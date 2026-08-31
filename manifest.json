@@ -1,0 +1,10 @@
+{
+  "name": "after-effects-codex-agent",
+  "version": "1.0.0",
+  "description": "Codex operating rules and quality references for Adobe After Effects workflows using an external AE MCP.",
+  "entrypoint": "AGENTS.md",
+  "skill": "SKILL.md",
+  "references": ["operations-and-safety", "compositing", "matte-roto", "color", "animation", "qc-render", "troubleshooting"],
+  "template": "templates/task-brief.md",
+  "repositoryPolicy": "create-new-project-or-version; never overwrite source by default"
+}
