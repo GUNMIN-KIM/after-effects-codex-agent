@@ -1,5 +1,5 @@
 {
-  "id": "b53274af-068d-442a-962f-034e645655de",
+  "id": "218b738b-01e9-4c0f-9a8d-73d1c1adabd6",
   "revision": 0,
   "last_node_id": 497,
   "last_link_id": 2009,
@@ -8,8 +8,8 @@
       "id": 13,
       "type": "ResolutionSelector",
       "pos": [
-        88,
-        2937
+        100,
+        2800
       ],
       "size": [
         308,
@@ -48,14 +48,16 @@
         "aspect_ratio": "1:1 (Square)",
         "megapixels": 4,
         "multiple": 32
-      }
+      },
+      "color": "#c2410c",
+      "bgcolor": "#431407"
     },
     {
       "id": 477,
       "type": "LoadImage",
       "pos": [
-        121,
-        2431
+        100,
+        2440
       ],
       "size": [
         275,
@@ -90,14 +92,17 @@
       "widgets_values_named": {
         "image": "244008d93c680947482b26948378658637d9f977fcc05e1066165e9f5d843f2f.png",
         "upload": "image"
-      }
+      },
+      "title": "Input Image (image_1)",
+      "color": "#0e7490",
+      "bgcolor": "#083344"
     },
     {
       "id": 497,
       "type": "LoadImage",
       "pos": [
-        121,
-        3200
+        100,
+        3060
       ],
       "size": [
         275,
@@ -132,14 +137,16 @@
         "image": "244008d93c680947482b26948378658637d9f977fcc05e1066165e9f5d843f2f.png",
         "upload": "image"
       },
-      "title": "Color Reference — 기존 색감 프레임 (기본: 원본과 동일)"
+      "title": "Color Reference (Color Match용)",
+      "color": "#a21caf",
+      "bgcolor": "#4a044e"
     },
     {
       "id": 459,
-      "type": "7aa37c62-6708-4984-b0f8-da9b9dd5545c",
+      "type": "54e4c5e8-fe64-4b32-8e55-7dbb20a88c6c",
       "pos": [
-        484,
-        2420
+        460,
+        2440
       ],
       "size": [
         429,
@@ -326,14 +333,16 @@
         "unet_name": "qwen_image_2.1_bf16.safetensors",
         "clip_name": "qwen3vl_8b_bf16.safetensors",
         "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
-      }
+      },
+      "color": "#6d28d9",
+      "bgcolor": "#2e1065"
     },
     {
       "id": 495,
       "type": "ColorTransfer",
       "pos": [
-        946,
-        2300
+        930,
+        2440
       ],
       "size": [
         320,
@@ -341,7 +350,7 @@
       ],
       "flags": {},
       "order": 4,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "localized_name": "image_target",
@@ -379,18 +388,20 @@
         "source_stats": "per_frame",
         "strength": 0.8
       },
-      "title": "Color Match (mkl_lab) — 기존 색감 적용"
+      "title": "Color Match (OFF · Ctrl+B로 켜기)",
+      "color": "#a21caf",
+      "bgcolor": "#4a044e"
     },
     {
       "id": 496,
       "type": "PreviewImage",
       "pos": [
-        1300,
-        2300
+        930,
+        2610
       ],
       "size": [
-        300,
-        300
+        320,
+        360
       ],
       "flags": {},
       "order": 5,
@@ -408,18 +419,20 @@
         "Node name for S&R": "PreviewImage"
       },
       "widgets_values": [],
-      "title": "Raw (색보정 전)"
+      "title": "Raw Preview",
+      "color": "#a16207",
+      "bgcolor": "#422006"
     },
     {
       "id": 461,
       "type": "SaveImageAdvanced",
       "pos": [
-        946,
-        2480
+        1290,
+        2440
       ],
       "size": [
-        715,
-        770
+        640,
+        700
       ],
       "flags": {},
       "order": 6,
@@ -452,18 +465,20 @@
         "format": "png",
         "format.bit_depth": "8-bit",
         "format.input_color_space": "sRGB"
-      }
+      },
+      "color": "#a16207",
+      "bgcolor": "#422006"
     },
     {
       "id": 472,
       "type": "ImageCompare",
       "pos": [
-        1705,
-        2480
+        1970,
+        2440
       ],
       "size": [
-        660,
-        770
+        640,
+        700
       ],
       "flags": {},
       "order": 7,
@@ -487,18 +502,20 @@
         "Node name for S&R": "ImageCompare"
       },
       "widgets_values": [],
-      "widgets_values_named": {}
+      "widgets_values_named": {},
+      "color": "#a16207",
+      "bgcolor": "#422006"
     },
     {
       "id": 490,
       "type": "MarkdownNote",
       "pos": [
-        -480,
-        2420
+        -500,
+        2440
       ],
       "size": [
         520,
-        760
+        900
       ],
       "flags": {},
       "order": 8,
@@ -507,10 +524,10 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "## Max Quality (공식 경로 · 30 step)\n\n메인 서브그래프 하나로 정리됨. 세부 수정은 노드 우클릭 → 서브그래프 열기.\n\n**원본 대비 변경점**\n- steps 10 → **30** (공식 40~50, 템플릿 기본 25)\n- DiT / CLIP 모두 **bf16**\n- custom_size **false** → image_1 비율 그대로 ~4MP 네이티브 2K\n- ImageCompare에 원본(image_a) 연결\n\n**모델**\n- diffusion_models/qwen_image_2.1_bf16.safetensors\n- text_encoders/qwen3vl_8b_bf16.safetensors\n- vae/qwen_image_2.1_vae_bf16.safetensors\n\n**속도 옵션** (품질 거의 유지)\n- steps 24~25\n- unet / clip을 `int8_convrot`로 교체 (VRAM 24GB 미만 권장)\n- resolution 2048 → 1536\n\n**프롬프트 팁**\n`Edit <image1>. Keep the pose, clothing, background and lighting unchanged. ...`\n\n**주의**\n- cfg 1 유지 (올리면 탐). cfg 1에서 negative_prompt 무시됨\n- resolution **1024 정확값 금지** (ComfyUI #16435) → 1056 / 1536 / 2048\n\n## 색상 처리 (Color Match)\n\n생성 → **Transfer Color (mkl_lab)** → 저장. 색보정 전 결과는 `Raw` 미리보기로 확인.\n\n- **Color Reference**에 기존 작업에서 쓰던 색감 프레임(그레이딩 끝난 스틸)을 넣으면 그 룩으로 맞춤\n- 기본값은 원본(image_1)과 같은 파일 → 원본 색감 유지 (Qwen 2.1의 물 빠진 색 보정)\n- strength **0.8**: 원래 톤을 따르면서 새로 생긴 요소(피, 조명 등)의 색은 남김\n  - 레퍼런스와 더 똑같이 → 1.0 / 편집한 색이 죽으면 → 0.5~0.6\n- method: `mkl_lab` 권장 (구조 보존 + 자연스러움). `reinhard_lab` = 더 약하고 부드러움, `histogram` = 가장 강하지만 밴딩 위험\n- 레퍼런스는 같은 조명·장면 계열일수록 정확함. 전혀 다른 장면이면 strength를 낮출 것\n"
+        "## Max Quality (공식 경로 · 30 step)\n\n메인 서브그래프 하나로 정리됨. 세부 수정은 노드 우클릭 → 서브그래프 열기.\n\n**원본 대비 변경점**\n- steps 10 → **30** (공식 40~50, 템플릿 기본 25)\n- DiT / CLIP 모두 **bf16**\n- custom_size **false** → image_1 비율 그대로 ~4MP 네이티브 2K\n- ImageCompare에 원본(image_a) 연결\n\n**모델**\n- diffusion_models/qwen_image_2.1_bf16.safetensors\n- text_encoders/qwen3vl_8b_bf16.safetensors\n- vae/qwen_image_2.1_vae_bf16.safetensors\n\n**속도 옵션** (품질 거의 유지)\n- steps 24~25\n- unet / clip을 `int8_convrot`로 교체 (VRAM 24GB 미만 권장)\n- resolution 2048 → 1536\n\n**프롬프트 팁**\n`Edit <image1>. Keep the pose, clothing, background and lighting unchanged. ...`\n\n**주의**\n- cfg 1 유지 (올리면 탐). cfg 1에서 negative_prompt 무시됨\n- resolution **1024 정확값 금지** (ComfyUI #16435) → 1056 / 1536 / 2048\n\n## 노드 색상 범례\n🟦 청록 Input · 🟧 주황 Size/Latent · 🔵 파랑 Model 로더 · 🟪 보라 LoRA / 메인 서브그래프\n🟩 초록 Prompt · 🟥 진홍 Sampling · 🟦 남색 VAE Decode · 🟣 자홍 Color Match · 🟨 골드 Output\n\n## Color Match (기본 OFF)\n노드 선택 후 **Ctrl+B**로 켜면 Color Reference 이미지 색감에 결과를 맞춤 (mkl_lab, strength 0.8).\n꺼져 있으면 생성 결과가 그대로 저장됨.\n"
       ],
-      "color": "#432",
-      "bgcolor": "#653"
+      "color": "#334155",
+      "bgcolor": "#0f172a"
     }
   ],
   "links": [
@@ -587,11 +604,64 @@
       "IMAGE"
     ]
   ],
-  "groups": [],
+  "groups": [
+    {
+      "id": 1,
+      "title": "① Input",
+      "bounding": [
+        80,
+        2366,
+        340,
+        1030
+      ],
+      "color": "#0e7490",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "② Generate",
+      "bounding": [
+        440,
+        2366,
+        470,
+        874
+      ],
+      "color": "#6d28d9",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "③ Color",
+      "bounding": [
+        910,
+        2366,
+        360,
+        624
+      ],
+      "color": "#a21caf",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "④ Output",
+      "bounding": [
+        1270,
+        2366,
+        1360,
+        794
+      ],
+      "color": "#a16207",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
   "definitions": {
     "subgraphs": [
       {
-        "id": "7aa37c62-6708-4984-b0f8-da9b9dd5545c",
+        "id": "54e4c5e8-fe64-4b32-8e55-7dbb20a88c6c",
         "version": 1,
         "state": {
           "lastGroupId": 40,
@@ -622,7 +692,7 @@
         },
         "inputs": [
           {
-            "id": "9178bfbb-640f-4cc9-b060-1d82f3944425",
+            "id": "14430add-e1e3-481a-ad01-288e9bbff83b",
             "name": "resolution",
             "type": "INT",
             "linkIds": [
@@ -634,7 +704,7 @@
             ]
           },
           {
-            "id": "8a82ad9b-240f-40c2-94e5-37735bd33486",
+            "id": "1a934716-b394-4cb3-bb58-90b1d2897542",
             "name": "prompt",
             "type": "STRING",
             "linkIds": [
@@ -647,7 +717,7 @@
             "label": "positive_prompt"
           },
           {
-            "id": "f2ab7c84-9859-40d2-8550-7e4f59976b58",
+            "id": "425cf973-0e06-415a-b455-714acd870c4f",
             "name": "negative_prompt",
             "type": "STRING",
             "linkIds": [
@@ -659,7 +729,7 @@
             ]
           },
           {
-            "id": "16833e95-c5c5-40d7-9c71-2ea94a292d0e",
+            "id": "7097efcf-5a63-42e1-a36d-442c2fcbc26c",
             "name": "cfg",
             "type": "FLOAT",
             "linkIds": [
@@ -671,7 +741,7 @@
             ]
           },
           {
-            "id": "1c6fa75c-e4b6-449a-aabe-6d9d7f5bb1ca",
+            "id": "d63e960d-eb54-479c-af61-b0542167d216",
             "name": "steps",
             "type": "INT",
             "linkIds": [
@@ -684,7 +754,7 @@
             "label": "steps"
           },
           {
-            "id": "f55f6ad5-16e2-4127-91c6-e5d1b399ad86",
+            "id": "5a428a01-f3c4-4cac-bdfd-fde72b6bed5f",
             "name": "switch",
             "type": "BOOLEAN",
             "linkIds": [
@@ -697,7 +767,7 @@
             "label": "custom_size"
           },
           {
-            "id": "7cf0cf3c-cdef-4b3b-b52f-5cb46ea8092e",
+            "id": "5ef73c92-052f-4055-b8d5-b0308132ed54",
             "name": "width",
             "type": "INT",
             "linkIds": [
@@ -709,7 +779,7 @@
             ]
           },
           {
-            "id": "34f97e96-028f-4e48-b6ca-a8327854f391",
+            "id": "29b6b38d-99a9-4397-a677-76b080faf681",
             "name": "height",
             "type": "INT",
             "linkIds": [
@@ -721,7 +791,7 @@
             ]
           },
           {
-            "id": "a9703157-554c-43a3-92ad-659a967ff1e0",
+            "id": "7e75ff11-e424-4121-bcc0-5e471fda4293",
             "name": "sampler_name",
             "type": "COMBO",
             "linkIds": [
@@ -734,7 +804,7 @@
             "label": "sampler"
           },
           {
-            "id": "21184a74-8d5a-45f0-be21-12f82b6b8657",
+            "id": "7766e5bc-4328-4186-84a5-472ce45947b1",
             "name": "scheduler",
             "type": "COMBO",
             "linkIds": [
@@ -747,7 +817,7 @@
             "label": "scheduler"
           },
           {
-            "id": "4fcb97c3-22f5-447c-bf1b-cccc8b2d628a",
+            "id": "c540e85b-4ae9-451d-8fb0-67bc5a91f7b5",
             "name": "seed",
             "type": "INT",
             "linkIds": [
@@ -759,7 +829,7 @@
             ]
           },
           {
-            "id": "517bf2f9-55a8-4925-9484-95f0190cd85e",
+            "id": "23565203-b24c-4941-865c-095be99e536c",
             "name": "unet_name",
             "type": "COMBO",
             "linkIds": [
@@ -771,7 +841,7 @@
             ]
           },
           {
-            "id": "a81d1bf2-f39a-49fd-9d79-687894258f15",
+            "id": "d67b7c23-5a2a-47ee-a13d-5f6a4a1c2811",
             "name": "clip_name",
             "type": "COMBO",
             "linkIds": [
@@ -783,7 +853,7 @@
             ]
           },
           {
-            "id": "a5db5efd-28aa-4393-b64c-8bd124448ffb",
+            "id": "a6049909-f620-4572-adf1-422ae66ccbbb",
             "name": "vae_name",
             "type": "COMBO",
             "linkIds": [
@@ -795,7 +865,7 @@
             ]
           },
           {
-            "id": "33082d67-3765-42e3-a19d-139b7007ef48",
+            "id": "0299b816-e807-4142-b724-955749b1bc9b",
             "name": "images.image_1",
             "type": "IMAGE",
             "linkIds": [
@@ -808,7 +878,7 @@
             "label": "image_1"
           },
           {
-            "id": "013eb3a2-0df8-4d4c-8d36-52c833535fa2",
+            "id": "c28b81d9-cae0-4fa5-88f8-0483b3b1e3de",
             "name": "images.image_2",
             "type": "IMAGE",
             "linkIds": [
@@ -821,7 +891,7 @@
             "label": "image_2"
           },
           {
-            "id": "bb91ee4d-90f2-4b5b-941b-80ba2094bcfa",
+            "id": "971f752c-3aa0-444e-9d2c-e6a22dfc055b",
             "name": "images.image_3",
             "type": "IMAGE",
             "linkIds": [
@@ -834,7 +904,7 @@
             "label": "image_3"
           },
           {
-            "id": "0a117cb3-47be-4c0b-80e7-3d5e62c8d93c",
+            "id": "f928ecbd-7d26-4591-8640-4273edc2463c",
             "name": "images.image_4",
             "type": "IMAGE",
             "linkIds": [
@@ -847,7 +917,7 @@
             "label": "image_4"
           },
           {
-            "id": "4f376342-233d-428f-bea0-18a0b9660ec8",
+            "id": "e015a6a8-36f5-4e26-9d01-8c78b798e0d0",
             "name": "images.image_5",
             "type": "IMAGE",
             "linkIds": [
@@ -860,7 +930,7 @@
             "label": "image_5"
           },
           {
-            "id": "b7c8c603-5864-436c-befa-aa259d6e7a26",
+            "id": "2f1faab8-c9b0-4e9b-8894-2835a899ceb2",
             "name": "images.image_6",
             "type": "IMAGE",
             "linkIds": [
@@ -873,7 +943,7 @@
             "label": "image_6"
           },
           {
-            "id": "048f508d-aae0-44a2-b8f2-ab0234cc8cf1",
+            "id": "8e55445c-87aa-42e4-b3cd-b7f1989a5c01",
             "name": "images.image_7",
             "type": "IMAGE",
             "linkIds": [
@@ -886,7 +956,7 @@
             "label": "image_7"
           },
           {
-            "id": "3fdab0f7-f054-45d1-9ec1-16a443b408ff",
+            "id": "1bb9f491-b474-4544-8639-ded101b8f3fd",
             "name": "images.image_8",
             "type": "IMAGE",
             "linkIds": [
@@ -899,7 +969,7 @@
             "label": "image_8"
           },
           {
-            "id": "12c09142-c0d5-4f07-97e7-a631b457e435",
+            "id": "3c8f2a0e-fa8a-4ba8-b409-c9d7dec2bdd5",
             "name": "images.image_9",
             "type": "IMAGE",
             "linkIds": [
@@ -912,7 +982,7 @@
             "label": "image_9"
           },
           {
-            "id": "856a1bfd-2d29-408e-95b6-6d962ee897d0",
+            "id": "de5f400f-3a99-4e46-b6ca-f3bc93048102",
             "name": "images.image_10",
             "type": "IMAGE",
             "linkIds": [
@@ -927,7 +997,7 @@
         ],
         "outputs": [
           {
-            "id": "a1a90a4b-210a-438d-9620-6def370f8094",
+            "id": "12e9ef2e-7324-466b-81b5-3f037f2b63d1",
             "name": "IMAGE",
             "type": "IMAGE",
             "linkIds": [
@@ -994,7 +1064,9 @@
             "widgets_values_named": {
               "unet_name": "qwen_image_2.1_bf16.safetensors",
               "weight_dtype": "default"
-            }
+            },
+            "color": "#1d4ed8",
+            "bgcolor": "#172554"
           },
           {
             "id": 453,
@@ -1050,7 +1122,9 @@
               "clip_name": "qwen3vl_8b_bf16.safetensors",
               "type": "qwen_image",
               "device": "default"
-            }
+            },
+            "color": "#1d4ed8",
+            "bgcolor": "#172554"
           },
           {
             "id": 454,
@@ -1103,7 +1177,9 @@
             ],
             "widgets_values_named": {
               "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
-            }
+            },
+            "color": "#1d4ed8",
+            "bgcolor": "#172554"
           },
           {
             "id": 456,
@@ -1161,7 +1237,9 @@
               "width": 2048,
               "height": 2048,
               "batch_size": 1
-            }
+            },
+            "color": "#c2410c",
+            "bgcolor": "#431407"
           },
           {
             "id": 457,
@@ -1203,7 +1281,9 @@
             ],
             "properties": {
               "Node name for S&R": "VAEDecode"
-            }
+            },
+            "color": "#4338ca",
+            "bgcolor": "#1e1b4b"
           },
           {
             "id": 458,
@@ -1320,7 +1400,9 @@
               "sampler_name": "euler",
               "scheduler": "simple",
               "denoise": 1
-            }
+            },
+            "color": "#be123c",
+            "bgcolor": "#4c0519"
           },
           {
             "id": 468,
@@ -1379,7 +1461,9 @@
             ],
             "widgets_values_named": {
               "switch": false
-            }
+            },
+            "color": "#c2410c",
+            "bgcolor": "#431407"
           },
           {
             "id": 469,
@@ -1423,7 +1507,9 @@
             "widgets_values_named": {
               "device": "auto",
               "dtype": "default"
-            }
+            },
+            "color": "#0f766e",
+            "bgcolor": "#042f2e"
           },
           {
             "id": 474,
@@ -1589,7 +1675,9 @@
               "prompt": "",
               "negative_prompt": "",
               "resolution": 2048
-            }
+            },
+            "color": "#15803d",
+            "bgcolor": "#052e16"
           }
         ],
         "groups": [
@@ -1602,7 +1690,7 @@
               530,
               590
             ],
-            "color": "#3f789e",
+            "color": "#1d4ed8",
             "flags": {}
           },
           {
@@ -1614,7 +1702,7 @@
               530,
               250
             ],
-            "color": "#3f789e",
+            "color": "#c2410c",
             "flags": {}
           },
           {
@@ -1626,7 +1714,7 @@
               700,
               860
             ],
-            "color": "#3f789e",
+            "color": "#15803d",
             "flags": {}
           },
           {
@@ -1638,7 +1726,7 @@
               470,
               860
             ],
-            "color": "#3f789e",
+            "color": "#be123c",
             "flags": {}
           }
         ],
