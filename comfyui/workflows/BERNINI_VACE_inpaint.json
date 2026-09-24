@@ -1,19 +1,19 @@
 {
   "id": "247ea069-731d-4b79-9d64-8807463de95c",
   "revision": 1,
-  "last_node_id": 404,
-  "last_link_id": 624,
+  "last_node_id": 410,
+  "last_link_id": 653,
   "nodes": [
     {
       "id": 47,
       "type": "LoadVideo",
       "pos": [
-        345,
-        180
+        60,
+        120
       ],
       "size": [
-        510,
-        480
+        480,
+        470
       ],
       "flags": {
         "collapsed": false
@@ -26,7 +26,7 @@
           "name": "VIDEO",
           "type": "VIDEO",
           "links": [
-            288
+            649
           ]
         }
       ],
@@ -55,435 +55,15 @@
       "bgcolor": "#042C50"
     },
     {
-      "id": 109,
-      "type": "Video Slice",
+      "id": 339,
+      "type": "LoadVideo",
       "pos": [
-        945,
-        225
+        60,
+        640
       ],
       "size": [
-        360,
-        165
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 6,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "video",
-          "type": "VIDEO",
-          "link": 288
-        }
-      ],
-      "outputs": [
-        {
-          "name": "VIDEO",
-          "type": "VIDEO",
-          "links": [
-            289,
-            463
-          ]
-        }
-      ],
-      "title": "원본 영상 프레임 트림",
-      "properties": {
-        "Node name for S&R": "Video Slice",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "widgets_values": [
-        0,
-        81,
-        false
-      ],
-      "widgets_values_named": {
-        "start_time": 0,
-        "duration": 81,
-        "strict_duration": false
-      },
-      "color": "#006F89",
-      "bgcolor": "#003A49"
-    },
-    {
-      "id": 110,
-      "type": "GetVideoComponents",
-      "pos": [
-        1455,
-        225
-      ],
-      "size": [
-        300,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 10,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "video",
-          "type": "VIDEO",
-          "link": 289
-        }
-      ],
-      "outputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "links": [
-            291,
-            540
-          ]
-        },
-        {
-          "name": "audio",
-          "type": "AUDIO",
-          "links": [
-            517,
-            558
-          ]
-        },
-        {
-          "name": "fps",
-          "type": "FLOAT",
-          "links": [
-            518,
-            559
-          ]
-        },
-        {
-          "name": "bit_depth",
-          "type": "COMBO",
-          "links": null
-        },
-        {
-          "name": "color_space",
-          "type": "COMBO",
-          "links": null
-        }
-      ],
-      "title": "원본 프레임 · 오디오 · FPS 추출",
-      "properties": {
-        "Node name for S&R": "GetVideoComponents",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "color": "#006F89",
-      "bgcolor": "#003A49"
-    },
-    {
-      "id": 111,
-      "type": "GetImageSize",
-      "pos": [
-        1905,
-        180
-      ],
-      "size": [
-        300,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 12,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 291
-        }
-      ],
-      "outputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "links": [
-            570,
-            572,
-            576,
-            578
-          ]
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": [
-            571,
-            573,
-            577,
-            579
-          ]
-        },
-        {
-          "name": "batch_size",
-          "type": "INT",
-          "links": [
-            293,
-            620
-          ]
-        }
-      ],
-      "title": "원본 프레임 크기 감지",
-      "properties": {
-        "Node name for S&R": "GetImageSize",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "color": "#006F89",
-      "bgcolor": "#003A49"
-    },
-    {
-      "id": 112,
-      "type": "PreviewAny",
-      "pos": [
-        1905,
-        480
-      ],
-      "size": [
-        300,
-        165
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 17,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "source",
-          "type": "*",
-          "link": 293
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": null
-        }
-      ],
-      "title": "원본 프레임 수 확인",
-      "properties": {
-        "Node name for S&R": "PreviewAny",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "widgets_values": [],
-      "widgets_values_named": {},
-      "color": "#414B8F",
-      "bgcolor": "#202647"
-    },
-    {
-      "id": 298,
-      "type": "69c3c422-bcfe-4955-bc23-8bac307287a8",
-      "pos": [
-        2445,
-        165
-      ],
-      "size": [
-        570,
-        900
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 18,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "source_video",
-          "name": "video",
-          "type": "VIDEO",
-          "link": 463
-        },
-        {
-          "name": "reference_video",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "label": "reference_images",
-          "name": "reference_images.reference_image_0",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": 497
-        },
-        {
-          "label": "task_type",
-          "name": "choice",
-          "type": "COMBO",
-          "widget": {
-            "name": "choice"
-          },
-          "link": null
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "link": 574
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "link": 575
-        },
-        {
-          "label": "noise_seed",
-          "name": "noise_seed",
-          "type": "INT",
-          "widget": {
-            "name": "noise_seed"
-          },
-          "link": null
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 621
-        },
-        {
-          "label": "turbo_mode",
-          "name": "value_1",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "value_1"
-          },
-          "link": null
-        },
-        {
-          "label": "high_noise_model",
-          "name": "unet_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "unet_name"
-          },
-          "link": null
-        },
-        {
-          "label": "low_noise_model",
-          "name": "unet_name_1",
-          "type": "COMBO",
-          "widget": {
-            "name": "unet_name_1"
-          },
-          "link": null
-        },
-        {
-          "label": "distill_lora",
-          "name": "lora_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "lora_name"
-          },
-          "link": null
-        },
-        {
-          "label": "inpaint_mask (흰색=생성)",
-          "name": "inpaint_mask",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": 624
-        },
-        {
-          "label": "inpaint_mode (VACE식)",
-          "name": "value_2",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "value_2"
-          },
-          "link": null
-        },
-        {
-          "label": "vace_gray_context",
-          "name": "value_3",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "value_3"
-          },
-          "link": null
-        },
-        {
-          "label": "inpaint_grow",
-          "name": "expand",
-          "type": "INT",
-          "widget": {
-            "name": "expand"
-          },
-          "link": 623
-        }
-      ],
-      "outputs": [
-        {
-          "name": "VIDEO",
-          "type": "VIDEO",
-          "links": [
-            505
-          ]
-        }
-      ],
-      "title": "Bernini VACE식 Inpaint 생성 (프롬프트 · 레퍼런스 · 마스크 · 모델 설정)",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0",
-        "previewExposures": []
-      },
-      "widgets_values": [
-        "Replace the gray studio backdrop with a daytime urban street: brick buildings, shop windows, sidewalk, and soft overcast light. Keep the model's outfit, accessories, body pose, motion, and full-body framing unchanged. Only the environment behind the subject should change.",
-        "Video Editing (Content Propagation)",
-        852303761886160,
-        81,
-        848,
-        true,
-        "wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
-        "wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
-        "lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank64_bf16.safetensors",
-        "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
-        "Wan2_1_VAE_bf16.safetensors",
-        true,
-        false,
-        16
-      ],
-      "widgets_values_named": {
-        "value": "Replace the gray studio backdrop with a daytime urban street: brick buildings, shop windows, sidewalk, and soft overcast light. Keep the model's outfit, accessories, body pose, motion, and full-body framing unchanged. Only the environment behind the subject should change.",
-        "choice": "Video Editing (Content Propagation)",
-        "noise_seed": 852303761886160,
-        "length": 81,
-        "ref_max_size": 848,
-        "value_1": true,
-        "unet_name": "wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
-        "unet_name_1": "wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
-        "lora_name": "lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank64_bf16.safetensors",
-        "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
-        "vae_name": "Wan2_1_VAE_bf16.safetensors",
-        "value_2": true,
-        "value_3": false,
-        "expand": 16
-      },
-      "color": "#5E258B",
-      "bgcolor": "#2D1245"
-    },
-    {
-      "id": 338,
-      "type": "LoadImage",
-      "pos": [
-        360,
-        810
-      ],
-      "size": [
-        345,
-        420
+        480,
+        470
       ],
       "flags": {
         "collapsed": false
@@ -493,10 +73,53 @@
       "inputs": [],
       "outputs": [
         {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            650
+          ]
+        }
+      ],
+      "title": "편집 마스크 비디오 로드 (흰색=생성 · 검정=원본 유지)",
+      "properties": {
+        "Node name for S&R": "LoadVideo",
+        "cnr_id": "comfy-core",
+        "ver": "0.24.0"
+      },
+      "widgets_values": [
+        "ac09c340b59d1b8589fbd6aa649fbff505c0781bd048f85c2852e6a715072684.mp4",
+        "image"
+      ],
+      "widgets_values_named": {
+        "file": "ac09c340b59d1b8589fbd6aa649fbff505c0781bd048f85c2852e6a715072684.mp4",
+        "upload": "image"
+      },
+      "color": "#007A60",
+      "bgcolor": "#003D30"
+    },
+    {
+      "id": 338,
+      "type": "LoadImage",
+      "pos": [
+        60,
+        1160
+      ],
+      "size": [
+        480,
+        440
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            497
+            651
           ]
         },
         {
@@ -521,746 +144,332 @@
       "bgcolor": "#042C50"
     },
     {
-      "id": 339,
-      "type": "LoadVideo",
+      "id": 410,
+      "type": "943b2be9-fdd5-4424-8be1-36f1824e6b42",
       "pos": [
-        840,
-        810
+        640,
+        120
       ],
       "size": [
-        390,
-        405
+        560,
+        1180
       ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "VIDEO",
-          "type": "VIDEO",
-          "links": [
-            498
-          ]
-        }
-      ],
-      "title": "편집 마스크 비디오 로드 (흰색=생성/인페인트 · 검정=원본 유지) → 생성 단계 + 최종 합성 공용",
-      "properties": {
-        "Node name for S&R": "LoadVideo",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "widgets_values": [
-        "ac09c340b59d1b8589fbd6aa649fbff505c0781bd048f85c2852e6a715072684.mp4",
-        "image"
-      ],
-      "widgets_values_named": {
-        "file": "ac09c340b59d1b8589fbd6aa649fbff505c0781bd048f85c2852e6a715072684.mp4",
-        "upload": "image"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 340,
-      "type": "Video Slice",
-      "pos": [
-        1245,
-        870
-      ],
-      "size": [
-        345,
-        165
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 7,
+      "flags": {},
+      "order": 3,
       "mode": 0,
       "inputs": [
         {
-          "name": "video",
+          "label": "source_video",
+          "name": "source_video",
           "type": "VIDEO",
-          "link": 498
+          "link": 649
+        },
+        {
+          "label": "mask_video (흰색=생성 · 검정=원본)",
+          "name": "mask_video",
+          "type": "VIDEO",
+          "link": 650
+        },
+        {
+          "label": "reference_image (선택)",
+          "name": "reference_image",
+          "type": "IMAGE",
+          "link": 651,
+          "shape": 7
+        },
+        {
+          "label": "prompt",
+          "name": "value",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "value"
+          }
+        },
+        {
+          "label": "task_type",
+          "name": "choice",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "choice"
+          }
+        },
+        {
+          "label": "noise_seed",
+          "name": "noise_seed",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "noise_seed"
+          }
+        },
+        {
+          "label": "turbo_mode",
+          "name": "value_1",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "value_1"
+          }
+        },
+        {
+          "label": "inpaint_mode (VACE식)",
+          "name": "value_2",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "value_2"
+          }
+        },
+        {
+          "label": "vace_gray_context",
+          "name": "value_3",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "value_3"
+          }
+        },
+        {
+          "label": "inpaint_grow (0…64 px)",
+          "name": "inpaint_grow",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "inpaint_grow"
+          }
+        },
+        {
+          "label": "mask_expand (−12…+24 px)",
+          "name": "mask_expand",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "mask_expand"
+          }
+        },
+        {
+          "label": "mask_feather (0…20 px)",
+          "name": "mask_feather",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "mask_feather"
+          }
+        },
+        {
+          "label": "trim_start (sec)",
+          "name": "start_time",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "start_time"
+          }
+        },
+        {
+          "label": "trim_duration (sec · 0=전체)",
+          "name": "duration",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "duration"
+          }
+        },
+        {
+          "label": "ref_max_size",
+          "name": "ref_max_size",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "ref_max_size"
+          }
+        },
+        {
+          "label": "high_noise_model",
+          "name": "unet_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "unet_name"
+          }
+        },
+        {
+          "label": "low_noise_model",
+          "name": "unet_name_1",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "unet_name_1"
+          }
+        },
+        {
+          "label": "distill_lora",
+          "name": "lora_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "lora_name"
+          }
+        },
+        {
+          "label": "clip_name",
+          "name": "clip_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "clip_name"
+          }
+        },
+        {
+          "label": "vae_name",
+          "name": "vae_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "vae_name"
+          }
         }
       ],
       "outputs": [
         {
-          "name": "VIDEO",
+          "label": "FINAL (VACE Inpaint Composite)",
+          "name": "FINAL",
           "type": "VIDEO",
           "links": [
-            499
+            652
+          ]
+        },
+        {
+          "label": "BERNINI INPAINT RAW (진단)",
+          "name": "RAW",
+          "type": "VIDEO",
+          "links": [
+            653
           ]
         }
       ],
-      "title": "마스크도 원본과 동일하게 프레임 트림",
+      "title": "Bernini-R VACE Inpaint (Main) · 프롬프트 · 마스크 · 모델",
       "properties": {
-        "Node name for S&R": "Video Slice",
         "cnr_id": "comfy-core",
-        "ver": "0.24.0"
+        "ver": "0.24.0",
+        "previewExposures": []
       },
       "widgets_values": [
+        "Replace the gray studio backdrop with a daytime urban street: brick buildings, shop windows, sidewalk, and soft overcast light. Keep the model's outfit, accessories, body pose, motion, and full-body framing unchanged. Only the environment behind the subject should change.",
+        "Video Editing (Content Propagation)",
+        852303761886160,
+        true,
+        true,
+        false,
+        16,
+        1,
+        1,
         0,
         81,
-        false
+        848,
+        "wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+        "wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+        "lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank64_bf16.safetensors",
+        "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "Wan2_1_VAE_bf16.safetensors"
       ],
       "widgets_values_named": {
+        "value": "Replace the gray studio backdrop with a daytime urban street: brick buildings, shop windows, sidewalk, and soft overcast light. Keep the model's outfit, accessories, body pose, motion, and full-body framing unchanged. Only the environment behind the subject should change.",
+        "choice": "Video Editing (Content Propagation)",
+        "noise_seed": 852303761886160,
+        "value_1": true,
+        "value_2": true,
+        "value_3": false,
+        "inpaint_grow": 16,
+        "mask_expand": 1,
+        "mask_feather": 1,
         "start_time": 0,
         "duration": 81,
-        "strict_duration": false
+        "ref_max_size": 848,
+        "unet_name": "wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+        "unet_name_1": "wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+        "lora_name": "lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank64_bf16.safetensors",
+        "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "vae_name": "Wan2_1_VAE_bf16.safetensors"
       },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
+      "color": "#5E258B",
+      "bgcolor": "#2D1245"
     },
     {
-      "id": 341,
-      "type": "GetVideoComponents",
+      "id": 367,
+      "type": "SaveVideo",
       "pos": [
-        1650,
-        870
-      ],
-      "size": [
-        300,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 11,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "video",
-          "type": "VIDEO",
-          "link": 499
-        }
-      ],
-      "outputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "links": [
-            543,
-            624
-          ]
-        },
-        {
-          "name": "audio",
-          "type": "AUDIO",
-          "links": null
-        },
-        {
-          "name": "fps",
-          "type": "FLOAT",
-          "links": null
-        },
-        {
-          "name": "bit_depth",
-          "type": "COMBO",
-          "links": null
-        },
-        {
-          "name": "color_space",
-          "type": "COMBO",
-          "links": null
-        }
-      ],
-      "title": "마스크 프레임 추출",
-      "properties": {
-        "Node name for S&R": "GetVideoComponents",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 342,
-      "type": "ImageScale",
-      "pos": [
-        1650,
-        1095
-      ],
-      "size": [
-        390,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 27,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 545
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 550
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 551
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            503
-          ]
-        }
-      ],
-      "title": "마스크를 원본 해상도로 맞춤",
-      "properties": {
-        "Node name for S&R": "ImageScale",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "widgets_values": [
-        "lanczos",
         1280,
-        720,
-        "disabled"
-      ],
-      "widgets_values_named": {
-        "upscale_method": "lanczos",
-        "width": 1280,
-        "height": 720,
-        "crop": "disabled"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 343,
-      "type": "ImageToMask",
-      "pos": [
-        1980,
-        855
+        120
       ],
       "size": [
-        330,
-        180
+        1100,
+        700
       ],
       "flags": {
         "collapsed": false,
         "allow_interaction": false
       },
-      "order": 28,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 503
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": [
-            520
-          ]
-        }
-      ],
-      "title": "마스크 이미지에서 Red 채널 추출 (흰색=편집)",
-      "properties": {
-        "Node name for S&R": "ImageToMask",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "widgets_values": [
-        "red"
-      ],
-      "widgets_values_named": {
-        "channel": "red"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 345,
-      "type": "GetVideoComponents",
-      "pos": [
-        3105,
-        165
-      ],
-      "size": [
-        360,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 19,
+      "order": 4,
       "mode": 0,
       "inputs": [
         {
           "name": "video",
           "type": "VIDEO",
-          "link": 505
+          "link": 652
         }
       ],
       "outputs": [
         {
-          "name": "images",
-          "type": "IMAGE",
-          "links": [
-            506,
-            539
-          ]
-        },
-        {
-          "name": "audio",
-          "type": "AUDIO",
-          "links": null
-        },
-        {
-          "name": "fps",
-          "type": "FLOAT",
-          "links": null
-        },
-        {
-          "name": "bit_depth",
-          "type": "COMBO",
-          "links": null
-        },
-        {
-          "name": "color_space",
-          "type": "COMBO",
+          "name": "video",
+          "type": "VIDEO",
           "links": null
         }
       ],
-      "title": "BERNINI RESULT 프레임 추출 (Native Output 유지)",
+      "title": "FINAL 저장 (VACE Inpaint Composite · 메인 결과)",
       "properties": {
-        "Node name for S&R": "GetVideoComponents",
+        "Node name for S&R": "SaveVideo",
         "cnr_id": "comfy-core",
         "ver": "0.24.0"
+      },
+      "widgets_values": [
+        "video/FINAL_COMPOSITE_bernini_vace_inpaint",
+        "auto",
+        "auto",
+        "auto"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "video/FINAL_COMPOSITE_bernini_vace_inpaint",
+        "format": "auto",
+        "format.codec": "auto",
+        "codec": "auto"
       },
       "color": "#287A32",
       "bgcolor": "#123C18"
     },
     {
-      "id": 346,
-      "type": "ImageScale",
-      "pos": [
-        3480,
-        165
-      ],
-      "size": [
-        405,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 20,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 506
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 546
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 547
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            516,
-            554
-          ]
-        }
-      ],
-      "title": "★ BERNINI RESULT → ORIGINAL RESOLUTION (공통)",
-      "properties": {
-        "Node name for S&R": "ImageScale",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0",
-        "RESOLUTION POLICY": "Bernini native output is preserved until this node; this node immediately resizes it to the source video width/height; its single IMAGE output is shared by BERNINI RESIZED RAW and FINAL Mask Composite."
-      },
-      "widgets_values": [
-        "lanczos",
-        1280,
-        720,
-        "disabled"
-      ],
-      "widgets_values_named": {
-        "upscale_method": "lanczos",
-        "width": 1280,
-        "height": 720,
-        "crop": "disabled"
-      },
-      "color": "#006F89",
-      "bgcolor": "#003A49"
-    },
-    {
-      "id": 350,
-      "type": "GetImageSize",
-      "pos": [
-        3495,
-        165
-      ],
-      "size": [
-        330,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 21,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 539
-        }
-      ],
-      "outputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "batch_size",
-          "type": "INT",
-          "links": [
-            541,
-            544
-          ]
-        }
-      ],
-      "title": "생성 결과 프레임 수 감지",
-      "properties": {
-        "Node name for S&R": "GetImageSize",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "color": "#006F89",
-      "bgcolor": "#003A49"
-    },
-    {
-      "id": 351,
-      "type": "ImageFromBatch",
-      "pos": [
-        3090,
-        1080
-      ],
-      "size": [
-        360,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 23,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 540
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 541
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            542
-          ]
-        }
-      ],
-      "title": "원본을 생성 결과 길이에 맞춤",
-      "properties": {
-        "Node name for S&R": "ImageFromBatch",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "widgets_values": [
-        0,
-        81
-      ],
-      "widgets_values_named": {
-        "batch_index": 0,
-        "length": 81
-      },
-      "color": "#006F89",
-      "bgcolor": "#003A49"
-    },
-    {
-      "id": 352,
-      "type": "ImageScale",
-      "pos": [
-        3585,
-        1080
-      ],
-      "size": [
-        390,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 26,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 542
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 548
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 549
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            555
-          ]
-        }
-      ],
-      "title": "원본 프레임을 원본 해상도로 맞춤",
-      "properties": {
-        "Node name for S&R": "ImageScale",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "widgets_values": [
-        "lanczos",
-        1280,
-        720,
-        "disabled"
-      ],
-      "widgets_values_named": {
-        "upscale_method": "lanczos",
-        "width": 1280,
-        "height": 720,
-        "crop": "disabled"
-      },
-      "color": "#006F89",
-      "bgcolor": "#003A49"
-    },
-    {
-      "id": 353,
-      "type": "ImageFromBatch",
-      "pos": [
-        1245,
-        1080
-      ],
-      "size": [
-        360,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 24,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 543
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 544
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            545
-          ]
-        }
-      ],
-      "title": "마스크를 생성 결과 길이에 맞춤",
-      "properties": {
-        "Node name for S&R": "ImageFromBatch",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "widgets_values": [
-        0,
-        81
-      ],
-      "widgets_values_named": {
-        "batch_index": 0,
-        "length": 81
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 354,
-      "type": "CreateVideo",
-      "pos": [
-        3960,
-        540
-      ],
-      "size": [
-        345,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 22,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 516
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": 517
-        },
-        {
-          "name": "fps",
-          "type": "FLOAT",
-          "widget": {
-            "name": "fps"
-          },
-          "link": 518
-        }
-      ],
-      "outputs": [
-        {
-          "name": "VIDEO",
-          "type": "VIDEO",
-          "links": [
-            519
-          ]
-        }
-      ],
-      "title": "BERNINI INPAINT RAW 영상 생성 (원본 해상도 · 진단용)",
-      "properties": {
-        "Node name for S&R": "CreateVideo",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0",
-        "RESOLUTION SOURCE": "Uses the shared output of ★ BERNINI RESULT → ORIGINAL RESOLUTION (공통)."
-      },
-      "widgets_values": [
-        30,
-        8,
-        "sRGB",
-        "none"
-      ],
-      "widgets_values_named": {
-        "fps": 30,
-        "bit_depth": 8,
-        "color_space": "sRGB",
-        "codec": "none"
-      },
-      "color": "#006F89",
-      "bgcolor": "#003A49"
-    },
-    {
       "id": 355,
       "type": "SaveVideo",
       "pos": [
-        4335,
-        540
+        1280,
+        880
       ],
       "size": [
-        1620,
-        1035
+        1100,
+        700
       ],
       "flags": {
         "collapsed": false,
         "allow_interaction": false
       },
-      "order": 25,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
           "name": "video",
           "type": "VIDEO",
-          "link": 519
+          "link": 653
         }
       ],
       "outputs": [
@@ -1270,7 +479,7 @@
           "links": null
         }
       ],
-      "title": "BERNINI INPAINT RAW 저장 (원본 해상도)",
+      "title": "BERNINI INPAINT RAW 저장 (진단용)",
       "properties": {
         "Node name for S&R": "SaveVideo",
         "cnr_id": "comfy-core",
@@ -1293,767 +502,18 @@
       "bgcolor": "#123C18"
     },
     {
-      "id": 356,
-      "type": "GrowMask",
-      "pos": [
-        2490,
-        1545
-      ],
-      "size": [
-        375,
-        195
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 32,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "mask",
-          "type": "MASK",
-          "link": 569
-        },
-        {
-          "name": "expand",
-          "type": "INT",
-          "widget": {
-            "name": "expand"
-          },
-          "link": 564
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": [
-            521
-          ]
-        }
-      ],
-      "title": "마스크 확장 (Mask Expand 연결 · tapered corners)",
-      "properties": {
-        "Node name for S&R": "GrowMask",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0",
-        "INTERNAL FIXED": "tapered_corners=True; input is range-clamped"
-      },
-      "widgets_values": [
-        4,
-        true
-      ],
-      "widgets_values_named": {
-        "expand": 4,
-        "tapered_corners": true
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 357,
-      "type": "MaskToImage",
-      "pos": [
-        2895,
-        1545
-      ],
-      "size": [
-        330,
-        135
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 33,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "mask",
-          "type": "MASK",
-          "link": 521
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            522
-          ]
-        }
-      ],
-      "title": "확장 마스크를 이미지로 변환",
-      "properties": {
-        "Node name for S&R": "MaskToImage",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 358,
-      "type": "ImageBlur",
-      "pos": [
-        3285,
-        1545
-      ],
-      "size": [
-        390,
-        195
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 34,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 522
-        },
-        {
-          "name": "blur_radius",
-          "type": "INT",
-          "widget": {
-            "name": "blur_radius"
-          },
-          "link": 566
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            523
-          ]
-        }
-      ],
-      "title": "마스크 페더 (Mask Feather 연결 · native Gaussian)",
-      "properties": {
-        "Node name for S&R": "ImageBlur",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0",
-        "INTERNAL FIXED": "sigma=2.0; blur_radius is range-clamped to 0..20"
-      },
-      "widgets_values": [
-        4,
-        2
-      ],
-      "widgets_values_named": {
-        "blur_radius": 4,
-        "sigma": 2
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 360,
-      "type": "ImageToMask",
-      "pos": [
-        3705,
-        1545
-      ],
-      "size": [
-        330,
-        150
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 35,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 523
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": [
-            556
-          ]
-        }
-      ],
-      "title": "페더 마스크로 변환 (Red 채널)",
-      "properties": {
-        "Node name for S&R": "ImageToMask",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0",
-        "INTERNAL FIXED": "channel=red; WHITE is the Bernini edit mask"
-      },
-      "widgets_values": [
-        "red"
-      ],
-      "widgets_values_named": {
-        "channel": "red"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 365,
-      "type": "ImageCompositeMasked",
-      "pos": [
-        3960,
-        165
-      ],
-      "size": [
-        480,
-        240
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 36,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "destination",
-          "type": "IMAGE",
-          "link": 555
-        },
-        {
-          "name": "source",
-          "type": "IMAGE",
-          "link": 554
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": 556
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            557
-          ]
-        }
-      ],
-      "title": "FINAL Mask Composite (Resized Bernini Result 공통 사용)",
-      "properties": {
-        "Node name for S&R": "ImageCompositeMasked",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0",
-        "BERNINI SOURCE": "Uses the same original-resolution Bernini result as BERNINI RESIZED RAW.",
-        "FIXED MASK CONVENTION": "WHITE=Bernini edited/generated result; BLACK=original source preserved"
-      },
-      "widgets_values": [
-        0,
-        0,
-        false
-      ],
-      "widgets_values_named": {
-        "x": 0,
-        "y": 0,
-        "resize_source": false
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 366,
-      "type": "CreateVideo",
-      "pos": [
-        4500,
-        165
-      ],
-      "size": [
-        405,
-        180
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 37,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 557
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": 558
-        },
-        {
-          "name": "fps",
-          "type": "FLOAT",
-          "widget": {
-            "name": "fps"
-          },
-          "link": 559
-        }
-      ],
-      "outputs": [
-        {
-          "name": "VIDEO",
-          "type": "VIDEO",
-          "links": [
-            560
-          ]
-        }
-      ],
-      "title": "FINAL 영상 생성 (원본 오디오 · FPS 유지)",
-      "properties": {
-        "Node name for S&R": "CreateVideo",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "widgets_values": [
-        30,
-        8,
-        "sRGB",
-        "none"
-      ],
-      "widgets_values_named": {
-        "fps": 30,
-        "bit_depth": 8,
-        "color_space": "sRGB",
-        "codec": "none"
-      },
-      "color": "#006F89",
-      "bgcolor": "#003A49"
-    },
-    {
-      "id": 367,
-      "type": "SaveVideo",
-      "pos": [
-        4935,
-        165
-      ],
-      "size": [
-        1620,
-        1035
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 38,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "video",
-          "type": "VIDEO",
-          "link": 560
-        }
-      ],
-      "outputs": [
-        {
-          "name": "video",
-          "type": "VIDEO",
-          "links": null
-        }
-      ],
-      "title": "FINAL COMPOSITE 저장 (메인 결과)",
-      "properties": {
-        "Node name for S&R": "SaveVideo",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0"
-      },
-      "widgets_values": [
-        "video/FINAL_COMPOSITE_bernini_vace_inpaint",
-        "auto",
-        "auto",
-        "auto"
-      ],
-      "widgets_values_named": {
-        "filename_prefix": "video/FINAL_COMPOSITE_bernini_vace_inpaint",
-        "format": "auto",
-        "format.codec": "auto",
-        "codec": "auto"
-      },
-      "color": "#287A32",
-      "bgcolor": "#123C18"
-    },
-    {
-      "id": 368,
-      "type": "PrimitiveInt",
-      "pos": [
-        1695,
-        1395
-      ],
-      "size": [
-        390,
-        120
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 3,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            563
-          ]
-        }
-      ],
-      "title": "사용자 조절 ① · Mask Expand  |  +4 px  |  −12 … +24",
-      "properties": {
-        "Node name for S&R": "PrimitiveInt",
-        "Allowed Range": "-12 to +24 px",
-        "USER CONTROL": true
-      },
-      "widgets_values": [
-        1,
-        "fixed"
-      ],
-      "widgets_values_named": {
-        "value": 1,
-        "fixed": "fixed"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 369,
-      "type": "PrimitiveInt",
-      "pos": [
-        1695,
-        1785
-      ],
-      "size": [
-        390,
-        120
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 4,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            565
-          ]
-        }
-      ],
-      "title": "사용자 조절 ② · Mask Feather  |  4 px  |  0 … 20",
-      "properties": {
-        "Node name for S&R": "PrimitiveInt",
-        "Allowed Range": "0 to 20 px",
-        "USER CONTROL": true
-      },
-      "widgets_values": [
-        1,
-        "fixed"
-      ],
-      "widgets_values_named": {
-        "value": 1,
-        "fixed": "fixed"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 370,
-      "type": "ComfyMathExpression",
-      "pos": [
-        2085,
-        1395
-      ],
-      "size": [
-        330,
-        135
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 8,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "a",
-          "name": "values.a",
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 563
-        },
-        {
-          "name": "values.b",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": null
-        },
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            564
-          ]
-        },
-        {
-          "name": "BOOL",
-          "type": "BOOLEAN",
-          "links": null
-        }
-      ],
-      "title": "Mask Expand 범위 고정 (−12 … +24 px)",
-      "properties": {
-        "Node name for S&R": "ComfyMathExpression",
-        "INTERNAL FIXED": true
-      },
-      "widgets_values": [
-        "max(-12, min(a, 24))"
-      ],
-      "widgets_values_named": {
-        "expression": "max(-12, min(a, 24))"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 371,
-      "type": "ComfyMathExpression",
-      "pos": [
-        2085,
-        1785
-      ],
-      "size": [
-        330,
-        135
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "a",
-          "name": "values.a",
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 565
-        },
-        {
-          "name": "values.b",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": null
-        },
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            566
-          ]
-        },
-        {
-          "name": "BOOL",
-          "type": "BOOLEAN",
-          "links": null
-        }
-      ],
-      "title": "Mask Feather 범위 고정 (0 … 20 px)",
-      "properties": {
-        "Node name for S&R": "ComfyMathExpression",
-        "INTERNAL FIXED": true
-      },
-      "widgets_values": [
-        "max(0, min(a, 20))"
-      ],
-      "widgets_values_named": {
-        "expression": "max(0, min(a, 20))"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 372,
-      "type": "MaskToImage",
-      "pos": [
-        390,
-        1545
-      ],
-      "size": [
-        345,
-        135
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 29,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "mask",
-          "type": "MASK",
-          "link": 520
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            567
-          ]
-        }
-      ],
-      "title": "마스크를 이미지로 변환 (Pre-Smoothing 전)",
-      "properties": {
-        "Node name for S&R": "MaskToImage",
-        "INTERNAL FIXED": true
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 373,
-      "type": "ImageBlur",
-      "pos": [
-        795,
-        1545
-      ],
-      "size": [
-        390,
-        165
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 30,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 567
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            568
-          ]
-        }
-      ],
-      "title": "마스크 엣지 부드럽게 (2 px 고정 Anti-Alias)",
-      "properties": {
-        "Node name for S&R": "ImageBlur",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0",
-        "INTERNAL FIXED": "native source resolution; blur_radius=2 px; sigma=1.0"
-      },
-      "widgets_values": [
-        2,
-        1
-      ],
-      "widgets_values_named": {
-        "blur_radius": 2,
-        "sigma": 1
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 374,
-      "type": "ImageToMask",
-      "pos": [
-        1245,
-        1545
-      ],
-      "size": [
-        345,
-        150
-      ],
-      "flags": {
-        "collapsed": false,
-        "allow_interaction": false
-      },
-      "order": 31,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 568
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": [
-            569
-          ]
-        }
-      ],
-      "title": "부드러운 마스크로 변환 (Red 채널)",
-      "properties": {
-        "Node name for S&R": "ImageToMask",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0",
-        "INTERNAL FIXED": "channel=red"
-      },
-      "widgets_values": [
-        "red"
-      ],
-      "widgets_values_named": {
-        "channel": "red"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
       "id": 375,
       "type": "Note",
       "pos": [
-        2355,
-        1050
+        2460,
+        120
       ],
       "size": [
-        585,
-        285
+        620,
+        1460
       ],
       "flags": {},
-      "order": 5,
+      "order": 6,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -2066,1045 +526,97 @@
       },
       "color": "#6B4500",
       "bgcolor": "#2A1B00"
-    },
-    {
-      "id": 376,
-      "type": "ComfyMathExpression",
-      "pos": [
-        2220,
-        1905
-      ],
-      "size": [
-        360,
-        150
-      ],
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "a",
-          "name": "values.a",
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 570
-        },
-        {
-          "name": "values.b",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 571
-        },
-        {
-          "name": "values.c",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": []
-        },
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            546,
-            548,
-            550
-          ]
-        },
-        {
-          "name": "BOOL",
-          "type": "BOOLEAN",
-          "links": []
-        }
-      ],
-      "title": "FINAL width · source aspect · long edge 1280",
-      "properties": {
-        "Node name for S&R": "ComfyMathExpression",
-        "cnr_id": "comfy-core"
-      },
-      "widgets_values": [
-        "max(16, round(a * 1280 / max(a, b) / 16) * 16)"
-      ],
-      "widgets_values_named": {
-        "expression": "max(16, round(a * 1280 / max(a, b) / 16) * 16)"
-      },
-      "color": "#956500",
-      "bgcolor": "#493200"
-    },
-    {
-      "id": 377,
-      "type": "ComfyMathExpression",
-      "pos": [
-        2625,
-        1905
-      ],
-      "size": [
-        360,
-        150
-      ],
-      "flags": {},
-      "order": 14,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "a",
-          "name": "values.a",
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 572
-        },
-        {
-          "name": "values.b",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 573
-        },
-        {
-          "name": "values.c",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": []
-        },
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            547,
-            549,
-            551
-          ]
-        },
-        {
-          "name": "BOOL",
-          "type": "BOOLEAN",
-          "links": []
-        }
-      ],
-      "title": "FINAL height · source aspect · long edge 1280",
-      "properties": {
-        "Node name for S&R": "ComfyMathExpression",
-        "cnr_id": "comfy-core"
-      },
-      "widgets_values": [
-        "max(16, round(b * 1280 / max(a, b) / 16) * 16)"
-      ],
-      "widgets_values_named": {
-        "expression": "max(16, round(b * 1280 / max(a, b) / 16) * 16)"
-      },
-      "color": "#956500",
-      "bgcolor": "#493200"
-    },
-    {
-      "id": 378,
-      "type": "ComfyMathExpression",
-      "pos": [
-        2220,
-        2115
-      ],
-      "size": [
-        360,
-        150
-      ],
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "a",
-          "name": "values.a",
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 576
-        },
-        {
-          "name": "values.b",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 577
-        },
-        {
-          "name": "values.c",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": []
-        },
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            574
-          ]
-        },
-        {
-          "name": "BOOL",
-          "type": "BOOLEAN",
-          "links": []
-        }
-      ],
-      "title": "BERNINI width · source aspect · long edge 848",
-      "properties": {
-        "Node name for S&R": "ComfyMathExpression",
-        "cnr_id": "comfy-core"
-      },
-      "widgets_values": [
-        "max(16, round(a * 848 / max(a, b) / 16) * 16)"
-      ],
-      "widgets_values_named": {
-        "expression": "max(16, round(a * 848 / max(a, b) / 16) * 16)"
-      },
-      "color": "#956500",
-      "bgcolor": "#493200"
-    },
-    {
-      "id": 379,
-      "type": "ComfyMathExpression",
-      "pos": [
-        2625,
-        2115
-      ],
-      "size": [
-        360,
-        150
-      ],
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "a",
-          "name": "values.a",
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 578
-        },
-        {
-          "name": "values.b",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 579
-        },
-        {
-          "name": "values.c",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": []
-        },
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            575
-          ]
-        },
-        {
-          "name": "BOOL",
-          "type": "BOOLEAN",
-          "links": []
-        }
-      ],
-      "title": "BERNINI height · source aspect · long edge 848",
-      "properties": {
-        "Node name for S&R": "ComfyMathExpression",
-        "cnr_id": "comfy-core"
-      },
-      "widgets_values": [
-        "max(16, round(b * 848 / max(a, b) / 16) * 16)"
-      ],
-      "widgets_values_named": {
-        "expression": "max(16, round(b * 848 / max(a, b) / 16) * 16)"
-      },
-      "color": "#956500",
-      "bgcolor": "#493200"
-    },
-    {
-      "id": 400,
-      "type": "ComfyMathExpression",
-      "pos": [
-        1905,
-        2055
-      ],
-      "size": [
-        330,
-        135
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "a",
-          "name": "values.a",
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 620
-        },
-        {
-          "name": "values.b",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": null
-        },
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            621
-          ]
-        },
-        {
-          "name": "BOOL",
-          "type": "BOOLEAN",
-          "links": null
-        }
-      ],
-      "title": "Bernini length · Wan VAE 4n+1 정렬",
-      "properties": {
-        "Node name for S&R": "ComfyMathExpression",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0",
-        "INTERNAL FIXED": true
-      },
-      "widgets_values": [
-        "max(1, ((a - 1) // 4) * 4 + 1)"
-      ],
-      "widgets_values_named": {
-        "expression": "max(1, ((a - 1) // 4) * 4 + 1)"
-      },
-      "color": "#006F89",
-      "bgcolor": "#003A49"
-    },
-    {
-      "id": 401,
-      "type": "PrimitiveInt",
-      "pos": [
-        300,
-        2055
-      ],
-      "size": [
-        390,
-        120
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            622
-          ]
-        }
-      ],
-      "title": "사용자 조절 ③ · Inpaint Grow (생성 영역 여유)  |  16 px  |  0 … 64",
-      "properties": {
-        "Node name for S&R": "PrimitiveInt",
-        "ver": "0.24.0",
-        "Allowed Range": "0 to 64 px (Bernini 해상도 기준)",
-        "USER CONTROL": true
-      },
-      "widgets_values": [
-        16,
-        "fixed"
-      ],
-      "widgets_values_named": {
-        "value": 16,
-        "fixed": "fixed"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
-    },
-    {
-      "id": 402,
-      "type": "ComfyMathExpression",
-      "pos": [
-        720,
-        2055
-      ],
-      "size": [
-        330,
-        135
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "a",
-          "name": "values.a",
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 622
-        },
-        {
-          "name": "values.b",
-          "shape": 7,
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": null
-        },
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            623
-          ]
-        },
-        {
-          "name": "BOOL",
-          "type": "BOOLEAN",
-          "links": null
-        }
-      ],
-      "title": "Inpaint Grow 범위 고정 (0 … 64 px)",
-      "properties": {
-        "Node name for S&R": "ComfyMathExpression",
-        "cnr_id": "comfy-core",
-        "ver": "0.24.0",
-        "INTERNAL FIXED": true
-      },
-      "widgets_values": [
-        "max(0, min(a, 64))"
-      ],
-      "widgets_values_named": {
-        "expression": "max(0, min(a, 64))"
-      },
-      "color": "#007A60",
-      "bgcolor": "#003D30"
     }
   ],
   "links": [
     [
-      288,
+      649,
       47,
       0,
-      109,
+      410,
       0,
       "VIDEO"
     ],
     [
-      289,
-      109,
-      0,
-      110,
-      0,
-      "VIDEO"
-    ],
-    [
-      291,
-      110,
-      0,
-      111,
-      0,
-      "IMAGE"
-    ],
-    [
-      293,
-      111,
-      2,
-      112,
-      0,
-      "INT"
-    ],
-    [
-      463,
-      109,
-      0,
-      298,
-      0,
-      "VIDEO"
-    ],
-    [
-      497,
-      338,
-      0,
-      298,
-      2,
-      "IMAGE"
-    ],
-    [
-      498,
+      650,
       339,
       0,
-      340,
-      0,
+      410,
+      1,
       "VIDEO"
     ],
     [
-      499,
-      340,
+      651,
+      338,
       0,
-      341,
-      0,
-      "VIDEO"
-    ],
-    [
-      503,
-      342,
-      0,
-      343,
-      0,
-      "IMAGE"
-    ],
-    [
-      505,
-      298,
-      0,
-      345,
-      0,
-      "VIDEO"
-    ],
-    [
-      506,
-      345,
-      0,
-      346,
-      0,
-      "IMAGE"
-    ],
-    [
-      516,
-      346,
-      0,
-      354,
-      0,
-      "IMAGE"
-    ],
-    [
-      517,
-      110,
-      1,
-      354,
-      1,
-      "AUDIO"
-    ],
-    [
-      518,
-      110,
+      410,
       2,
-      354,
-      2,
-      "FLOAT"
-    ],
-    [
-      521,
-      356,
-      0,
-      357,
-      0,
-      "MASK"
-    ],
-    [
-      522,
-      357,
-      0,
-      358,
-      0,
       "IMAGE"
     ],
     [
-      523,
-      358,
-      0,
-      360,
-      0,
-      "IMAGE"
-    ],
-    [
-      520,
-      343,
-      0,
-      372,
-      0,
-      "MASK"
-    ],
-    [
-      539,
-      345,
-      0,
-      350,
-      0,
-      "IMAGE"
-    ],
-    [
-      540,
-      110,
-      0,
-      351,
-      0,
-      "IMAGE"
-    ],
-    [
-      542,
-      351,
-      0,
-      352,
-      0,
-      "IMAGE"
-    ],
-    [
-      543,
-      341,
-      0,
-      353,
-      0,
-      "IMAGE"
-    ],
-    [
-      545,
-      353,
-      0,
-      342,
-      0,
-      "IMAGE"
-    ],
-    [
-      554,
-      346,
-      0,
-      365,
-      1,
-      "IMAGE"
-    ],
-    [
-      555,
-      352,
-      0,
-      365,
-      0,
-      "IMAGE"
-    ],
-    [
-      556,
-      360,
-      0,
-      365,
-      2,
-      "MASK"
-    ],
-    [
-      557,
-      365,
-      0,
-      366,
-      0,
-      "IMAGE"
-    ],
-    [
-      558,
-      110,
-      1,
-      366,
-      1,
-      "AUDIO"
-    ],
-    [
-      559,
-      110,
-      2,
-      366,
-      2,
-      "FLOAT"
-    ],
-    [
-      564,
-      370,
-      1,
-      356,
-      1,
-      "INT"
-    ],
-    [
-      566,
-      371,
-      1,
-      358,
-      1,
-      "INT"
-    ],
-    [
-      567,
-      372,
-      0,
-      373,
-      0,
-      "IMAGE"
-    ],
-    [
-      568,
-      373,
-      0,
-      374,
-      0,
-      "IMAGE"
-    ],
-    [
-      569,
-      374,
-      0,
-      356,
-      0,
-      "MASK"
-    ],
-    [
-      519,
-      354,
-      0,
-      355,
-      0,
-      "VIDEO"
-    ],
-    [
-      560,
-      366,
+      652,
+      410,
       0,
       367,
       0,
       "VIDEO"
     ],
     [
-      563,
-      368,
+      653,
+      410,
+      1,
+      355,
       0,
-      370,
-      0,
-      "INT"
-    ],
-    [
-      565,
-      369,
-      0,
-      371,
-      0,
-      "INT"
-    ],
-    [
-      570,
-      111,
-      0,
-      376,
-      0,
-      "INT"
-    ],
-    [
-      571,
-      111,
-      1,
-      376,
-      1,
-      "INT"
-    ],
-    [
-      572,
-      111,
-      0,
-      377,
-      0,
-      "INT"
-    ],
-    [
-      573,
-      111,
-      1,
-      377,
-      1,
-      "INT"
-    ],
-    [
-      576,
-      111,
-      0,
-      378,
-      0,
-      "INT"
-    ],
-    [
-      577,
-      111,
-      1,
-      378,
-      1,
-      "INT"
-    ],
-    [
-      578,
-      111,
-      0,
-      379,
-      0,
-      "INT"
-    ],
-    [
-      579,
-      111,
-      1,
-      379,
-      1,
-      "INT"
-    ],
-    [
-      574,
-      378,
-      1,
-      298,
-      4,
-      "INT"
-    ],
-    [
-      575,
-      379,
-      1,
-      298,
-      5,
-      "INT"
-    ],
-    [
-      550,
-      376,
-      1,
-      342,
-      1,
-      "INT"
-    ],
-    [
-      551,
-      377,
-      1,
-      342,
-      2,
-      "INT"
-    ],
-    [
-      546,
-      376,
-      1,
-      346,
-      1,
-      "INT"
-    ],
-    [
-      547,
-      377,
-      1,
-      346,
-      2,
-      "INT"
-    ],
-    [
-      541,
-      350,
-      2,
-      351,
-      1,
-      "INT"
-    ],
-    [
-      548,
-      376,
-      1,
-      352,
-      1,
-      "INT"
-    ],
-    [
-      549,
-      377,
-      1,
-      352,
-      2,
-      "INT"
-    ],
-    [
-      544,
-      350,
-      2,
-      353,
-      1,
-      "INT"
-    ],
-    [
-      620,
-      111,
-      2,
-      400,
-      0,
-      "INT"
-    ],
-    [
-      621,
-      400,
-      1,
-      298,
-      7,
-      "INT"
-    ],
-    [
-      622,
-      401,
-      0,
-      402,
-      0,
-      "INT"
-    ],
-    [
-      623,
-      402,
-      1,
-      298,
-      15,
-      "INT"
-    ],
-    [
-      624,
-      341,
-      0,
-      298,
-      12,
-      "IMAGE"
+      "VIDEO"
     ]
   ],
   "groups": [
     {
       "id": 1,
-      "title": "01 원본 소스 · 프레임 / 오디오 / FPS 추출",
+      "title": "01 입력 · 소스 / 마스크 / 참조 이미지",
       "bounding": [
-        285,
-        105,
-        1980,
-        620
+        30,
+        40,
+        540,
+        1590
       ],
       "color": "#08748B",
       "flags": {}
     },
     {
       "id": 2,
-      "title": "02 참조 이미지 입력 (선택)",
+      "title": "02 Bernini-R VACE Inpaint (메인 서브그래프 · 더블클릭으로 내부 편집)",
       "bounding": [
-        285,
-        750,
-        484.042368135234,
-        582.6841491760742
-      ],
-      "color": "#0A5F9E",
-      "flags": {}
-    },
-    {
-      "id": 3,
-      "title": "03 편집 마스크 · 트림 → 프레임 추출 → 길이/해상도 정렬",
-      "bounding": [
-        780,
-        750,
-        1560,
-        580
-      ],
-      "color": "#08765F",
-      "flags": {}
-    },
-    {
-      "id": 4,
-      "title": "04 Bernini VACE식 Inpaint 생성 · 결과 프레임 추출 · 원본 해상도 복원",
-      "bounding": [
-        2355,
-        105,
-        1940,
-        900
+        610,
+        40,
+        620,
+        1290
       ],
       "color": "#48538E",
       "flags": {}
     },
     {
-      "id": 5,
-      "title": "05 BERNINI RAW · 진단 출력",
+      "id": 3,
+      "title": "03 출력 · FINAL / RAW",
       "bounding": [
-        4305,
-        105,
-        1466.7571803381252,
-        478.1591376745621
+        1250,
+        40,
+        1160,
+        1570
       ],
       "color": "#2C7736",
       "flags": {}
     },
     {
-      "id": 6,
-      "title": "06 원본 프레임 · Bernini 결과 길이 정렬",
+      "id": 4,
+      "title": "프롬프트 가이드",
       "bounding": [
-        2970,
-        1020,
-        1080.8109470344089,
-        313.6391341988543
+        2430,
+        40,
+        680,
+        1570
       ],
-      "color": "#48538E",
-      "flags": {}
-    },
-    {
-      "id": 7,
-      "title": "07 마스크 후처리 · 2 px Anti-Alias → Mask Expand → Mask Feather (모두 원본 해상도)",
-      "bounding": [
-        285,
-        1335,
-        3850,
-        650
-      ],
-      "color": "#08765F",
-      "flags": {}
-    },
-    {
-      "id": 9,
-      "title": "09 FINAL COMPOSITE · 고정 규칙: WHITE=Bernini · BLACK=원본",
-      "bounding": [
-        4305,
-        675,
-        1685.8440514562599,
-        1387.5235415363445
-      ],
-      "color": "#08748B",
-      "flags": {}
-    },
-    {
-      "id": 8,
-      "title": "08 VACE식 Inpaint 컨트롤 · Inpaint Grow · length 4n+1",
-      "bounding": [
-        285,
-        1995,
-        2000,
-        240
-      ],
-      "color": "#08765F",
+      "color": "#6B4500",
       "flags": {}
     }
   ],
@@ -8015,16 +5527,3441 @@
           }
         ],
         "extra": {}
+      },
+      {
+        "id": "943b2be9-fdd5-4424-8be1-36f1824e6b42",
+        "version": 1,
+        "state": {
+          "lastGroupId": 20,
+          "lastNodeId": 404,
+          "lastLinkId": 653,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "Bernini-R VACE Inpaint (Main)",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -250,
+            400,
+            150,
+            440
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            6700,
+            600,
+            150,
+            80
+          ]
+        },
+        "inputs": [
+          {
+            "id": "8c2a6fb3-e6eb-47ad-9b19-4036ab816fce",
+            "name": "source_video",
+            "type": "VIDEO",
+            "linkIds": [
+              625
+            ],
+            "localized_name": "source_video",
+            "label": "source_video",
+            "pos": [
+              -120,
+              420
+            ]
+          },
+          {
+            "id": "e3f43a4c-252c-44e1-ab00-abe9dd7a6d34",
+            "name": "mask_video",
+            "type": "VIDEO",
+            "linkIds": [
+              626
+            ],
+            "localized_name": "mask_video",
+            "label": "mask_video (흰색=생성 · 검정=원본)",
+            "pos": [
+              -120,
+              440
+            ]
+          },
+          {
+            "id": "ca26b055-93e3-481c-bc0c-00122cce8710",
+            "name": "reference_image",
+            "type": "IMAGE",
+            "linkIds": [
+              627
+            ],
+            "localized_name": "reference_image",
+            "label": "reference_image (선택)",
+            "pos": [
+              -120,
+              460
+            ]
+          },
+          {
+            "id": "c5f959f0-ec18-4267-bfd4-437b2eda3beb",
+            "name": "value",
+            "type": "STRING",
+            "linkIds": [
+              628
+            ],
+            "localized_name": "value",
+            "label": "prompt",
+            "pos": [
+              -120,
+              480
+            ]
+          },
+          {
+            "id": "5ce371c1-fc6b-4454-b8ea-7a52600bf2b8",
+            "name": "choice",
+            "type": "COMBO",
+            "linkIds": [
+              629
+            ],
+            "localized_name": "choice",
+            "label": "task_type",
+            "pos": [
+              -120,
+              500
+            ]
+          },
+          {
+            "id": "85d4eb8d-ead1-404c-af5a-c239e4863d5b",
+            "name": "noise_seed",
+            "type": "INT",
+            "linkIds": [
+              630
+            ],
+            "localized_name": "noise_seed",
+            "label": "noise_seed",
+            "pos": [
+              -120,
+              520
+            ]
+          },
+          {
+            "id": "2e14e408-81b8-45b0-8607-dd2dc490a400",
+            "name": "value_1",
+            "type": "BOOLEAN",
+            "linkIds": [
+              631
+            ],
+            "localized_name": "value_1",
+            "label": "turbo_mode",
+            "pos": [
+              -120,
+              540
+            ]
+          },
+          {
+            "id": "be114d55-b7ff-48d7-86e3-f1a40ed29480",
+            "name": "value_2",
+            "type": "BOOLEAN",
+            "linkIds": [
+              632
+            ],
+            "localized_name": "value_2",
+            "label": "inpaint_mode (VACE식)",
+            "pos": [
+              -120,
+              560
+            ]
+          },
+          {
+            "id": "54c53b40-5897-48bf-a289-57476860ebed",
+            "name": "value_3",
+            "type": "BOOLEAN",
+            "linkIds": [
+              633
+            ],
+            "localized_name": "value_3",
+            "label": "vace_gray_context",
+            "pos": [
+              -120,
+              580
+            ]
+          },
+          {
+            "id": "9eb5b880-bb66-4b1e-b5aa-30a75db5ff13",
+            "name": "inpaint_grow",
+            "type": "INT",
+            "linkIds": [
+              634
+            ],
+            "localized_name": "inpaint_grow",
+            "label": "inpaint_grow (0…64 px)",
+            "pos": [
+              -120,
+              600
+            ]
+          },
+          {
+            "id": "e4e880e1-95c1-464d-8793-9fafd9c9bebb",
+            "name": "mask_expand",
+            "type": "INT",
+            "linkIds": [
+              635
+            ],
+            "localized_name": "mask_expand",
+            "label": "mask_expand (−12…+24 px)",
+            "pos": [
+              -120,
+              620
+            ]
+          },
+          {
+            "id": "a964d037-4cac-4acf-b281-7454efae93a4",
+            "name": "mask_feather",
+            "type": "INT",
+            "linkIds": [
+              636
+            ],
+            "localized_name": "mask_feather",
+            "label": "mask_feather (0…20 px)",
+            "pos": [
+              -120,
+              640
+            ]
+          },
+          {
+            "id": "f19877fc-5deb-42f7-bdfc-c0d044308d93",
+            "name": "start_time",
+            "type": "FLOAT",
+            "linkIds": [
+              637,
+              638
+            ],
+            "localized_name": "start_time",
+            "label": "trim_start (sec)",
+            "pos": [
+              -120,
+              660
+            ]
+          },
+          {
+            "id": "94ef0946-cd93-4b50-8e7f-88aa6ee0a0c4",
+            "name": "duration",
+            "type": "FLOAT",
+            "linkIds": [
+              639,
+              640
+            ],
+            "localized_name": "duration",
+            "label": "trim_duration (sec · 0=전체)",
+            "pos": [
+              -120,
+              680
+            ]
+          },
+          {
+            "id": "c4005136-655e-4526-b891-41e4bcf5d95d",
+            "name": "ref_max_size",
+            "type": "INT",
+            "linkIds": [
+              641
+            ],
+            "localized_name": "ref_max_size",
+            "label": "ref_max_size",
+            "pos": [
+              -120,
+              700
+            ]
+          },
+          {
+            "id": "a9e57a65-b816-48e5-a8dd-631fba81d931",
+            "name": "unet_name",
+            "type": "COMBO",
+            "linkIds": [
+              642
+            ],
+            "localized_name": "unet_name",
+            "label": "high_noise_model",
+            "pos": [
+              -120,
+              720
+            ]
+          },
+          {
+            "id": "fc8bada9-c3ec-4592-bee7-8985f0e2cab6",
+            "name": "unet_name_1",
+            "type": "COMBO",
+            "linkIds": [
+              643
+            ],
+            "localized_name": "unet_name_1",
+            "label": "low_noise_model",
+            "pos": [
+              -120,
+              740
+            ]
+          },
+          {
+            "id": "c9c35674-a9ff-462b-9573-af48ef516e5f",
+            "name": "lora_name",
+            "type": "COMBO",
+            "linkIds": [
+              644
+            ],
+            "localized_name": "lora_name",
+            "label": "distill_lora",
+            "pos": [
+              -120,
+              760
+            ]
+          },
+          {
+            "id": "0c36ebfb-5719-41c1-95be-9ed672a16f32",
+            "name": "clip_name",
+            "type": "COMBO",
+            "linkIds": [
+              645
+            ],
+            "localized_name": "clip_name",
+            "label": "clip_name",
+            "pos": [
+              -120,
+              780
+            ]
+          },
+          {
+            "id": "80046825-1531-4930-aee4-a3edac4be7b8",
+            "name": "vae_name",
+            "type": "COMBO",
+            "linkIds": [
+              646
+            ],
+            "localized_name": "vae_name",
+            "label": "vae_name",
+            "pos": [
+              -120,
+              800
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "9b025178-4a98-46c2-97a7-c10b946d26c0",
+            "name": "FINAL",
+            "type": "VIDEO",
+            "linkIds": [
+              647
+            ],
+            "localized_name": "FINAL",
+            "label": "FINAL (VACE Inpaint Composite)",
+            "pos": [
+              6720,
+              620
+            ]
+          },
+          {
+            "id": "ded0b7e4-641e-4197-963f-f04c2196fff3",
+            "name": "RAW",
+            "type": "VIDEO",
+            "linkIds": [
+              648
+            ],
+            "localized_name": "RAW",
+            "label": "BERNINI INPAINT RAW (진단)",
+            "pos": [
+              6720,
+              640
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 109,
+            "type": "Video Slice",
+            "pos": [
+              945,
+              225
+            ],
+            "size": [
+              360,
+              165
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 6,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "video",
+                "type": "VIDEO",
+                "link": 625
+              },
+              {
+                "localized_name": "start_time",
+                "name": "start_time",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "start_time"
+                },
+                "link": 637
+              },
+              {
+                "localized_name": "duration",
+                "name": "duration",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "duration"
+                },
+                "link": 639
+              }
+            ],
+            "outputs": [
+              {
+                "name": "VIDEO",
+                "type": "VIDEO",
+                "links": [
+                  289,
+                  463
+                ]
+              }
+            ],
+            "title": "원본 영상 프레임 트림",
+            "properties": {
+              "Node name for S&R": "Video Slice",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "widgets_values": [
+              0,
+              81,
+              false
+            ],
+            "widgets_values_named": {
+              "start_time": 0,
+              "duration": 81,
+              "strict_duration": false
+            },
+            "color": "#006F89",
+            "bgcolor": "#003A49"
+          },
+          {
+            "id": 110,
+            "type": "GetVideoComponents",
+            "pos": [
+              1455,
+              225
+            ],
+            "size": [
+              300,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 10,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "video",
+                "type": "VIDEO",
+                "link": 289
+              }
+            ],
+            "outputs": [
+              {
+                "name": "images",
+                "type": "IMAGE",
+                "links": [
+                  291,
+                  540
+                ]
+              },
+              {
+                "name": "audio",
+                "type": "AUDIO",
+                "links": [
+                  517,
+                  558
+                ]
+              },
+              {
+                "name": "fps",
+                "type": "FLOAT",
+                "links": [
+                  518,
+                  559
+                ]
+              },
+              {
+                "name": "bit_depth",
+                "type": "COMBO",
+                "links": null
+              },
+              {
+                "name": "color_space",
+                "type": "COMBO",
+                "links": null
+              }
+            ],
+            "title": "원본 프레임 · 오디오 · FPS 추출",
+            "properties": {
+              "Node name for S&R": "GetVideoComponents",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "color": "#006F89",
+            "bgcolor": "#003A49"
+          },
+          {
+            "id": 111,
+            "type": "GetImageSize",
+            "pos": [
+              1905,
+              180
+            ],
+            "size": [
+              300,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 12,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 291
+              }
+            ],
+            "outputs": [
+              {
+                "name": "width",
+                "type": "INT",
+                "links": [
+                  570,
+                  572,
+                  576,
+                  578
+                ]
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "links": [
+                  571,
+                  573,
+                  577,
+                  579
+                ]
+              },
+              {
+                "name": "batch_size",
+                "type": "INT",
+                "links": [
+                  293,
+                  620
+                ]
+              }
+            ],
+            "title": "원본 프레임 크기 감지",
+            "properties": {
+              "Node name for S&R": "GetImageSize",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "color": "#006F89",
+            "bgcolor": "#003A49"
+          },
+          {
+            "id": 112,
+            "type": "PreviewAny",
+            "pos": [
+              1905,
+              480
+            ],
+            "size": [
+              300,
+              165
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 17,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "source",
+                "type": "*",
+                "link": 293
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": null
+              }
+            ],
+            "title": "원본 프레임 수 확인",
+            "properties": {
+              "Node name for S&R": "PreviewAny",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "widgets_values": [],
+            "widgets_values_named": {},
+            "color": "#414B8F",
+            "bgcolor": "#202647"
+          },
+          {
+            "id": 298,
+            "type": "69c3c422-bcfe-4955-bc23-8bac307287a8",
+            "pos": [
+              2445,
+              165
+            ],
+            "size": [
+              570,
+              900
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 18,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "source_video",
+                "name": "video",
+                "type": "VIDEO",
+                "link": 463
+              },
+              {
+                "name": "reference_video",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "label": "reference_images",
+                "name": "reference_images.reference_image_0",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 627
+              },
+              {
+                "label": "task_type",
+                "name": "choice",
+                "type": "COMBO",
+                "widget": {
+                  "name": "choice"
+                },
+                "link": 629
+              },
+              {
+                "name": "width",
+                "type": "INT",
+                "link": 574
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "link": 575
+              },
+              {
+                "label": "noise_seed",
+                "name": "noise_seed",
+                "type": "INT",
+                "widget": {
+                  "name": "noise_seed"
+                },
+                "link": 630
+              },
+              {
+                "name": "length",
+                "type": "INT",
+                "widget": {
+                  "name": "length"
+                },
+                "link": 621
+              },
+              {
+                "label": "turbo_mode",
+                "name": "value_1",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "value_1"
+                },
+                "link": 631
+              },
+              {
+                "label": "high_noise_model",
+                "name": "unet_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "unet_name"
+                },
+                "link": 642
+              },
+              {
+                "label": "low_noise_model",
+                "name": "unet_name_1",
+                "type": "COMBO",
+                "widget": {
+                  "name": "unet_name_1"
+                },
+                "link": 643
+              },
+              {
+                "label": "distill_lora",
+                "name": "lora_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "lora_name"
+                },
+                "link": 644
+              },
+              {
+                "label": "inpaint_mask (흰색=생성)",
+                "name": "inpaint_mask",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 624
+              },
+              {
+                "label": "inpaint_mode (VACE식)",
+                "name": "value_2",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "value_2"
+                },
+                "link": 632
+              },
+              {
+                "label": "vace_gray_context",
+                "name": "value_3",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "value_3"
+                },
+                "link": 633
+              },
+              {
+                "label": "inpaint_grow",
+                "name": "expand",
+                "type": "INT",
+                "widget": {
+                  "name": "expand"
+                },
+                "link": 623
+              },
+              {
+                "localized_name": "value",
+                "name": "value",
+                "type": "STRING",
+                "widget": {
+                  "name": "value"
+                },
+                "link": 628,
+                "label": "prompt"
+              },
+              {
+                "localized_name": "ref_max_size",
+                "name": "ref_max_size",
+                "type": "INT",
+                "widget": {
+                  "name": "ref_max_size"
+                },
+                "link": 641
+              },
+              {
+                "localized_name": "clip_name",
+                "name": "clip_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "clip_name"
+                },
+                "link": 645
+              },
+              {
+                "localized_name": "vae_name",
+                "name": "vae_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "vae_name"
+                },
+                "link": 646
+              }
+            ],
+            "outputs": [
+              {
+                "name": "VIDEO",
+                "type": "VIDEO",
+                "links": [
+                  505
+                ]
+              }
+            ],
+            "title": "Bernini VACE식 Inpaint 생성 (프롬프트 · 레퍼런스 · 마스크 · 모델 설정)",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0",
+              "previewExposures": []
+            },
+            "widgets_values": [
+              "Replace the gray studio backdrop with a daytime urban street: brick buildings, shop windows, sidewalk, and soft overcast light. Keep the model's outfit, accessories, body pose, motion, and full-body framing unchanged. Only the environment behind the subject should change.",
+              "Video Editing (Content Propagation)",
+              852303761886160,
+              81,
+              848,
+              true,
+              "wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+              "wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+              "lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank64_bf16.safetensors",
+              "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+              "Wan2_1_VAE_bf16.safetensors",
+              true,
+              false,
+              16
+            ],
+            "widgets_values_named": {
+              "value": "Replace the gray studio backdrop with a daytime urban street: brick buildings, shop windows, sidewalk, and soft overcast light. Keep the model's outfit, accessories, body pose, motion, and full-body framing unchanged. Only the environment behind the subject should change.",
+              "choice": "Video Editing (Content Propagation)",
+              "noise_seed": 852303761886160,
+              "length": 81,
+              "ref_max_size": 848,
+              "value_1": true,
+              "unet_name": "wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+              "unet_name_1": "wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+              "lora_name": "lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank64_bf16.safetensors",
+              "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+              "vae_name": "Wan2_1_VAE_bf16.safetensors",
+              "value_2": true,
+              "value_3": false,
+              "expand": 16
+            },
+            "color": "#5E258B",
+            "bgcolor": "#2D1245"
+          },
+          {
+            "id": 340,
+            "type": "Video Slice",
+            "pos": [
+              1245,
+              870
+            ],
+            "size": [
+              345,
+              165
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 7,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "video",
+                "type": "VIDEO",
+                "link": 626
+              },
+              {
+                "localized_name": "start_time",
+                "name": "start_time",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "start_time"
+                },
+                "link": 638
+              },
+              {
+                "localized_name": "duration",
+                "name": "duration",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "duration"
+                },
+                "link": 640
+              }
+            ],
+            "outputs": [
+              {
+                "name": "VIDEO",
+                "type": "VIDEO",
+                "links": [
+                  499
+                ]
+              }
+            ],
+            "title": "마스크도 원본과 동일하게 프레임 트림",
+            "properties": {
+              "Node name for S&R": "Video Slice",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "widgets_values": [
+              0,
+              81,
+              false
+            ],
+            "widgets_values_named": {
+              "start_time": 0,
+              "duration": 81,
+              "strict_duration": false
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 341,
+            "type": "GetVideoComponents",
+            "pos": [
+              1650,
+              870
+            ],
+            "size": [
+              300,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 11,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "video",
+                "type": "VIDEO",
+                "link": 499
+              }
+            ],
+            "outputs": [
+              {
+                "name": "images",
+                "type": "IMAGE",
+                "links": [
+                  543,
+                  624
+                ]
+              },
+              {
+                "name": "audio",
+                "type": "AUDIO",
+                "links": null
+              },
+              {
+                "name": "fps",
+                "type": "FLOAT",
+                "links": null
+              },
+              {
+                "name": "bit_depth",
+                "type": "COMBO",
+                "links": null
+              },
+              {
+                "name": "color_space",
+                "type": "COMBO",
+                "links": null
+              }
+            ],
+            "title": "마스크 프레임 추출",
+            "properties": {
+              "Node name for S&R": "GetVideoComponents",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 342,
+            "type": "ImageScale",
+            "pos": [
+              1650,
+              1095
+            ],
+            "size": [
+              390,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 27,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 545
+              },
+              {
+                "name": "width",
+                "type": "INT",
+                "widget": {
+                  "name": "width"
+                },
+                "link": 550
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "widget": {
+                  "name": "height"
+                },
+                "link": 551
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  503
+                ]
+              }
+            ],
+            "title": "마스크를 원본 해상도로 맞춤",
+            "properties": {
+              "Node name for S&R": "ImageScale",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "widgets_values": [
+              "lanczos",
+              1280,
+              720,
+              "disabled"
+            ],
+            "widgets_values_named": {
+              "upscale_method": "lanczos",
+              "width": 1280,
+              "height": 720,
+              "crop": "disabled"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 343,
+            "type": "ImageToMask",
+            "pos": [
+              1980,
+              855
+            ],
+            "size": [
+              330,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 28,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 503
+              }
+            ],
+            "outputs": [
+              {
+                "name": "MASK",
+                "type": "MASK",
+                "links": [
+                  520
+                ]
+              }
+            ],
+            "title": "마스크 이미지에서 Red 채널 추출 (흰색=편집)",
+            "properties": {
+              "Node name for S&R": "ImageToMask",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "widgets_values": [
+              "red"
+            ],
+            "widgets_values_named": {
+              "channel": "red"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 345,
+            "type": "GetVideoComponents",
+            "pos": [
+              3105,
+              165
+            ],
+            "size": [
+              360,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 19,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "video",
+                "type": "VIDEO",
+                "link": 505
+              }
+            ],
+            "outputs": [
+              {
+                "name": "images",
+                "type": "IMAGE",
+                "links": [
+                  506,
+                  539
+                ]
+              },
+              {
+                "name": "audio",
+                "type": "AUDIO",
+                "links": null
+              },
+              {
+                "name": "fps",
+                "type": "FLOAT",
+                "links": null
+              },
+              {
+                "name": "bit_depth",
+                "type": "COMBO",
+                "links": null
+              },
+              {
+                "name": "color_space",
+                "type": "COMBO",
+                "links": null
+              }
+            ],
+            "title": "BERNINI RESULT 프레임 추출 (Native Output 유지)",
+            "properties": {
+              "Node name for S&R": "GetVideoComponents",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "color": "#287A32",
+            "bgcolor": "#123C18"
+          },
+          {
+            "id": 346,
+            "type": "ImageScale",
+            "pos": [
+              3480,
+              165
+            ],
+            "size": [
+              405,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 20,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 506
+              },
+              {
+                "name": "width",
+                "type": "INT",
+                "widget": {
+                  "name": "width"
+                },
+                "link": 546
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "widget": {
+                  "name": "height"
+                },
+                "link": 547
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  516,
+                  554
+                ]
+              }
+            ],
+            "title": "★ BERNINI RESULT → ORIGINAL RESOLUTION (공통)",
+            "properties": {
+              "Node name for S&R": "ImageScale",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0",
+              "RESOLUTION POLICY": "Bernini native output is preserved until this node; this node immediately resizes it to the source video width/height; its single IMAGE output is shared by BERNINI RESIZED RAW and FINAL Mask Composite."
+            },
+            "widgets_values": [
+              "lanczos",
+              1280,
+              720,
+              "disabled"
+            ],
+            "widgets_values_named": {
+              "upscale_method": "lanczos",
+              "width": 1280,
+              "height": 720,
+              "crop": "disabled"
+            },
+            "color": "#006F89",
+            "bgcolor": "#003A49"
+          },
+          {
+            "id": 350,
+            "type": "GetImageSize",
+            "pos": [
+              3495,
+              165
+            ],
+            "size": [
+              330,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 21,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 539
+              }
+            ],
+            "outputs": [
+              {
+                "name": "width",
+                "type": "INT",
+                "links": null
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "links": null
+              },
+              {
+                "name": "batch_size",
+                "type": "INT",
+                "links": [
+                  541,
+                  544
+                ]
+              }
+            ],
+            "title": "생성 결과 프레임 수 감지",
+            "properties": {
+              "Node name for S&R": "GetImageSize",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "color": "#006F89",
+            "bgcolor": "#003A49"
+          },
+          {
+            "id": 351,
+            "type": "ImageFromBatch",
+            "pos": [
+              3090,
+              1080
+            ],
+            "size": [
+              360,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 23,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 540
+              },
+              {
+                "name": "length",
+                "type": "INT",
+                "widget": {
+                  "name": "length"
+                },
+                "link": 541
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  542
+                ]
+              }
+            ],
+            "title": "원본을 생성 결과 길이에 맞춤",
+            "properties": {
+              "Node name for S&R": "ImageFromBatch",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "widgets_values": [
+              0,
+              81
+            ],
+            "widgets_values_named": {
+              "batch_index": 0,
+              "length": 81
+            },
+            "color": "#006F89",
+            "bgcolor": "#003A49"
+          },
+          {
+            "id": 352,
+            "type": "ImageScale",
+            "pos": [
+              3585,
+              1080
+            ],
+            "size": [
+              390,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 26,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 542
+              },
+              {
+                "name": "width",
+                "type": "INT",
+                "widget": {
+                  "name": "width"
+                },
+                "link": 548
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "widget": {
+                  "name": "height"
+                },
+                "link": 549
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  555
+                ]
+              }
+            ],
+            "title": "원본 프레임을 원본 해상도로 맞춤",
+            "properties": {
+              "Node name for S&R": "ImageScale",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "widgets_values": [
+              "lanczos",
+              1280,
+              720,
+              "disabled"
+            ],
+            "widgets_values_named": {
+              "upscale_method": "lanczos",
+              "width": 1280,
+              "height": 720,
+              "crop": "disabled"
+            },
+            "color": "#006F89",
+            "bgcolor": "#003A49"
+          },
+          {
+            "id": 353,
+            "type": "ImageFromBatch",
+            "pos": [
+              1245,
+              1080
+            ],
+            "size": [
+              360,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 24,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 543
+              },
+              {
+                "name": "length",
+                "type": "INT",
+                "widget": {
+                  "name": "length"
+                },
+                "link": 544
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  545
+                ]
+              }
+            ],
+            "title": "마스크를 생성 결과 길이에 맞춤",
+            "properties": {
+              "Node name for S&R": "ImageFromBatch",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "widgets_values": [
+              0,
+              81
+            ],
+            "widgets_values_named": {
+              "batch_index": 0,
+              "length": 81
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 354,
+            "type": "CreateVideo",
+            "pos": [
+              3960,
+              540
+            ],
+            "size": [
+              345,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 22,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "images",
+                "type": "IMAGE",
+                "link": 516
+              },
+              {
+                "name": "audio",
+                "shape": 7,
+                "type": "AUDIO",
+                "link": 517
+              },
+              {
+                "name": "fps",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "fps"
+                },
+                "link": 518
+              }
+            ],
+            "outputs": [
+              {
+                "name": "VIDEO",
+                "type": "VIDEO",
+                "links": [
+                  648
+                ]
+              }
+            ],
+            "title": "BERNINI INPAINT RAW 영상 생성 (원본 해상도 · 진단용)",
+            "properties": {
+              "Node name for S&R": "CreateVideo",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0",
+              "RESOLUTION SOURCE": "Uses the shared output of ★ BERNINI RESULT → ORIGINAL RESOLUTION (공통)."
+            },
+            "widgets_values": [
+              30,
+              8,
+              "sRGB",
+              "none"
+            ],
+            "widgets_values_named": {
+              "fps": 30,
+              "bit_depth": 8,
+              "color_space": "sRGB",
+              "codec": "none"
+            },
+            "color": "#006F89",
+            "bgcolor": "#003A49"
+          },
+          {
+            "id": 356,
+            "type": "GrowMask",
+            "pos": [
+              2490,
+              1545
+            ],
+            "size": [
+              375,
+              195
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 32,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "mask",
+                "type": "MASK",
+                "link": 569
+              },
+              {
+                "name": "expand",
+                "type": "INT",
+                "widget": {
+                  "name": "expand"
+                },
+                "link": 564
+              }
+            ],
+            "outputs": [
+              {
+                "name": "MASK",
+                "type": "MASK",
+                "links": [
+                  521
+                ]
+              }
+            ],
+            "title": "마스크 확장 (Mask Expand 연결 · tapered corners)",
+            "properties": {
+              "Node name for S&R": "GrowMask",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0",
+              "INTERNAL FIXED": "tapered_corners=True; input is range-clamped"
+            },
+            "widgets_values": [
+              4,
+              true
+            ],
+            "widgets_values_named": {
+              "expand": 4,
+              "tapered_corners": true
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 357,
+            "type": "MaskToImage",
+            "pos": [
+              2895,
+              1545
+            ],
+            "size": [
+              330,
+              135
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 33,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "mask",
+                "type": "MASK",
+                "link": 521
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  522
+                ]
+              }
+            ],
+            "title": "확장 마스크를 이미지로 변환",
+            "properties": {
+              "Node name for S&R": "MaskToImage",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 358,
+            "type": "ImageBlur",
+            "pos": [
+              3285,
+              1545
+            ],
+            "size": [
+              390,
+              195
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 34,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 522
+              },
+              {
+                "name": "blur_radius",
+                "type": "INT",
+                "widget": {
+                  "name": "blur_radius"
+                },
+                "link": 566
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  523
+                ]
+              }
+            ],
+            "title": "마스크 페더 (Mask Feather 연결 · native Gaussian)",
+            "properties": {
+              "Node name for S&R": "ImageBlur",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0",
+              "INTERNAL FIXED": "sigma=2.0; blur_radius is range-clamped to 0..20"
+            },
+            "widgets_values": [
+              4,
+              2
+            ],
+            "widgets_values_named": {
+              "blur_radius": 4,
+              "sigma": 2
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 360,
+            "type": "ImageToMask",
+            "pos": [
+              3705,
+              1545
+            ],
+            "size": [
+              330,
+              150
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 35,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 523
+              }
+            ],
+            "outputs": [
+              {
+                "name": "MASK",
+                "type": "MASK",
+                "links": [
+                  556
+                ]
+              }
+            ],
+            "title": "페더 마스크로 변환 (Red 채널)",
+            "properties": {
+              "Node name for S&R": "ImageToMask",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0",
+              "INTERNAL FIXED": "channel=red; WHITE is the Bernini edit mask"
+            },
+            "widgets_values": [
+              "red"
+            ],
+            "widgets_values_named": {
+              "channel": "red"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 365,
+            "type": "ImageCompositeMasked",
+            "pos": [
+              3960,
+              165
+            ],
+            "size": [
+              480,
+              240
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 36,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "destination",
+                "type": "IMAGE",
+                "link": 555
+              },
+              {
+                "name": "source",
+                "type": "IMAGE",
+                "link": 554
+              },
+              {
+                "name": "mask",
+                "shape": 7,
+                "type": "MASK",
+                "link": 556
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  557
+                ]
+              }
+            ],
+            "title": "FINAL Mask Composite (Resized Bernini Result 공통 사용)",
+            "properties": {
+              "Node name for S&R": "ImageCompositeMasked",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0",
+              "BERNINI SOURCE": "Uses the same original-resolution Bernini result as BERNINI RESIZED RAW.",
+              "FIXED MASK CONVENTION": "WHITE=Bernini edited/generated result; BLACK=original source preserved"
+            },
+            "widgets_values": [
+              0,
+              0,
+              false
+            ],
+            "widgets_values_named": {
+              "x": 0,
+              "y": 0,
+              "resize_source": false
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 366,
+            "type": "CreateVideo",
+            "pos": [
+              4500,
+              165
+            ],
+            "size": [
+              405,
+              180
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 37,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "images",
+                "type": "IMAGE",
+                "link": 557
+              },
+              {
+                "name": "audio",
+                "shape": 7,
+                "type": "AUDIO",
+                "link": 558
+              },
+              {
+                "name": "fps",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "fps"
+                },
+                "link": 559
+              }
+            ],
+            "outputs": [
+              {
+                "name": "VIDEO",
+                "type": "VIDEO",
+                "links": [
+                  647
+                ]
+              }
+            ],
+            "title": "FINAL 영상 생성 (원본 오디오 · FPS 유지)",
+            "properties": {
+              "Node name for S&R": "CreateVideo",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0"
+            },
+            "widgets_values": [
+              30,
+              8,
+              "sRGB",
+              "none"
+            ],
+            "widgets_values_named": {
+              "fps": 30,
+              "bit_depth": 8,
+              "color_space": "sRGB",
+              "codec": "none"
+            },
+            "color": "#006F89",
+            "bgcolor": "#003A49"
+          },
+          {
+            "id": 368,
+            "type": "PrimitiveInt",
+            "pos": [
+              1695,
+              1395
+            ],
+            "size": [
+              390,
+              120
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "value",
+                "name": "value",
+                "type": "INT",
+                "widget": {
+                  "name": "value"
+                },
+                "link": 635
+              }
+            ],
+            "outputs": [
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  563
+                ]
+              }
+            ],
+            "title": "Mask Expand (메인 입력 mask_expand)",
+            "properties": {
+              "Node name for S&R": "PrimitiveInt",
+              "Allowed Range": "-12 to +24 px",
+              "USER CONTROL": true
+            },
+            "widgets_values": [
+              1,
+              "fixed"
+            ],
+            "widgets_values_named": {
+              "value": 1,
+              "fixed": "fixed"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 369,
+            "type": "PrimitiveInt",
+            "pos": [
+              1695,
+              1785
+            ],
+            "size": [
+              390,
+              120
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 4,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "value",
+                "name": "value",
+                "type": "INT",
+                "widget": {
+                  "name": "value"
+                },
+                "link": 636
+              }
+            ],
+            "outputs": [
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  565
+                ]
+              }
+            ],
+            "title": "Mask Feather (메인 입력 mask_feather)",
+            "properties": {
+              "Node name for S&R": "PrimitiveInt",
+              "Allowed Range": "0 to 20 px",
+              "USER CONTROL": true
+            },
+            "widgets_values": [
+              1,
+              "fixed"
+            ],
+            "widgets_values_named": {
+              "value": 1,
+              "fixed": "fixed"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 370,
+            "type": "ComfyMathExpression",
+            "pos": [
+              2085,
+              1395
+            ],
+            "size": [
+              330,
+              135
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 8,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "a",
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 563
+              },
+              {
+                "name": "values.b",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": null
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  564
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": null
+              }
+            ],
+            "title": "Mask Expand 범위 고정 (−12 … +24 px)",
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "INTERNAL FIXED": true
+            },
+            "widgets_values": [
+              "max(-12, min(a, 24))"
+            ],
+            "widgets_values_named": {
+              "expression": "max(-12, min(a, 24))"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 371,
+            "type": "ComfyMathExpression",
+            "pos": [
+              2085,
+              1785
+            ],
+            "size": [
+              330,
+              135
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 9,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "a",
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 565
+              },
+              {
+                "name": "values.b",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": null
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  566
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": null
+              }
+            ],
+            "title": "Mask Feather 범위 고정 (0 … 20 px)",
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "INTERNAL FIXED": true
+            },
+            "widgets_values": [
+              "max(0, min(a, 20))"
+            ],
+            "widgets_values_named": {
+              "expression": "max(0, min(a, 20))"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 372,
+            "type": "MaskToImage",
+            "pos": [
+              390,
+              1545
+            ],
+            "size": [
+              345,
+              135
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 29,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "mask",
+                "type": "MASK",
+                "link": 520
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  567
+                ]
+              }
+            ],
+            "title": "마스크를 이미지로 변환 (Pre-Smoothing 전)",
+            "properties": {
+              "Node name for S&R": "MaskToImage",
+              "INTERNAL FIXED": true
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 373,
+            "type": "ImageBlur",
+            "pos": [
+              795,
+              1545
+            ],
+            "size": [
+              390,
+              165
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 30,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 567
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  568
+                ]
+              }
+            ],
+            "title": "마스크 엣지 부드럽게 (2 px 고정 Anti-Alias)",
+            "properties": {
+              "Node name for S&R": "ImageBlur",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0",
+              "INTERNAL FIXED": "native source resolution; blur_radius=2 px; sigma=1.0"
+            },
+            "widgets_values": [
+              2,
+              1
+            ],
+            "widgets_values_named": {
+              "blur_radius": 2,
+              "sigma": 1
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 374,
+            "type": "ImageToMask",
+            "pos": [
+              1245,
+              1545
+            ],
+            "size": [
+              345,
+              150
+            ],
+            "flags": {
+              "collapsed": false,
+              "allow_interaction": false
+            },
+            "order": 31,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 568
+              }
+            ],
+            "outputs": [
+              {
+                "name": "MASK",
+                "type": "MASK",
+                "links": [
+                  569
+                ]
+              }
+            ],
+            "title": "부드러운 마스크로 변환 (Red 채널)",
+            "properties": {
+              "Node name for S&R": "ImageToMask",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0",
+              "INTERNAL FIXED": "channel=red"
+            },
+            "widgets_values": [
+              "red"
+            ],
+            "widgets_values_named": {
+              "channel": "red"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 376,
+            "type": "ComfyMathExpression",
+            "pos": [
+              2220,
+              1905
+            ],
+            "size": [
+              360,
+              150
+            ],
+            "flags": {},
+            "order": 13,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "a",
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 570
+              },
+              {
+                "name": "values.b",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 571
+              },
+              {
+                "name": "values.c",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  546,
+                  548,
+                  550
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "title": "FINAL width · source aspect · long edge 1280",
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(16, round(a * 1280 / max(a, b) / 16) * 16)"
+            ],
+            "widgets_values_named": {
+              "expression": "max(16, round(a * 1280 / max(a, b) / 16) * 16)"
+            },
+            "color": "#956500",
+            "bgcolor": "#493200"
+          },
+          {
+            "id": 377,
+            "type": "ComfyMathExpression",
+            "pos": [
+              2625,
+              1905
+            ],
+            "size": [
+              360,
+              150
+            ],
+            "flags": {},
+            "order": 14,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "a",
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 572
+              },
+              {
+                "name": "values.b",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 573
+              },
+              {
+                "name": "values.c",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  547,
+                  549,
+                  551
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "title": "FINAL height · source aspect · long edge 1280",
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(16, round(b * 1280 / max(a, b) / 16) * 16)"
+            ],
+            "widgets_values_named": {
+              "expression": "max(16, round(b * 1280 / max(a, b) / 16) * 16)"
+            },
+            "color": "#956500",
+            "bgcolor": "#493200"
+          },
+          {
+            "id": 378,
+            "type": "ComfyMathExpression",
+            "pos": [
+              2220,
+              2115
+            ],
+            "size": [
+              360,
+              150
+            ],
+            "flags": {},
+            "order": 15,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "a",
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 576
+              },
+              {
+                "name": "values.b",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 577
+              },
+              {
+                "name": "values.c",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  574
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "title": "BERNINI width · source aspect · long edge 848",
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(16, round(a * 848 / max(a, b) / 16) * 16)"
+            ],
+            "widgets_values_named": {
+              "expression": "max(16, round(a * 848 / max(a, b) / 16) * 16)"
+            },
+            "color": "#956500",
+            "bgcolor": "#493200"
+          },
+          {
+            "id": 379,
+            "type": "ComfyMathExpression",
+            "pos": [
+              2625,
+              2115
+            ],
+            "size": [
+              360,
+              150
+            ],
+            "flags": {},
+            "order": 16,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "a",
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 578
+              },
+              {
+                "name": "values.b",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 579
+              },
+              {
+                "name": "values.c",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  575
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "title": "BERNINI height · source aspect · long edge 848",
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(16, round(b * 848 / max(a, b) / 16) * 16)"
+            ],
+            "widgets_values_named": {
+              "expression": "max(16, round(b * 848 / max(a, b) / 16) * 16)"
+            },
+            "color": "#956500",
+            "bgcolor": "#493200"
+          },
+          {
+            "id": 400,
+            "type": "ComfyMathExpression",
+            "pos": [
+              1905,
+              2055
+            ],
+            "size": [
+              330,
+              135
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "a",
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 620
+              },
+              {
+                "name": "values.b",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": null
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  621
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": null
+              }
+            ],
+            "title": "Bernini length · Wan VAE 4n+1 정렬",
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0",
+              "INTERNAL FIXED": true
+            },
+            "widgets_values": [
+              "max(1, ((a - 1) // 4) * 4 + 1)"
+            ],
+            "widgets_values_named": {
+              "expression": "max(1, ((a - 1) // 4) * 4 + 1)"
+            },
+            "color": "#006F89",
+            "bgcolor": "#003A49"
+          },
+          {
+            "id": 401,
+            "type": "PrimitiveInt",
+            "pos": [
+              300,
+              2055
+            ],
+            "size": [
+              390,
+              120
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "value",
+                "name": "value",
+                "type": "INT",
+                "widget": {
+                  "name": "value"
+                },
+                "link": 634
+              }
+            ],
+            "outputs": [
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  622
+                ]
+              }
+            ],
+            "title": "Inpaint Grow (메인 입력 inpaint_grow)",
+            "properties": {
+              "Node name for S&R": "PrimitiveInt",
+              "ver": "0.24.0",
+              "Allowed Range": "0 to 64 px (Bernini 해상도 기준)",
+              "USER CONTROL": true
+            },
+            "widgets_values": [
+              16,
+              "fixed"
+            ],
+            "widgets_values_named": {
+              "value": 16,
+              "fixed": "fixed"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          },
+          {
+            "id": 402,
+            "type": "ComfyMathExpression",
+            "pos": [
+              720,
+              2055
+            ],
+            "size": [
+              330,
+              135
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": "a",
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 622
+              },
+              {
+                "name": "values.b",
+                "shape": 7,
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": null
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  623
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": null
+              }
+            ],
+            "title": "Inpaint Grow 범위 고정 (0 … 64 px)",
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core",
+              "ver": "0.24.0",
+              "INTERNAL FIXED": true
+            },
+            "widgets_values": [
+              "max(0, min(a, 64))"
+            ],
+            "widgets_values_named": {
+              "expression": "max(0, min(a, 64))"
+            },
+            "color": "#007A60",
+            "bgcolor": "#003D30"
+          }
+        ],
+        "groups": [
+          {
+            "id": 1,
+            "title": "01 원본 소스 · 프레임 / 오디오 / FPS 추출",
+            "bounding": [
+              285,
+              105,
+              1980,
+              620
+            ],
+            "color": "#08748B",
+            "flags": {}
+          },
+          {
+            "id": 3,
+            "title": "03 편집 마스크 · 트림 → 프레임 추출 → 길이/해상도 정렬",
+            "bounding": [
+              780,
+              750,
+              1560,
+              580
+            ],
+            "color": "#08765F",
+            "flags": {}
+          },
+          {
+            "id": 4,
+            "title": "04 Bernini VACE식 Inpaint 생성 · 결과 프레임 추출 · 원본 해상도 복원",
+            "bounding": [
+              2355,
+              105,
+              1940,
+              900
+            ],
+            "color": "#48538E",
+            "flags": {}
+          },
+          {
+            "id": 5,
+            "title": "05 BERNINI INPAINT RAW · 진단 출력 (→ RAW)",
+            "bounding": [
+              3945,
+              480,
+              400,
+              280
+            ],
+            "color": "#2C7736",
+            "flags": {}
+          },
+          {
+            "id": 6,
+            "title": "06 원본 프레임 · Bernini 결과 길이 정렬",
+            "bounding": [
+              2970,
+              1020,
+              1080.8109470344089,
+              313.6391341988543
+            ],
+            "color": "#48538E",
+            "flags": {}
+          },
+          {
+            "id": 7,
+            "title": "07 마스크 후처리 · 2 px Anti-Alias → Mask Expand → Mask Feather (모두 원본 해상도)",
+            "bounding": [
+              285,
+              1335,
+              3850,
+              650
+            ],
+            "color": "#08765F",
+            "flags": {}
+          },
+          {
+            "id": 9,
+            "title": "09 FINAL COMPOSITE · WHITE=생성 · BLACK=원본 (→ FINAL)",
+            "bounding": [
+              3945,
+              105,
+              1000,
+              360
+            ],
+            "color": "#08748B",
+            "flags": {}
+          },
+          {
+            "id": 8,
+            "title": "08 VACE식 Inpaint 컨트롤 · Inpaint Grow · length 4n+1",
+            "bounding": [
+              285,
+              1995,
+              2000,
+              240
+            ],
+            "color": "#08765F",
+            "flags": {}
+          }
+        ],
+        "links": [
+          {
+            "id": 289,
+            "origin_id": 109,
+            "origin_slot": 0,
+            "target_id": 110,
+            "target_slot": 0,
+            "type": "VIDEO"
+          },
+          {
+            "id": 291,
+            "origin_id": 110,
+            "origin_slot": 0,
+            "target_id": 111,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 293,
+            "origin_id": 111,
+            "origin_slot": 2,
+            "target_id": 112,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 463,
+            "origin_id": 109,
+            "origin_slot": 0,
+            "target_id": 298,
+            "target_slot": 0,
+            "type": "VIDEO"
+          },
+          {
+            "id": 499,
+            "origin_id": 340,
+            "origin_slot": 0,
+            "target_id": 341,
+            "target_slot": 0,
+            "type": "VIDEO"
+          },
+          {
+            "id": 503,
+            "origin_id": 342,
+            "origin_slot": 0,
+            "target_id": 343,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 505,
+            "origin_id": 298,
+            "origin_slot": 0,
+            "target_id": 345,
+            "target_slot": 0,
+            "type": "VIDEO"
+          },
+          {
+            "id": 506,
+            "origin_id": 345,
+            "origin_slot": 0,
+            "target_id": 346,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 516,
+            "origin_id": 346,
+            "origin_slot": 0,
+            "target_id": 354,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 517,
+            "origin_id": 110,
+            "origin_slot": 1,
+            "target_id": 354,
+            "target_slot": 1,
+            "type": "AUDIO"
+          },
+          {
+            "id": 518,
+            "origin_id": 110,
+            "origin_slot": 2,
+            "target_id": 354,
+            "target_slot": 2,
+            "type": "FLOAT"
+          },
+          {
+            "id": 521,
+            "origin_id": 356,
+            "origin_slot": 0,
+            "target_id": 357,
+            "target_slot": 0,
+            "type": "MASK"
+          },
+          {
+            "id": 522,
+            "origin_id": 357,
+            "origin_slot": 0,
+            "target_id": 358,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 523,
+            "origin_id": 358,
+            "origin_slot": 0,
+            "target_id": 360,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 520,
+            "origin_id": 343,
+            "origin_slot": 0,
+            "target_id": 372,
+            "target_slot": 0,
+            "type": "MASK"
+          },
+          {
+            "id": 539,
+            "origin_id": 345,
+            "origin_slot": 0,
+            "target_id": 350,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 540,
+            "origin_id": 110,
+            "origin_slot": 0,
+            "target_id": 351,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 542,
+            "origin_id": 351,
+            "origin_slot": 0,
+            "target_id": 352,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 543,
+            "origin_id": 341,
+            "origin_slot": 0,
+            "target_id": 353,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 545,
+            "origin_id": 353,
+            "origin_slot": 0,
+            "target_id": 342,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 554,
+            "origin_id": 346,
+            "origin_slot": 0,
+            "target_id": 365,
+            "target_slot": 1,
+            "type": "IMAGE"
+          },
+          {
+            "id": 555,
+            "origin_id": 352,
+            "origin_slot": 0,
+            "target_id": 365,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 556,
+            "origin_id": 360,
+            "origin_slot": 0,
+            "target_id": 365,
+            "target_slot": 2,
+            "type": "MASK"
+          },
+          {
+            "id": 557,
+            "origin_id": 365,
+            "origin_slot": 0,
+            "target_id": 366,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 558,
+            "origin_id": 110,
+            "origin_slot": 1,
+            "target_id": 366,
+            "target_slot": 1,
+            "type": "AUDIO"
+          },
+          {
+            "id": 559,
+            "origin_id": 110,
+            "origin_slot": 2,
+            "target_id": 366,
+            "target_slot": 2,
+            "type": "FLOAT"
+          },
+          {
+            "id": 564,
+            "origin_id": 370,
+            "origin_slot": 1,
+            "target_id": 356,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 566,
+            "origin_id": 371,
+            "origin_slot": 1,
+            "target_id": 358,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 567,
+            "origin_id": 372,
+            "origin_slot": 0,
+            "target_id": 373,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 568,
+            "origin_id": 373,
+            "origin_slot": 0,
+            "target_id": 374,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 569,
+            "origin_id": 374,
+            "origin_slot": 0,
+            "target_id": 356,
+            "target_slot": 0,
+            "type": "MASK"
+          },
+          {
+            "id": 563,
+            "origin_id": 368,
+            "origin_slot": 0,
+            "target_id": 370,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 565,
+            "origin_id": 369,
+            "origin_slot": 0,
+            "target_id": 371,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 570,
+            "origin_id": 111,
+            "origin_slot": 0,
+            "target_id": 376,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 571,
+            "origin_id": 111,
+            "origin_slot": 1,
+            "target_id": 376,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 572,
+            "origin_id": 111,
+            "origin_slot": 0,
+            "target_id": 377,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 573,
+            "origin_id": 111,
+            "origin_slot": 1,
+            "target_id": 377,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 576,
+            "origin_id": 111,
+            "origin_slot": 0,
+            "target_id": 378,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 577,
+            "origin_id": 111,
+            "origin_slot": 1,
+            "target_id": 378,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 578,
+            "origin_id": 111,
+            "origin_slot": 0,
+            "target_id": 379,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 579,
+            "origin_id": 111,
+            "origin_slot": 1,
+            "target_id": 379,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 574,
+            "origin_id": 378,
+            "origin_slot": 1,
+            "target_id": 298,
+            "target_slot": 4,
+            "type": "INT"
+          },
+          {
+            "id": 575,
+            "origin_id": 379,
+            "origin_slot": 1,
+            "target_id": 298,
+            "target_slot": 5,
+            "type": "INT"
+          },
+          {
+            "id": 550,
+            "origin_id": 376,
+            "origin_slot": 1,
+            "target_id": 342,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 551,
+            "origin_id": 377,
+            "origin_slot": 1,
+            "target_id": 342,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 546,
+            "origin_id": 376,
+            "origin_slot": 1,
+            "target_id": 346,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 547,
+            "origin_id": 377,
+            "origin_slot": 1,
+            "target_id": 346,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 541,
+            "origin_id": 350,
+            "origin_slot": 2,
+            "target_id": 351,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 548,
+            "origin_id": 376,
+            "origin_slot": 1,
+            "target_id": 352,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 549,
+            "origin_id": 377,
+            "origin_slot": 1,
+            "target_id": 352,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 544,
+            "origin_id": 350,
+            "origin_slot": 2,
+            "target_id": 353,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 620,
+            "origin_id": 111,
+            "origin_slot": 2,
+            "target_id": 400,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 621,
+            "origin_id": 400,
+            "origin_slot": 1,
+            "target_id": 298,
+            "target_slot": 7,
+            "type": "INT"
+          },
+          {
+            "id": 622,
+            "origin_id": 401,
+            "origin_slot": 0,
+            "target_id": 402,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 623,
+            "origin_id": 402,
+            "origin_slot": 1,
+            "target_id": 298,
+            "target_slot": 15,
+            "type": "INT"
+          },
+          {
+            "id": 624,
+            "origin_id": 341,
+            "origin_slot": 0,
+            "target_id": 298,
+            "target_slot": 12,
+            "type": "IMAGE"
+          },
+          {
+            "id": 625,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 109,
+            "target_slot": 0,
+            "type": "VIDEO"
+          },
+          {
+            "id": 626,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 340,
+            "target_slot": 0,
+            "type": "VIDEO"
+          },
+          {
+            "id": 627,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 298,
+            "target_slot": 2,
+            "type": "IMAGE"
+          },
+          {
+            "id": 628,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 298,
+            "target_slot": 16,
+            "type": "STRING"
+          },
+          {
+            "id": 629,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 298,
+            "target_slot": 3,
+            "type": "COMBO"
+          },
+          {
+            "id": 630,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 298,
+            "target_slot": 6,
+            "type": "INT"
+          },
+          {
+            "id": 631,
+            "origin_id": -10,
+            "origin_slot": 6,
+            "target_id": 298,
+            "target_slot": 8,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 632,
+            "origin_id": -10,
+            "origin_slot": 7,
+            "target_id": 298,
+            "target_slot": 13,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 633,
+            "origin_id": -10,
+            "origin_slot": 8,
+            "target_id": 298,
+            "target_slot": 14,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 634,
+            "origin_id": -10,
+            "origin_slot": 9,
+            "target_id": 401,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 635,
+            "origin_id": -10,
+            "origin_slot": 10,
+            "target_id": 368,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 636,
+            "origin_id": -10,
+            "origin_slot": 11,
+            "target_id": 369,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 637,
+            "origin_id": -10,
+            "origin_slot": 12,
+            "target_id": 109,
+            "target_slot": 1,
+            "type": "FLOAT"
+          },
+          {
+            "id": 638,
+            "origin_id": -10,
+            "origin_slot": 12,
+            "target_id": 340,
+            "target_slot": 1,
+            "type": "FLOAT"
+          },
+          {
+            "id": 639,
+            "origin_id": -10,
+            "origin_slot": 13,
+            "target_id": 109,
+            "target_slot": 2,
+            "type": "FLOAT"
+          },
+          {
+            "id": 640,
+            "origin_id": -10,
+            "origin_slot": 13,
+            "target_id": 340,
+            "target_slot": 2,
+            "type": "FLOAT"
+          },
+          {
+            "id": 641,
+            "origin_id": -10,
+            "origin_slot": 14,
+            "target_id": 298,
+            "target_slot": 17,
+            "type": "INT"
+          },
+          {
+            "id": 642,
+            "origin_id": -10,
+            "origin_slot": 15,
+            "target_id": 298,
+            "target_slot": 9,
+            "type": "COMBO"
+          },
+          {
+            "id": 643,
+            "origin_id": -10,
+            "origin_slot": 16,
+            "target_id": 298,
+            "target_slot": 10,
+            "type": "COMBO"
+          },
+          {
+            "id": 644,
+            "origin_id": -10,
+            "origin_slot": 17,
+            "target_id": 298,
+            "target_slot": 11,
+            "type": "COMBO"
+          },
+          {
+            "id": 645,
+            "origin_id": -10,
+            "origin_slot": 18,
+            "target_id": 298,
+            "target_slot": 18,
+            "type": "COMBO"
+          },
+          {
+            "id": 646,
+            "origin_id": -10,
+            "origin_slot": 19,
+            "target_id": 298,
+            "target_slot": 19,
+            "type": "COMBO"
+          },
+          {
+            "id": 647,
+            "origin_id": 366,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "VIDEO"
+          },
+          {
+            "id": 648,
+            "origin_id": 354,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 1,
+            "type": "VIDEO"
+          }
+        ],
+        "extra": {}
       }
     ]
   },
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.41772481694156605,
+      "scale": 0.55,
       "offset": [
-        570.9815519959114,
-        454.1020430743991
+        40,
+        40
       ]
     },
     "frontendVersion": "1.53.7",
@@ -8040,13 +8977,31 @@
       "generation_inpaint": "VACE-style: source VAE latent + SetLatentNoiseMask(grown mask); WHITE regenerated, BLACK pinned to source latent every step"
     },
     "open_node_layout": {
-      "all_actual_nodes_expanded": true,
-      "collapsed_subgraphs_or_relays": false,
+      "layout": "main canvas = inputs → single main subgraph → saves; processing lanes live inside the main subgraph",
+      "main_subgraph": "Bernini-R VACE Inpaint (Main)",
+      "nested_subgraphs": [
+        "Video Edit (Bernini-R · VACE-style Inpaint)",
+        "Select Per-Line Text by Index"
+      ],
       "fixed_mask_convention": "WHITE=Bernini edited/generated result; BLACK=original source preserved",
-      "layout": "left-to-right visible processing lanes",
       "user_controls": [
-        "Mask Expand",
-        "Mask Feather"
+        "prompt",
+        "task_type",
+        "noise_seed",
+        "turbo_mode",
+        "inpaint_mode (VACE식)",
+        "vace_gray_context",
+        "inpaint_grow (0…64 px)",
+        "mask_expand (−12…+24 px)",
+        "mask_feather (0…20 px)",
+        "trim_start (sec)",
+        "trim_duration (sec · 0=전체)",
+        "ref_max_size",
+        "high_noise_model",
+        "low_noise_model",
+        "distill_lora",
+        "clip_name",
+        "vae_name"
       ]
     },
     "priority_development_audit": {
@@ -8070,6 +9025,10 @@
         {
           "change": "Inpaint Grow user control",
           "node": 401
+        },
+        {
+          "change": "packaged into single main subgraph",
+          "node": 410
         }
       ],
       "date": "2026-09-24",
