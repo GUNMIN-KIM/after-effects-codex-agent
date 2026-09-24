@@ -20,12 +20,12 @@ prompt = g.node("PrimitiveStringMultiline", "③ 바깥 영역 설명 (비워도
 neg = g.node("PrimitiveStringMultiline", "negative", (0, 860),
              {"value": "pc game, console game, video game, cartoon, childish, ugly, visible seam, border, frame, black bars, letterbox, color shift, mismatched lighting, duplicated objects, distorted faces"},
              kind="input", size=[420, 140])
-maxl = g.node("PrimitiveInt", "④ 생성 해상도 긴 변 상한 (VRAM 부족하면 1536)", (460, 260), {"value": 1920}, kind="param")
+maxl = g.node("PrimitiveInt", "④ 생성 해상도 긴 변 상한 (기본 4096=캔버스 원본 크기 · VRAM 부족하면 1920)", (460, 260), {"value": 4096}, kind="param")
 seed = g.node("PrimitiveInt", "⑤ seed", (460, 370), {"value": 42}, kind="param")
 has_audio = g.node("PrimitiveBoolean", "⑥ 원본에 소리가 있음 (무음이면 끄기)", (460, 480), {"value": True}, kind="param")
 lora_s = g.node("PrimitiveFloat", "⑦ Outpaint IC-LoRA 강도", (460, 590), {"value": 1.0}, kind="param")
 cm_s = g.node("PrimitiveFloat", "⑧ 생성 영역 색 보정 강도 (원본 기준 · 0=끔)", (460, 700), {"value": 1.0}, kind="param")
-dil = g.node("PrimitiveInt", "⑨ 최종 경계 블렌드 확장 (0=원본 픽셀 최대 보존 · 선 보이면 2~4)", (460, 810), {"value": 0}, kind="param")
+seam = g.node("PrimitiveInt", "⑨ 경계 블렌드 폭 px (원본 안쪽 · 선 보이면 48)", (460, 810), {"value": 24}, kind="param")
 g.group("조작 패널 — 여기만 만지면 됩니다", (-30, -60, 950, 1100), "#48538E", main=True)
 
 # ─────────────── 모델 ───────────────
@@ -60,6 +60,7 @@ M = math("a + (8 - (a-1) % 8) % 8", "LTX 프레임 수 (8n+1로 올림)", (XA + 
 LAST = math("a-1", "마지막 프레임 번호", (XA + 340, 420), N)
 PX = math("(a-b)//2", "원본 X 위치", (XA + 340, 560), Wc["INT"], W0)
 PY = math("(a-b)//2", "원본 Y 위치", (XA + 340, 700), Hc["INT"], H0)
+TM = math("a/b", "본 영상 길이 (초) · 가이드 프레임 제외", (XA + 340, 840), M["INT"], fps)
 g.group("자동 계산", (XA - 30, -60, 720, 1060), "#414B8F")
 
 # ─────────────── 입력 준비 ───────────────
@@ -91,6 +92,14 @@ spm_f = g.node("ImageFromBatch", "첫 프레임 마스크", (XP + 200, 1120), {"
 g.link(spm_i, spm_f, "image")
 spm = g.node("ImageToMask", "공간 마스크 (흰색=바깥=생성)", (XP + 200, 1160), {"channel": "red"}, kind="guide", collapsed=True)
 g.link(spm_f, spm, "image")
+m2i = g.node("MaskToImage", "마스크→이미지", (XP + 200, 1200), {}, kind="guide", collapsed=True)
+g.link(pad[1], m2i, "mask")
+m2s = g.node("ImageScale", "stage2 마스크 크기", (XP + 200, 1240), {"upscale_method": "area", "crop": "disabled"}, kind="guide", collapsed=True)
+g.link(m2i, m2s, "image"); g.link(Wg["INT"], m2s, "width"); g.link(Hg["INT"], m2s, "height")
+m2 = g.node("ImageToMask", "stage2 마스크", (XP + 200, 1280), {"channel": "red"}, kind="guide", collapsed=True)
+g.link(m2s, m2, "image")
+m2inv = g.node("InvertMask", "원본 영역 마스크", (XP + 200, 1320), {}, kind="guide", collapsed=True)
+g.link(m2, m2inv, "mask")
 green1 = g.node("LTXVInpaintPreprocess", "바깥 영역 → 초록 신호 (IC-LoRA 입력)", (XP, 1260), {}, kind="guide")
 g.link(ref1, green1, "images"); g.link(m1, green1, "mask")
 g.group("입력 준비 — 공식 Outpaint 전처리", (XP - 30, -60, 400, 1440), "#6B4500")
@@ -103,8 +112,8 @@ ne = g.node("CLIPTextEncode", "negative", (XS, 120), {}, kind="gen")
 g.link(clip, ne, "clip"); g.link(neg, ne, "text")
 cond = g.node("LTXVConditioning", "원본 fps", (XS, 240), {}, kind="gen")
 g.link(pe, cond, "positive"); g.link(ne, cond, "negative"); g.link(fps, cond, "frame_rate")
-e1 = g.node("EmptyLTXVLatentVideo", "stage1 latent", (XS, 380), {}, kind="gen")
-g.link(Wh["INT"], e1, "width"); g.link(Hh["INT"], e1, "height"); g.link(M["INT"], e1, "length")
+e1 = g.node("VAEEncodeTiled", "stage1 latent = 원본(절반 해상도) 인코드", (XS, 380), {"tile_size": 512, "overlap": 64, "temporal_size": 64, "temporal_overlap": 8}, kind="gen")
+g.link(ref1, e1, "pixels"); g.link(vae, e1, "vae")
 gd = g.node("LTXAddVideoICLoRAGuideAdvanced", "Outpaint 가이드 (원본 영상 + 초록 마스크)", (XS, 540),
             {"frame_idx": 0, "strength": 1.0, "crop": "disabled", "use_tiled_encode": False, "attention_strength": 1.0}, kind="guide")
 g.link(cond[0], gd, "positive"); g.link(cond[1], gd, "negative"); g.link(vae, gd, "vae"); g.link(e1, gd, "latent")
@@ -123,34 +132,42 @@ sa = g.node("ComfySwitchNode", "⑥ audio latent", (XS + 340, 220), {}, kind="pa
 g.link(ea, sa, "on_false"); g.link(aref[2], sa, "on_true"); g.link(has_audio, sa, "switch")
 av1 = g.node("LTXVConcatAVLatent", "AV latent", (XS + 340, 330), {}, kind="gen")
 g.link(gd[2], av1, "video_latent"); g.link(sa, av1, "audio_latent")
+msk1 = g.node("LTXVSetAudioVideoMaskByTime", "Stage1 원본 영역 latent 고정 · 바깥만 생성", (XS + 680, 380),
+              {"start_time": 0.0, "mask_video": True, "mask_audio": False,
+               "mask_init_value_video": 0.0, "mask_init_value_audio": 0.0, "slope_len": 3}, kind="guide")
+g.link(av1, msk1, "av_latent"); g.link(sp, msk1, "positive"); g.link(sn, msk1, "negative")
+g.link(ic, msk1, "model"); g.link(vae, msk1, "vae"); g.link(avae, msk1, "audio_vae"); g.link(fps, msk1, "video_fps")
+g.link(spm, msk1, "spatial_mask"); g.link(TM["FLOAT"], msk1, "end_time")
 cg1 = g.node("CFGGuider", "cfg 1", (XS + 340, 440), {"cfg": 1.0}, kind="gen")
-g.link(ic, cg1, "model"); g.link(sp, cg1, "positive"); g.link(sn, cg1, "negative")
+g.link(ic, cg1, "model"); g.link(msk1[0], cg1, "positive"); g.link(msk1[1], cg1, "negative")
 nz = g.node("RandomNoise", "noise", (XS + 340, 560), {}, kind="gen")
 g.link(seed, nz, "noise_seed")
 k1 = g.node("KSamplerSelect", "euler_ancestral", (XS + 340, 680), {"sampler_name": "euler_ancestral"}, kind="gen")
 s1s = g.node("ManualSigmas", "distilled 8-step", (XS + 340, 780), {"sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"}, kind="gen")
-s1 = g.node("SamplerCustomAdvanced", "Stage 1 · 절반 해상도", (XS + 340, 900), {}, kind="gen")
-g.link(nz, s1, "noise"); g.link(cg1, s1, "guider"); g.link(k1, s1, "sampler"); g.link(s1s, s1, "sigmas"); g.link(av1, s1, "latent_image")
+s1 = g.node("SamplerCustomAdvanced", "Stage 1 · 절반 해상도 · 원본 고정", (XS + 340, 900), {}, kind="gen")
+g.link(nz, s1, "noise"); g.link(cg1, s1, "guider"); g.link(k1, s1, "sampler"); g.link(s1s, s1, "sigmas"); g.link(msk1[2], s1, "latent_image")
 sep1 = g.node("LTXVSeparateAVLatent", "분리", (XS + 340, 1060), {}, kind="gen")
 g.link(s1[1], sep1, "av_latent")
 crop = g.node("LTXVCropGuides", "가이드 토큰 제거", (XS + 340, 1170), {}, kind="gen")
 g.link(sp, crop, "positive"); g.link(sn, crop, "negative"); g.link(sep1[0], crop, "latent")
-d1 = g.node("VAEDecodeTiled", "stage1 디코드", (XS + 680, 0), {"tile_size": 512, "overlap": 64, "temporal_size": 128, "temporal_overlap": 32}, kind="gen")
+d1 = g.node("VAEDecodeTiled", "stage1 디코드", (XS + 680, 800), {"tile_size": 512, "overlap": 64, "temporal_size": 128, "temporal_overlap": 32}, kind="gen")
 g.link(crop[2], d1, "samples"); g.link(vae, d1, "vae")
-b1 = g.node("LTXVLaplacianPyramidBlend", "stage1 원본 영역 복원 (공식 dilation 5)", (XS + 680, 160),
+b1 = g.node("LTXVLaplacianPyramidBlend", "stage1 원본 영역 복원 (공식 dilation 5)", (XS + 680, 960),
             {"trim_to_shortest": True, "mask_low_res_dilation": 5}, kind="color")
 g.link(d1, b1, "image_a"); g.link(green1, b1, "image_b"); g.link(m1, b1, "mask")
-g.group("Stage 1 — 절반 해상도 8 step (공식)", (XS - 30, -60, 1040, 1360), "#9A1F50")
+g.group("Stage 1 — 절반 해상도 8 step · 원본 영역 latent 고정", (XS - 30, -60, 1060, 1360), "#9A1F50")
 
 # ─────────────── Stage 2 ───────────────
 X2 = XS + 1080
 u2 = g.node("ImageScale", "stage2 해상도로 확대", (X2, 0), {"upscale_method": "lanczos", "crop": "disabled"}, kind="gen")
 g.link(b1, u2, "image"); g.link(Wg["INT"], u2, "width"); g.link(Hg["INT"], u2, "height")
-enc2 = g.node("VAEEncodeTiled", "stage2 인코드", (X2, 180), {"tile_size": 512, "overlap": 64, "temporal_size": 64, "temporal_overlap": 8}, kind="gen")
-g.link(u2, enc2, "pixels"); g.link(vae, enc2, "vae")
-aref2 = g.node("LTXVSetAudioRefTokens", "오디오 고정", (X2, 360), {}, kind="gen")
+u2c = g.node("ImageCompositeMasked", "가운데를 풀해상도 원본으로 교체 (흐린 확대본 X)", (X2, 150), {"x": 0, "y": 0, "resize_source": False}, kind="guide")
+g.link(u2, u2c, "destination"); g.link(ref2, u2c, "source"); g.link(m2inv, u2c, "mask")
+enc2 = g.node("VAEEncodeTiled", "stage2 인코드", (X2, 330), {"tile_size": 512, "overlap": 64, "temporal_size": 64, "temporal_overlap": 8}, kind="gen")
+g.link(u2c, enc2, "pixels"); g.link(vae, enc2, "vae")
+aref2 = g.node("LTXVSetAudioRefTokens", "오디오 고정", (X2, 480), {}, kind="gen")
 g.link(crop[0], aref2, "positive"); g.link(crop[1], aref2, "negative"); g.link(sep1[1], aref2, "audio_latent")
-av2 = g.node("LTXVConcatAVLatent", "AV latent", (X2, 500), {}, kind="gen")
+av2 = g.node("LTXVConcatAVLatent", "AV latent", (X2, 600), {}, kind="gen")
 g.link(enc2, av2, "video_latent"); g.link(aref2[2], av2, "audio_latent")
 msk2 = g.node("LTXVSetAudioVideoMaskByTime", "원본 영역 latent 고정 · 바깥만 정제 (공간 마스크)", (X2 + 340, 0),
               {"start_time": 0.0, "end_time": 2000.0, "mask_video": True, "mask_audio": False,
@@ -158,15 +175,15 @@ msk2 = g.node("LTXVSetAudioVideoMaskByTime", "원본 영역 latent 고정 · 바
 g.link(av2, msk2, "av_latent"); g.link(aref2[0], msk2, "positive"); g.link(aref2[1], msk2, "negative")
 g.link(ic, msk2, "model"); g.link(vae, msk2, "vae"); g.link(avae, msk2, "audio_vae"); g.link(fps, msk2, "video_fps")
 g.link(spm, msk2, "spatial_mask")
-cg2 = g.node("CFGGuider", "cfg 1", (X2, 610), {"cfg": 1.0}, kind="gen")
+cg2 = g.node("CFGGuider", "cfg 1", (X2 + 340, 460), {"cfg": 1.0}, kind="gen")
 g.link(ic, cg2, "model"); g.link(msk2[0], cg2, "positive"); g.link(msk2[1], cg2, "negative")
-k2 = g.node("KSamplerSelect", "euler", (X2, 730), {"sampler_name": "euler"}, kind="gen")
-s2s = g.node("ManualSigmas", "공식 refine", (X2, 830), {"sigmas": "0.7250, 0.4219, 0.0"}, kind="gen")
-s2 = g.node("SamplerCustomAdvanced", "Stage 2 · 고해상도 정제", (X2, 950), {}, kind="gen")
+k2 = g.node("KSamplerSelect", "euler", (X2 + 340, 580), {"sampler_name": "euler"}, kind="gen")
+s2s = g.node("ManualSigmas", "바깥 정제 강화 (0.85부터)", (X2 + 340, 680), {"sigmas": "0.85, 0.7250, 0.4219, 0.0"}, kind="gen")
+s2 = g.node("SamplerCustomAdvanced", "Stage 2 · 풀해상도 정제", (X2 + 340, 800), {}, kind="gen")
 g.link(nz, s2, "noise"); g.link(cg2, s2, "guider"); g.link(k2, s2, "sampler"); g.link(s2s, s2, "sigmas"); g.link(msk2[2], s2, "latent_image")
-sep2 = g.node("LTXVSeparateAVLatent", "분리", (X2, 1110), {}, kind="gen")
+sep2 = g.node("LTXVSeparateAVLatent", "분리", (X2 + 340, 960), {}, kind="gen")
 g.link(s2[0], sep2, "av_latent")
-d2 = g.node("VAEDecodeTiled", "stage2 디코드", (X2, 1220), {"tile_size": 512, "overlap": 64, "temporal_size": 128, "temporal_overlap": 32}, kind="gen")
+d2 = g.node("VAEDecodeTiled", "stage2 디코드", (X2 + 340, 1070), {"tile_size": 512, "overlap": 64, "temporal_size": 128, "temporal_overlap": 32}, kind="gen")
 g.link(sep2[0], d2, "samples"); g.link(vae, d2, "vae")
 g.group("Stage 2 — 원본 영역 고정 + 바깥만 고해상도 정제", (X2 - 30, -60, 740, 1420), "#9A1F50")
 
@@ -180,9 +197,17 @@ cmn = g.node("ColorMatchV2", "생성 결과 전체 색을 원본에 맞춤 (프�
 g.link(dc, cmn, "image_target"); g.link(comp0, cmn, "image_ref"); g.link(cm_s, cmn, "strength")
 comp = g.node("ImageCompositeMasked", "원본 1:1 붙이기", (XF, 580), {"resize_source": False}, kind="post")
 g.link(cmn, comp, "destination"); g.link(fM, comp, "source"); g.link(PX["INT"], comp, "x"); g.link(PY["INT"], comp, "y")
-fb = g.node("LTXVLaplacianPyramidBlend", "Laplacian 경계 블렌드 (원본 디테일 유지 · 저주파만 연결)", (XF, 780),
-            {"trim_to_shortest": True}, kind="color")
-g.link(cmn, fb, "image_a"); g.link(comp, fb, "image_b"); g.link(pad[1], fb, "mask"); g.link(dil, fb, "mask_low_res_dilation")
+grow = g.node("GrowMask", "경계 띠 · 원본 안쪽으로 ⑨px", (XF + 200, 780), {"tapered_corners": True}, kind="color", collapsed=True)
+g.link(spm, grow, "mask"); g.link(seam, grow, "expand")
+growi = g.node("MaskToImage", "마스크→이미지", (XF + 200, 820), {}, kind="color", collapsed=True)
+g.link(grow, growi, "mask")
+growr = g.node("RepeatImageBatch", "전체 프레임으로 복제", (XF + 200, 860), {}, kind="color", collapsed=True)
+g.link(growi, growr, "image"); g.link(M["INT"], growr, "amount")
+growm = g.node("ImageToMask", "경계 띠 마스크", (XF + 200, 900), {"channel": "red"}, kind="color", collapsed=True)
+g.link(growr, growm, "image")
+fb = g.node("LTXVLaplacianPyramidBlend", "Laplacian 경계 블렌드 (띠 안에서만 생성↔원본 전환)", (XF, 780),
+            {"trim_to_shortest": True, "mask_low_res_dilation": 0}, kind="color")
+g.link(cmn, fb, "image_a"); g.link(comp, fb, "image_b"); g.link(growm, fb, "mask")
 trim = g.node("ImageFromBatch", "원래 프레임 수로 복원", (XF, 980), {}, kind="post")
 g.link(fb, trim, "image"); g.link(N, trim, "length")
 asw = g.node("ComfySwitchNode", "⑥ 원본 오디오 그대로", (XF, 1120), {}, kind="param")
@@ -197,20 +222,18 @@ g.group("출력", (2070, -60, 520, 660), "#287A32", main=True)
 
 g.note("사용법 · 원리", """# LTX-2.5 아웃페인트 (원본 1:1 보존)
 
-## 무엇이 달라졌나 (Lightricks 공식 2.5 Outpaint 2-stage 기준)
-- **distilled 트랜스포머 + In/Outpaint IC-LoRA** (dev + distilled LoRA 조합 제거). 공식 2.5 예제도 2.3 In/Outpaint LoRA를 그대로 씀 — 2.5 전용판은 아직 없음
-- **2-stage**: 절반 해상도 8 step → 원본 영역 Laplacian 복원 → 확대·재인코드 → 3-sigma 정제.
-- **Stage 2에서 원본 영역을 latent로 고정** (공식 Retake 노드의 spatial_mask). 바깥 영역이 "다시 그려진 가운데"가 아니라 실제 원본에 맞춰 정제되므로, 원본과 생성 영역이 따로 노는 현상이 줄어듦 RTX 업스케일 제거 (표준 ComfyUI에 없는 노드이기도 함)
-- 최종 합성: 기존 `ImageCompositeMasked`(딱딱한 붙이기)는 경계에 색 단차가 생김 → **Laplacian 피라미드 블렌드**로 교체. 원본 영역의 세부 픽셀은 그대로, 경계의 저주파(색·밝기)만 부드럽게 이어짐
-- ⑧ 생성 영역 전체를 원본 색에 맞춤 (재생성된 중앙 ↔ 원본 중앙 차이로 보정) → 색 털림 방지
-- **원본 fps 유지**, 원본 오디오를 모델에 고정 입력 + 출력은 원본 오디오 그대로
-- 프레임 수가 8n+1이 아니면 마지막 프레임 반복으로 채운 뒤 원래 길이로 잘라냄
+## 원본과 생성 영역이 맞도록 한 구조
+1. **Stage 1부터 원본 영역을 latent로 고정** — 원본(절반 해상도)을 인코드해 가운데는 noise mask 0, 바깥만 생성. 바깥이 처음부터 진짜 원본을 보며 만들어짐 (+ 공식 In/Outpaint IC-LoRA 가이드)
+2. **Stage 2는 풀해상도 원본을 가운데에 넣고 고정** — 흐린 확대본이 아니라 선명한 원본 옆에서 바깥을 0.85부터 다시 정제
+3. **생성 해상도 = 캔버스 원본 크기** (④ 기본 4096 = 제한 없음). 확대로 인한 화질 차이 없음
+4. **경계**: 원본 안쪽 ⑨px(기본 24) 띠에서만 생성↔원본을 Laplacian 블렌드. 가운데가 고정돼 있어 띠 안의 생성본은 원본과 거의 같음
+5. 생성 영역 전체 색을 원본에 맞춤 (⑧)
 
 ## 팁
-- 캔버스: 16:9 원본 → 21:9 선택 시 1920×1080 → 2560×1088 (원본은 가운데 1:1)
-- ④ 생성 상한 1920이면 2560 캔버스는 1920×832에서 생성 후 확대. VRAM 여유 있으면 2560
-- 경계에 선이 보이면 ⑨를 2~4 (원본 가장자리 일부가 재생성 영역과 섞임)
-- ③ 바깥 배경을 구체적으로 쓰면 복제·반복 물체가 줄어듦
+- VRAM 부족하면 ④를 1920 → 바깥 영역만 확대되므로 화질 차이가 다시 생길 수 있음
+- 경계에 선이 보이면 ⑨를 48
+- ③ 바깥 배경을 구체적으로 쓰면 반복·복제 물체가 줄어듦
+- 16:9 → 21:9: 1920×1080 → 2624×1088 (원본은 가운데 1:1)
 """, (0, 1080), size=[900, 600])
 
 note_key = g.nodes[-1]["key"]  # 사용법 노트
