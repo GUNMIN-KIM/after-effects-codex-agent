@@ -32,8 +32,8 @@ g.group("조작 패널 — 여기만 만지면 됩니다", (-30, -60, 950, 1120)
 XM = 1000
 unet = g.node("UNETLoader", "LTX-2.5 distilled (int8)", (XM, 0),
               {"unet_name": "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors"}, kind="model")
-ic = g.node("LTXICLoRALoaderModelOnly", "Clean Plate IC-LoRA (LTX-2.5 전용 공식판)", (XM, 140),
-            {"lora_name": "ltx-2.5-22b-ic-lora-clean-plate-1.0.safetensors"}, kind="model")
+ic = g.node("LTXICLoRALoaderModelOnly", "Clean Plate IC-LoRA (클라우드: 2.3판 · 로컬에 2.5판 있으면 교체)", (XM, 140),
+            {"lora_name": "ltx-2.3-22b-ic-lora-clean-plate-1.0.safetensors"}, kind="model")
 g.link(unet, ic, "model"); g.link(lora_s, ic, "strength_model")
 clip = g.node("CLIPLoader", "Gemma 4 12B + LTX-2.5 projection", (XM, 300),
               {"clip_name": "gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors", "type": "ltxv"}, kind="model")
@@ -138,17 +138,14 @@ g.group("후처리", (XF - 30, -60, 400, 720), "#006F89")
 
 XO = XF + 440
 out = g.node("VHS_VideoCombine", "⑨ Clean Plate MP4", (XO, 0),
-             {"filename_prefix": "LTX2.5_CleanPlate/cleanplate", "format": "video/h264-mp4", "crf": 12}, kind="out", size=[460, 560])
+             {"filename_prefix": "LTX2.5_CleanPlate/cleanplate", "format": "video/h264-mp4", "crf": 10}, kind="out", size=[460, 560])
 g.link(cmn, out, "images"); g.link(asw, out, "audio"); g.link(fps, out, "frame_rate")
-out2 = g.node("VHS_VideoCombine", "⑩ Clean Plate ProRes (AE 합성용)", (XO, 620),
-              {"filename_prefix": "LTX2.5_CleanPlate/cleanplate_prores", "format": "video/ProRes"}, kind="out", size=[460, 400])
-g.link(cmn, out2, "images"); g.link(asw, out2, "audio"); g.link(fps, out2, "frame_rate")
-g.group("출력", (2070, -60, 520, 1120), "#287A32", main=True)
+g.group("출력", (2070, -60, 520, 660), "#287A32", main=True)
 
 g.note("사용법 · 원리", """# LTX-2.5 Clean Plate (마스크 없이 사람·차량 제거)
 
 ## 무엇이 달라졌나
-- **LTX-2.5 전용 공식 Clean Plate IC-LoRA** (`ltx-2.5-22b-ic-lora-clean-plate-1.0`) — 2.3 LoRA가 아니라 2.5 트랜스포머에서 학습된 판
+- Clean Plate IC-LoRA: Comfy Cloud에는 2.3판(`ltx-2.3-22b-ic-lora-clean-plate-1.0`)만 있어 기본값은 2.3판. 공식 2.5 예제들이 2.3 IC-LoRA를 2.5 트랜스포머에 그대로 쓰는 것과 같은 방식. 로컬에 2.5판(`ltx-2.5-22b-ic-lora-clean-plate-1.0`)을 받으면 로더에서 교체
 - 2.3 dev + distilled LoRA 0.6 조합 → **2.5 distilled 트랜스포머** 단독 (공식 IC-LoRA 파이프라인은 distilled만 지원)
 - Gemma 3 → **Gemma 4 12B** 인코더, 2.5 VAE
 - **2-stage**: 학습 해상도(≈1024×576) 근처 절반 해상도에서 제거 → latent x2 → 풀해상도 3 step 정제 (공식 검증 1920×1088)
@@ -164,8 +161,8 @@ g.note("사용법 · 원리", """# LTX-2.5 Clean Plate (마스크 없이 사람�
 
 note_key = g.nodes[-1]["key"]  # 사용법 노트
 g.core("LTX-2.5 CLEANPLATE CORE", "LTX-2.5 CLEANPLATE CORE  (더블클릭=내부 진입)", (1440, 0),
-       [n["key"] for n in g.nodes[:MAIN_UPTO]] + [out, out2, note_key],
-       relocate={out: (2100, 0), out2: (2100, 620)}, color="gen",
+       [n["key"] for n in g.nodes[:MAIN_UPTO]] + [out, note_key],
+       relocate={out: (2100, 0)}, color="gen",
        out_labels={"원본 fps": "fps", "⑦ 소리 없으면 무음 출력": "최종 오디오", "⑥ 원본 오디오 그대로": "최종 오디오", "⑧ 오디오": "최종 오디오", "원본 + 연장 (이음새 크로스페이드)": "최종 영상 (원본+연장)"})
 
 build(g, sys.argv[1] if len(sys.argv) > 1 else "/opt/cf/out_cleanplate.json")

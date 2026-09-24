@@ -6,7 +6,7 @@ After Effects 합성 전에 ComfyUI에서 쓰는 영상 생성 워크플로 4종
 |---|---|---|---|
 | `workflows/LTX2.5_Extend_Retake.json` | 길이 연장 | 2.5 distilled | 원본 마지막 2초를 latent에 **고정**하고 뒤만 생성 (Retake 방식) |
 | `workflows/LTX2.5_Outpaint_Original1to1.json` | 아웃페인트 | 2.5 distilled + 2.3 In/Outpaint IC-LoRA | 공식 2-stage 구조 + **Laplacian 블렌드**로 원본 1:1 복원 |
-| `workflows/LTX2.5_CleanPlate.json` | 사람·차량 제거 | 2.5 distilled + **2.5 Clean Plate IC-LoRA** | 2.3에서 2.5 전용 LoRA로 교체 + 2-stage |
+| `workflows/LTX2.5_CleanPlate.json` | 사람·차량 제거 | 2.5 distilled + Clean Plate IC-LoRA (클라우드 기본 2.3판) | 2.5 트랜스포머로 교체 + 2-stage |
 | `workflows/LTX2.5_UnionControl_MoGe.json` | 깊이 제어 v2v | 2.5 distilled + 2.3 Union IC-LoRA | 공식 sigma, 2-stage, 제어 영상 비율·fps 자동 |
 
 ### 구조: 메인 그래프 + CORE 서브그래프
@@ -36,7 +36,7 @@ CORE를 더블클릭하면 안에 그룹별로 정리된 엔진이 있다: 자�
 |---|---|---|
 | 길이 연장 | **2.5** | IC-LoRA가 필요 없는 기본 모델 기능이다. 2.5가 최신 기본 모델이고 공식 Comfy 템플릿도 2.5 기준이다. |
 | 아웃페인트 | **2.5 + 2.3 LoRA** | 2.5 전용 In/Outpaint LoRA는 아직 없다. Lightricks 공식 `LTX-2.5_ICLoRA_Outpaint_Two_Stage_Distilled.json`도 2.5 distilled에 `ltx-2.3-22b-ic-lora-in-outpainting-0.9`를 얹는다. |
-| Clean Plate | **2.5** | 2.5에서 따로 학습한 공식 `LTX-2.5-22b-IC-LoRA-Clean-Plate`가 나왔다. |
+| Clean Plate | **2.5 + 2.3 LoRA (클라우드)** | 2.5 전용 공식 `LTX-2.5-22b-IC-LoRA-Clean-Plate`가 나왔지만 Comfy Cloud에는 아직 없어서 기본값은 2.3판이다. 로컬에서 2.5판을 받으면 로더 파일명만 바꾼다. |
 | Union Control | **2.5 + 2.3 LoRA** | 공식 `LTX-2.5_ICLoRA_Union_Control_Distilled.json`이 같은 조합을 쓴다. |
 
 > LTX-2 README에는 "LoRA는 학습에 쓴 모델에서만 동작한다"는 문장이 있다. 그런데 공식 2.5 예제 워크플로가 2.3 IC-LoRA를 그대로 쓰므로 IC-LoRA는 예외로 보고 공식 예제를 따랐다. 2.5 전용판이 나오면 로더의 파일명만 바꾸면 된다.
@@ -90,12 +90,12 @@ CORE를 더블클릭하면 안에 그룹별로 정리된 엔진이 있다: 자�
 
 ### Clean Plate — `LTX2.5_CleanPlate.json`
 - 모델 구성을 2.5로 바꿨다.
-  - LoRA: `ltx-2.5-22b-ic-lora-clean-plate-1.0`
+  - LoRA: 기본 `ltx-2.3-22b-ic-lora-clean-plate-1.0` (Comfy Cloud에 있는 파일). 로컬에서 `ltx-2.5-22b-ic-lora-clean-plate-1.0`을 받으면 교체
   - 트랜스포머: 2.5 distilled
   - 텍스트 인코더: Gemma 4 12B
   - VAE: 2.5
 - LoRA 학습 해상도(1024×576, 49프레임 @25fps) 근처에서 Stage 1을 돌리고, latent x2 → 풀해상도 3 step으로 정제한다. 공식 검증 해상도는 1920×1088이다.
-- VHS `LTXV` 포맷 강제 자르기와 controlaltai `TwoWaySwitch` 의존을 제거했다. 출력은 원본 해상도·프레임 수 그대로이고, MP4와 ProRes를 함께 낸다.
+- VHS `LTXV` 포맷 강제 자르기와 controlaltai `TwoWaySwitch` 의존을 제거했다. 출력은 원본 해상도·프레임 수 그대로인 H.264 MP4(CRF 10)다.
 
 ### Union Control — `LTX2.5_UnionControl_MoGe.json`
 - `KSampler + linear_quadratic` 대신 **공식 distilled sigma**를 쓴다. distilled 모델은 이 sigma 값으로 학습됐다.
@@ -107,6 +107,8 @@ CORE를 더블클릭하면 안에 그룹별로 정리된 엔진이 있다: 자�
 
 ## 3. 필요 파일
 
+> **Comfy Cloud 호환:** 모든 모델 파일명은 기존 클라우드 워크플로에서 쓰던 이름에 맞췄다(공간 업스케일러만 Comfy 공식 2.5 템플릿 파일). VHS의 `video/ProRes` 포맷은 클라우드에 없어서 ProRes 출력 노드를 모두 제거하고 `video/h264-mp4` 하나만 남겼다. AE 합성용 고화질이 필요하면 로컬 ComfyUI에서 출력 노드의 format을 ProRes로 바꾼다.
+
 ### 모델 (Comfy-Org 재패키지 파일명 — 기존 워크플로와 동일)
 | 폴더 | 파일 |
 |---|---|
@@ -114,7 +116,7 @@ CORE를 더블클릭하면 안에 그룹별로 정리된 엔진이 있다: 자�
 | `models/text_encoders/` | `gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors`, `gemma4_e2b_it_bf16.safetensors` (프롬프트 보강용) |
 | `models/vae/` | `ltx-2.5-video-vae-bf16.safetensors`, `ltx-2.5-audio-vae-bf16.safetensors` |
 | `models/latent_upscale_models/` | `ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors` |
-| `models/loras/` | `ltx-2.5-22b-ic-lora-clean-plate-1.0.safetensors`, `ltx-2.3-22b-ic-lora-in-outpainting-0.9.safetensors`, `ltx-2.3-22b-ic-lora-union-control-ref0.5.safetensors` |
+| `models/loras/` | `ltx-2.3-22b-ic-lora-clean-plate-1.0.safetensors` (또는 2.5판), `ltx-2.3-22b-ic-lora-in-outpainting-0.9.safetensors`, `ltx-2.3-22b-ic-lora-union-control-ref0.5.safetensors` |
 | `models/geometry_estimation/` | `moge_2_vitl_normal_fp16.safetensors` (Union만) |
 
 bf16 원본(`ltx-2.5-22b-distilled-transformer-bf16.safetensors` 등)을 쓰려면 로더의 파일명만 바꾼다.

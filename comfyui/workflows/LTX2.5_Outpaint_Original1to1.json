@@ -1,8 +1,8 @@
 {
- "id": "44b9cfd9-49d7-436c-8932-d6567e658a6e",
+ "id": "a8880b17-4440-4793-adb1-75e54981eaed",
  "revision": 0,
- "last_node_id": 84,
- "last_link_id": 185,
+ "last_node_id": 83,
+ "last_link_id": 179,
  "nodes": [
   {
    "id": 1,
@@ -113,7 +113,7 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      164
+      161
      ]
     },
     {
@@ -127,7 +127,7 @@
      "name": "audio",
      "type": "AUDIO",
      "links": [
-      165
+      162
      ]
     },
     {
@@ -135,7 +135,7 @@
      "name": "video_info",
      "type": "VHS_VIDEOINFO",
      "links": [
-      163
+      160
      ]
     }
    ],
@@ -258,7 +258,7 @@
      "name": "width",
      "type": "INT",
      "links": [
-      168
+      165
      ]
     },
     {
@@ -266,7 +266,7 @@
      "name": "height",
      "type": "INT",
      "links": [
-      169
+      166
      ]
     }
    ],
@@ -318,7 +318,7 @@
      "name": "STRING",
      "type": "STRING",
      "links": [
-      171
+      168
      ]
     }
    ],
@@ -366,7 +366,7 @@
      "name": "STRING",
      "type": "STRING",
      "links": [
-      172
+      169
      ]
     }
    ],
@@ -414,7 +414,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      173
+      170
      ]
     }
    ],
@@ -464,7 +464,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      174
+      171
      ]
     }
    ],
@@ -514,7 +514,7 @@
      "name": "BOOLEAN",
      "type": "BOOLEAN",
      "links": [
-      167
+      164
      ]
     }
    ],
@@ -610,7 +610,7 @@
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
-      175
+      172
      ]
     }
    ],
@@ -658,7 +658,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      176
+      173
      ]
     }
    ],
@@ -748,7 +748,7 @@
     102
    ],
    "flags": {},
-   "order": 18,
+   "order": 17,
    "mode": 0,
    "inputs": [
     {
@@ -782,7 +782,7 @@
      "name": "model",
      "type": "MODEL",
      "links": [
-      179
+      176
      ]
     },
     {
@@ -790,7 +790,7 @@
      "name": "latent_downscale_factor",
      "type": "FLOAT",
      "links": [
-      178
+      175
      ]
     }
    ],
@@ -859,7 +859,7 @@
      "name": "CLIP",
      "type": "CLIP",
      "links": [
-      170
+      167
      ]
     }
    ],
@@ -911,7 +911,7 @@
      "name": "VAE",
      "type": "VAE",
      "links": [
-      177
+      174
      ]
     }
    ],
@@ -959,7 +959,7 @@
      "name": "VAE",
      "type": "VAE",
      "links": [
-      166
+      163
      ]
     }
    ],
@@ -995,14 +995,14 @@
      "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
-     "link": 184
+     "link": 179
     },
     {
      "localized_name": "audio",
      "name": "audio",
      "shape": 7,
      "type": "AUDIO",
-     "link": 182
+     "link": 178
     },
     {
      "localized_name": "meta_batch",
@@ -1025,7 +1025,7 @@
      "widget": {
       "name": "frame_rate"
      },
-     "link": 180
+     "link": 177
     },
     {
      "localized_name": "loop_count",
@@ -1126,7 +1126,7 @@
     "filename_prefix": "LTX2.5_Outpaint/outpaint",
     "format": "video/h264-mp4",
     "pix_fmt": "yuv420p",
-    "crf": 12,
+    "crf": 10,
     "save_metadata": true,
     "trim_to_audio": false,
     "pingpong": false,
@@ -1144,7 +1144,7 @@
     "filename_prefix": "LTX2.5_Outpaint/outpaint",
     "format": "video/h264-mp4",
     "pix_fmt": "yuv420p",
-    "crf": 12,
+    "crf": 10,
     "save_metadata": true,
     "trim_to_audio": false,
     "pingpong": false,
@@ -1160,161 +1160,6 @@
   },
   {
    "id": 82,
-   "type": "VHS_VideoCombine",
-   "pos": [
-    2100,
-    620
-   ],
-   "size": [
-    460,
-    400
-   ],
-   "flags": {},
-   "order": 15,
-   "mode": 2,
-   "inputs": [
-    {
-     "localized_name": "images",
-     "name": "images",
-     "type": "IMAGE",
-     "link": 185
-    },
-    {
-     "localized_name": "audio",
-     "name": "audio",
-     "shape": 7,
-     "type": "AUDIO",
-     "link": 183
-    },
-    {
-     "localized_name": "meta_batch",
-     "name": "meta_batch",
-     "shape": 7,
-     "type": "VHS_BatchManager",
-     "link": null
-    },
-    {
-     "localized_name": "vae",
-     "name": "vae",
-     "shape": 7,
-     "type": "VAE",
-     "link": null
-    },
-    {
-     "localized_name": "frame_rate",
-     "name": "frame_rate",
-     "type": "FLOAT",
-     "widget": {
-      "name": "frame_rate"
-     },
-     "link": 181
-    },
-    {
-     "localized_name": "loop_count",
-     "name": "loop_count",
-     "type": "INT",
-     "widget": {
-      "name": "loop_count"
-     },
-     "link": null
-    },
-    {
-     "localized_name": "filename_prefix",
-     "name": "filename_prefix",
-     "type": "STRING",
-     "widget": {
-      "name": "filename_prefix"
-     },
-     "link": null
-    },
-    {
-     "localized_name": "format",
-     "name": "format",
-     "type": "COMBO",
-     "widget": {
-      "name": "format"
-     },
-     "link": null
-    },
-    {
-     "localized_name": "pingpong",
-     "name": "pingpong",
-     "type": "BOOLEAN",
-     "widget": {
-      "name": "pingpong"
-     },
-     "link": null
-    },
-    {
-     "localized_name": "save_output",
-     "name": "save_output",
-     "type": "BOOLEAN",
-     "widget": {
-      "name": "save_output"
-     },
-     "link": null
-    },
-    {
-     "name": "profile",
-     "type": [
-      "lt",
-      "standard",
-      "hq",
-      "4444",
-      "4444xq"
-     ],
-     "widget": {
-      "name": "profile"
-     },
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "Filenames",
-     "name": "Filenames",
-     "type": "VHS_FILENAMES",
-     "links": null
-    }
-   ],
-   "title": "⑪ ProRes (필요 시 Ctrl+M 해제)",
-   "properties": {
-    "Node name for S&R": "VHS_VideoCombine"
-   },
-   "widgets_values": {
-    "frame_rate": 8,
-    "loop_count": 0,
-    "filename_prefix": "LTX2.5_Outpaint/outpaint_prores",
-    "format": "video/ProRes",
-    "profile": "hq",
-    "pingpong": false,
-    "save_output": true,
-    "videopreview": {
-     "hidden": false,
-     "paused": false,
-     "params": {},
-     "muted": null
-    }
-   },
-   "widgets_values_named": {
-    "frame_rate": 8,
-    "loop_count": 0,
-    "filename_prefix": "LTX2.5_Outpaint/outpaint_prores",
-    "format": "video/ProRes",
-    "profile": "hq",
-    "pingpong": false,
-    "save_output": true,
-    "videopreview": {
-     "hidden": false,
-     "paused": false,
-     "params": {}
-    }
-   },
-   "color": "#287A32",
-   "bgcolor": "#123C18"
-  },
-  {
-   "id": 83,
    "type": "MarkdownNote",
    "pos": [
     0,
@@ -1325,7 +1170,7 @@
     600
    ],
    "flags": {},
-   "order": 16,
+   "order": 15,
    "mode": 0,
    "inputs": [],
    "outputs": [],
@@ -1341,8 +1186,8 @@
    "bgcolor": "#2A1B00"
   },
   {
-   "id": 84,
-   "type": "da661d58-6c89-4f99-a424-02f6dc33571e",
+   "id": 83,
+   "type": "475fd35a-7a68-4264-bfa7-d6584ed076f4",
    "pos": [
     1440,
     0
@@ -1352,7 +1197,7 @@
     510
    ],
    "flags": {},
-   "order": 17,
+   "order": 16,
    "mode": 0,
    "inputs": [
     {
@@ -1360,28 +1205,28 @@
      "localized_name": "video_info",
      "name": "video_info",
      "type": "VHS_VIDEOINFO",
-     "link": 163
+     "link": 160
     },
     {
      "label": "① 입력 영상 · IMAGE",
      "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
-     "link": 164
+     "link": 161
     },
     {
      "label": "① 입력 영상 · audio",
      "localized_name": "audio",
      "name": "audio",
      "type": "AUDIO",
-     "link": 165
+     "link": 162
     },
     {
      "label": "LTX-2.5 Audio VAE",
      "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
-     "link": 166
+     "link": 163
     },
     {
      "label": "⑥ 원본에 소리가 있음",
@@ -1391,7 +1236,7 @@
      "widget": {
       "name": "switch"
      },
-     "link": 167
+     "link": 164
     },
     {
      "label": "② 확장할 화면비 · width",
@@ -1402,7 +1247,7 @@
      "widget": {
       "name": "values.c"
      },
-     "link": 168
+     "link": 165
     },
     {
      "label": "② 확장할 화면비 · height",
@@ -1410,14 +1255,14 @@
      "name": "values.d",
      "shape": 7,
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 169
+     "link": 166
     },
     {
      "label": "Gemma 4 12B + LTX-2.5 projection",
      "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
-     "link": 170
+     "link": 167
     },
     {
      "label": "③ 바깥 영역 설명",
@@ -1427,7 +1272,7 @@
      "widget": {
       "name": "text"
      },
-     "link": 171
+     "link": 168
     },
     {
      "label": "negative",
@@ -1437,7 +1282,7 @@
      "widget": {
       "name": "text_1"
      },
-     "link": 172
+     "link": 169
     },
     {
      "label": "④ 생성 해상도 긴 변 상한",
@@ -1448,7 +1293,7 @@
      "widget": {
       "name": "values.c_1"
      },
-     "link": 173
+     "link": 170
     },
     {
      "label": "⑤ seed",
@@ -1458,7 +1303,7 @@
      "widget": {
       "name": "noise_seed"
      },
-     "link": 174
+     "link": 171
     },
     {
      "label": "⑧ 생성 영역 색 보정 강도",
@@ -1468,7 +1313,7 @@
      "widget": {
       "name": "strength"
      },
-     "link": 175
+     "link": 172
     },
     {
      "label": "⑨ 최종 경계 블렌드 확장",
@@ -1478,14 +1323,14 @@
      "widget": {
       "name": "mask_low_res_dilation"
      },
-     "link": 176
+     "link": 173
     },
     {
      "label": "LTX-2.5 Video VAE",
      "localized_name": "vae_1",
      "name": "vae_1",
      "type": "VAE",
-     "link": 177
+     "link": 174
     },
     {
      "label": "In/Outpaint IC-LoRA · latent_downscale_factor",
@@ -1495,14 +1340,14 @@
      "widget": {
       "name": "latent_downscale_factor"
      },
-     "link": 178
+     "link": 175
     },
     {
      "label": "In/Outpaint IC-LoRA · model",
      "localized_name": "model",
      "name": "model",
      "type": "MODEL",
-     "link": 179
+     "link": 176
     }
    ],
    "outputs": [
@@ -1512,8 +1357,7 @@
      "name": "loaded_fps🟦",
      "type": "FLOAT",
      "links": [
-      180,
-      181
+      177
      ]
     },
     {
@@ -1522,8 +1366,7 @@
      "name": "output",
      "type": "AUDIO",
      "links": [
-      182,
-      183
+      178
      ]
     },
     {
@@ -1532,8 +1375,7 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      184,
-      185
+      179
      ]
     }
    ],
@@ -1585,186 +1427,162 @@
    "FLOAT"
   ],
   [
-   163,
+   160,
    1,
    3,
-   84,
+   83,
    0,
    "VHS_VIDEOINFO"
   ],
   [
-   164,
+   161,
    1,
    0,
-   84,
+   83,
    1,
    "IMAGE"
   ],
   [
-   165,
+   162,
    1,
    2,
-   84,
+   83,
    2,
    "AUDIO"
   ],
   [
-   166,
+   163,
    15,
    0,
-   84,
+   83,
    3,
    "VAE"
   ],
   [
-   167,
+   164,
    7,
    0,
-   84,
+   83,
    4,
    "BOOLEAN"
   ],
   [
-   168,
+   165,
    2,
    0,
-   84,
+   83,
    5,
    "INT"
   ],
   [
-   169,
+   166,
    2,
    1,
-   84,
+   83,
    6,
    "INT"
   ],
   [
-   170,
+   167,
    13,
    0,
-   84,
+   83,
    7,
    "CLIP"
   ],
   [
-   171,
+   168,
    3,
    0,
-   84,
+   83,
    8,
    "STRING"
   ],
   [
-   172,
+   169,
    4,
    0,
-   84,
+   83,
    9,
    "STRING"
   ],
   [
-   173,
+   170,
    5,
    0,
-   84,
+   83,
    10,
    "INT"
   ],
   [
-   174,
+   171,
    6,
    0,
-   84,
+   83,
    11,
    "INT"
   ],
   [
-   175,
+   172,
    9,
    0,
-   84,
+   83,
    12,
    "FLOAT"
   ],
   [
-   176,
+   173,
    10,
    0,
-   84,
+   83,
    13,
    "INT"
   ],
   [
-   177,
+   174,
    14,
    0,
-   84,
+   83,
    14,
    "VAE"
   ],
   [
-   178,
+   175,
    12,
    1,
-   84,
+   83,
    15,
    "FLOAT"
   ],
   [
-   179,
+   176,
    12,
    0,
-   84,
+   83,
    16,
    "MODEL"
   ],
   [
-   180,
-   84,
+   177,
+   83,
    0,
    81,
    4,
    "FLOAT"
   ],
   [
-   181,
-   84,
-   0,
-   82,
-   4,
-   "FLOAT"
-  ],
-  [
-   182,
-   84,
+   178,
+   83,
    1,
    81,
    1,
    "AUDIO"
   ],
   [
-   183,
-   84,
-   1,
-   82,
-   1,
-   "AUDIO"
-  ],
-  [
-   184,
-   84,
+   179,
+   83,
    2,
    81,
-   0,
-   "IMAGE"
-  ],
-  [
-   185,
-   84,
-   2,
-   82,
    0,
    "IMAGE"
   ]
@@ -1801,7 +1619,7 @@
     2070,
     -60,
     520,
-    1120
+    660
    ],
    "color": "#287A32",
    "flags": {}
@@ -1810,12 +1628,12 @@
  "definitions": {
   "subgraphs": [
    {
-    "id": "da661d58-6c89-4f99-a424-02f6dc33571e",
+    "id": "475fd35a-7a68-4264-bfa7-d6584ed076f4",
     "version": 1,
     "state": {
      "lastGroupId": 8,
-     "lastNodeId": 84,
-     "lastLinkId": 185,
+     "lastNodeId": 83,
+     "lastLinkId": 179,
      "lastRerouteId": 0
     },
     "revision": 0,
@@ -1841,7 +1659,7 @@
     },
     "inputs": [
      {
-      "id": "fdfd4221-b53c-4ba2-8307-f3551363a4a2",
+      "id": "5dd42e7a-39e2-4b53-9095-4fcc48a9b52e",
       "name": "video_info",
       "type": "VHS_VIDEOINFO",
       "linkIds": [
@@ -1855,7 +1673,7 @@
       ]
      },
      {
-      "id": "4fd3dda8-6037-45ff-b90e-0569b923e09a",
+      "id": "f21f7f26-2029-4be0-b128-5302bd8226eb",
       "name": "image",
       "type": "IMAGE",
       "linkIds": [
@@ -1871,7 +1689,7 @@
       ]
      },
      {
-      "id": "5db2352b-4346-4288-ac4c-efbb6e9620be",
+      "id": "e5ce7753-9abc-4f1f-b896-81f4f12df5cd",
       "name": "audio",
       "type": "AUDIO",
       "linkIds": [
@@ -1886,7 +1704,7 @@
       ]
      },
      {
-      "id": "7df8374e-90b4-4478-a53a-409634f8ab8a",
+      "id": "1892f175-8382-45ad-9f18-0e6f7e85b272",
       "name": "vae",
       "type": "VAE",
       "linkIds": [
@@ -1902,7 +1720,7 @@
       ]
      },
      {
-      "id": "8dcf5f8d-9919-47d9-aa9f-be89931f1dec",
+      "id": "0338cfe3-9964-43d6-8d08-ecfe58265f7c",
       "name": "switch",
       "type": "BOOLEAN",
       "linkIds": [
@@ -1919,7 +1737,7 @@
       ]
      },
      {
-      "id": "6945f156-d50e-448e-bdac-bab463bbfa9e",
+      "id": "df75053c-7086-41e4-9872-c0be13faf77d",
       "name": "values.c",
       "type": "FLOAT,INT,BOOLEAN",
       "linkIds": [
@@ -1935,7 +1753,7 @@
       ]
      },
      {
-      "id": "41857afe-1c3b-41b2-9040-1109a10bf2da",
+      "id": "c8deab14-690a-49e1-8d95-2f226d4b8f6f",
       "name": "values.d",
       "type": "FLOAT,INT,BOOLEAN",
       "linkIds": [
@@ -1951,7 +1769,7 @@
       ]
      },
      {
-      "id": "4d2bc6cc-6619-4d16-997a-eab60706cfa7",
+      "id": "c4ae4129-7a9c-449c-abed-4bbb2fa3f6cb",
       "name": "clip",
       "type": "CLIP",
       "linkIds": [
@@ -1966,7 +1784,7 @@
       ]
      },
      {
-      "id": "7e3f660d-a770-4b17-9b8b-2b62a6c9d59a",
+      "id": "36f2036d-3efe-4653-8841-6b9bbe9b2df6",
       "name": "text",
       "type": "STRING",
       "linkIds": [
@@ -1980,7 +1798,7 @@
       ]
      },
      {
-      "id": "ec659069-b35b-4f76-a61b-3bc9ddd8132d",
+      "id": "9208c9e0-1b70-45b1-b7ca-4205dde7c670",
       "name": "text_1",
       "type": "STRING",
       "linkIds": [
@@ -1994,7 +1812,7 @@
       ]
      },
      {
-      "id": "b94585f9-7dc9-4a99-b054-7508e18fb95e",
+      "id": "ee005cbc-ccfe-4688-8212-8e2d50941b3d",
       "name": "values.c_1",
       "type": "FLOAT,INT,BOOLEAN",
       "linkIds": [
@@ -2010,7 +1828,7 @@
       ]
      },
      {
-      "id": "dbdb5a9f-db36-449e-a9f2-871d06a7b975",
+      "id": "e6eb257f-a1c7-475f-8a55-9faf803faa9b",
       "name": "noise_seed",
       "type": "INT",
       "linkIds": [
@@ -2024,7 +1842,7 @@
       ]
      },
      {
-      "id": "6b99f6c1-585b-48a2-b618-b9759532346a",
+      "id": "8a01449b-d6d6-4fe3-964d-8bf16dd1e79e",
       "name": "strength",
       "type": "FLOAT",
       "linkIds": [
@@ -2038,7 +1856,7 @@
       ]
      },
      {
-      "id": "994af7c8-0d6c-4e9c-9451-1e04738263b3",
+      "id": "19326521-6291-435e-8f5f-366a24fd4938",
       "name": "mask_low_res_dilation",
       "type": "INT",
       "linkIds": [
@@ -2052,7 +1870,7 @@
       ]
      },
      {
-      "id": "f3dec028-44cb-4263-9287-ab6ed71d676f",
+      "id": "e5b2a6fa-54fc-4e0d-bb22-132f75fb4682",
       "name": "vae_1",
       "type": "VAE",
       "linkIds": [
@@ -2070,7 +1888,7 @@
       ]
      },
      {
-      "id": "01bf2c26-b2df-4395-bbce-8058dfac45e7",
+      "id": "077013c9-a7d7-48a8-a8bc-77029d1dee4f",
       "name": "latent_downscale_factor",
       "type": "FLOAT",
       "linkIds": [
@@ -2084,7 +1902,7 @@
       ]
      },
      {
-      "id": "df3fc90b-b2af-4525-b9ed-ad87069dae65",
+      "id": "5b01d805-edef-4f57-99dc-ff992a83227b",
       "name": "model",
       "type": "MODEL",
       "linkIds": [
@@ -2102,7 +1920,7 @@
     ],
     "outputs": [
      {
-      "id": "54a442c4-f220-41e3-88ad-c60dec8d3c5f",
+      "id": "00bd0730-ad95-4304-8c67-e605519412b4",
       "name": "loaded_fps🟦",
       "type": "FLOAT",
       "linkIds": [
@@ -2116,7 +1934,7 @@
       ]
      },
      {
-      "id": "67fe759d-ea37-4c47-a738-030bee512170",
+      "id": "c0e2ff20-abf6-4c2f-a0c7-5b46ba050331",
       "name": "output",
       "type": "AUDIO",
       "linkIds": [
@@ -2130,7 +1948,7 @@
       ]
      },
      {
-      "id": "9b4830d0-6a92-4182-9bb4-6ee4b691c42f",
+      "id": "0f322ca0-9d16-4a90-b651-199473690fe8",
       "name": "IMAGE",
       "type": "IMAGE",
       "linkIds": [

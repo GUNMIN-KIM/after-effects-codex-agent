@@ -191,12 +191,9 @@ g.group("원본 1:1 복원 — 딱딱한 합성 대신 Laplacian 블렌드", (XF
 
 XO = XF + 440
 out = g.node("VHS_VideoCombine", "⑩ 최종 MP4", (XO, 0),
-             {"filename_prefix": "LTX2.5_Outpaint/outpaint", "format": "video/h264-mp4", "crf": 12}, kind="out", size=[460, 560])
+             {"filename_prefix": "LTX2.5_Outpaint/outpaint", "format": "video/h264-mp4", "crf": 10}, kind="out", size=[460, 560])
 g.link(trim, out, "images"); g.link(asw, out, "audio"); g.link(fps, out, "frame_rate")
-out2 = g.node("VHS_VideoCombine", "⑪ ProRes (필요 시 Ctrl+M 해제)", (XO, 620),
-              {"filename_prefix": "LTX2.5_Outpaint/outpaint_prores", "format": "video/ProRes"}, kind="out", mode=2, size=[460, 400])
-g.link(trim, out2, "images"); g.link(asw, out2, "audio"); g.link(fps, out2, "frame_rate")
-g.group("출력", (2070, -60, 520, 1120), "#287A32", main=True)
+g.group("출력", (2070, -60, 520, 660), "#287A32", main=True)
 
 g.note("사용법 · 원리", """# LTX-2.5 아웃페인트 (원본 1:1 보존)
 
@@ -218,8 +215,8 @@ g.note("사용법 · 원리", """# LTX-2.5 아웃페인트 (원본 1:1 보존)
 
 note_key = g.nodes[-1]["key"]  # 사용법 노트
 g.core("LTX-2.5 OUTPAINT CORE", "LTX-2.5 아웃페인트 CORE  (더블클릭=내부 진입)", (1440, 0),
-       [n["key"] for n in g.nodes[:MAIN_UPTO]] + [out, out2, note_key],
-       relocate={out: (2100, 0), out2: (2100, 620)}, color="gen",
+       [n["key"] for n in g.nodes[:MAIN_UPTO]] + [out, note_key],
+       relocate={out: (2100, 0)}, color="gen",
        out_labels={"원본 fps": "fps", "⑦ 소리 없으면 무음 출력": "최종 오디오", "⑥ 원본 오디오 그대로": "최종 오디오", "⑧ 오디오": "최종 오디오", "원본 + 연장 (이음새 크로스페이드)": "최종 영상 (원본+연장)"})
 
 build(g, sys.argv[1] if len(sys.argv) > 1 else "/opt/cf/out_outpaint.json")

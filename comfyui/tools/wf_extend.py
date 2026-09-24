@@ -190,12 +190,9 @@ g.group("합치기 — 원본 프레임 무변형 + 색 보정 + 이음새 처�
 # ─────────────────────────── 출력 ───────────────────────────
 XO = XP + 440
 out = g.node("VHS_VideoCombine", "⑫ 최종 MP4 (원본 + 연장)", (XO, 0),
-             {"filename_prefix": "LTX2.5_Extend/extend", "format": "video/h264-mp4", "crf": 12}, kind="out", size=[460, 560])
+             {"filename_prefix": "LTX2.5_Extend/extend", "format": "video/h264-mp4", "crf": 10}, kind="out", size=[460, 560])
 g.link(ext[2], out, "images"); g.link(a_sw, out, "audio"); g.link(fps, out, "frame_rate")
-out2 = g.node("VHS_VideoCombine", "⑬ ProRes (AE 합성용 · 필요 시 Ctrl+M 해제)", (XO, 620),
-              {"filename_prefix": "LTX2.5_Extend/extend_prores", "format": "video/ProRes"}, kind="out", mode=2, size=[460, 400])
-g.link(ext[2], out2, "images"); g.link(a_sw, out2, "audio"); g.link(fps, out2, "frame_rate")
-g.group("출력", (2070, -60, 520, 1120), "#287A32", main=True)
+g.group("출력", (2070, -60, 520, 660), "#287A32", main=True)
 
 g.note("사용법 · 원리", """# LTX-2.5 길이 연장 (Retake 방식)
 
@@ -223,8 +220,8 @@ g.note("사용법 · 원리", """# LTX-2.5 길이 연장 (Retake 방식)
 
 note_key = g.nodes[-1]["key"]  # 사용법 노트
 g.core("LTX-2.5 EXTEND CORE", "LTX-2.5 길이연장 CORE  (더블클릭=내부 진입)", (1440, 0),
-       [n["key"] for n in g.nodes[:MAIN_UPTO]] + [out, out2, note_key],
-       relocate={out: (2100, 0), out2: (2100, 620)}, color="gen",
+       [n["key"] for n in g.nodes[:MAIN_UPTO]] + [out, note_key],
+       relocate={out: (2100, 0)}, color="gen",
        out_labels={"원본 fps": "fps", "⑦ 연장 구간 소리": "최종 오디오", "⑥ 원본 오디오 그대로": "최종 오디오", "⑧ 오디오": "최종 오디오", "원본 + 연장 (이음새 크로스페이드)": "최종 영상 (원본+연장)"})
 
 build(g, sys.argv[1] if len(sys.argv) > 1 else "/opt/cf/out_extend.json")

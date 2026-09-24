@@ -1,8 +1,8 @@
 {
- "id": "4223cfcd-8ce8-47da-932c-435730baa25e",
+ "id": "c851c55e-c335-4277-93fa-5845c6a97824",
  "revision": 0,
- "last_node_id": 58,
- "last_link_id": 112,
+ "last_node_id": 57,
+ "last_link_id": 106,
  "nodes": [
   {
    "id": 1,
@@ -16,7 +16,7 @@
     600
    ],
    "flags": {},
-   "order": 17,
+   "order": 16,
    "mode": 0,
    "inputs": [
     {
@@ -113,7 +113,7 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      93
+      90
      ]
     },
     {
@@ -127,7 +127,7 @@
      "name": "audio",
      "type": "AUDIO",
      "links": [
-      95
+      92
      ]
     },
     {
@@ -135,7 +135,7 @@
      "name": "video_info",
      "type": "VHS_VIDEOINFO",
      "links": [
-      92
+      89
      ]
     }
    ],
@@ -230,7 +230,7 @@
      "name": "STRING",
      "type": "STRING",
      "links": [
-      98
+      95
      ]
     }
    ],
@@ -278,7 +278,7 @@
      "name": "STRING",
      "type": "STRING",
      "links": [
-      99
+      96
      ]
     }
    ],
@@ -376,7 +376,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      100
+      97
      ]
     }
    ],
@@ -426,7 +426,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      101
+      98
      ]
     }
    ],
@@ -524,7 +524,7 @@
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
-      94
+      91
      ]
     }
    ],
@@ -572,7 +572,7 @@
      "name": "BOOLEAN",
      "type": "BOOLEAN",
      "links": [
-      96
+      93
      ]
     }
    ],
@@ -656,11 +656,11 @@
     140
    ],
    "size": [
-    317.3775390625,
+    457.3912109375,
     102
    ],
    "flags": {},
-   "order": 18,
+   "order": 17,
    "mode": 0,
    "inputs": [
     {
@@ -694,7 +694,7 @@
      "name": "model",
      "type": "MODEL",
      "links": [
-      104
+      101
      ]
     },
     {
@@ -702,20 +702,20 @@
      "name": "latent_downscale_factor",
      "type": "FLOAT",
      "links": [
-      103
+      100
      ]
     }
    ],
-   "title": "Clean Plate IC-LoRA (LTX-2.5 전용 공식판)",
+   "title": "Clean Plate IC-LoRA (클라우드: 2.3판 · 로컬에 2.5판 있으면 교체)",
    "properties": {
     "Node name for S&R": "LTXICLoRALoaderModelOnly"
    },
    "widgets_values": [
-    "ltx-2.5-22b-ic-lora-clean-plate-1.0.safetensors",
+    "ltx-2.3-22b-ic-lora-clean-plate-1.0.safetensors",
     1
    ],
    "widgets_values_named": {
-    "lora_name": "ltx-2.5-22b-ic-lora-clean-plate-1.0.safetensors",
+    "lora_name": "ltx-2.3-22b-ic-lora-clean-plate-1.0.safetensors",
     "strength_model": 1
    },
    "color": "#5E258B",
@@ -771,7 +771,7 @@
      "name": "CLIP",
      "type": "CLIP",
      "links": [
-      97
+      94
      ]
     }
    ],
@@ -823,7 +823,7 @@
      "name": "VAE",
      "type": "VAE",
      "links": [
-      102
+      99
      ]
     }
    ],
@@ -871,7 +871,7 @@
      "name": "VAE",
      "type": "VAE",
      "links": [
-      106
+      103
      ]
     }
    ],
@@ -919,7 +919,7 @@
      "name": "LATENT_UPSCALE_MODEL",
      "type": "LATENT_UPSCALE_MODEL",
      "links": [
-      105
+      102
      ]
     }
    ],
@@ -955,14 +955,14 @@
      "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
-     "link": 109
+     "link": 105
     },
     {
      "localized_name": "audio",
      "name": "audio",
      "shape": 7,
      "type": "AUDIO",
-     "link": 111
+     "link": 106
     },
     {
      "localized_name": "meta_batch",
@@ -985,7 +985,7 @@
      "widget": {
       "name": "frame_rate"
      },
-     "link": 107
+     "link": 104
     },
     {
      "localized_name": "loop_count",
@@ -1086,7 +1086,7 @@
     "filename_prefix": "LTX2.5_CleanPlate/cleanplate",
     "format": "video/h264-mp4",
     "pix_fmt": "yuv420p",
-    "crf": 12,
+    "crf": 10,
     "save_metadata": true,
     "trim_to_audio": false,
     "pingpong": false,
@@ -1104,7 +1104,7 @@
     "filename_prefix": "LTX2.5_CleanPlate/cleanplate",
     "format": "video/h264-mp4",
     "pix_fmt": "yuv420p",
-    "crf": 12,
+    "crf": 10,
     "save_metadata": true,
     "trim_to_audio": false,
     "pingpong": false,
@@ -1120,161 +1120,6 @@
   },
   {
    "id": 56,
-   "type": "VHS_VideoCombine",
-   "pos": [
-    2100,
-    620
-   ],
-   "size": [
-    460,
-    400
-   ],
-   "flags": {},
-   "order": 14,
-   "mode": 0,
-   "inputs": [
-    {
-     "localized_name": "images",
-     "name": "images",
-     "type": "IMAGE",
-     "link": 110
-    },
-    {
-     "localized_name": "audio",
-     "name": "audio",
-     "shape": 7,
-     "type": "AUDIO",
-     "link": 112
-    },
-    {
-     "localized_name": "meta_batch",
-     "name": "meta_batch",
-     "shape": 7,
-     "type": "VHS_BatchManager",
-     "link": null
-    },
-    {
-     "localized_name": "vae",
-     "name": "vae",
-     "shape": 7,
-     "type": "VAE",
-     "link": null
-    },
-    {
-     "localized_name": "frame_rate",
-     "name": "frame_rate",
-     "type": "FLOAT",
-     "widget": {
-      "name": "frame_rate"
-     },
-     "link": 108
-    },
-    {
-     "localized_name": "loop_count",
-     "name": "loop_count",
-     "type": "INT",
-     "widget": {
-      "name": "loop_count"
-     },
-     "link": null
-    },
-    {
-     "localized_name": "filename_prefix",
-     "name": "filename_prefix",
-     "type": "STRING",
-     "widget": {
-      "name": "filename_prefix"
-     },
-     "link": null
-    },
-    {
-     "localized_name": "format",
-     "name": "format",
-     "type": "COMBO",
-     "widget": {
-      "name": "format"
-     },
-     "link": null
-    },
-    {
-     "localized_name": "pingpong",
-     "name": "pingpong",
-     "type": "BOOLEAN",
-     "widget": {
-      "name": "pingpong"
-     },
-     "link": null
-    },
-    {
-     "localized_name": "save_output",
-     "name": "save_output",
-     "type": "BOOLEAN",
-     "widget": {
-      "name": "save_output"
-     },
-     "link": null
-    },
-    {
-     "name": "profile",
-     "type": [
-      "lt",
-      "standard",
-      "hq",
-      "4444",
-      "4444xq"
-     ],
-     "widget": {
-      "name": "profile"
-     },
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "Filenames",
-     "name": "Filenames",
-     "type": "VHS_FILENAMES",
-     "links": null
-    }
-   ],
-   "title": "⑩ Clean Plate ProRes (AE 합성용)",
-   "properties": {
-    "Node name for S&R": "VHS_VideoCombine"
-   },
-   "widgets_values": {
-    "frame_rate": 8,
-    "loop_count": 0,
-    "filename_prefix": "LTX2.5_CleanPlate/cleanplate_prores",
-    "format": "video/ProRes",
-    "profile": "hq",
-    "pingpong": false,
-    "save_output": true,
-    "videopreview": {
-     "hidden": false,
-     "paused": false,
-     "params": {},
-     "muted": null
-    }
-   },
-   "widgets_values_named": {
-    "frame_rate": 8,
-    "loop_count": 0,
-    "filename_prefix": "LTX2.5_CleanPlate/cleanplate_prores",
-    "format": "video/ProRes",
-    "profile": "hq",
-    "pingpong": false,
-    "save_output": true,
-    "videopreview": {
-     "hidden": false,
-     "paused": false,
-     "params": {}
-    }
-   },
-   "color": "#287A32",
-   "bgcolor": "#123C18"
-  },
-  {
-   "id": 57,
    "type": "MarkdownNote",
    "pos": [
     0,
@@ -1285,24 +1130,24 @@
     560
    ],
    "flags": {},
-   "order": 15,
+   "order": 14,
    "mode": 0,
    "inputs": [],
    "outputs": [],
    "title": "사용법 · 원리",
    "properties": {},
    "widgets_values": [
-    "# LTX-2.5 Clean Plate (마스크 없이 사람·차량 제거)\n\n## 무엇이 달라졌나\n- **LTX-2.5 전용 공식 Clean Plate IC-LoRA** (`ltx-2.5-22b-ic-lora-clean-plate-1.0`) — 2.3 LoRA가 아니라 2.5 트랜스포머에서 학습된 판\n- 2.3 dev + distilled LoRA 0.6 조합 → **2.5 distilled 트랜스포머** 단독 (공식 IC-LoRA 파이프라인은 distilled만 지원)\n- Gemma 3 → **Gemma 4 12B** 인코더, 2.5 VAE\n- **2-stage**: 학습 해상도(≈1024×576) 근처 절반 해상도에서 제거 → latent x2 → 풀해상도 3 step 정제 (공식 검증 1920×1088)\n- VHS `LTXV` 포맷(해상도·프레임 강제 자르기) 제거 → 원본 해상도·프레임 수 그대로 출력\n- controlaltai `TwoWaySwitch` 등 외부 의존 노드 제거\n- ⑦ 결과를 원본 프레임별 색에 맞춤 (사람이 화면 대부분이면 0.2 이하로)\n\n## 팁\n- LoRA 학습: 49프레임 @25fps, 1024×576 / 576×1024. 길면 ③으로 나눠서 처리\n- 사람이 남으면 ⑥ 1.1~1.2, 배경이 뭉개지면 0.8~0.9\n- ② 프롬프트는 \"사람 없는 같은 장면\"을 설명 (지울 대상 이름을 쓰지 말 것)\n"
+    "# LTX-2.5 Clean Plate (마스크 없이 사람·차량 제거)\n\n## 무엇이 달라졌나\n- Clean Plate IC-LoRA: Comfy Cloud에는 2.3판(`ltx-2.3-22b-ic-lora-clean-plate-1.0`)만 있어 기본값은 2.3판. 공식 2.5 예제들이 2.3 IC-LoRA를 2.5 트랜스포머에 그대로 쓰는 것과 같은 방식. 로컬에 2.5판(`ltx-2.5-22b-ic-lora-clean-plate-1.0`)을 받으면 로더에서 교체\n- 2.3 dev + distilled LoRA 0.6 조합 → **2.5 distilled 트랜스포머** 단독 (공식 IC-LoRA 파이프라인은 distilled만 지원)\n- Gemma 3 → **Gemma 4 12B** 인코더, 2.5 VAE\n- **2-stage**: 학습 해상도(≈1024×576) 근처 절반 해상도에서 제거 → latent x2 → 풀해상도 3 step 정제 (공식 검증 1920×1088)\n- VHS `LTXV` 포맷(해상도·프레임 강제 자르기) 제거 → 원본 해상도·프레임 수 그대로 출력\n- controlaltai `TwoWaySwitch` 등 외부 의존 노드 제거\n- ⑦ 결과를 원본 프레임별 색에 맞춤 (사람이 화면 대부분이면 0.2 이하로)\n\n## 팁\n- LoRA 학습: 49프레임 @25fps, 1024×576 / 576×1024. 길면 ③으로 나눠서 처리\n- 사람이 남으면 ⑥ 1.1~1.2, 배경이 뭉개지면 0.8~0.9\n- ② 프롬프트는 \"사람 없는 같은 장면\"을 설명 (지울 대상 이름을 쓰지 말 것)\n"
    ],
    "widgets_values_named": {
-    "text": "# LTX-2.5 Clean Plate (마스크 없이 사람·차량 제거)\n\n## 무엇이 달라졌나\n- **LTX-2.5 전용 공식 Clean Plate IC-LoRA** (`ltx-2.5-22b-ic-lora-clean-plate-1.0`) — 2.3 LoRA가 아니라 2.5 트랜스포머에서 학습된 판\n- 2.3 dev + distilled LoRA 0.6 조합 → **2.5 distilled 트랜스포머** 단독 (공식 IC-LoRA 파이프라인은 distilled만 지원)\n- Gemma 3 → **Gemma 4 12B** 인코더, 2.5 VAE\n- **2-stage**: 학습 해상도(≈1024×576) 근처 절반 해상도에서 제거 → latent x2 → 풀해상도 3 step 정제 (공식 검증 1920×1088)\n- VHS `LTXV` 포맷(해상도·프레임 강제 자르기) 제거 → 원본 해상도·프레임 수 그대로 출력\n- controlaltai `TwoWaySwitch` 등 외부 의존 노드 제거\n- ⑦ 결과를 원본 프레임별 색에 맞춤 (사람이 화면 대부분이면 0.2 이하로)\n\n## 팁\n- LoRA 학습: 49프레임 @25fps, 1024×576 / 576×1024. 길면 ③으로 나눠서 처리\n- 사람이 남으면 ⑥ 1.1~1.2, 배경이 뭉개지면 0.8~0.9\n- ② 프롬프트는 \"사람 없는 같은 장면\"을 설명 (지울 대상 이름을 쓰지 말 것)\n"
+    "text": "# LTX-2.5 Clean Plate (마스크 없이 사람·차량 제거)\n\n## 무엇이 달라졌나\n- Clean Plate IC-LoRA: Comfy Cloud에는 2.3판(`ltx-2.3-22b-ic-lora-clean-plate-1.0`)만 있어 기본값은 2.3판. 공식 2.5 예제들이 2.3 IC-LoRA를 2.5 트랜스포머에 그대로 쓰는 것과 같은 방식. 로컬에 2.5판(`ltx-2.5-22b-ic-lora-clean-plate-1.0`)을 받으면 로더에서 교체\n- 2.3 dev + distilled LoRA 0.6 조합 → **2.5 distilled 트랜스포머** 단독 (공식 IC-LoRA 파이프라인은 distilled만 지원)\n- Gemma 3 → **Gemma 4 12B** 인코더, 2.5 VAE\n- **2-stage**: 학습 해상도(≈1024×576) 근처 절반 해상도에서 제거 → latent x2 → 풀해상도 3 step 정제 (공식 검증 1920×1088)\n- VHS `LTXV` 포맷(해상도·프레임 강제 자르기) 제거 → 원본 해상도·프레임 수 그대로 출력\n- controlaltai `TwoWaySwitch` 등 외부 의존 노드 제거\n- ⑦ 결과를 원본 프레임별 색에 맞춤 (사람이 화면 대부분이면 0.2 이하로)\n\n## 팁\n- LoRA 학습: 49프레임 @25fps, 1024×576 / 576×1024. 길면 ③으로 나눠서 처리\n- 사람이 남으면 ⑥ 1.1~1.2, 배경이 뭉개지면 0.8~0.9\n- ② 프롬프트는 \"사람 없는 같은 장면\"을 설명 (지울 대상 이름을 쓰지 말 것)\n"
    },
    "color": "#6B4500",
    "bgcolor": "#2A1B00"
   },
   {
-   "id": 58,
-   "type": "4f80afea-6252-4bb7-aceb-1cb4e5bab0be",
+   "id": 57,
+   "type": "8808d772-5c08-4f8b-b69c-65606023c697",
    "pos": [
     1440,
     0
@@ -1312,7 +1157,7 @@
     432
    ],
    "flags": {},
-   "order": 16,
+   "order": 15,
    "mode": 0,
    "inputs": [
     {
@@ -1320,14 +1165,14 @@
      "localized_name": "video_info",
      "name": "video_info",
      "type": "VHS_VIDEOINFO",
-     "link": 92
+     "link": 89
     },
     {
      "label": "① 입력 영상 · IMAGE",
      "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
-     "link": 93
+     "link": 90
     },
     {
      "label": "⑦ 원본 색 일치 강도",
@@ -1337,7 +1182,7 @@
      "widget": {
       "name": "strength"
      },
-     "link": 94
+     "link": 91
     },
     {
      "label": "① 입력 영상 · audio",
@@ -1345,7 +1190,7 @@
      "name": "on_true",
      "shape": 7,
      "type": "*",
-     "link": 95
+     "link": 92
     },
     {
      "label": "⑧ 원본 오디오 포함",
@@ -1355,14 +1200,14 @@
      "widget": {
       "name": "switch"
      },
-     "link": 96
+     "link": 93
     },
     {
      "label": "Gemma 4 12B + LTX-2.5 projection",
      "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
-     "link": 97
+     "link": 94
     },
     {
      "label": "② 사람이 없는 빈 장면 설명",
@@ -1372,7 +1217,7 @@
      "widget": {
       "name": "text"
      },
-     "link": 98
+     "link": 95
     },
     {
      "label": "negative",
@@ -1382,7 +1227,7 @@
      "widget": {
       "name": "text_1"
      },
-     "link": 99
+     "link": 96
     },
     {
      "label": "④ 생성 해상도 긴 변 상한",
@@ -1393,7 +1238,7 @@
      "widget": {
       "name": "values.c"
      },
-     "link": 100
+     "link": 97
     },
     {
      "label": "⑤ seed",
@@ -1403,14 +1248,14 @@
      "widget": {
       "name": "noise_seed"
      },
-     "link": 101
+     "link": 98
     },
     {
      "label": "LTX-2.5 Video VAE",
      "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
-     "link": 102
+     "link": 99
     },
     {
      "label": "Clean Plate IC-LoRA · latent_downscale_factor",
@@ -1420,28 +1265,28 @@
      "widget": {
       "name": "latent_downscale_factor"
      },
-     "link": 103
+     "link": 100
     },
     {
      "label": "Clean Plate IC-LoRA · model",
      "localized_name": "model",
      "name": "model",
      "type": "MODEL",
-     "link": 104
+     "link": 101
     },
     {
      "label": "LTX-2.5 공간 업스케일러 x2",
      "localized_name": "upscale_model",
      "name": "upscale_model",
      "type": "LATENT_UPSCALE_MODEL",
-     "link": 105
+     "link": 102
     },
     {
      "label": "LTX-2.5 Audio VAE",
      "localized_name": "Audio VAE",
      "name": "audio_vae",
      "type": "VAE",
-     "link": 106
+     "link": 103
     }
    ],
    "outputs": [
@@ -1451,8 +1296,7 @@
      "name": "loaded_fps🟦",
      "type": "FLOAT",
      "links": [
-      107,
-      108
+      104
      ]
     },
     {
@@ -1461,8 +1305,7 @@
      "name": "image",
      "type": "IMAGE",
      "links": [
-      109,
-      110
+      105
      ]
     },
     {
@@ -1471,8 +1314,7 @@
      "name": "output",
      "type": "AUDIO",
      "links": [
-      111,
-      112
+      106
      ]
     }
    ],
@@ -1528,170 +1370,146 @@
    "FLOAT"
   ],
   [
-   92,
+   89,
    1,
    3,
-   58,
+   57,
    0,
    "VHS_VIDEOINFO"
   ],
   [
-   93,
+   90,
    1,
    0,
-   58,
+   57,
    1,
    "IMAGE"
   ],
   [
-   94,
+   91,
    8,
    0,
-   58,
+   57,
    2,
    "FLOAT"
   ],
   [
-   95,
+   92,
    1,
    2,
-   58,
+   57,
    3,
    "AUDIO"
   ],
   [
-   96,
+   93,
    9,
    0,
-   58,
+   57,
    4,
    "BOOLEAN"
   ],
   [
-   97,
+   94,
    12,
    0,
-   58,
+   57,
    5,
    "CLIP"
   ],
   [
-   98,
+   95,
    2,
    0,
-   58,
+   57,
    6,
    "STRING"
   ],
   [
-   99,
+   96,
    3,
    0,
-   58,
+   57,
    7,
    "STRING"
   ],
   [
-   100,
+   97,
    5,
    0,
-   58,
+   57,
    8,
    "INT"
   ],
   [
-   101,
+   98,
    6,
    0,
-   58,
+   57,
    9,
    "INT"
   ],
   [
-   102,
+   99,
    13,
    0,
-   58,
+   57,
    10,
    "VAE"
   ],
   [
-   103,
+   100,
    11,
    1,
-   58,
+   57,
    11,
    "FLOAT"
   ],
   [
-   104,
+   101,
    11,
    0,
-   58,
+   57,
    12,
    "MODEL"
   ],
   [
-   105,
+   102,
    15,
    0,
-   58,
+   57,
    13,
    "LATENT_UPSCALE_MODEL"
   ],
   [
-   106,
+   103,
    14,
    0,
-   58,
+   57,
    14,
    "VAE"
   ],
   [
-   107,
-   58,
+   104,
+   57,
    0,
    55,
    4,
    "FLOAT"
   ],
   [
-   108,
-   58,
-   0,
-   56,
-   4,
-   "FLOAT"
-  ],
-  [
-   109,
-   58,
+   105,
+   57,
    1,
    55,
    0,
    "IMAGE"
   ],
   [
-   110,
-   58,
-   1,
-   56,
-   0,
-   "IMAGE"
-  ],
-  [
-   111,
-   58,
+   106,
+   57,
    2,
    55,
-   1,
-   "AUDIO"
-  ],
-  [
-   112,
-   58,
-   2,
-   56,
    1,
    "AUDIO"
   ]
@@ -1728,7 +1546,7 @@
     2070,
     -60,
     520,
-    1120
+    660
    ],
    "color": "#287A32",
    "flags": {}
@@ -1737,12 +1555,12 @@
  "definitions": {
   "subgraphs": [
    {
-    "id": "4f80afea-6252-4bb7-aceb-1cb4e5bab0be",
+    "id": "8808d772-5c08-4f8b-b69c-65606023c697",
     "version": 1,
     "state": {
      "lastGroupId": 8,
-     "lastNodeId": 58,
-     "lastLinkId": 112,
+     "lastNodeId": 57,
+     "lastLinkId": 106,
      "lastRerouteId": 0
     },
     "revision": 0,
@@ -1768,7 +1586,7 @@
     },
     "inputs": [
      {
-      "id": "b8944574-712d-412f-b799-c108a53500bd",
+      "id": "6c49492f-c70c-483d-831f-7b063f186b50",
       "name": "video_info",
       "type": "VHS_VIDEOINFO",
       "linkIds": [
@@ -1782,7 +1600,7 @@
       ]
      },
      {
-      "id": "556b0f43-f8cb-435b-a0f4-0fe69ff72e3b",
+      "id": "b689e720-b463-494c-8d85-f451810e9dea",
       "name": "image",
       "type": "IMAGE",
       "linkIds": [
@@ -1799,7 +1617,7 @@
       ]
      },
      {
-      "id": "3f970da7-a68f-4a45-9557-8b51fcb11d3e",
+      "id": "c84f8ef0-1884-477e-855d-70ad8cca3201",
       "name": "strength",
       "type": "FLOAT",
       "linkIds": [
@@ -1813,7 +1631,7 @@
       ]
      },
      {
-      "id": "006ace90-84c7-4de1-b0bf-9cdd8e34b8ef",
+      "id": "051dcbff-2dba-45c5-8d62-f8b3c9f50b97",
       "name": "on_true",
       "type": "*",
       "linkIds": [
@@ -1828,7 +1646,7 @@
       ]
      },
      {
-      "id": "a7fa3258-63cf-4221-95ab-26db9372605c",
+      "id": "de219360-a32c-4b42-93cd-142a1b48e04f",
       "name": "switch",
       "type": "BOOLEAN",
       "linkIds": [
@@ -1842,7 +1660,7 @@
       ]
      },
      {
-      "id": "fc52010e-0a86-4b95-9795-ba57e0d853de",
+      "id": "56b2b7ea-9fe9-48ee-be20-b0a61b9bbb1b",
       "name": "clip",
       "type": "CLIP",
       "linkIds": [
@@ -1857,7 +1675,7 @@
       ]
      },
      {
-      "id": "b41f16f0-aec9-405d-9524-9e32cc7d55aa",
+      "id": "b5cf5b7d-a4ec-4e93-812e-d22821c3fb4c",
       "name": "text",
       "type": "STRING",
       "linkIds": [
@@ -1871,7 +1689,7 @@
       ]
      },
      {
-      "id": "997d1355-7070-4c3e-8b23-7593c7c08169",
+      "id": "a524a830-4169-4efb-9220-ba1baf9cdd2d",
       "name": "text_1",
       "type": "STRING",
       "linkIds": [
@@ -1885,7 +1703,7 @@
       ]
      },
      {
-      "id": "578e8d63-abcc-4451-b545-60cdf5a18caa",
+      "id": "78c39a3d-5d78-4237-bb37-2a5212bd50fc",
       "name": "values.c",
       "type": "FLOAT,INT,BOOLEAN",
       "linkIds": [
@@ -1901,7 +1719,7 @@
       ]
      },
      {
-      "id": "bce0fcc9-368d-441d-8bd9-218c9100dff2",
+      "id": "1e4ada23-c461-4dfc-bebc-b8e99ba57b5d",
       "name": "noise_seed",
       "type": "INT",
       "linkIds": [
@@ -1915,7 +1733,7 @@
       ]
      },
      {
-      "id": "538d0f1a-1dc0-4401-8eac-99e8ce77357f",
+      "id": "e925838f-be2c-4e92-b342-5877144e4397",
       "name": "vae",
       "type": "VAE",
       "linkIds": [
@@ -1931,7 +1749,7 @@
       ]
      },
      {
-      "id": "3df4c071-4537-4c36-a234-95549b55ceb8",
+      "id": "4a2db3c4-8b5d-4981-a384-f8f19bb76f78",
       "name": "latent_downscale_factor",
       "type": "FLOAT",
       "linkIds": [
@@ -1945,7 +1763,7 @@
       ]
      },
      {
-      "id": "df0a702f-1637-4188-90b4-b65de9cfa018",
+      "id": "b57f42b4-bb2b-462c-886f-5b3d659a4012",
       "name": "model",
       "type": "MODEL",
       "linkIds": [
@@ -1960,7 +1778,7 @@
       ]
      },
      {
-      "id": "5440dec8-af56-45cb-9c21-15f72197f254",
+      "id": "29efd9cc-daa8-4ff9-9920-1edbe6ab0478",
       "name": "upscale_model",
       "type": "LATENT_UPSCALE_MODEL",
       "linkIds": [
@@ -1974,7 +1792,7 @@
       ]
      },
      {
-      "id": "a882d6e8-91c9-4146-b36d-cbfc499fe567",
+      "id": "6460b788-b73f-4ef3-b337-aa7627753c8f",
       "name": "audio_vae",
       "type": "VAE",
       "linkIds": [
@@ -1990,7 +1808,7 @@
     ],
     "outputs": [
      {
-      "id": "796648f1-f11f-48da-95ba-34b1df4511cd",
+      "id": "3d602e1d-d182-46ad-bb72-93841bf29703",
       "name": "loaded_fps🟦",
       "type": "FLOAT",
       "linkIds": [
@@ -2004,7 +1822,7 @@
       ]
      },
      {
-      "id": "d3cab6b2-68b5-4f17-a5cd-ea00b41f11a7",
+      "id": "ea146847-7f46-4b84-9c34-650d940e1564",
       "name": "image",
       "type": "IMAGE",
       "linkIds": [
@@ -2018,7 +1836,7 @@
       ]
      },
      {
-      "id": "56ba80ec-7d14-4a61-a357-50bfd9f3d870",
+      "id": "839f4def-99c4-408c-9900-c051457c65d5",
       "name": "output",
       "type": "AUDIO",
       "linkIds": [
