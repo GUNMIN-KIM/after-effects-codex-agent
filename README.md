@@ -10,6 +10,7 @@ After Effects를 실제로 읽고 수정하는 After Effects MCP와 Codex의 판
 | `SKILL.md` | 조사→계획→수정→시각 검수→저장 workflow |
 | `references/` | 합성, 매트, 색상, 애니메이션, 렌더, 문제 해결 기준 |
 | `templates/task-brief.md` | 실제 작업 지시 템플릿 |
+| `comfyui/` | AE 합성 전 소스 생성용 ComfyUI LTX-2.5 워크플로 (길이 연장·아웃페인트·Clean Plate·Union Control) |
 | `THIRD_PARTY_NOTICES.md` | 외부 프로젝트·상표·문서 고지 |
 
 ## 사용 순서
