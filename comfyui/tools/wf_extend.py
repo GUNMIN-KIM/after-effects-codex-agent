@@ -28,7 +28,7 @@ has_audio = g.node("PrimitiveBoolean", "⑦ 원본에 소리가 있음 (무음 �
 cm_str = g.node("PrimitiveFloat", "⑧ 색 일치 강도 (0=끔 · 0.5 권장 · 1=완전 일치)", (X0 + 460, 550), {"value": 0.5}, kind="param")
 seam = g.node("PrimitiveInt", "⑨ 이음새 크로스페이드 프레임", (X0 + 460, 660), {"value": 4}, kind="param")
 enh = g.node("PrimitiveBoolean", "⑩ 프롬프트 자동 보강 (Gemma, 원본 마지막 프레임 참고)", (X0 + 460, 770), {"value": False}, kind="param")
-g.group("조작 패널 — 여기만 만지면 됩니다", (X0 - 30, -60, 950, 1120), "#48538E")
+g.group("조작 패널 — 여기만 만지면 됩니다", (X0 - 30, -60, 950, 1120), "#48538E", main=True)
 
 # ─────────────────────────── 모델 ───────────────────────────
 XM = X0 + 1000
@@ -43,8 +43,9 @@ vae = g.node("VAELoader", "LTX-2.5 Video VAE (고화질 디퓨전 디코더)", (
 avae = g.node("VAELoader", "LTX-2.5 Audio VAE", (XM, 520), {"vae_name": "ltx-2.5-audio-vae-bf16.safetensors"}, kind="model")
 upm = g.node("LatentUpscaleModelLoader", "LTX-2.5 공간 업스케일러 x2", (XM, 620),
              {"model_name": "ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors"}, kind="model")
-g.group("모델 (LTX-2.5 공식 Comfy 파일명)", (XM - 30, -60, 380, 800), "#5E258B")
+g.group("모델 (LTX-2.5 공식 Comfy 파일명)", (XM - 30, -60, 380, 800), "#5E258B", main=True)
 
+MAIN_UPTO = len(g.nodes)
 # ─────────────────────────── 자동 계산 ───────────────────────────
 XA = XM + 420
 info = g.node("VHS_VideoInfo", "원본 fps", (XA, 0), {}, kind="post")
@@ -189,7 +190,7 @@ g.link(ext[2], out, "images"); g.link(a_sw, out, "audio"); g.link(fps, out, "fra
 out2 = g.node("VHS_VideoCombine", "⑫ ProRes (AE 합성용 · 필요 시 Ctrl+M 해제)", (XO, 620),
               {"filename_prefix": "LTX2.5_Extend/extend_prores", "format": "video/ProRes"}, kind="out", mode=2, size=[460, 400])
 g.link(ext[2], out2, "images"); g.link(a_sw, out2, "audio"); g.link(fps, out2, "frame_rate")
-g.group("출력", (XO - 30, -60, 520, 1120), "#287A32")
+g.group("출력", (2070, -60, 520, 1120), "#287A32", main=True)
 
 g.note("사용법 · 원리", """# LTX-2.5 길이 연장 (Retake 방식)
 
@@ -213,5 +214,11 @@ g.note("사용법 · 원리", """# LTX-2.5 길이 연장 (Retake 방식)
 - 생성 해상도는 64배수로 맞춘 뒤(최대 0.7% 비율 오차) 최종 출력은 원본 가로·세로로 정확히 복원
 - 새 프레임 수는 8의 배수로 올림되어 입력한 초보다 약간 길 수 있음
 """, (X0, 1100), size=[900, 640])
+
+note_key = g.nodes[-1]["key"]  # 사용법 노트
+g.core("LTX-2.5 EXTEND CORE", "LTX-2.5 길이연장 CORE  (더블클릭=내부 진입)", (1440, 0),
+       [n["key"] for n in g.nodes[:MAIN_UPTO]] + [out, out2, note_key],
+       relocate={out: (2100, 0), out2: (2100, 620)}, color="gen",
+       out_labels={"원본 fps": "fps", "⑦ 소리 없으면 무음 출력": "최종 오디오", "⑥ 원본 오디오 그대로": "최종 오디오", "⑧ 오디오": "최종 오디오", "원본 + 연장 (이음새 크로스페이드)": "최종 영상 (원본+연장)"})
 
 build(g, sys.argv[1] if len(sys.argv) > 1 else "/opt/cf/out_extend.json")

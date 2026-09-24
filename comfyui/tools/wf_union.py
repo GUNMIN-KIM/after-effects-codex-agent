@@ -26,7 +26,7 @@ prompt = g.node("PrimitiveStringMultiline", "⑩ 프롬프트", (0, 920),
 neg = g.node("PrimitiveStringMultiline", "negative", (460, 780),
              {"value": "pc game, console game, video game, cartoon, childish, ugly, blurry, deformed face, distorted proportions, flicker, color shift, oversaturated"},
              kind="input", size=[420, 150])
-g.group("조작 패널 — 여기만 만지면 됩니다", (-30, -60, 950, 1240), "#48538E")
+g.group("조작 패널 — 여기만 만지면 됩니다", (-30, -60, 950, 1240), "#48538E", main=True)
 
 # ─────────────── 모델 ───────────────
 XM = 1000
@@ -43,8 +43,9 @@ avae = g.node("VAELoader", "LTX-2.5 Audio VAE", (XM, 680), {"vae_name": "ltx-2.5
 upm = g.node("LatentUpscaleModelLoader", "LTX-2.5 공간 업스케일러 x2", (XM, 780),
              {"model_name": "ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors"}, kind="model")
 moge = g.node("LoadMoGeModel", "MoGe-2 깊이 모델", (XM, 900), {"model_name": "moge_2_vitl_normal_fp16.safetensors"}, kind="model")
-g.group("모델", (XM - 30, -60, 400, 1080), "#5E258B")
+g.group("모델", (XM - 30, -60, 400, 1080), "#5E258B", main=True)
 
+MAIN_UPTO = len(g.nodes)
 # ─────────────── 제어 영상 · 깊이 ───────────────
 XD = XM + 440
 sl = g.node("Video Slice", "구간 자르기", (XD, 0), {"strict_duration": False}, kind="post")
@@ -162,7 +163,7 @@ pv1 = g.node("PreviewImage", "깊이 확인 (엔진 입력)", (XO, 620), {}, kin
 g.link(d1, pv1, "images")
 pv2 = g.node("PreviewImage", "깊이 품질 확인 · depth_colored", (XO, 960), {}, kind="out", size=[420, 300])
 g.link(depc, pv2, "images")
-g.group("출력 · 확인", (XO - 30, -60, 520, 1380), "#287A32")
+g.group("출력 · 확인", (2070, -60, 520, 1380), "#287A32", main=True)
 
 g.note("사용법 · 원리", """# LTX-2.5 Union Control (MoGe-2 depth)
 
@@ -177,5 +178,10 @@ g.note("사용법 · 원리", """# LTX-2.5 Union Control (MoGe-2 depth)
 - 깊이 미리보기부터 확인: 엔진(Stage 1/2)을 Ctrl+B로 끄고 실행하면 깊이만 빠르게 나옴
 - Union IC-LoRA 2.5 전용판은 아직 없음 → 공식 2.5 예제도 2.3 ref0.5 파일을 그대로 사용
 """, (0, 1180), size=[900, 520])
+
+note_key = g.nodes[-1]["key"]  # 사용법 노트
+g.core("LTX-2.5 UNION CONTROL CORE", "LTX-2.5 Union Control CORE  (더블클릭=내부 진입)", (1440, 0),
+       [n["key"] for n in g.nodes[:MAIN_UPTO]] + [out, pv1, pv2, note_key],
+       relocate={out: (2100, 0), pv1: (2100, 620), pv2: (2100, 960)}, color="gen")
 
 build(g, sys.argv[1] if len(sys.argv) > 1 else "/opt/cf/out_union.json")

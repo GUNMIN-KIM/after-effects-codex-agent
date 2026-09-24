@@ -26,7 +26,7 @@ has_audio = g.node("PrimitiveBoolean", "⑥ 원본에 소리가 있음 (무음�
 lora_s = g.node("PrimitiveFloat", "⑦ Outpaint IC-LoRA 강도", (460, 590), {"value": 1.0}, kind="param")
 cm_s = g.node("PrimitiveFloat", "⑧ 생성 영역 색 보정 강도 (원본 기준 · 0=끔)", (460, 700), {"value": 1.0}, kind="param")
 dil = g.node("PrimitiveInt", "⑨ 최종 경계 블렌드 확장 (0=원본 픽셀 최대 보존 · 선 보이면 2~4)", (460, 810), {"value": 0}, kind="param")
-g.group("조작 패널 — 여기만 만지면 됩니다", (-30, -60, 950, 1100), "#48538E")
+g.group("조작 패널 — 여기만 만지면 됩니다", (-30, -60, 950, 1100), "#48538E", main=True)
 
 # ─────────────── 모델 ───────────────
 XM = 1000
@@ -39,8 +39,9 @@ clip = g.node("CLIPLoader", "Gemma 4 12B + LTX-2.5 projection", (XM, 300),
               {"clip_name": "gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors", "type": "ltxv"}, kind="model")
 vae = g.node("VAELoader", "LTX-2.5 Video VAE", (XM, 440), {"vae_name": "ltx-2.5-video-vae-bf16.safetensors"}, kind="model")
 avae = g.node("VAELoader", "LTX-2.5 Audio VAE", (XM, 540), {"vae_name": "ltx-2.5-audio-vae-bf16.safetensors"}, kind="model")
-g.group("모델", (XM - 30, -60, 400, 720), "#5E258B")
+g.group("모델", (XM - 30, -60, 400, 720), "#5E258B", main=True)
 
+MAIN_UPTO = len(g.nodes)
 # ─────────────── 자동 계산 ───────────────
 XA = XM + 440
 info = g.node("VHS_VideoInfo", "원본 fps", (XA, 0), {}, kind="post")
@@ -183,7 +184,7 @@ g.link(trim, out, "images"); g.link(asw, out, "audio"); g.link(fps, out, "frame_
 out2 = g.node("VHS_VideoCombine", "⑪ ProRes (필요 시 Ctrl+M 해제)", (XO, 620),
               {"filename_prefix": "LTX2.5_Outpaint/outpaint_prores", "format": "video/ProRes"}, kind="out", mode=2, size=[460, 400])
 g.link(trim, out2, "images"); g.link(asw, out2, "audio"); g.link(fps, out2, "frame_rate")
-g.group("출력", (XO - 30, -60, 520, 1120), "#287A32")
+g.group("출력", (2070, -60, 520, 1120), "#287A32", main=True)
 
 g.note("사용법 · 원리", """# LTX-2.5 아웃페인트 (원본 1:1 보존)
 
@@ -201,5 +202,11 @@ g.note("사용법 · 원리", """# LTX-2.5 아웃페인트 (원본 1:1 보존)
 - 경계에 선이 보이면 ⑨를 2~4 (원본 가장자리 일부가 재생성 영역과 섞임)
 - ③ 바깥 배경을 구체적으로 쓰면 복제·반복 물체가 줄어듦
 """, (0, 1080), size=[900, 600])
+
+note_key = g.nodes[-1]["key"]  # 사용법 노트
+g.core("LTX-2.5 OUTPAINT CORE", "LTX-2.5 아웃페인트 CORE  (더블클릭=내부 진입)", (1440, 0),
+       [n["key"] for n in g.nodes[:MAIN_UPTO]] + [out, out2, note_key],
+       relocate={out: (2100, 0), out2: (2100, 620)}, color="gen",
+       out_labels={"원본 fps": "fps", "⑦ 소리 없으면 무음 출력": "최종 오디오", "⑥ 원본 오디오 그대로": "최종 오디오", "⑧ 오디오": "최종 오디오", "원본 + 연장 (이음새 크로스페이드)": "최종 영상 (원본+연장)"})
 
 build(g, sys.argv[1] if len(sys.argv) > 1 else "/opt/cf/out_outpaint.json")

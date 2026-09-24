@@ -26,7 +26,7 @@ seed = g.node("PrimitiveInt", "⑤ seed", (460, 220), {"value": 42}, kind="param
 lora_s = g.node("PrimitiveFloat", "⑥ Clean Plate LoRA 강도", (460, 330), {"value": 1.0}, kind="param")
 cm_s = g.node("PrimitiveFloat", "⑦ 원본 색 일치 강도 (0=끔)", (460, 440), {"value": 0.5}, kind="param")
 keep_audio = g.node("PrimitiveBoolean", "⑧ 원본 오디오 포함 (기본 무음)", (460, 550), {"value": False}, kind="param")
-g.group("조작 패널 — 여기만 만지면 됩니다", (-30, -60, 950, 1120), "#48538E")
+g.group("조작 패널 — 여기만 만지면 됩니다", (-30, -60, 950, 1120), "#48538E", main=True)
 
 # ─────────────── 모델 ───────────────
 XM = 1000
@@ -41,8 +41,9 @@ vae = g.node("VAELoader", "LTX-2.5 Video VAE", (XM, 440), {"vae_name": "ltx-2.5-
 avae = g.node("VAELoader", "LTX-2.5 Audio VAE", (XM, 540), {"vae_name": "ltx-2.5-audio-vae-bf16.safetensors"}, kind="model")
 upm = g.node("LatentUpscaleModelLoader", "LTX-2.5 공간 업스케일러 x2", (XM, 640),
              {"model_name": "ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors"}, kind="model")
-g.group("모델", (XM - 30, -60, 400, 820), "#5E258B")
+g.group("모델", (XM - 30, -60, 400, 820), "#5E258B", main=True)
 
+MAIN_UPTO = len(g.nodes)
 # ─────────────── 자동 계산 ───────────────
 XA = XM + 440
 info = g.node("VHS_VideoInfo", "원본 fps", (XA, 0), {}, kind="post")
@@ -142,7 +143,7 @@ g.link(cmn, out, "images"); g.link(asw, out, "audio"); g.link(fps, out, "frame_r
 out2 = g.node("VHS_VideoCombine", "⑩ Clean Plate ProRes (AE 합성용)", (XO, 620),
               {"filename_prefix": "LTX2.5_CleanPlate/cleanplate_prores", "format": "video/ProRes"}, kind="out", size=[460, 400])
 g.link(cmn, out2, "images"); g.link(asw, out2, "audio"); g.link(fps, out2, "frame_rate")
-g.group("출력", (XO - 30, -60, 520, 1120), "#287A32")
+g.group("출력", (2070, -60, 520, 1120), "#287A32", main=True)
 
 g.note("사용법 · 원리", """# LTX-2.5 Clean Plate (마스크 없이 사람·차량 제거)
 
@@ -160,5 +161,11 @@ g.note("사용법 · 원리", """# LTX-2.5 Clean Plate (마스크 없이 사람�
 - 사람이 남으면 ⑥ 1.1~1.2, 배경이 뭉개지면 0.8~0.9
 - ② 프롬프트는 "사람 없는 같은 장면"을 설명 (지울 대상 이름을 쓰지 말 것)
 """, (0, 1080), size=[900, 560])
+
+note_key = g.nodes[-1]["key"]  # 사용법 노트
+g.core("LTX-2.5 CLEANPLATE CORE", "LTX-2.5 CLEANPLATE CORE  (더블클릭=내부 진입)", (1440, 0),
+       [n["key"] for n in g.nodes[:MAIN_UPTO]] + [out, out2, note_key],
+       relocate={out: (2100, 0), out2: (2100, 620)}, color="gen",
+       out_labels={"원본 fps": "fps", "⑦ 소리 없으면 무음 출력": "최종 오디오", "⑥ 원본 오디오 그대로": "최종 오디오", "⑧ 오디오": "최종 오디오", "원본 + 연장 (이음새 크로스페이드)": "최종 영상 (원본+연장)"})
 
 build(g, sys.argv[1] if len(sys.argv) > 1 else "/opt/cf/out_cleanplate.json")

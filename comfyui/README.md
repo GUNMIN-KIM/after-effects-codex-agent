@@ -9,7 +9,24 @@ After Effects 합성 전에 ComfyUI에서 쓰는 영상 생성 워크플로 4종
 | `workflows/LTX2.5_CleanPlate.json` | 사람·차량 제거 | 2.5 distilled + **2.5 Clean Plate IC-LoRA** | 2.3에서 2.5 전용 LoRA로 교체 + 2-stage |
 | `workflows/LTX2.5_UnionControl_MoGe.json` | 깊이 제어 v2v | 2.5 distilled + 2.3 Union IC-LoRA | 공식 sigma, 2-stage, 제어 영상 비율·fps 자동 |
 
-모든 워크플로는 서브그래프 없이 평면 구조다. 왼쪽 **조작 패널** 그룹의 ①~⑩ 값만 바꾸면 된다.
+### 구조: 메인 그래프 + CORE 서브그래프
+각 워크플로를 열면 메인 화면에는 아래 네 가지만 보인다.
+
+| 메인 그래프 | 내용 |
+|---|---|
+| 조작 패널 | 입력 영상, 프롬프트, ①~⑩ 설정값 |
+| 모델 | 트랜스포머, IC-LoRA, 텍스트 인코더, VAE, 업스케일러 로더 — 파일명을 여기서 바로 바꾼다 |
+| **CORE 서브그래프** | `LTX-2.5 … CORE (더블클릭=내부 진입)` — 처리 엔진 전체 |
+| 출력 | MP4 / ProRes / 미리보기 |
+
+CORE를 더블클릭하면 안에 그룹별로 정리된 엔진이 있다: 자동 계산 → 준비 → Stage 1 → Stage 2 → 후처리. 서브그래프 입력 이름은 연결된 조작 패널 노드 이름(①, ② …)과 같다. 평소에는 메인의 ①~⑩ 값만 바꾸면 된다.
+
+| 워크플로 | CORE 이름 | CORE 내부 노드 | 입력 / 출력 |
+|---|---|---|---|
+| 길이 연장 | LTX-2.5 EXTEND CORE | 60 | 19 / 3 |
+| 아웃페인트 | LTX-2.5 OUTPAINT CORE | 61 | 17 / 3 |
+| Clean Plate | LTX-2.5 CLEANPLATE CORE | 39 | 15 / 3 |
+| Union | LTX-2.5 UNION CONTROL CORE | 47 | 18 / 5 |
 
 ---
 
@@ -137,7 +154,11 @@ bf16 원본(`ltx-2.5-22b-distilled-transformer-bf16.safetensors` 등)을 쓰려�
 
 GPU가 없어 **실제 LTX 모델 추론은 돌리지 않았다.** 생성 품질(얼굴 일관성, 색 유지)은 사용자 환경에서 확인해야 한다.
 
-검증 중 발견한 사항: 현재 프론트엔드(1.53.6)에서 `ResizeImageMaskNode`를 `match size`로 쓰면 동적 입력 연결이 로드 시 끊긴다. Lightricks 공식 Outpaint 예제도 같은 오류가 난다. 그래서 새 워크플로에서는 정적 노드(`MaskToImage` → `ImageScale` → `ImageToMask`)를 쓴다.
+서브그래프 버전도 같은 검증을 모두 다시 통과했고, 추가로 "열기 → 저장 → 다시 열기" 왕복 후에도 연결 오류가 없는 것을 확인했다.
+
+검증 중 발견한 사항: 현재 프론트엔드(1.53.6)의 `convertToSubgraph`는 `ComfyMathExpression`(자동 증가 입력) 노드를 서브그래프로 옮길 때 `values.c` 이후 연결을 한 칸씩 밀어 `expression` 칸에 붙인다. `tools/builder.py`가 변환 직후 입력 순서를 링크 번호에 맞게 재정렬해서 보정한다. 직접 ComfyUI에서 "Convert to Subgraph"를 쓸 때도 같은 증상이 날 수 있으니, 변환 뒤 Math Expression 노드의 연결을 확인한다.
+
+또 현재 프론트엔드(1.53.6)에서 `ResizeImageMaskNode`를 `match size`로 쓰면 동적 입력 연결이 로드 시 끊긴다. Lightricks 공식 Outpaint 예제도 같은 오류가 난다. 그래서 새 워크플로에서는 정적 노드(`MaskToImage` → `ImageScale` → `ImageToMask`)를 쓴다.
 
 ### 워크플로 다시 만들기
 `tools/wf_*.py`는 실행 중인 ComfyUI 프론트엔드 안에서 노드를 생성하고 직렬화한다. 그래서 위젯 순서와 동적 입력이 ComfyUI가 저장하는 형식과 정확히 같다.
