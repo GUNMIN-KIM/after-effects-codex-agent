@@ -1,8 +1,8 @@
 {
-  "id": "6b23c3be-e35e-4d5f-a1fa-5a1da45e797f",
+  "id": "b53274af-068d-442a-962f-034e645655de",
   "revision": 0,
-  "last_node_id": 490,
-  "last_link_id": 2006,
+  "last_node_id": 497,
+  "last_link_id": 2009,
   "nodes": [
     {
       "id": 13,
@@ -71,7 +71,7 @@
           "type": "IMAGE",
           "links": [
             2003,
-            2005
+            2008
           ]
         },
         {
@@ -93,8 +93,50 @@
       }
     },
     {
+      "id": 497,
+      "type": "LoadImage",
+      "pos": [
+        121,
+        3200
+      ],
+      "size": [
+        275,
+        319
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            2005
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "244008d93c680947482b26948378658637d9f977fcc05e1066165e9f5d843f2f.png",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "244008d93c680947482b26948378658637d9f977fcc05e1066165e9f5d843f2f.png",
+        "upload": "image"
+      },
+      "title": "Color Reference — 기존 색감 프레임 (기본: 원본과 동일)"
+    },
+    {
       "id": 459,
-      "type": "b1b0f8a7-f2ee-4e72-925c-ad3f61a3cd51",
+      "type": "7aa37c62-6708-4984-b0f8-da9b9dd5545c",
       "pos": [
         484,
         2420
@@ -104,7 +146,7 @@
         780
       ],
       "flags": {},
-      "order": 2,
+      "order": 3,
       "mode": 0,
       "inputs": [
         {
@@ -244,7 +286,8 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            2004
+            2004,
+            2006
           ]
         }
       ],
@@ -286,24 +329,106 @@
       }
     },
     {
+      "id": 495,
+      "type": "ColorTransfer",
+      "pos": [
+        946,
+        2300
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image_target",
+          "name": "image_target",
+          "type": "IMAGE",
+          "link": 2004
+        },
+        {
+          "localized_name": "image_ref",
+          "name": "image_ref",
+          "type": "IMAGE",
+          "link": 2005
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            2007
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ColorTransfer"
+      },
+      "widgets_values": [
+        "mkl_lab",
+        "per_frame",
+        0.8
+      ],
+      "widgets_values_named": {
+        "method": "mkl_lab",
+        "source_stats": "per_frame",
+        "strength": 0.8
+      },
+      "title": "Color Match (mkl_lab) — 기존 색감 적용"
+    },
+    {
+      "id": 496,
+      "type": "PreviewImage",
+      "pos": [
+        1300,
+        2300
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 2006
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "title": "Raw (색보정 전)"
+    },
+    {
       "id": 461,
       "type": "SaveImageAdvanced",
       "pos": [
         946,
-        2420
+        2480
       ],
       "size": [
         715,
         770
       ],
       "flags": {},
-      "order": 3,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 2004
+          "link": 2007
         }
       ],
       "outputs": [
@@ -311,7 +436,7 @@
           "name": "images",
           "type": "IMAGE",
           "links": [
-            2006
+            2009
           ]
         }
       ],
@@ -334,27 +459,27 @@
       "type": "ImageCompare",
       "pos": [
         1705,
-        2420
+        2480
       ],
       "size": [
         660,
         770
       ],
       "flags": {},
-      "order": 4,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
           "name": "image_a",
           "shape": 7,
           "type": "IMAGE",
-          "link": 2005
+          "link": 2008
         },
         {
           "name": "image_b",
           "shape": 7,
           "type": "IMAGE",
-          "link": 2006
+          "link": 2009
         }
       ],
       "outputs": [],
@@ -376,13 +501,13 @@
         760
       ],
       "flags": {},
-      "order": 5,
+      "order": 8,
       "mode": 0,
       "inputs": [],
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "## Max Quality (공식 경로 · 30 step)\n\n메인 서브그래프 하나로 정리됨. 세부 수정은 노드 우클릭 → 서브그래프 열기.\n\n**원본 대비 변경점**\n- steps 10 → **30** (공식 40~50, 템플릿 기본 25)\n- DiT / CLIP 모두 **bf16**\n- custom_size **false** → image_1 비율 그대로 ~4MP 네이티브 2K\n- ImageCompare에 원본(image_a) 연결\n\n**모델**\n- diffusion_models/qwen_image_2.1_bf16.safetensors\n- text_encoders/qwen3vl_8b_bf16.safetensors\n- vae/qwen_image_2.1_vae_bf16.safetensors\n\n**속도 옵션** (품질 거의 유지)\n- steps 24~25\n- unet / clip을 `int8_convrot`로 교체 (VRAM 24GB 미만 권장)\n- resolution 2048 → 1536\n\n**프롬프트 팁**\n`Edit <image1>. Keep the pose, clothing, background and lighting unchanged. ...`\n\n**주의**\n- cfg 1 유지 (올리면 탐). cfg 1에서 negative_prompt 무시됨\n- resolution **1024 정확값 금지** (ComfyUI #16435) → 1056 / 1536 / 2048\n"
+        "## Max Quality (공식 경로 · 30 step)\n\n메인 서브그래프 하나로 정리됨. 세부 수정은 노드 우클릭 → 서브그래프 열기.\n\n**원본 대비 변경점**\n- steps 10 → **30** (공식 40~50, 템플릿 기본 25)\n- DiT / CLIP 모두 **bf16**\n- custom_size **false** → image_1 비율 그대로 ~4MP 네이티브 2K\n- ImageCompare에 원본(image_a) 연결\n\n**모델**\n- diffusion_models/qwen_image_2.1_bf16.safetensors\n- text_encoders/qwen3vl_8b_bf16.safetensors\n- vae/qwen_image_2.1_vae_bf16.safetensors\n\n**속도 옵션** (품질 거의 유지)\n- steps 24~25\n- unet / clip을 `int8_convrot`로 교체 (VRAM 24GB 미만 권장)\n- resolution 2048 → 1536\n\n**프롬프트 팁**\n`Edit <image1>. Keep the pose, clothing, background and lighting unchanged. ...`\n\n**주의**\n- cfg 1 유지 (올리면 탐). cfg 1에서 negative_prompt 무시됨\n- resolution **1024 정확값 금지** (ComfyUI #16435) → 1056 / 1536 / 2048\n\n## 색상 처리 (Color Match)\n\n생성 → **Transfer Color (mkl_lab)** → 저장. 색보정 전 결과는 `Raw` 미리보기로 확인.\n\n- **Color Reference**에 기존 작업에서 쓰던 색감 프레임(그레이딩 끝난 스틸)을 넣으면 그 룩으로 맞춤\n- 기본값은 원본(image_1)과 같은 파일 → 원본 색감 유지 (Qwen 2.1의 물 빠진 색 보정)\n- strength **0.8**: 원래 톤을 따르면서 새로 생긴 요소(피, 조명 등)의 색은 남김\n  - 레퍼런스와 더 똑같이 → 1.0 / 편집한 색이 죽으면 → 0.5~0.6\n- method: `mkl_lab` 권장 (구조 보존 + 자연스러움). `reinhard_lab` = 더 약하고 부드러움, `histogram` = 가장 강하지만 밴딩 위험\n- 레퍼런스는 같은 조명·장면 계열일수록 정확함. 전혀 다른 장면이면 strength를 낮출 것\n"
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -417,12 +542,36 @@
       2004,
       459,
       0,
-      461,
+      495,
       0,
       "IMAGE"
     ],
     [
       2005,
+      497,
+      0,
+      495,
+      1,
+      "IMAGE"
+    ],
+    [
+      2006,
+      459,
+      0,
+      496,
+      0,
+      "IMAGE"
+    ],
+    [
+      2007,
+      495,
+      0,
+      461,
+      0,
+      "IMAGE"
+    ],
+    [
+      2008,
       477,
       0,
       472,
@@ -430,7 +579,7 @@
       "IMAGE"
     ],
     [
-      2006,
+      2009,
       461,
       0,
       472,
@@ -442,7 +591,7 @@
   "definitions": {
     "subgraphs": [
       {
-        "id": "b1b0f8a7-f2ee-4e72-925c-ad3f61a3cd51",
+        "id": "7aa37c62-6708-4984-b0f8-da9b9dd5545c",
         "version": 1,
         "state": {
           "lastGroupId": 40,
@@ -473,7 +622,7 @@
         },
         "inputs": [
           {
-            "id": "1db71da5-8934-4543-86a1-e7b900a117ff",
+            "id": "9178bfbb-640f-4cc9-b060-1d82f3944425",
             "name": "resolution",
             "type": "INT",
             "linkIds": [
@@ -485,7 +634,7 @@
             ]
           },
           {
-            "id": "bc4c8274-80e5-4c38-937c-c504b2ff006d",
+            "id": "8a82ad9b-240f-40c2-94e5-37735bd33486",
             "name": "prompt",
             "type": "STRING",
             "linkIds": [
@@ -498,7 +647,7 @@
             "label": "positive_prompt"
           },
           {
-            "id": "b1b170f8-7470-4512-8c9d-cd170159b245",
+            "id": "f2ab7c84-9859-40d2-8550-7e4f59976b58",
             "name": "negative_prompt",
             "type": "STRING",
             "linkIds": [
@@ -510,7 +659,7 @@
             ]
           },
           {
-            "id": "baee899d-2a6e-4afc-af27-0e5dcb857450",
+            "id": "16833e95-c5c5-40d7-9c71-2ea94a292d0e",
             "name": "cfg",
             "type": "FLOAT",
             "linkIds": [
@@ -522,7 +671,7 @@
             ]
           },
           {
-            "id": "c6dc85af-566e-4d73-a554-747dd07a0b4e",
+            "id": "1c6fa75c-e4b6-449a-aabe-6d9d7f5bb1ca",
             "name": "steps",
             "type": "INT",
             "linkIds": [
@@ -535,7 +684,7 @@
             "label": "steps"
           },
           {
-            "id": "04011195-8ba6-4b8f-8bd6-ccb9865a128e",
+            "id": "f55f6ad5-16e2-4127-91c6-e5d1b399ad86",
             "name": "switch",
             "type": "BOOLEAN",
             "linkIds": [
@@ -548,7 +697,7 @@
             "label": "custom_size"
           },
           {
-            "id": "de8942d0-fdbf-4f31-980d-fd968e7e4b93",
+            "id": "7cf0cf3c-cdef-4b3b-b52f-5cb46ea8092e",
             "name": "width",
             "type": "INT",
             "linkIds": [
@@ -560,7 +709,7 @@
             ]
           },
           {
-            "id": "61ae7af3-f70f-4183-af6e-873800177593",
+            "id": "34f97e96-028f-4e48-b6ca-a8327854f391",
             "name": "height",
             "type": "INT",
             "linkIds": [
@@ -572,7 +721,7 @@
             ]
           },
           {
-            "id": "1f7f0487-c85f-4839-9a36-1033706bde89",
+            "id": "a9703157-554c-43a3-92ad-659a967ff1e0",
             "name": "sampler_name",
             "type": "COMBO",
             "linkIds": [
@@ -585,7 +734,7 @@
             "label": "sampler"
           },
           {
-            "id": "2870a542-2454-4416-94af-df312056a628",
+            "id": "21184a74-8d5a-45f0-be21-12f82b6b8657",
             "name": "scheduler",
             "type": "COMBO",
             "linkIds": [
@@ -598,7 +747,7 @@
             "label": "scheduler"
           },
           {
-            "id": "4a080331-e657-4acd-b432-2da67d9ec5a0",
+            "id": "4fcb97c3-22f5-447c-bf1b-cccc8b2d628a",
             "name": "seed",
             "type": "INT",
             "linkIds": [
@@ -610,7 +759,7 @@
             ]
           },
           {
-            "id": "f3308791-5bb3-458d-a2a5-5aa756b24543",
+            "id": "517bf2f9-55a8-4925-9484-95f0190cd85e",
             "name": "unet_name",
             "type": "COMBO",
             "linkIds": [
@@ -622,7 +771,7 @@
             ]
           },
           {
-            "id": "1b8d4a3a-4444-4be0-bfbb-87002357400b",
+            "id": "a81d1bf2-f39a-49fd-9d79-687894258f15",
             "name": "clip_name",
             "type": "COMBO",
             "linkIds": [
@@ -634,7 +783,7 @@
             ]
           },
           {
-            "id": "fa9d7826-0f6a-411c-8f67-5387028ea383",
+            "id": "a5db5efd-28aa-4393-b64c-8bd124448ffb",
             "name": "vae_name",
             "type": "COMBO",
             "linkIds": [
@@ -646,7 +795,7 @@
             ]
           },
           {
-            "id": "c9a83010-ae90-4be8-aeae-c9426a8fae23",
+            "id": "33082d67-3765-42e3-a19d-139b7007ef48",
             "name": "images.image_1",
             "type": "IMAGE",
             "linkIds": [
@@ -659,7 +808,7 @@
             "label": "image_1"
           },
           {
-            "id": "82d8c66a-c4ca-4828-bbb7-52758bdc0a0b",
+            "id": "013eb3a2-0df8-4d4c-8d36-52c833535fa2",
             "name": "images.image_2",
             "type": "IMAGE",
             "linkIds": [
@@ -672,7 +821,7 @@
             "label": "image_2"
           },
           {
-            "id": "6048f5d3-718f-40b7-af46-997b12f4b91c",
+            "id": "bb91ee4d-90f2-4b5b-941b-80ba2094bcfa",
             "name": "images.image_3",
             "type": "IMAGE",
             "linkIds": [
@@ -685,7 +834,7 @@
             "label": "image_3"
           },
           {
-            "id": "b96cf101-1dfc-4c21-a75f-405a5eec77d3",
+            "id": "0a117cb3-47be-4c0b-80e7-3d5e62c8d93c",
             "name": "images.image_4",
             "type": "IMAGE",
             "linkIds": [
@@ -698,7 +847,7 @@
             "label": "image_4"
           },
           {
-            "id": "eb686158-fa56-4e83-bd6b-2cb35af19918",
+            "id": "4f376342-233d-428f-bea0-18a0b9660ec8",
             "name": "images.image_5",
             "type": "IMAGE",
             "linkIds": [
@@ -711,7 +860,7 @@
             "label": "image_5"
           },
           {
-            "id": "652f9143-cc07-4a6b-af2e-da8cb2467997",
+            "id": "b7c8c603-5864-436c-befa-aa259d6e7a26",
             "name": "images.image_6",
             "type": "IMAGE",
             "linkIds": [
@@ -724,7 +873,7 @@
             "label": "image_6"
           },
           {
-            "id": "893e003b-827a-448b-ae3a-6763317e0bdf",
+            "id": "048f508d-aae0-44a2-b8f2-ab0234cc8cf1",
             "name": "images.image_7",
             "type": "IMAGE",
             "linkIds": [
@@ -737,7 +886,7 @@
             "label": "image_7"
           },
           {
-            "id": "9fb5b165-d4df-41ee-8b14-fdf83d41c844",
+            "id": "3fdab0f7-f054-45d1-9ec1-16a443b408ff",
             "name": "images.image_8",
             "type": "IMAGE",
             "linkIds": [
@@ -750,7 +899,7 @@
             "label": "image_8"
           },
           {
-            "id": "5b47555c-64f7-4df9-b715-ae6944346837",
+            "id": "12c09142-c0d5-4f07-97e7-a631b457e435",
             "name": "images.image_9",
             "type": "IMAGE",
             "linkIds": [
@@ -763,7 +912,7 @@
             "label": "image_9"
           },
           {
-            "id": "c22c5f96-6113-4785-8a45-72bd37da8083",
+            "id": "856a1bfd-2d29-408e-95b6-6d962ee897d0",
             "name": "images.image_10",
             "type": "IMAGE",
             "linkIds": [
@@ -778,7 +927,7 @@
         ],
         "outputs": [
           {
-            "id": "4e969032-631a-43cd-936c-c7b50119faab",
+            "id": "a1a90a4b-210a-438d-9620-6def370f8094",
             "name": "IMAGE",
             "type": "IMAGE",
             "linkIds": [
