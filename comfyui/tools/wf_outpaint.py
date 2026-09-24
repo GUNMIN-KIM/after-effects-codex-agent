@@ -85,6 +85,12 @@ m1s = g.node("ImageScale", "stage1 마스크 크기", (XP, 1120), {"upscale_meth
 g.link(m1i, m1s, "image"); g.link(Wh["INT"], m1s, "width"); g.link(Hh["INT"], m1s, "height")
 m1 = g.node("ImageToMask", "stage1 마스크", (XP, 1160), {"channel": "red"}, kind="guide", collapsed=True)
 g.link(m1s, m1, "image")
+spm_i = g.node("MaskToImage", "마스크→이미지", (XP + 200, 1080), {}, kind="guide", collapsed=True)
+g.link(pad[1], spm_i, "mask")
+spm_f = g.node("ImageFromBatch", "첫 프레임 마스크", (XP + 200, 1120), {"batch_index": 0, "length": 1}, kind="guide", collapsed=True)
+g.link(spm_i, spm_f, "image")
+spm = g.node("ImageToMask", "공간 마스크 (흰색=바깥=생성)", (XP + 200, 1160), {"channel": "red"}, kind="guide", collapsed=True)
+g.link(spm_f, spm, "image")
 green1 = g.node("LTXVInpaintPreprocess", "바깥 영역 → 초록 신호 (IC-LoRA 입력)", (XP, 1260), {}, kind="guide")
 g.link(ref1, green1, "images"); g.link(m1, green1, "mask")
 g.group("입력 준비 — 공식 Outpaint 전처리", (XP - 30, -60, 400, 1440), "#6B4500")
@@ -146,20 +152,26 @@ aref2 = g.node("LTXVSetAudioRefTokens", "오디오 고정", (X2, 360), {}, kind=
 g.link(crop[0], aref2, "positive"); g.link(crop[1], aref2, "negative"); g.link(sep1[1], aref2, "audio_latent")
 av2 = g.node("LTXVConcatAVLatent", "AV latent", (X2, 500), {}, kind="gen")
 g.link(enc2, av2, "video_latent"); g.link(aref2[2], av2, "audio_latent")
+msk2 = g.node("LTXVSetAudioVideoMaskByTime", "원본 영역 latent 고정 · 바깥만 정제 (공간 마스크)", (X2 + 340, 0),
+              {"start_time": 0.0, "end_time": 2000.0, "mask_video": True, "mask_audio": False,
+               "mask_init_value_video": 0.0, "mask_init_value_audio": 0.0, "slope_len": 3}, kind="guide")
+g.link(av2, msk2, "av_latent"); g.link(aref2[0], msk2, "positive"); g.link(aref2[1], msk2, "negative")
+g.link(ic, msk2, "model"); g.link(vae, msk2, "vae"); g.link(avae, msk2, "audio_vae"); g.link(fps, msk2, "video_fps")
+g.link(spm, msk2, "spatial_mask")
 cg2 = g.node("CFGGuider", "cfg 1", (X2, 610), {"cfg": 1.0}, kind="gen")
-g.link(ic, cg2, "model"); g.link(aref2[0], cg2, "positive"); g.link(aref2[1], cg2, "negative")
+g.link(ic, cg2, "model"); g.link(msk2[0], cg2, "positive"); g.link(msk2[1], cg2, "negative")
 k2 = g.node("KSamplerSelect", "euler", (X2, 730), {"sampler_name": "euler"}, kind="gen")
 s2s = g.node("ManualSigmas", "공식 refine", (X2, 830), {"sigmas": "0.7250, 0.4219, 0.0"}, kind="gen")
 s2 = g.node("SamplerCustomAdvanced", "Stage 2 · 고해상도 정제", (X2, 950), {}, kind="gen")
-g.link(nz, s2, "noise"); g.link(cg2, s2, "guider"); g.link(k2, s2, "sampler"); g.link(s2s, s2, "sigmas"); g.link(av2, s2, "latent_image")
+g.link(nz, s2, "noise"); g.link(cg2, s2, "guider"); g.link(k2, s2, "sampler"); g.link(s2s, s2, "sigmas"); g.link(msk2[2], s2, "latent_image")
 sep2 = g.node("LTXVSeparateAVLatent", "분리", (X2, 1110), {}, kind="gen")
 g.link(s2[0], sep2, "av_latent")
 d2 = g.node("VAEDecodeTiled", "stage2 디코드", (X2, 1220), {"tile_size": 512, "overlap": 64, "temporal_size": 128, "temporal_overlap": 32}, kind="gen")
 g.link(sep2[0], d2, "samples"); g.link(vae, d2, "vae")
-g.group("Stage 2 — 고해상도 정제 (공식)", (X2 - 30, -60, 400, 1420), "#9A1F50")
+g.group("Stage 2 — 원본 영역 고정 + 바깥만 고해상도 정제", (X2 - 30, -60, 740, 1420), "#9A1F50")
 
 # ─────────────── 원본 1:1 복원 · 색 보정 ───────────────
-XF = X2 + 440
+XF = X2 + 780
 dc = g.node("ImageScale", "최종 캔버스 크기로", (XF, 0), {"upscale_method": "lanczos", "crop": "disabled"}, kind="post")
 g.link(d2, dc, "image"); g.link(Wc["INT"], dc, "width"); g.link(Hc["INT"], dc, "height")
 comp0 = g.node("ImageCompositeMasked", "원본 1:1 붙이기 (색 기준용)", (XF, 180), {"resize_source": False}, kind="post")
@@ -190,7 +202,8 @@ g.note("사용법 · 원리", """# LTX-2.5 아웃페인트 (원본 1:1 보존)
 
 ## 무엇이 달라졌나 (Lightricks 공식 2.5 Outpaint 2-stage 기준)
 - **distilled 트랜스포머 + In/Outpaint IC-LoRA** (dev + distilled LoRA 조합 제거). 공식 2.5 예제도 2.3 In/Outpaint LoRA를 그대로 씀 — 2.5 전용판은 아직 없음
-- **2-stage**: 절반 해상도 8 step → 원본 영역 Laplacian 복원 → 확대·재인코드 → 3-sigma 정제. RTX 업스케일 제거 (표준 ComfyUI에 없는 노드이기도 함)
+- **2-stage**: 절반 해상도 8 step → 원본 영역 Laplacian 복원 → 확대·재인코드 → 3-sigma 정제.
+- **Stage 2에서 원본 영역을 latent로 고정** (공식 Retake 노드의 spatial_mask). 바깥 영역이 "다시 그려진 가운데"가 아니라 실제 원본에 맞춰 정제되므로, 원본과 생성 영역이 따로 노는 현상이 줄어듦 RTX 업스케일 제거 (표준 ComfyUI에 없는 노드이기도 함)
 - 최종 합성: 기존 `ImageCompositeMasked`(딱딱한 붙이기)는 경계에 색 단차가 생김 → **Laplacian 피라미드 블렌드**로 교체. 원본 영역의 세부 픽셀은 그대로, 경계의 저주파(색·밝기)만 부드럽게 이어짐
 - ⑧ 생성 영역 전체를 원본 색에 맞춤 (재생성된 중앙 ↔ 원본 중앙 차이로 보정) → 색 털림 방지
 - **원본 fps 유지**, 원본 오디오를 모델에 고정 입력 + 출력은 원본 오디오 그대로

@@ -24,9 +24,10 @@ sec = g.node("PrimitiveFloat", "③ 추가할 길이 (초)", (X0 + 460, 0), {"va
 ctxn = g.node("PrimitiveInt", "④ 고정할 원본 문맥 프레임 (8n+1 · 49 권장, 얼굴 불안하면 73/97)", (X0 + 460, 110), {"value": 49}, kind="param")
 maxl = g.node("PrimitiveInt", "⑤ 생성 해상도 긴 변 상한 (원본보다 크면 원본 기준)", (X0 + 460, 220), {"value": 1920}, kind="param")
 seed = g.node("PrimitiveInt", "⑥ seed", (X0 + 460, 330), {"value": 42}, kind="param")
-has_audio = g.node("PrimitiveBoolean", "⑦ 원본에 소리가 있음 (무음 영상이면 끄기)", (X0 + 460, 440), {"value": True}, kind="param")
+has_audio = g.node("PrimitiveBoolean", "⑦ 연장 구간 소리 생성 (끄면 원본 소리 + 연장 구간 무음)", (X0 + 460, 440), {"value": True}, kind="param")
 cm_str = g.node("PrimitiveFloat", "⑧ 색 일치 강도 (0=끔 · 0.5 권장 · 1=완전 일치)", (X0 + 460, 550), {"value": 0.5}, kind="param")
 seam = g.node("PrimitiveInt", "⑨ 이음새 크로스페이드 프레임", (X0 + 460, 660), {"value": 4}, kind="param")
+src_audio = g.node("PrimitiveBoolean", "⑪ 원본 영상에 소리 트랙이 있음 (소리 없는 영상이면 끄기)", (X0 + 460, 880), {"value": True}, kind="param")
 enh = g.node("PrimitiveBoolean", "⑩ 프롬프트 자동 보강 (Gemma, 원본 마지막 프레임 참고)", (X0 + 460, 770), {"value": False}, kind="param")
 g.group("조작 패널 — 여기만 만지면 됩니다", (X0 - 30, -60, 950, 1120), "#48538E", main=True)
 
@@ -62,10 +63,11 @@ Wf = math("max(64, round(a*min(1, c/max(a,b))/64)*64)", "stage2 가로 (64배수
 Hf = math("max(64, round(b*min(1, c/max(a,b))/64)*64)", "stage2 세로 (64배수)", (XA + 340, 140), W0, H0, maxl[0])
 Wh = math("a//2", "stage1 가로 (절반)", (XA + 340, 280), Wf["INT"])
 Hh = math("a//2", "stage1 세로 (절반)", (XA + 340, 420), Hf["INT"])
-t_ctx0 = math("a/b", "문맥 시작 시각 (초)", (XA + 340, 560), CST["INT"], fps)
+t_orig = math("a/b", "원본 길이 (초)", (XA + 340, 560), N, fps)
 t_ctx = math("a/b", "문맥 길이 (초) = 생성 시작 시각", (XA + 340, 700), C["INT"], fps)
 t_end = math("a/b + 1", "생성 끝 시각 (여유 1초)", (XA + 340, 840), TOT["INT"], fps)
 t_new = math("a/b", "새 구간 길이 (초)", (XA + 340, 980), NEW["INT"], fps)
+t_end_exact = math("(a+b)/c", "최종 영상 길이 (초)", (XA, 1100), N, NEW["INT"], fps)
 TS = math("a-b", "디코드 결과에서 잘라낼 시작 (C - 크로스페이드)", (XA + 340, 1120), C["INT"], seam[0])
 TL = math("a+b", "잘라낼 길이 (새 프레임 + 크로스페이드)", (XA + 340, 1260), NEW["INT"], seam[0])
 LAST = math("a-1", "원본 마지막 프레임 번호", (XA, 960), N)
@@ -81,10 +83,6 @@ ctx_h = g.node("ImageScale", "문맥 · stage1 해상도", (XC, 340), {"upscale_
 g.link(ctx, ctx_h, "image"); g.link(Wh["INT"], ctx_h, "width"); g.link(Hh["INT"], ctx_h, "height")
 last = g.node("ImageFromBatch", "원본 마지막 1프레임 (색 기준 · 프롬프트 보강 참고)", (XC, 520), {}, kind="guide")
 g.link(vid[0], last, "image"); g.link(LAST["INT"], last, "batch_index")
-a_ctx = g.node("TrimAudioDuration", "문맥 구간 원본 오디오", (XC, 680), {}, kind="guide")
-g.link(vid[2], a_ctx, "audio"); g.link(t_ctx0["FLOAT"], a_ctx, "start_index"); g.link(t_ctx["FLOAT"], a_ctx, "duration")
-a_enc = g.node("LTXVAudioVAEEncode", "문맥 오디오 인코드 (소리 이어짐)", (XC, 840), {}, kind="guide")
-g.link(a_ctx, a_enc, "audio"); g.link(avae, a_enc, "audio_vae")
 
 # 프롬프트
 enh_t = g.node("TextGenerateLTX2Prompt", "Gemma 프롬프트 보강 (⑩ 켤 때만 실행)", (XC, 980),
@@ -112,14 +110,10 @@ ea = g.node("LTXVEmptyLatentAudio", "빈 오디오 latent", (XS, 720), {}, kind=
 g.link(avae, ea, "audio_vae"); g.link(TOT["INT"], ea, "frames_number"); g.link(fps, ea, "frame_rate")
 av0 = g.node("LTXVConcatAVLatent", "AV latent", (XS, 880), {}, kind="gen")
 g.link(inp1, av0, "video_latent"); g.link(ea, av0, "audio_latent")
-av_ctx = g.node("LTXVConcatAVLatent", "문맥 오디오 삽입 (뒤는 0 패딩 → 생성)", (XS, 980), {}, kind="gen")
-g.link(av0, av_ctx, "video_latent"); g.link(a_enc, av_ctx, "audio_latent")
-asw = g.node("ComfySwitchNode", "⑦ 소리 있음? 문맥 오디오 사용", (XS, 1080), {}, kind="param")
-g.link(av0, asw, "on_false"); g.link(av_ctx, asw, "on_true"); g.link(has_audio, asw, "switch")
-msk1 = g.node("LTXVSetAudioVideoMaskByTime", "Retake 마스크 · 문맥=고정 / 이후=생성", (XS + 340, 0),
-              {"mask_video": True, "mask_audio": True, "mask_init_value_video": 0.0, "mask_init_value_audio": 0.0, "slope_len": 3},
+msk1 = g.node("LTXVSetAudioVideoMaskByTime", "Retake 마스크 · 영상 문맥=고정 / 이후=생성 · 오디오는 공식처럼 전체 생성", (XS + 340, 0),
+              {"mask_video": True, "mask_audio": False, "mask_init_value_video": 0.0, "mask_init_value_audio": 1.0, "slope_len": 3},
               kind="guide")
-g.link(asw, msk1, "av_latent"); g.link(cond[0], msk1, "positive"); g.link(cond[1], msk1, "negative")
+g.link(av0, msk1, "av_latent"); g.link(cond[0], msk1, "positive"); g.link(cond[1], msk1, "negative")
 g.link(unet, msk1, "model"); g.link(vae, msk1, "vae"); g.link(avae, msk1, "audio_vae")
 g.link(t_ctx["FLOAT"], msk1, "start_time"); g.link(t_end["FLOAT"], msk1, "end_time"); g.link(fps, msk1, "video_fps")
 gd1 = g.node("CFGGuider", "distilled · cfg 1", (XS + 340, 420), {"cfg": 1.0}, kind="gen")
@@ -176,18 +170,29 @@ ext = g.node("ImageBatchExtendWithOverlap", "원본 + 연장 (이음새 크로�
 g.link(vid[0], ext, "source_images"); g.link(seam, ext, "overlap"); g.link(cmn, ext, "new_images")
 a_new = g.node("TrimAudioDuration", "생성 오디오 · 새 구간만", (XP, 740), {}, kind="post")
 g.link(adec, a_new, "audio"); g.link(t_ctx["FLOAT"], a_new, "start_index"); g.link(t_new["FLOAT"], a_new, "duration")
-a_cat = g.node("AudioConcat", "원본 오디오 + 새 오디오", (XP, 900), {"direction": "after"}, kind="post")
-g.link(vid[2], a_cat, "audio1"); g.link(a_new, a_cat, "audio2")
-a_sw = g.node("ComfySwitchNode", "⑦ 소리 없으면 무음 출력", (XP, 1040), {}, kind="param")
-g.link(a_cat, a_sw, "on_true"); g.link(has_audio, a_sw, "switch")
-g.group("합치기 — 원본 프레임 무변형 + 색 보정 + 이음새 처리", (XP - 30, -60, 400, 1260), "#006F89")
+# 원본 소리를 원본 영상 길이에 정확히 맞춤 (길거나 짧거나 없어도 안전)
+sil_o = g.node("EmptyAudio", "무음 · 원본 길이", (XP, 900), {"sample_rate": 44100, "channels": 2}, kind="post")
+g.link(t_orig["FLOAT"], sil_o, "duration")
+src_sw = g.node("ComfySwitchNode", "⑪ 원본 소리 (끄면 무음 · VHS 오디오 읽지 않음)", (XP + 180, 900), {}, kind="param")
+g.link(vid[2], src_sw, "on_true"); g.link(sil_o, src_sw, "on_false"); g.link(src_audio, src_sw, "switch")
+a_orig = g.node("AudioMerge", "원본 소리 → 원본 영상 길이로 정렬", (XP, 1040), {"merge_method": "add"}, kind="post")
+g.link(sil_o, a_orig, "audio1"); g.link(src_sw, a_orig, "audio2")
+a_cat = g.node("AudioConcat", "원본 소리 + 생성 소리", (XP, 1180), {"direction": "after"}, kind="post")
+g.link(a_orig, a_cat, "audio1"); g.link(a_new, a_cat, "audio2")
+sil_t = g.node("EmptyAudio", "무음 · 전체 길이", (XP, 1320), {"sample_rate": 44100, "channels": 2}, kind="post")
+g.link(t_end_exact["FLOAT"], sil_t, "duration")
+a_mute = g.node("AudioMerge", "원본 소리 + 연장 구간 무음", (XP, 1460), {"merge_method": "add"}, kind="post")
+g.link(sil_t, a_mute, "audio1"); g.link(src_sw, a_mute, "audio2")
+a_sw = g.node("ComfySwitchNode", "⑦ 연장 구간 소리", (XP, 1600), {}, kind="param")
+g.link(a_cat, a_sw, "on_true"); g.link(a_mute, a_sw, "on_false"); g.link(has_audio, a_sw, "switch")
+g.group("합치기 — 원본 프레임 무변형 + 색 보정 + 이음새 처리 + 오디오 정렬", (XP - 30, -60, 400, 1800), "#006F89")
 
 # ─────────────────────────── 출력 ───────────────────────────
 XO = XP + 440
-out = g.node("VHS_VideoCombine", "⑪ 최종 MP4 (원본 + 연장)", (XO, 0),
+out = g.node("VHS_VideoCombine", "⑫ 최종 MP4 (원본 + 연장)", (XO, 0),
              {"filename_prefix": "LTX2.5_Extend/extend", "format": "video/h264-mp4", "crf": 12}, kind="out", size=[460, 560])
 g.link(ext[2], out, "images"); g.link(a_sw, out, "audio"); g.link(fps, out, "frame_rate")
-out2 = g.node("VHS_VideoCombine", "⑫ ProRes (AE 합성용 · 필요 시 Ctrl+M 해제)", (XO, 620),
+out2 = g.node("VHS_VideoCombine", "⑬ ProRes (AE 합성용 · 필요 시 Ctrl+M 해제)", (XO, 620),
               {"filename_prefix": "LTX2.5_Extend/extend_prores", "format": "video/ProRes"}, kind="out", mode=2, size=[460, 400])
 g.link(ext[2], out2, "images"); g.link(a_sw, out2, "audio"); g.link(fps, out2, "frame_rate")
 g.group("출력", (2070, -60, 520, 1120), "#287A32", main=True)
@@ -198,7 +203,8 @@ g.note("사용법 · 원리", """# LTX-2.5 길이 연장 (Retake 방식)
 
 ## 무엇이 달라졌나
 - 원본 **마지막 C프레임(기본 49 ≈ 2초)** 을 latent에 넣고 noise mask 0으로 **고정** → 모델이 얼굴·옷·조명을 2초 분량 그대로 보면서 뒤만 생성합니다. (공식 `RetakePipeline`과 같은 원리, 9프레임 가이드보다 얼굴 유지력이 훨씬 높음)
-- 원본 **소리도 문맥으로 고정** → 새 구간 소리가 자연스럽게 이어짐 (⑦ 무음 영상이면 끄기)
+- 소리: 원본 소리는 원본 영상 길이에 정확히 맞춰 그대로 쓰고, 연장 구간은 LTX가 영상과 함께 생성한 소리를 붙임 (⑦ 끄면 연장 구간 무음 · 생성 오디오 미사용)
+- 소리 트랙이 없는 영상은 ⑪을 끄기 (켜 두면 VHS가 오디오를 읽다가 멈춤)
 - **2-stage**: 절반 해상도 8 step → 공식 latent 업스케일러 x2 → 풀해상도 3 step 정제. RTX 업스케일로 얼굴을 다시 그리지 않음
 - **원본 fps 유지** (force_rate 0). 기존 24fps 강제 변환 제거
 - 원본 프레임은 한 장도 재생성하지 않고 그대로 출력. 이음새는 ⑨ 4프레임 크로스페이드
@@ -219,6 +225,6 @@ note_key = g.nodes[-1]["key"]  # 사용법 노트
 g.core("LTX-2.5 EXTEND CORE", "LTX-2.5 길이연장 CORE  (더블클릭=내부 진입)", (1440, 0),
        [n["key"] for n in g.nodes[:MAIN_UPTO]] + [out, out2, note_key],
        relocate={out: (2100, 0), out2: (2100, 620)}, color="gen",
-       out_labels={"원본 fps": "fps", "⑦ 소리 없으면 무음 출력": "최종 오디오", "⑥ 원본 오디오 그대로": "최종 오디오", "⑧ 오디오": "최종 오디오", "원본 + 연장 (이음새 크로스페이드)": "최종 영상 (원본+연장)"})
+       out_labels={"원본 fps": "fps", "⑦ 연장 구간 소리": "최종 오디오", "⑥ 원본 오디오 그대로": "최종 오디오", "⑧ 오디오": "최종 오디오", "원본 + 연장 (이음새 크로스페이드)": "최종 영상 (원본+연장)"})
 
 build(g, sys.argv[1] if len(sys.argv) > 1 else "/opt/cf/out_extend.json")

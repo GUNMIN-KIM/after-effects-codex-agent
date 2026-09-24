@@ -1,8 +1,8 @@
 {
- "id": "a4dec2ca-f736-4775-b599-1ac7221b97eb",
+ "id": "44b9cfd9-49d7-436c-8932-d6567e658a6e",
  "revision": 0,
- "last_node_id": 80,
- "last_link_id": 174,
+ "last_node_id": 84,
+ "last_link_id": 185,
  "nodes": [
   {
    "id": 1,
@@ -113,7 +113,7 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      153
+      164
      ]
     },
     {
@@ -127,7 +127,7 @@
      "name": "audio",
      "type": "AUDIO",
      "links": [
-      154
+      165
      ]
     },
     {
@@ -135,7 +135,7 @@
      "name": "video_info",
      "type": "VHS_VIDEOINFO",
      "links": [
-      152
+      163
      ]
     }
    ],
@@ -258,7 +258,7 @@
      "name": "width",
      "type": "INT",
      "links": [
-      157
+      168
      ]
     },
     {
@@ -266,7 +266,7 @@
      "name": "height",
      "type": "INT",
      "links": [
-      158
+      169
      ]
     }
    ],
@@ -318,7 +318,7 @@
      "name": "STRING",
      "type": "STRING",
      "links": [
-      160
+      171
      ]
     }
    ],
@@ -366,7 +366,7 @@
      "name": "STRING",
      "type": "STRING",
      "links": [
-      161
+      172
      ]
     }
    ],
@@ -414,7 +414,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      162
+      173
      ]
     }
    ],
@@ -464,7 +464,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      163
+      174
      ]
     }
    ],
@@ -514,7 +514,7 @@
      "name": "BOOLEAN",
      "type": "BOOLEAN",
      "links": [
-      156
+      167
      ]
     }
    ],
@@ -610,7 +610,7 @@
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
-      164
+      175
      ]
     }
    ],
@@ -658,7 +658,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      165
+      176
      ]
     }
    ],
@@ -782,7 +782,7 @@
      "name": "model",
      "type": "MODEL",
      "links": [
-      168
+      179
      ]
     },
     {
@@ -790,7 +790,7 @@
      "name": "latent_downscale_factor",
      "type": "FLOAT",
      "links": [
-      167
+      178
      ]
     }
    ],
@@ -859,7 +859,7 @@
      "name": "CLIP",
      "type": "CLIP",
      "links": [
-      159
+      170
      ]
     }
    ],
@@ -911,7 +911,7 @@
      "name": "VAE",
      "type": "VAE",
      "links": [
-      166
+      177
      ]
     }
    ],
@@ -959,7 +959,7 @@
      "name": "VAE",
      "type": "VAE",
      "links": [
-      155
+      166
      ]
     }
    ],
@@ -977,7 +977,7 @@
    "bgcolor": "#2D1245"
   },
   {
-   "id": 77,
+   "id": 81,
    "type": "VHS_VideoCombine",
    "pos": [
     2100,
@@ -995,14 +995,14 @@
      "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
-     "link": 173
+     "link": 184
     },
     {
      "localized_name": "audio",
      "name": "audio",
      "shape": 7,
      "type": "AUDIO",
-     "link": 171
+     "link": 182
     },
     {
      "localized_name": "meta_batch",
@@ -1025,7 +1025,7 @@
      "widget": {
       "name": "frame_rate"
      },
-     "link": 169
+     "link": 180
     },
     {
      "localized_name": "loop_count",
@@ -1159,7 +1159,7 @@
    "bgcolor": "#123C18"
   },
   {
-   "id": 78,
+   "id": 82,
    "type": "VHS_VideoCombine",
    "pos": [
     2100,
@@ -1177,14 +1177,14 @@
      "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
-     "link": 174
+     "link": 185
     },
     {
      "localized_name": "audio",
      "name": "audio",
      "shape": 7,
      "type": "AUDIO",
-     "link": 172
+     "link": 183
     },
     {
      "localized_name": "meta_batch",
@@ -1207,7 +1207,7 @@
      "widget": {
       "name": "frame_rate"
      },
-     "link": 170
+     "link": 181
     },
     {
      "localized_name": "loop_count",
@@ -1314,7 +1314,7 @@
    "bgcolor": "#123C18"
   },
   {
-   "id": 79,
+   "id": 83,
    "type": "MarkdownNote",
    "pos": [
     0,
@@ -1332,17 +1332,17 @@
    "title": "사용법 · 원리",
    "properties": {},
    "widgets_values": [
-    "# LTX-2.5 아웃페인트 (원본 1:1 보존)\n\n## 무엇이 달라졌나 (Lightricks 공식 2.5 Outpaint 2-stage 기준)\n- **distilled 트랜스포머 + In/Outpaint IC-LoRA** (dev + distilled LoRA 조합 제거). 공식 2.5 예제도 2.3 In/Outpaint LoRA를 그대로 씀 — 2.5 전용판은 아직 없음\n- **2-stage**: 절반 해상도 8 step → 원본 영역 Laplacian 복원 → 확대·재인코드 → 3-sigma 정제. RTX 업스케일 제거 (표준 ComfyUI에 없는 노드이기도 함)\n- 최종 합성: 기존 `ImageCompositeMasked`(딱딱한 붙이기)는 경계에 색 단차가 생김 → **Laplacian 피라미드 블렌드**로 교체. 원본 영역의 세부 픽셀은 그대로, 경계의 저주파(색·밝기)만 부드럽게 이어짐\n- ⑧ 생성 영역 전체를 원본 색에 맞춤 (재생성된 중앙 ↔ 원본 중앙 차이로 보정) → 색 털림 방지\n- **원본 fps 유지**, 원본 오디오를 모델에 고정 입력 + 출력은 원본 오디오 그대로\n- 프레임 수가 8n+1이 아니면 마지막 프레임 반복으로 채운 뒤 원래 길이로 잘라냄\n\n## 팁\n- 캔버스: 16:9 원본 → 21:9 선택 시 1920×1080 → 2560×1088 (원본은 가운데 1:1)\n- ④ 생성 상한 1920이면 2560 캔버스는 1920×832에서 생성 후 확대. VRAM 여유 있으면 2560\n- 경계에 선이 보이면 ⑨를 2~4 (원본 가장자리 일부가 재생성 영역과 섞임)\n- ③ 바깥 배경을 구체적으로 쓰면 복제·반복 물체가 줄어듦\n"
+    "# LTX-2.5 아웃페인트 (원본 1:1 보존)\n\n## 무엇이 달라졌나 (Lightricks 공식 2.5 Outpaint 2-stage 기준)\n- **distilled 트랜스포머 + In/Outpaint IC-LoRA** (dev + distilled LoRA 조합 제거). 공식 2.5 예제도 2.3 In/Outpaint LoRA를 그대로 씀 — 2.5 전용판은 아직 없음\n- **2-stage**: 절반 해상도 8 step → 원본 영역 Laplacian 복원 → 확대·재인코드 → 3-sigma 정제.\n- **Stage 2에서 원본 영역을 latent로 고정** (공식 Retake 노드의 spatial_mask). 바깥 영역이 \"다시 그려진 가운데\"가 아니라 실제 원본에 맞춰 정제되므로, 원본과 생성 영역이 따로 노는 현상이 줄어듦 RTX 업스케일 제거 (표준 ComfyUI에 없는 노드이기도 함)\n- 최종 합성: 기존 `ImageCompositeMasked`(딱딱한 붙이기)는 경계에 색 단차가 생김 → **Laplacian 피라미드 블렌드**로 교체. 원본 영역의 세부 픽셀은 그대로, 경계의 저주파(색·밝기)만 부드럽게 이어짐\n- ⑧ 생성 영역 전체를 원본 색에 맞춤 (재생성된 중앙 ↔ 원본 중앙 차이로 보정) → 색 털림 방지\n- **원본 fps 유지**, 원본 오디오를 모델에 고정 입력 + 출력은 원본 오디오 그대로\n- 프레임 수가 8n+1이 아니면 마지막 프레임 반복으로 채운 뒤 원래 길이로 잘라냄\n\n## 팁\n- 캔버스: 16:9 원본 → 21:9 선택 시 1920×1080 → 2560×1088 (원본은 가운데 1:1)\n- ④ 생성 상한 1920이면 2560 캔버스는 1920×832에서 생성 후 확대. VRAM 여유 있으면 2560\n- 경계에 선이 보이면 ⑨를 2~4 (원본 가장자리 일부가 재생성 영역과 섞임)\n- ③ 바깥 배경을 구체적으로 쓰면 복제·반복 물체가 줄어듦\n"
    ],
    "widgets_values_named": {
-    "text": "# LTX-2.5 아웃페인트 (원본 1:1 보존)\n\n## 무엇이 달라졌나 (Lightricks 공식 2.5 Outpaint 2-stage 기준)\n- **distilled 트랜스포머 + In/Outpaint IC-LoRA** (dev + distilled LoRA 조합 제거). 공식 2.5 예제도 2.3 In/Outpaint LoRA를 그대로 씀 — 2.5 전용판은 아직 없음\n- **2-stage**: 절반 해상도 8 step → 원본 영역 Laplacian 복원 → 확대·재인코드 → 3-sigma 정제. RTX 업스케일 제거 (표준 ComfyUI에 없는 노드이기도 함)\n- 최종 합성: 기존 `ImageCompositeMasked`(딱딱한 붙이기)는 경계에 색 단차가 생김 → **Laplacian 피라미드 블렌드**로 교체. 원본 영역의 세부 픽셀은 그대로, 경계의 저주파(색·밝기)만 부드럽게 이어짐\n- ⑧ 생성 영역 전체를 원본 색에 맞춤 (재생성된 중앙 ↔ 원본 중앙 차이로 보정) → 색 털림 방지\n- **원본 fps 유지**, 원본 오디오를 모델에 고정 입력 + 출력은 원본 오디오 그대로\n- 프레임 수가 8n+1이 아니면 마지막 프레임 반복으로 채운 뒤 원래 길이로 잘라냄\n\n## 팁\n- 캔버스: 16:9 원본 → 21:9 선택 시 1920×1080 → 2560×1088 (원본은 가운데 1:1)\n- ④ 생성 상한 1920이면 2560 캔버스는 1920×832에서 생성 후 확대. VRAM 여유 있으면 2560\n- 경계에 선이 보이면 ⑨를 2~4 (원본 가장자리 일부가 재생성 영역과 섞임)\n- ③ 바깥 배경을 구체적으로 쓰면 복제·반복 물체가 줄어듦\n"
+    "text": "# LTX-2.5 아웃페인트 (원본 1:1 보존)\n\n## 무엇이 달라졌나 (Lightricks 공식 2.5 Outpaint 2-stage 기준)\n- **distilled 트랜스포머 + In/Outpaint IC-LoRA** (dev + distilled LoRA 조합 제거). 공식 2.5 예제도 2.3 In/Outpaint LoRA를 그대로 씀 — 2.5 전용판은 아직 없음\n- **2-stage**: 절반 해상도 8 step → 원본 영역 Laplacian 복원 → 확대·재인코드 → 3-sigma 정제.\n- **Stage 2에서 원본 영역을 latent로 고정** (공식 Retake 노드의 spatial_mask). 바깥 영역이 \"다시 그려진 가운데\"가 아니라 실제 원본에 맞춰 정제되므로, 원본과 생성 영역이 따로 노는 현상이 줄어듦 RTX 업스케일 제거 (표준 ComfyUI에 없는 노드이기도 함)\n- 최종 합성: 기존 `ImageCompositeMasked`(딱딱한 붙이기)는 경계에 색 단차가 생김 → **Laplacian 피라미드 블렌드**로 교체. 원본 영역의 세부 픽셀은 그대로, 경계의 저주파(색·밝기)만 부드럽게 이어짐\n- ⑧ 생성 영역 전체를 원본 색에 맞춤 (재생성된 중앙 ↔ 원본 중앙 차이로 보정) → 색 털림 방지\n- **원본 fps 유지**, 원본 오디오를 모델에 고정 입력 + 출력은 원본 오디오 그대로\n- 프레임 수가 8n+1이 아니면 마지막 프레임 반복으로 채운 뒤 원래 길이로 잘라냄\n\n## 팁\n- 캔버스: 16:9 원본 → 21:9 선택 시 1920×1080 → 2560×1088 (원본은 가운데 1:1)\n- ④ 생성 상한 1920이면 2560 캔버스는 1920×832에서 생성 후 확대. VRAM 여유 있으면 2560\n- 경계에 선이 보이면 ⑨를 2~4 (원본 가장자리 일부가 재생성 영역과 섞임)\n- ③ 바깥 배경을 구체적으로 쓰면 복제·반복 물체가 줄어듦\n"
    },
    "color": "#6B4500",
    "bgcolor": "#2A1B00"
   },
   {
-   "id": 80,
-   "type": "e1357a83-032e-4df7-9a31-2191aef523a9",
+   "id": 84,
+   "type": "da661d58-6c89-4f99-a424-02f6dc33571e",
    "pos": [
     1440,
     0
@@ -1360,28 +1360,28 @@
      "localized_name": "video_info",
      "name": "video_info",
      "type": "VHS_VIDEOINFO",
-     "link": 152
+     "link": 163
     },
     {
      "label": "① 입력 영상 · IMAGE",
      "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
-     "link": 153
+     "link": 164
     },
     {
      "label": "① 입력 영상 · audio",
      "localized_name": "audio",
      "name": "audio",
      "type": "AUDIO",
-     "link": 154
+     "link": 165
     },
     {
      "label": "LTX-2.5 Audio VAE",
      "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
-     "link": 155
+     "link": 166
     },
     {
      "label": "⑥ 원본에 소리가 있음",
@@ -1391,7 +1391,7 @@
      "widget": {
       "name": "switch"
      },
-     "link": 156
+     "link": 167
     },
     {
      "label": "② 확장할 화면비 · width",
@@ -1402,7 +1402,7 @@
      "widget": {
       "name": "values.c"
      },
-     "link": 157
+     "link": 168
     },
     {
      "label": "② 확장할 화면비 · height",
@@ -1410,14 +1410,14 @@
      "name": "values.d",
      "shape": 7,
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 158
+     "link": 169
     },
     {
      "label": "Gemma 4 12B + LTX-2.5 projection",
      "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
-     "link": 159
+     "link": 170
     },
     {
      "label": "③ 바깥 영역 설명",
@@ -1427,7 +1427,7 @@
      "widget": {
       "name": "text"
      },
-     "link": 160
+     "link": 171
     },
     {
      "label": "negative",
@@ -1437,7 +1437,7 @@
      "widget": {
       "name": "text_1"
      },
-     "link": 161
+     "link": 172
     },
     {
      "label": "④ 생성 해상도 긴 변 상한",
@@ -1448,7 +1448,7 @@
      "widget": {
       "name": "values.c_1"
      },
-     "link": 162
+     "link": 173
     },
     {
      "label": "⑤ seed",
@@ -1458,7 +1458,7 @@
      "widget": {
       "name": "noise_seed"
      },
-     "link": 163
+     "link": 174
     },
     {
      "label": "⑧ 생성 영역 색 보정 강도",
@@ -1468,7 +1468,7 @@
      "widget": {
       "name": "strength"
      },
-     "link": 164
+     "link": 175
     },
     {
      "label": "⑨ 최종 경계 블렌드 확장",
@@ -1478,14 +1478,14 @@
      "widget": {
       "name": "mask_low_res_dilation"
      },
-     "link": 165
+     "link": 176
     },
     {
      "label": "LTX-2.5 Video VAE",
      "localized_name": "vae_1",
      "name": "vae_1",
      "type": "VAE",
-     "link": 166
+     "link": 177
     },
     {
      "label": "In/Outpaint IC-LoRA · latent_downscale_factor",
@@ -1495,14 +1495,14 @@
      "widget": {
       "name": "latent_downscale_factor"
      },
-     "link": 167
+     "link": 178
     },
     {
      "label": "In/Outpaint IC-LoRA · model",
      "localized_name": "model",
      "name": "model",
      "type": "MODEL",
-     "link": 168
+     "link": 179
     }
    ],
    "outputs": [
@@ -1512,8 +1512,8 @@
      "name": "loaded_fps🟦",
      "type": "FLOAT",
      "links": [
-      169,
-      170
+      180,
+      181
      ]
     },
     {
@@ -1522,8 +1522,8 @@
      "name": "output",
      "type": "AUDIO",
      "links": [
-      171,
-      172
+      182,
+      183
      ]
     },
     {
@@ -1532,8 +1532,8 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      173,
-      174
+      184,
+      185
      ]
     }
    ],
@@ -1585,186 +1585,186 @@
    "FLOAT"
   ],
   [
-   152,
+   163,
    1,
    3,
-   80,
+   84,
    0,
    "VHS_VIDEOINFO"
   ],
   [
-   153,
+   164,
    1,
    0,
-   80,
+   84,
    1,
    "IMAGE"
   ],
   [
-   154,
+   165,
    1,
    2,
-   80,
+   84,
    2,
    "AUDIO"
   ],
   [
-   155,
+   166,
    15,
    0,
-   80,
+   84,
    3,
-   "VAE"
-  ],
-  [
-   156,
-   7,
-   0,
-   80,
-   4,
-   "BOOLEAN"
-  ],
-  [
-   157,
-   2,
-   0,
-   80,
-   5,
-   "INT"
-  ],
-  [
-   158,
-   2,
-   1,
-   80,
-   6,
-   "INT"
-  ],
-  [
-   159,
-   13,
-   0,
-   80,
-   7,
-   "CLIP"
-  ],
-  [
-   160,
-   3,
-   0,
-   80,
-   8,
-   "STRING"
-  ],
-  [
-   161,
-   4,
-   0,
-   80,
-   9,
-   "STRING"
-  ],
-  [
-   162,
-   5,
-   0,
-   80,
-   10,
-   "INT"
-  ],
-  [
-   163,
-   6,
-   0,
-   80,
-   11,
-   "INT"
-  ],
-  [
-   164,
-   9,
-   0,
-   80,
-   12,
-   "FLOAT"
-  ],
-  [
-   165,
-   10,
-   0,
-   80,
-   13,
-   "INT"
-  ],
-  [
-   166,
-   14,
-   0,
-   80,
-   14,
    "VAE"
   ],
   [
    167,
+   7,
+   0,
+   84,
+   4,
+   "BOOLEAN"
+  ],
+  [
+   168,
+   2,
+   0,
+   84,
+   5,
+   "INT"
+  ],
+  [
+   169,
+   2,
+   1,
+   84,
+   6,
+   "INT"
+  ],
+  [
+   170,
+   13,
+   0,
+   84,
+   7,
+   "CLIP"
+  ],
+  [
+   171,
+   3,
+   0,
+   84,
+   8,
+   "STRING"
+  ],
+  [
+   172,
+   4,
+   0,
+   84,
+   9,
+   "STRING"
+  ],
+  [
+   173,
+   5,
+   0,
+   84,
+   10,
+   "INT"
+  ],
+  [
+   174,
+   6,
+   0,
+   84,
+   11,
+   "INT"
+  ],
+  [
+   175,
+   9,
+   0,
+   84,
+   12,
+   "FLOAT"
+  ],
+  [
+   176,
+   10,
+   0,
+   84,
+   13,
+   "INT"
+  ],
+  [
+   177,
+   14,
+   0,
+   84,
+   14,
+   "VAE"
+  ],
+  [
+   178,
    12,
    1,
-   80,
+   84,
    15,
    "FLOAT"
   ],
   [
-   168,
+   179,
    12,
    0,
-   80,
+   84,
    16,
    "MODEL"
   ],
   [
-   169,
-   80,
+   180,
+   84,
    0,
-   77,
+   81,
    4,
    "FLOAT"
   ],
   [
-   170,
-   80,
+   181,
+   84,
    0,
-   78,
+   82,
    4,
    "FLOAT"
   ],
   [
-   171,
-   80,
+   182,
+   84,
    1,
-   77,
-   1,
-   "AUDIO"
-  ],
-  [
-   172,
-   80,
-   1,
-   78,
+   81,
    1,
    "AUDIO"
   ],
   [
-   173,
-   80,
+   183,
+   84,
+   1,
+   82,
+   1,
+   "AUDIO"
+  ],
+  [
+   184,
+   84,
    2,
-   77,
+   81,
    0,
    "IMAGE"
   ],
   [
-   174,
-   80,
+   185,
+   84,
    2,
-   78,
+   82,
    0,
    "IMAGE"
   ]
@@ -1810,12 +1810,12 @@
  "definitions": {
   "subgraphs": [
    {
-    "id": "e1357a83-032e-4df7-9a31-2191aef523a9",
+    "id": "da661d58-6c89-4f99-a424-02f6dc33571e",
     "version": 1,
     "state": {
      "lastGroupId": 8,
-     "lastNodeId": 80,
-     "lastLinkId": 174,
+     "lastNodeId": 84,
+     "lastLinkId": 185,
      "lastRerouteId": 0
     },
     "revision": 0,
@@ -1833,7 +1833,7 @@
     "outputNode": {
      "id": -20,
      "bounding": [
-      4590,
+      4930,
       606,
       128,
       108
@@ -1841,7 +1841,7 @@
     },
     "inputs": [
      {
-      "id": "1f38fc51-2d56-440a-82c4-91046115db7d",
+      "id": "fdfd4221-b53c-4ba2-8307-f3551363a4a2",
       "name": "video_info",
       "type": "VHS_VIDEOINFO",
       "linkIds": [
@@ -1855,7 +1855,7 @@
       ]
      },
      {
-      "id": "67f0f196-83fa-4b87-b40c-8dfc0ad24e4f",
+      "id": "4fd3dda8-6037-45ff-b90e-0569b923e09a",
       "name": "image",
       "type": "IMAGE",
       "linkIds": [
@@ -1871,12 +1871,12 @@
       ]
      },
      {
-      "id": "dd95329c-af0f-4c1a-922a-5a56107dec7e",
+      "id": "5db2352b-4346-4288-ac4c-efbb6e9620be",
       "name": "audio",
       "type": "AUDIO",
       "linkIds": [
-       66,
-       144
+       69,
+       155
       ],
       "localized_name": "audio",
       "label": "① 입력 영상 · audio",
@@ -1886,12 +1886,13 @@
       ]
      },
      {
-      "id": "405a666f-44f6-4d58-863b-15d919dc35d7",
+      "id": "7df8374e-90b4-4478-a53a-409634f8ab8a",
       "name": "vae",
       "type": "VAE",
       "linkIds": [
-       67,
-       71
+       70,
+       121,
+       74
       ],
       "localized_name": "vae",
       "label": "LTX-2.5 Audio VAE",
@@ -1901,14 +1902,14 @@
       ]
      },
      {
-      "id": "d8f13d49-595e-4151-9f35-8b5ee69fc81e",
+      "id": "8dcf5f8d-9919-47d9-aa9f-be89931f1dec",
       "name": "switch",
       "type": "BOOLEAN",
       "linkIds": [
-       145,
-       76,
+       156,
        79,
-       82
+       82,
+       85
       ],
       "localized_name": "switch",
       "label": "⑥ 원본에 소리가 있음",
@@ -1918,7 +1919,7 @@
       ]
      },
      {
-      "id": "99c5a25a-dd39-4010-a058-0fbe7dc1d6d6",
+      "id": "6945f156-d50e-448e-bdac-bab463bbfa9e",
       "name": "values.c",
       "type": "FLOAT,INT,BOOLEAN",
       "linkIds": [
@@ -1934,7 +1935,7 @@
       ]
      },
      {
-      "id": "a071f24b-2eee-47df-9b23-c40d184bdcd9",
+      "id": "41857afe-1c3b-41b2-9040-1109a10bf2da",
       "name": "values.d",
       "type": "FLOAT,INT,BOOLEAN",
       "linkIds": [
@@ -1950,12 +1951,12 @@
       ]
      },
      {
-      "id": "dc03f2de-89a1-45e6-af42-c527f74a676e",
+      "id": "4d2bc6cc-6619-4d16-997a-eab60706cfa7",
       "name": "clip",
       "type": "CLIP",
       "linkIds": [
-       50,
-       52
+       53,
+       55
       ],
       "localized_name": "clip",
       "label": "Gemma 4 12B + LTX-2.5 projection",
@@ -1965,11 +1966,11 @@
       ]
      },
      {
-      "id": "4081dc52-8eb3-406c-8282-9dfbd6f2bae0",
+      "id": "7e3f660d-a770-4b17-9b8b-2b62a6c9d59a",
       "name": "text",
       "type": "STRING",
       "linkIds": [
-       51
+       54
       ],
       "localized_name": "text",
       "label": "③ 바깥 영역 설명",
@@ -1979,11 +1980,11 @@
       ]
      },
      {
-      "id": "6e90a266-f0f4-48a1-bdb4-eb30859f0b02",
+      "id": "ec659069-b35b-4f76-a61b-3bc9ddd8132d",
       "name": "text_1",
       "type": "STRING",
       "linkIds": [
-       53
+       56
       ],
       "localized_name": "text_1",
       "label": "negative",
@@ -1993,7 +1994,7 @@
       ]
      },
      {
-      "id": "c2981b8b-a767-4894-9476-e59f1ef66d5a",
+      "id": "b94585f9-7dc9-4a99-b054-7508e18fb95e",
       "name": "values.c_1",
       "type": "FLOAT,INT,BOOLEAN",
       "linkIds": [
@@ -2009,11 +2010,11 @@
       ]
      },
      {
-      "id": "4d00df53-7f36-4cc1-b99b-68ff442d96d8",
+      "id": "dbdb5a9f-db36-449e-a9f2-871d06a7b975",
       "name": "noise_seed",
       "type": "INT",
       "linkIds": [
-       88
+       91
       ],
       "localized_name": "noise_seed",
       "label": "⑤ seed",
@@ -2023,11 +2024,11 @@
       ]
      },
      {
-      "id": "aef12771-6ad1-4af9-b96b-9726e5dc302c",
+      "id": "6b99f6c1-585b-48a2-b618-b9759532346a",
       "name": "strength",
       "type": "FLOAT",
       "linkIds": [
-       133
+       144
       ],
       "localized_name": "strength",
       "label": "⑧ 생성 영역 색 보정 강도",
@@ -2037,11 +2038,11 @@
       ]
      },
      {
-      "id": "bbf70d16-bdd0-4908-b05e-d89b34d3349e",
+      "id": "994af7c8-0d6c-4e9c-9451-1e04738263b3",
       "name": "mask_low_res_dilation",
       "type": "INT",
       "linkIds": [
-       141
+       152
       ],
       "localized_name": "mask_low_res_dilation",
       "label": "⑨ 최종 경계 블렌드 확장",
@@ -2051,14 +2052,15 @@
       ]
      },
      {
-      "id": "7208225f-f51b-4849-ac53-0cade47c9a12",
+      "id": "f3dec028-44cb-4263-9287-ab6ed71d676f",
       "name": "vae_1",
       "type": "VAE",
       "linkIds": [
-       62,
-       99,
-       107,
-       123
+       65,
+       120,
+       102,
+       110,
+       134
       ],
       "localized_name": "vae_1",
       "label": "LTX-2.5 Video VAE",
@@ -2068,11 +2070,11 @@
       ]
      },
      {
-      "id": "8696032d-0e83-4f12-a41c-e69c779e9c77",
+      "id": "01bf2c26-b2df-4395-bbce-8058dfac45e7",
       "name": "latent_downscale_factor",
       "type": "FLOAT",
       "linkIds": [
-       65
+       68
       ],
       "localized_name": "latent_downscale_factor",
       "label": "In/Outpaint IC-LoRA · latent_downscale_factor",
@@ -2082,12 +2084,13 @@
       ]
      },
      {
-      "id": "3ed5d714-c743-4522-9fea-12a2e1e4c7e0",
+      "id": "df3fc90b-b2af-4525-b9ed-ad87069dae65",
       "name": "model",
       "type": "MODEL",
       "linkIds": [
-       85,
-       113
+       88,
+       119,
+       124
       ],
       "localized_name": "model",
       "label": "In/Outpaint IC-LoRA · model",
@@ -2099,11 +2102,11 @@
     ],
     "outputs": [
      {
-      "id": "efcf047d-ad22-4624-939e-9e517ef90ff8",
+      "id": "54a442c4-f220-41e3-88ad-c60dec8d3c5f",
       "name": "loaded_fps🟦",
       "type": "FLOAT",
       "linkIds": [
-       148
+       159
       ],
       "localized_name": "loaded_fps🟦",
       "label": "fps",
@@ -2113,11 +2116,11 @@
       ]
      },
      {
-      "id": "d07e0e1b-1a40-45d4-9663-00a4b659b93c",
+      "id": "67fe759d-ea37-4c47-a738-030bee512170",
       "name": "output",
       "type": "AUDIO",
       "linkIds": [
-       147
+       158
       ],
       "localized_name": "output",
       "label": "최종 오디오",
@@ -2127,11 +2130,11 @@
       ]
      },
      {
-      "id": "b6d240ad-7255-4ec2-90b1-4e861b3f1f20",
+      "id": "9b4830d0-6a92-4182-9bb4-6ee4b691c42f",
       "name": "IMAGE",
       "type": "IMAGE",
       "linkIds": [
-       146
+       157
       ],
       "localized_name": "IMAGE",
       "label": "원래 프레임 수로 복원",
@@ -2201,9 +2204,10 @@
         "name": "loaded_fps🟦",
         "type": "FLOAT",
         "links": [
-         56,
-         73,
-         148
+         59,
+         76,
+         122,
+         159
         ]
        },
        {
@@ -2289,7 +2293,7 @@
         "links": [
          21,
          22,
-         143
+         154
         ]
        }
       ],
@@ -2419,7 +2423,7 @@
       "bgcolor": "#2A1B00"
      },
      {
-      "id": 44,
+      "id": 47,
       "type": "VAEEncodeAudio",
       "pos": [
        2640,
@@ -2430,20 +2434,20 @@
        46
       ],
       "flags": {},
-      "order": 32,
+      "order": 35,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "audio",
         "name": "audio",
         "type": "AUDIO",
-        "link": 66
+        "link": 69
        },
        {
         "localized_name": "vae",
         "name": "vae",
         "type": "VAE",
-        "link": 67
+        "link": 70
        }
       ],
       "outputs": [
@@ -2452,7 +2456,7 @@
         "name": "LATENT",
         "type": "LATENT",
         "links": [
-         70
+         73
         ]
        }
       ],
@@ -2464,10 +2468,10 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 76,
+      "id": 80,
       "type": "ComfySwitchNode",
       "pos": [
-       4160,
+       4500,
        1120
       ],
       "size": [
@@ -2475,7 +2479,7 @@
        78
       ],
       "flags": {},
-      "order": 60,
+      "order": 64,
       "mode": 0,
       "inputs": [
        {
@@ -2490,7 +2494,7 @@
         "name": "on_true",
         "shape": 7,
         "type": "*",
-        "link": 144
+        "link": 155
        },
        {
         "localized_name": "switch",
@@ -2499,7 +2503,7 @@
         "widget": {
          "name": "switch"
         },
-        "link": 145
+        "link": 156
        }
       ],
       "outputs": [
@@ -2508,7 +2512,7 @@
         "name": "output",
         "type": "*",
         "links": [
-         147
+         158
         ]
        }
       ],
@@ -2600,7 +2604,7 @@
          16,
          23,
          35,
-         125
+         136
         ]
        },
        {
@@ -2698,7 +2702,7 @@
          17,
          25,
          36,
-         126
+         137
         ]
        },
        {
@@ -2722,7 +2726,7 @@
       "bgcolor": "#493200"
      },
      {
-      "id": 39,
+      "id": 42,
       "type": "CLIPTextEncode",
       "pos": [
        2640,
@@ -2733,14 +2737,14 @@
        88
       ],
       "flags": {},
-      "order": 27,
+      "order": 30,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "clip",
         "name": "clip",
         "type": "CLIP",
-        "link": 50
+        "link": 53
        },
        {
         "localized_name": "text",
@@ -2749,7 +2753,7 @@
         "widget": {
          "name": "text"
         },
-        "link": 51
+        "link": 54
        }
       ],
       "outputs": [
@@ -2758,7 +2762,7 @@
         "name": "CONDITIONING",
         "type": "CONDITIONING",
         "links": [
-         54
+         57
         ]
        }
       ],
@@ -2776,7 +2780,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 40,
+      "id": 43,
       "type": "CLIPTextEncode",
       "pos": [
        2640,
@@ -2787,14 +2791,14 @@
        88
       ],
       "flags": {},
-      "order": 28,
+      "order": 31,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "clip",
         "name": "clip",
         "type": "CLIP",
-        "link": 52
+        "link": 55
        },
        {
         "localized_name": "text",
@@ -2803,7 +2807,7 @@
         "widget": {
          "name": "text"
         },
-        "link": 53
+        "link": 56
        }
       ],
       "outputs": [
@@ -2812,7 +2816,7 @@
         "name": "CONDITIONING",
         "type": "CONDITIONING",
         "links": [
-         55
+         58
         ]
        }
       ],
@@ -2895,7 +2899,7 @@
         "links": [
          19,
          38,
-         104
+         107
         ]
        },
        {
@@ -2984,7 +2988,7 @@
         "links": [
          20,
          39,
-         105
+         108
         ]
        },
        {
@@ -3008,7 +3012,7 @@
       "bgcolor": "#493200"
      },
      {
-      "id": 52,
+      "id": 55,
       "type": "RandomNoise",
       "pos": [
        2980,
@@ -3019,7 +3023,7 @@
        82
       ],
       "flags": {},
-      "order": 40,
+      "order": 43,
       "mode": 0,
       "inputs": [
        {
@@ -3029,7 +3033,7 @@
         "widget": {
          "name": "noise_seed"
         },
-        "link": 88
+        "link": 91
        }
       ],
       "outputs": [
@@ -3038,8 +3042,8 @@
         "name": "NOISE",
         "type": "NOISE",
         "links": [
-         89,
-         116
+         92,
+         127
         ]
        }
       ],
@@ -3059,7 +3063,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 47,
+      "id": 50,
       "type": "ComfySwitchNode",
       "pos": [
        2980,
@@ -3070,70 +3074,7 @@
        78
       ],
       "flags": {},
-      "order": 35,
-      "mode": 0,
-      "inputs": [
-       {
-        "localized_name": "on_false",
-        "name": "on_false",
-        "shape": 7,
-        "type": "*",
-        "link": 74
-       },
-       {
-        "localized_name": "on_true",
-        "name": "on_true",
-        "shape": 7,
-        "type": "*",
-        "link": 75
-       },
-       {
-        "localized_name": "switch",
-        "name": "switch",
-        "type": "BOOLEAN",
-        "widget": {
-         "name": "switch"
-        },
-        "link": 76
-       }
-      ],
-      "outputs": [
-       {
-        "localized_name": "output",
-        "name": "output",
-        "type": "*",
-        "links": [
-         86,
-         95
-        ]
-       }
-      ],
-      "title": "⑥ positive",
-      "properties": {
-       "Node name for S&R": "ComfySwitchNode"
-      },
-      "widgets_values": [
-       false
-      ],
-      "widgets_values_named": {
-       "switch": false
-      },
-      "color": "#956500",
-      "bgcolor": "#493200"
-     },
-     {
-      "id": 48,
-      "type": "ComfySwitchNode",
-      "pos": [
-       2980,
-       110
-      ],
-      "size": [
-       260,
-       78
-      ],
-      "flags": {},
-      "order": 36,
+      "order": 38,
       "mode": 0,
       "inputs": [
        {
@@ -3166,12 +3107,12 @@
         "name": "output",
         "type": "*",
         "links": [
-         87,
-         96
+         89,
+         98
         ]
        }
       ],
-      "title": "⑥ negative",
+      "title": "⑥ positive",
       "properties": {
        "Node name for S&R": "ComfySwitchNode"
       },
@@ -3185,18 +3126,18 @@
       "bgcolor": "#493200"
      },
      {
-      "id": 49,
+      "id": 51,
       "type": "ComfySwitchNode",
       "pos": [
        2980,
-       220
+       110
       ],
       "size": [
        260,
        78
       ],
       "flags": {},
-      "order": 37,
+      "order": 39,
       "mode": 0,
       "inputs": [
        {
@@ -3229,7 +3170,70 @@
         "name": "output",
         "type": "*",
         "links": [
-         84
+         90,
+         99
+        ]
+       }
+      ],
+      "title": "⑥ negative",
+      "properties": {
+       "Node name for S&R": "ComfySwitchNode"
+      },
+      "widgets_values": [
+       false
+      ],
+      "widgets_values_named": {
+       "switch": false
+      },
+      "color": "#956500",
+      "bgcolor": "#493200"
+     },
+     {
+      "id": 52,
+      "type": "ComfySwitchNode",
+      "pos": [
+       2980,
+       220
+      ],
+      "size": [
+       260,
+       78
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "on_false",
+        "name": "on_false",
+        "shape": 7,
+        "type": "*",
+        "link": 83
+       },
+       {
+        "localized_name": "on_true",
+        "name": "on_true",
+        "shape": 7,
+        "type": "*",
+        "link": 84
+       },
+       {
+        "localized_name": "switch",
+        "name": "switch",
+        "type": "BOOLEAN",
+        "widget": {
+         "name": "switch"
+        },
+        "link": 85
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "output",
+        "name": "output",
+        "type": "*",
+        "links": [
+         87
         ]
        }
       ],
@@ -3247,10 +3251,10 @@
       "bgcolor": "#493200"
      },
      {
-      "id": 72,
+      "id": 76,
       "type": "ColorMatchV2",
       "pos": [
-       4160,
+       4500,
        380
       ],
       "size": [
@@ -3258,20 +3262,20 @@
        126
       ],
       "flags": {},
-      "order": 56,
+      "order": 60,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "image_target",
         "name": "image_target",
         "type": "IMAGE",
-        "link": 131
+        "link": 142
        },
        {
         "localized_name": "image_ref",
         "name": "image_ref",
         "type": "IMAGE",
-        "link": 132
+        "link": 143
        },
        {
         "localized_name": "method",
@@ -3289,7 +3293,7 @@
         "widget": {
          "name": "strength"
         },
-        "link": 133
+        "link": 144
        },
        {
         "localized_name": "multithread",
@@ -3307,8 +3311,8 @@
         "name": "image",
         "type": "IMAGE",
         "links": [
-         134,
-         138
+         145,
+         149
         ]
        }
       ],
@@ -3330,10 +3334,10 @@
       "bgcolor": "#003D30"
      },
      {
-      "id": 74,
+      "id": 78,
       "type": "LTXVLaplacianPyramidBlend",
       "pos": [
-       4160,
+       4500,
        780
       ],
       "size": [
@@ -3341,26 +3345,26 @@
        122
       ],
       "flags": {},
-      "order": 58,
+      "order": 62,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "image_a",
         "name": "image_a",
         "type": "IMAGE",
-        "link": 138
+        "link": 149
        },
        {
         "localized_name": "image_b",
         "name": "image_b",
         "type": "IMAGE",
-        "link": 139
+        "link": 150
        },
        {
         "localized_name": "mask",
         "name": "mask",
         "type": "MASK",
-        "link": 140
+        "link": 151
        },
        {
         "localized_name": "trim_to_shortest",
@@ -3378,7 +3382,7 @@
         "widget": {
          "name": "mask_low_res_dilation"
         },
-        "link": 141
+        "link": 152
        }
       ],
       "outputs": [
@@ -3387,7 +3391,7 @@
         "name": "image",
         "type": "IMAGE",
         "links": [
-         142
+         153
         ]
        }
       ],
@@ -3407,7 +3411,7 @@
       "bgcolor": "#003D30"
      },
      {
-      "id": 43,
+      "id": 46,
       "type": "LTXAddVideoICLoRAGuideAdvanced",
       "pos": [
        2640,
@@ -3418,38 +3422,38 @@
        326
       ],
       "flags": {},
-      "order": 31,
+      "order": 34,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "positive",
         "name": "positive",
         "type": "CONDITIONING",
-        "link": 60
+        "link": 63
        },
        {
         "localized_name": "negative",
         "name": "negative",
         "type": "CONDITIONING",
-        "link": 61
+        "link": 64
        },
        {
         "localized_name": "vae",
         "name": "vae",
         "type": "VAE",
-        "link": 62
+        "link": 65
        },
        {
         "localized_name": "latent",
         "name": "latent",
         "type": "LATENT",
-        "link": 63
+        "link": 66
        },
        {
         "localized_name": "image",
         "name": "image",
         "type": "IMAGE",
-        "link": 64
+        "link": 67
        },
        {
         "localized_name": "attention_mask",
@@ -3483,7 +3487,7 @@
         "widget": {
          "name": "latent_downscale_factor"
         },
-        "link": 65
+        "link": 68
        },
        {
         "localized_name": "crop",
@@ -3537,8 +3541,8 @@
         "name": "positive",
         "type": "CONDITIONING",
         "links": [
-         68,
-         74
+         71,
+         77
         ]
        },
        {
@@ -3546,8 +3550,8 @@
         "name": "negative",
         "type": "CONDITIONING",
         "links": [
-         69,
-         77
+         72,
+         80
         ]
        },
        {
@@ -3555,7 +3559,7 @@
         "name": "latent",
         "type": "LATENT",
         "links": [
-         83
+         86
         ]
        }
       ],
@@ -3587,7 +3591,7 @@
       "bgcolor": "#2A1B00"
      },
      {
-      "id": 51,
+      "id": 54,
       "type": "CFGGuider",
       "pos": [
        2980,
@@ -3598,26 +3602,26 @@
        98
       ],
       "flags": {},
-      "order": 39,
+      "order": 42,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "model",
         "name": "model",
         "type": "MODEL",
-        "link": 85
+        "link": 88
        },
        {
         "localized_name": "positive",
         "name": "positive",
         "type": "CONDITIONING",
-        "link": 86
+        "link": 89
        },
        {
         "localized_name": "negative",
         "name": "negative",
         "type": "CONDITIONING",
-        "link": 87
+        "link": 90
        },
        {
         "localized_name": "cfg",
@@ -3635,7 +3639,7 @@
         "name": "GUIDER",
         "type": "GUIDER",
         "links": [
-         90
+         93
         ]
        }
       ],
@@ -3653,7 +3657,203 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 64,
+      "id": 67,
+      "type": "LTXVSetAudioVideoMaskByTime",
+      "pos": [
+       4060,
+       0
+      ],
+      "size": [
+       346.355078125,
+       346
+      ],
+      "flags": {},
+      "order": 53,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "av_latent",
+        "name": "av_latent",
+        "type": "LATENT",
+        "link": 116
+       },
+       {
+        "localized_name": "positive",
+        "name": "positive",
+        "type": "CONDITIONING",
+        "link": 117
+       },
+       {
+        "localized_name": "negative",
+        "name": "negative",
+        "type": "CONDITIONING",
+        "link": 118
+       },
+       {
+        "localized_name": "model",
+        "name": "model",
+        "type": "MODEL",
+        "link": 119
+       },
+       {
+        "localized_name": "vae",
+        "name": "vae",
+        "type": "VAE",
+        "link": 120
+       },
+       {
+        "localized_name": "audio_vae",
+        "name": "audio_vae",
+        "type": "VAE",
+        "link": 121
+       },
+       {
+        "localized_name": "spatial_mask",
+        "name": "spatial_mask",
+        "shape": 7,
+        "type": "MASK",
+        "link": 123
+       },
+       {
+        "localized_name": "start_time",
+        "name": "start_time",
+        "type": "FLOAT",
+        "widget": {
+         "name": "start_time"
+        },
+        "link": null
+       },
+       {
+        "localized_name": "end_time",
+        "name": "end_time",
+        "type": "FLOAT",
+        "widget": {
+         "name": "end_time"
+        },
+        "link": null
+       },
+       {
+        "localized_name": "video_fps",
+        "name": "video_fps",
+        "type": "FLOAT",
+        "widget": {
+         "name": "video_fps"
+        },
+        "link": 122
+       },
+       {
+        "localized_name": "mask_video",
+        "name": "mask_video",
+        "type": "BOOLEAN",
+        "widget": {
+         "name": "mask_video"
+        },
+        "link": null
+       },
+       {
+        "localized_name": "mask_audio",
+        "name": "mask_audio",
+        "type": "BOOLEAN",
+        "widget": {
+         "name": "mask_audio"
+        },
+        "link": null
+       },
+       {
+        "localized_name": "mask_init_value_video",
+        "name": "mask_init_value_video",
+        "type": "FLOAT",
+        "widget": {
+         "name": "mask_init_value_video"
+        },
+        "link": null
+       },
+       {
+        "localized_name": "mask_init_value_audio",
+        "name": "mask_init_value_audio",
+        "type": "FLOAT",
+        "widget": {
+         "name": "mask_init_value_audio"
+        },
+        "link": null
+       },
+       {
+        "localized_name": "slope_len",
+        "name": "slope_len",
+        "type": "INT",
+        "widget": {
+         "name": "slope_len"
+        },
+        "link": null
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "positive",
+        "name": "positive",
+        "type": "CONDITIONING",
+        "links": [
+         125
+        ]
+       },
+       {
+        "localized_name": "negative",
+        "name": "negative",
+        "type": "CONDITIONING",
+        "links": [
+         126
+        ]
+       },
+       {
+        "localized_name": "av_latent",
+        "name": "av_latent",
+        "type": "LATENT",
+        "links": [
+         131
+        ]
+       },
+       {
+        "localized_name": "video_latent_blend_coefficients",
+        "name": "video_latent_blend_coefficients",
+        "type": "FLOAT",
+        "links": null
+       },
+       {
+        "localized_name": "video_pixel_blend_coefficients",
+        "name": "video_pixel_blend_coefficients",
+        "type": "FLOAT",
+        "links": null
+       }
+      ],
+      "title": "원본 영역 latent 고정 · 바깥만 정제 (공간 마스크)",
+      "properties": {
+       "Node name for S&R": "LTXVSetAudioVideoMaskByTime"
+      },
+      "widgets_values": [
+       0,
+       2000,
+       24,
+       true,
+       false,
+       0,
+       0,
+       3
+      ],
+      "widgets_values_named": {
+       "start_time": 0,
+       "end_time": 2000,
+       "video_fps": 24,
+       "mask_video": true,
+       "mask_audio": false,
+       "mask_init_value_video": 0,
+       "mask_init_value_audio": 0,
+       "slope_len": 3
+      },
+      "color": "#6B4500",
+      "bgcolor": "#2A1B00"
+     },
+     {
+      "id": 68,
       "type": "CFGGuider",
       "pos": [
        3720,
@@ -3664,26 +3864,26 @@
        98
       ],
       "flags": {},
-      "order": 50,
+      "order": 54,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "model",
         "name": "model",
         "type": "MODEL",
-        "link": 113
+        "link": 124
        },
        {
         "localized_name": "positive",
         "name": "positive",
         "type": "CONDITIONING",
-        "link": 114
+        "link": 125
        },
        {
         "localized_name": "negative",
         "name": "negative",
         "type": "CONDITIONING",
-        "link": 115
+        "link": 126
        },
        {
         "localized_name": "cfg",
@@ -3701,7 +3901,7 @@
         "name": "GUIDER",
         "type": "GUIDER",
         "links": [
-         117
+         128
         ]
        }
       ],
@@ -3719,7 +3919,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 58,
+      "id": 61,
       "type": "VAEDecodeTiled",
       "pos": [
        3320,
@@ -3730,20 +3930,20 @@
        150
       ],
       "flags": {},
-      "order": 44,
+      "order": 47,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "samples",
         "name": "samples",
         "type": "LATENT",
-        "link": 98
+        "link": 101
        },
        {
         "localized_name": "vae",
         "name": "vae",
         "type": "VAE",
-        "link": 99
+        "link": 102
        },
        {
         "localized_name": "tile_size",
@@ -3788,7 +3988,7 @@
         "name": "IMAGE",
         "type": "IMAGE",
         "links": [
-         100
+         103
         ]
        }
       ],
@@ -3812,7 +4012,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 61,
+      "id": 64,
       "type": "VAEEncodeTiled",
       "pos": [
        3720,
@@ -3823,20 +4023,20 @@
        150
       ],
       "flags": {},
-      "order": 47,
+      "order": 50,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "pixels",
         "name": "pixels",
         "type": "IMAGE",
-        "link": 106
+        "link": 109
        },
        {
         "localized_name": "vae",
         "name": "vae",
         "type": "VAE",
-        "link": 107
+        "link": 110
        },
        {
         "localized_name": "tile_size",
@@ -3881,7 +4081,7 @@
         "name": "LATENT",
         "type": "LATENT",
         "links": [
-         111
+         114
         ]
        }
       ],
@@ -3905,7 +4105,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 69,
+      "id": 73,
       "type": "VAEDecodeTiled",
       "pos": [
        3720,
@@ -3916,20 +4116,20 @@
        150
       ],
       "flags": {},
-      "order": 53,
+      "order": 57,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "samples",
         "name": "samples",
         "type": "LATENT",
-        "link": 122
+        "link": 133
        },
        {
         "localized_name": "vae",
         "name": "vae",
         "type": "VAE",
-        "link": 123
+        "link": 134
        },
        {
         "localized_name": "tile_size",
@@ -3974,7 +4174,7 @@
         "name": "IMAGE",
         "type": "IMAGE",
         "links": [
-         124
+         135
         ]
        }
       ],
@@ -3998,7 +4198,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 46,
+      "id": 49,
       "type": "LTXVEmptyLatentAudio",
       "pos": [
        2640,
@@ -4009,14 +4209,14 @@
        106
       ],
       "flags": {},
-      "order": 34,
+      "order": 37,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "Audio VAE",
         "name": "audio_vae",
         "type": "VAE",
-        "link": 71
+        "link": 74
        },
        {
         "localized_name": "frames_number",
@@ -4025,7 +4225,7 @@
         "widget": {
          "name": "frames_number"
         },
-        "link": 72
+        "link": 75
        },
        {
         "localized_name": "frame_rate",
@@ -4034,7 +4234,7 @@
         "widget": {
          "name": "frame_rate"
         },
-        "link": 73
+        "link": 76
        },
        {
         "localized_name": "batch_size",
@@ -4052,7 +4252,7 @@
         "name": "Latent",
         "type": "LATENT",
         "links": [
-         80
+         83
         ]
        }
       ],
@@ -4125,7 +4325,7 @@
         "links": [
          41,
          45,
-         57
+         60
         ]
        },
        {
@@ -4200,7 +4400,7 @@
         "links": [
          42,
          46,
-         58
+         61
         ]
        },
        {
@@ -4274,8 +4474,8 @@
         "type": "INT",
         "links": [
          33,
-         59,
-         72
+         62,
+         75
         ]
        },
        {
@@ -4428,8 +4628,8 @@
         "name": "INT",
         "type": "INT",
         "links": [
-         129,
-         136
+         140,
+         147
         ]
        },
        {
@@ -4509,8 +4709,8 @@
         "name": "INT",
         "type": "INT",
         "links": [
-         130,
-         137
+         141,
+         148
         ]
        },
        {
@@ -4634,8 +4834,8 @@
         "type": "IMAGE",
         "links": [
          34,
-         128,
-         135
+         139,
+         146
         ]
        }
       ],
@@ -4735,7 +4935,8 @@
         "type": "MASK",
         "links": [
          43,
-         140
+         48,
+         151
         ]
        }
       ],
@@ -4907,7 +5108,7 @@
         "name": "IMAGE",
         "type": "IMAGE",
         "links": [
-         48
+         51
         ]
        }
       ],
@@ -5099,8 +5300,8 @@
         "name": "MASK",
         "type": "MASK",
         "links": [
-         49,
-         102
+         52,
+         105
         ]
        }
       ],
@@ -5119,6 +5320,170 @@
      },
      {
       "id": 38,
+      "type": "MaskToImage",
+      "pos": [
+       2400,
+       1080
+      ],
+      "size": [
+       260,
+       26
+      ],
+      "flags": {
+       "collapsed": true
+      },
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "mask",
+        "name": "mask",
+        "type": "MASK",
+        "link": 48
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "IMAGE",
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         49
+        ]
+       }
+      ],
+      "title": "마스크→이미지",
+      "properties": {
+       "Node name for S&R": "MaskToImage"
+      },
+      "color": "#6B4500",
+      "bgcolor": "#2A1B00"
+     },
+     {
+      "id": 39,
+      "type": "ImageFromBatch",
+      "pos": [
+       2400,
+       1120
+      ],
+      "size": [
+       260,
+       34
+      ],
+      "flags": {
+       "collapsed": true
+      },
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "image",
+        "name": "image",
+        "type": "IMAGE",
+        "link": 49
+       },
+       {
+        "localized_name": "batch_index",
+        "name": "batch_index",
+        "type": "INT",
+        "widget": {
+         "name": "batch_index"
+        },
+        "link": null
+       },
+       {
+        "localized_name": "length",
+        "name": "length",
+        "type": "INT",
+        "widget": {
+         "name": "length"
+        },
+        "link": null
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "IMAGE",
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         50
+        ]
+       }
+      ],
+      "title": "첫 프레임 마스크",
+      "properties": {
+       "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+       0,
+       1
+      ],
+      "widgets_values_named": {
+       "batch_index": 0,
+       "length": 1
+      },
+      "color": "#6B4500",
+      "bgcolor": "#2A1B00"
+     },
+     {
+      "id": 40,
+      "type": "ImageToMask",
+      "pos": [
+       2400,
+       1160
+      ],
+      "size": [
+       260,
+       34
+      ],
+      "flags": {
+       "collapsed": true
+      },
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "image",
+        "name": "image",
+        "type": "IMAGE",
+        "link": 50
+       },
+       {
+        "localized_name": "channel",
+        "name": "channel",
+        "type": "COMBO",
+        "widget": {
+         "name": "channel"
+        },
+        "link": null
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "MASK",
+        "name": "MASK",
+        "type": "MASK",
+        "links": [
+         123
+        ]
+       }
+      ],
+      "title": "공간 마스크 (흰색=바깥=생성)",
+      "properties": {
+       "Node name for S&R": "ImageToMask"
+      },
+      "widgets_values": [
+       "red"
+      ],
+      "widgets_values_named": {
+       "channel": "red"
+      },
+      "color": "#6B4500",
+      "bgcolor": "#2A1B00"
+     },
+     {
+      "id": 41,
       "type": "LTXVInpaintPreprocess",
       "pos": [
        2200,
@@ -5129,20 +5494,20 @@
        46
       ],
       "flags": {},
-      "order": 26,
+      "order": 29,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "images",
         "name": "images",
         "type": "IMAGE",
-        "link": 48
+        "link": 51
        },
        {
         "localized_name": "mask",
         "name": "mask",
         "type": "MASK",
-        "link": 49
+        "link": 52
        }
       ],
       "outputs": [
@@ -5151,8 +5516,8 @@
         "name": "image",
         "type": "IMAGE",
         "links": [
-         64,
-         101
+         67,
+         104
         ]
        }
       ],
@@ -5164,7 +5529,7 @@
       "bgcolor": "#2A1B00"
      },
      {
-      "id": 41,
+      "id": 44,
       "type": "LTXVConditioning",
       "pos": [
        2640,
@@ -5175,20 +5540,20 @@
        78
       ],
       "flags": {},
-      "order": 29,
+      "order": 32,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "positive",
         "name": "positive",
         "type": "CONDITIONING",
-        "link": 54
+        "link": 57
        },
        {
         "localized_name": "negative",
         "name": "negative",
         "type": "CONDITIONING",
-        "link": 55
+        "link": 58
        },
        {
         "localized_name": "frame_rate",
@@ -5197,7 +5562,7 @@
         "widget": {
          "name": "frame_rate"
         },
-        "link": 56
+        "link": 59
        }
       ],
       "outputs": [
@@ -5206,7 +5571,7 @@
         "name": "positive",
         "type": "CONDITIONING",
         "links": [
-         60
+         63
         ]
        },
        {
@@ -5214,7 +5579,7 @@
         "name": "negative",
         "type": "CONDITIONING",
         "links": [
-         61
+         64
         ]
        }
       ],
@@ -5232,7 +5597,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 42,
+      "id": 45,
       "type": "EmptyLTXVLatentVideo",
       "pos": [
        2640,
@@ -5243,7 +5608,7 @@
        130
       ],
       "flags": {},
-      "order": 30,
+      "order": 33,
       "mode": 0,
       "inputs": [
        {
@@ -5253,7 +5618,7 @@
         "widget": {
          "name": "width"
         },
-        "link": 57
+        "link": 60
        },
        {
         "localized_name": "height",
@@ -5262,7 +5627,7 @@
         "widget": {
          "name": "height"
         },
-        "link": 58
+        "link": 61
        },
        {
         "localized_name": "length",
@@ -5271,7 +5636,7 @@
         "widget": {
          "name": "length"
         },
-        "link": 59
+        "link": 62
        },
        {
         "localized_name": "batch_size",
@@ -5289,7 +5654,7 @@
         "name": "LATENT",
         "type": "LATENT",
         "links": [
-         63
+         66
         ]
        }
       ],
@@ -5313,7 +5678,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 45,
+      "id": 48,
       "type": "LTXVSetAudioRefTokens",
       "pos": [
        2640,
@@ -5324,26 +5689,26 @@
        66
       ],
       "flags": {},
-      "order": 33,
+      "order": 36,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "positive",
         "name": "positive",
         "type": "CONDITIONING",
-        "link": 68
+        "link": 71
        },
        {
         "localized_name": "negative",
         "name": "negative",
         "type": "CONDITIONING",
-        "link": 69
+        "link": 72
        },
        {
         "localized_name": "audio_latent",
         "name": "audio_latent",
         "type": "LATENT",
-        "link": 70
+        "link": 73
        }
       ],
       "outputs": [
@@ -5352,7 +5717,7 @@
         "name": "positive",
         "type": "CONDITIONING",
         "links": [
-         75
+         78
         ]
        },
        {
@@ -5360,7 +5725,7 @@
         "name": "negative",
         "type": "CONDITIONING",
         "links": [
-         78
+         81
         ]
        },
        {
@@ -5368,7 +5733,7 @@
         "name": "frozen_audio",
         "type": "LATENT",
         "links": [
-         81
+         84
         ]
        }
       ],
@@ -5380,7 +5745,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 50,
+      "id": 53,
       "type": "LTXVConcatAVLatent",
       "pos": [
        2980,
@@ -5391,20 +5756,20 @@
        46
       ],
       "flags": {},
-      "order": 38,
+      "order": 41,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "video_latent",
         "name": "video_latent",
         "type": "LATENT",
-        "link": 83
+        "link": 86
        },
        {
         "localized_name": "audio_latent",
         "name": "audio_latent",
         "type": "LATENT",
-        "link": 84
+        "link": 87
        }
       ],
       "outputs": [
@@ -5413,7 +5778,7 @@
         "name": "latent",
         "type": "LATENT",
         "links": [
-         93
+         96
         ]
        }
       ],
@@ -5425,7 +5790,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 53,
+      "id": 56,
       "type": "KSamplerSelect",
       "pos": [
        2980,
@@ -5455,7 +5820,7 @@
         "name": "SAMPLER",
         "type": "SAMPLER",
         "links": [
-         91
+         94
         ]
        }
       ],
@@ -5473,7 +5838,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 54,
+      "id": 57,
       "type": "ManualSigmas",
       "pos": [
        2980,
@@ -5503,7 +5868,7 @@
         "name": "SIGMAS",
         "type": "SIGMAS",
         "links": [
-         92
+         95
         ]
        }
       ],
@@ -5521,7 +5886,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 55,
+      "id": 58,
       "type": "SamplerCustomAdvanced",
       "pos": [
        2980,
@@ -5532,38 +5897,38 @@
        106
       ],
       "flags": {},
-      "order": 41,
+      "order": 44,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "noise",
         "name": "noise",
         "type": "NOISE",
-        "link": 89
+        "link": 92
        },
        {
         "localized_name": "guider",
         "name": "guider",
         "type": "GUIDER",
-        "link": 90
+        "link": 93
        },
        {
         "localized_name": "sampler",
         "name": "sampler",
         "type": "SAMPLER",
-        "link": 91
+        "link": 94
        },
        {
         "localized_name": "sigmas",
         "name": "sigmas",
         "type": "SIGMAS",
-        "link": 92
+        "link": 95
        },
        {
         "localized_name": "latent_image",
         "name": "latent_image",
         "type": "LATENT",
-        "link": 93
+        "link": 96
        }
       ],
       "outputs": [
@@ -5578,7 +5943,7 @@
         "name": "denoised_output",
         "type": "LATENT",
         "links": [
-         94
+         97
         ]
        }
       ],
@@ -5590,7 +5955,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 56,
+      "id": 59,
       "type": "LTXVSeparateAVLatent",
       "pos": [
        2980,
@@ -5601,14 +5966,14 @@
        46
       ],
       "flags": {},
-      "order": 42,
+      "order": 45,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "av_latent",
         "name": "av_latent",
         "type": "LATENT",
-        "link": 94
+        "link": 97
        }
       ],
       "outputs": [
@@ -5617,7 +5982,7 @@
         "name": "video_latent",
         "type": "LATENT",
         "links": [
-         97
+         100
         ]
        },
        {
@@ -5625,7 +5990,7 @@
         "name": "audio_latent",
         "type": "LATENT",
         "links": [
-         110
+         113
         ]
        }
       ],
@@ -5637,7 +6002,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 57,
+      "id": 60,
       "type": "LTXVCropGuides",
       "pos": [
        2980,
@@ -5648,26 +6013,26 @@
        66
       ],
       "flags": {},
-      "order": 43,
+      "order": 46,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "positive",
         "name": "positive",
         "type": "CONDITIONING",
-        "link": 95
+        "link": 98
        },
        {
         "localized_name": "negative",
         "name": "negative",
         "type": "CONDITIONING",
-        "link": 96
+        "link": 99
        },
        {
         "localized_name": "latent",
         "name": "latent",
         "type": "LATENT",
-        "link": 97
+        "link": 100
        }
       ],
       "outputs": [
@@ -5676,7 +6041,7 @@
         "name": "positive",
         "type": "CONDITIONING",
         "links": [
-         108
+         111
         ]
        },
        {
@@ -5684,7 +6049,7 @@
         "name": "negative",
         "type": "CONDITIONING",
         "links": [
-         109
+         112
         ]
        },
        {
@@ -5692,7 +6057,7 @@
         "name": "latent",
         "type": "LATENT",
         "links": [
-         98
+         101
         ]
        }
       ],
@@ -5704,7 +6069,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 59,
+      "id": 62,
       "type": "LTXVLaplacianPyramidBlend",
       "pos": [
        3320,
@@ -5715,26 +6080,26 @@
        122
       ],
       "flags": {},
-      "order": 45,
+      "order": 48,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "image_a",
         "name": "image_a",
         "type": "IMAGE",
-        "link": 100
+        "link": 103
        },
        {
         "localized_name": "image_b",
         "name": "image_b",
         "type": "IMAGE",
-        "link": 101
+        "link": 104
        },
        {
         "localized_name": "mask",
         "name": "mask",
         "type": "MASK",
-        "link": 102
+        "link": 105
        },
        {
         "localized_name": "trim_to_shortest",
@@ -5761,7 +6126,7 @@
         "name": "image",
         "type": "IMAGE",
         "links": [
-         103
+         106
         ]
        }
       ],
@@ -5781,7 +6146,7 @@
       "bgcolor": "#003D30"
      },
      {
-      "id": 60,
+      "id": 63,
       "type": "ImageScale",
       "pos": [
        3720,
@@ -5792,14 +6157,14 @@
        130
       ],
       "flags": {},
-      "order": 46,
+      "order": 49,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "image",
         "name": "image",
         "type": "IMAGE",
-        "link": 103
+        "link": 106
        },
        {
         "localized_name": "upscale_method",
@@ -5817,7 +6182,7 @@
         "widget": {
          "name": "width"
         },
-        "link": 104
+        "link": 107
        },
        {
         "localized_name": "height",
@@ -5826,7 +6191,7 @@
         "widget": {
          "name": "height"
         },
-        "link": 105
+        "link": 108
        },
        {
         "localized_name": "crop",
@@ -5844,7 +6209,7 @@
         "name": "IMAGE",
         "type": "IMAGE",
         "links": [
-         106
+         109
         ]
        }
       ],
@@ -5868,7 +6233,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 62,
+      "id": 65,
       "type": "LTXVSetAudioRefTokens",
       "pos": [
        3720,
@@ -5879,26 +6244,26 @@
        66
       ],
       "flags": {},
-      "order": 48,
+      "order": 51,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "positive",
         "name": "positive",
         "type": "CONDITIONING",
-        "link": 108
+        "link": 111
        },
        {
         "localized_name": "negative",
         "name": "negative",
         "type": "CONDITIONING",
-        "link": 109
+        "link": 112
        },
        {
         "localized_name": "audio_latent",
         "name": "audio_latent",
         "type": "LATENT",
-        "link": 110
+        "link": 113
        }
       ],
       "outputs": [
@@ -5907,7 +6272,7 @@
         "name": "positive",
         "type": "CONDITIONING",
         "links": [
-         114
+         117
         ]
        },
        {
@@ -5915,7 +6280,7 @@
         "name": "negative",
         "type": "CONDITIONING",
         "links": [
-         115
+         118
         ]
        },
        {
@@ -5923,7 +6288,7 @@
         "name": "frozen_audio",
         "type": "LATENT",
         "links": [
-         112
+         115
         ]
        }
       ],
@@ -5935,7 +6300,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 63,
+      "id": 66,
       "type": "LTXVConcatAVLatent",
       "pos": [
        3720,
@@ -5946,20 +6311,20 @@
        46
       ],
       "flags": {},
-      "order": 49,
+      "order": 52,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "video_latent",
         "name": "video_latent",
         "type": "LATENT",
-        "link": 111
+        "link": 114
        },
        {
         "localized_name": "audio_latent",
         "name": "audio_latent",
         "type": "LATENT",
-        "link": 112
+        "link": 115
        }
       ],
       "outputs": [
@@ -5968,7 +6333,7 @@
         "name": "latent",
         "type": "LATENT",
         "links": [
-         120
+         116
         ]
        }
       ],
@@ -5980,7 +6345,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 65,
+      "id": 69,
       "type": "KSamplerSelect",
       "pos": [
        3720,
@@ -6010,7 +6375,7 @@
         "name": "SAMPLER",
         "type": "SAMPLER",
         "links": [
-         118
+         129
         ]
        }
       ],
@@ -6028,7 +6393,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 66,
+      "id": 70,
       "type": "ManualSigmas",
       "pos": [
        3720,
@@ -6058,7 +6423,7 @@
         "name": "SIGMAS",
         "type": "SIGMAS",
         "links": [
-         119
+         130
         ]
        }
       ],
@@ -6076,7 +6441,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 67,
+      "id": 71,
       "type": "SamplerCustomAdvanced",
       "pos": [
        3720,
@@ -6087,38 +6452,38 @@
        106
       ],
       "flags": {},
-      "order": 51,
+      "order": 55,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "noise",
         "name": "noise",
         "type": "NOISE",
-        "link": 116
+        "link": 127
        },
        {
         "localized_name": "guider",
         "name": "guider",
         "type": "GUIDER",
-        "link": 117
+        "link": 128
        },
        {
         "localized_name": "sampler",
         "name": "sampler",
         "type": "SAMPLER",
-        "link": 118
+        "link": 129
        },
        {
         "localized_name": "sigmas",
         "name": "sigmas",
         "type": "SIGMAS",
-        "link": 119
+        "link": 130
        },
        {
         "localized_name": "latent_image",
         "name": "latent_image",
         "type": "LATENT",
-        "link": 120
+        "link": 131
        }
       ],
       "outputs": [
@@ -6127,7 +6492,7 @@
         "name": "output",
         "type": "LATENT",
         "links": [
-         121
+         132
         ]
        },
        {
@@ -6145,7 +6510,7 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 68,
+      "id": 72,
       "type": "LTXVSeparateAVLatent",
       "pos": [
        3720,
@@ -6156,14 +6521,14 @@
        46
       ],
       "flags": {},
-      "order": 52,
+      "order": 56,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "av_latent",
         "name": "av_latent",
         "type": "LATENT",
-        "link": 121
+        "link": 132
        }
       ],
       "outputs": [
@@ -6172,7 +6537,7 @@
         "name": "video_latent",
         "type": "LATENT",
         "links": [
-         122
+         133
         ]
        },
        {
@@ -6190,10 +6555,10 @@
       "bgcolor": "#4A0F27"
      },
      {
-      "id": 70,
+      "id": 74,
       "type": "ImageScale",
       "pos": [
-       4160,
+       4500,
        0
       ],
       "size": [
@@ -6201,14 +6566,14 @@
        130
       ],
       "flags": {},
-      "order": 54,
+      "order": 58,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "image",
         "name": "image",
         "type": "IMAGE",
-        "link": 124
+        "link": 135
        },
        {
         "localized_name": "upscale_method",
@@ -6226,7 +6591,7 @@
         "widget": {
          "name": "width"
         },
-        "link": 125
+        "link": 136
        },
        {
         "localized_name": "height",
@@ -6235,7 +6600,7 @@
         "widget": {
          "name": "height"
         },
-        "link": 126
+        "link": 137
        },
        {
         "localized_name": "crop",
@@ -6253,8 +6618,8 @@
         "name": "IMAGE",
         "type": "IMAGE",
         "links": [
-         127,
-         131
+         138,
+         142
         ]
        }
       ],
@@ -6278,10 +6643,10 @@
       "bgcolor": "#003A49"
      },
      {
-      "id": 71,
+      "id": 75,
       "type": "ImageCompositeMasked",
       "pos": [
-       4160,
+       4500,
        180
       ],
       "size": [
@@ -6289,20 +6654,20 @@
        146
       ],
       "flags": {},
-      "order": 55,
+      "order": 59,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "destination",
         "name": "destination",
         "type": "IMAGE",
-        "link": 127
+        "link": 138
        },
        {
         "localized_name": "source",
         "name": "source",
         "type": "IMAGE",
-        "link": 128
+        "link": 139
        },
        {
         "localized_name": "mask",
@@ -6318,7 +6683,7 @@
         "widget": {
          "name": "x"
         },
-        "link": 129
+        "link": 140
        },
        {
         "localized_name": "y",
@@ -6327,7 +6692,7 @@
         "widget": {
          "name": "y"
         },
-        "link": 130
+        "link": 141
        },
        {
         "localized_name": "resize_source",
@@ -6345,7 +6710,7 @@
         "name": "IMAGE",
         "type": "IMAGE",
         "links": [
-         132
+         143
         ]
        }
       ],
@@ -6367,10 +6732,10 @@
       "bgcolor": "#003A49"
      },
      {
-      "id": 73,
+      "id": 77,
       "type": "ImageCompositeMasked",
       "pos": [
-       4160,
+       4500,
        580
       ],
       "size": [
@@ -6378,20 +6743,20 @@
        146
       ],
       "flags": {},
-      "order": 57,
+      "order": 61,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "destination",
         "name": "destination",
         "type": "IMAGE",
-        "link": 134
+        "link": 145
        },
        {
         "localized_name": "source",
         "name": "source",
         "type": "IMAGE",
-        "link": 135
+        "link": 146
        },
        {
         "localized_name": "mask",
@@ -6407,7 +6772,7 @@
         "widget": {
          "name": "x"
         },
-        "link": 136
+        "link": 147
        },
        {
         "localized_name": "y",
@@ -6416,7 +6781,7 @@
         "widget": {
          "name": "y"
         },
-        "link": 137
+        "link": 148
        },
        {
         "localized_name": "resize_source",
@@ -6434,7 +6799,7 @@
         "name": "IMAGE",
         "type": "IMAGE",
         "links": [
-         139
+         150
         ]
        }
       ],
@@ -6456,10 +6821,10 @@
       "bgcolor": "#003A49"
      },
      {
-      "id": 75,
+      "id": 79,
       "type": "ImageFromBatch",
       "pos": [
-       4160,
+       4500,
        980
       ],
       "size": [
@@ -6467,14 +6832,14 @@
        82
       ],
       "flags": {},
-      "order": 59,
+      "order": 63,
       "mode": 0,
       "inputs": [
        {
         "localized_name": "image",
         "name": "image",
         "type": "IMAGE",
-        "link": 142
+        "link": 153
        },
        {
         "localized_name": "batch_index",
@@ -6492,7 +6857,7 @@
         "widget": {
          "name": "length"
         },
-        "link": 143
+        "link": 154
        }
       ],
       "outputs": [
@@ -6501,7 +6866,7 @@
         "name": "IMAGE",
         "type": "IMAGE",
         "links": [
-         146
+         157
         ]
        }
       ],
@@ -6560,11 +6925,11 @@
      },
      {
       "id": 4,
-      "title": "Stage 2 — 고해상도 정제 (공식)",
+      "title": "Stage 2 — 원본 영역 고정 + 바깥만 고해상도 정제",
       "bounding": [
        3690,
        -60,
-       400,
+       740,
        1420
       ],
       "color": "#9A1F50",
@@ -6574,7 +6939,7 @@
       "id": 5,
       "title": "원본 1:1 복원 — 딱딱한 합성 대신 Laplacian 블렌드",
       "bounding": [
-       4130,
+       4470,
        -60,
        400,
        1300
@@ -6665,194 +7030,234 @@
       "type": "INT"
      },
      {
-      "id": 74,
-      "origin_id": 43,
-      "origin_slot": 0,
-      "target_id": 47,
-      "target_slot": 0,
-      "type": "CONDITIONING"
-     },
-     {
-      "id": 75,
-      "origin_id": 45,
-      "origin_slot": 0,
-      "target_id": 47,
-      "target_slot": 1,
-      "type": "CONDITIONING"
-     },
-     {
       "id": 77,
-      "origin_id": 43,
-      "origin_slot": 1,
-      "target_id": 48,
+      "origin_id": 46,
+      "origin_slot": 0,
+      "target_id": 50,
       "target_slot": 0,
       "type": "CONDITIONING"
      },
      {
       "id": 78,
-      "origin_id": 45,
-      "origin_slot": 1,
-      "target_id": 48,
+      "origin_id": 48,
+      "origin_slot": 0,
+      "target_id": 50,
       "target_slot": 1,
       "type": "CONDITIONING"
      },
      {
       "id": 80,
       "origin_id": 46,
-      "origin_slot": 0,
-      "target_id": 49,
+      "origin_slot": 1,
+      "target_id": 51,
       "target_slot": 0,
-      "type": "LATENT"
+      "type": "CONDITIONING"
      },
      {
       "id": 81,
-      "origin_id": 45,
+      "origin_id": 48,
+      "origin_slot": 1,
+      "target_id": 51,
+      "target_slot": 1,
+      "type": "CONDITIONING"
+     },
+     {
+      "id": 83,
+      "origin_id": 49,
+      "origin_slot": 0,
+      "target_id": 52,
+      "target_slot": 0,
+      "type": "LATENT"
+     },
+     {
+      "id": 84,
+      "origin_id": 48,
       "origin_slot": 2,
-      "target_id": 49,
+      "target_id": 52,
       "target_slot": 1,
       "type": "LATENT"
      },
      {
-      "id": 131,
-      "origin_id": 70,
+      "id": 142,
+      "origin_id": 74,
       "origin_slot": 0,
-      "target_id": 72,
+      "target_id": 76,
       "target_slot": 0,
       "type": "IMAGE"
      },
      {
-      "id": 132,
-      "origin_id": 71,
+      "id": 143,
+      "origin_id": 75,
       "origin_slot": 0,
-      "target_id": 72,
+      "target_id": 76,
       "target_slot": 1,
       "type": "IMAGE"
      },
      {
-      "id": 138,
-      "origin_id": 72,
+      "id": 149,
+      "origin_id": 76,
       "origin_slot": 0,
-      "target_id": 74,
+      "target_id": 78,
       "target_slot": 0,
       "type": "IMAGE"
      },
      {
-      "id": 139,
-      "origin_id": 73,
+      "id": 150,
+      "origin_id": 77,
       "origin_slot": 0,
-      "target_id": 74,
+      "target_id": 78,
       "target_slot": 1,
       "type": "IMAGE"
      },
      {
-      "id": 140,
+      "id": 151,
       "origin_id": 32,
       "origin_slot": 1,
-      "target_id": 74,
+      "target_id": 78,
       "target_slot": 2,
       "type": "MASK"
      },
      {
-      "id": 60,
-      "origin_id": 41,
+      "id": 63,
+      "origin_id": 44,
       "origin_slot": 0,
-      "target_id": 43,
+      "target_id": 46,
       "target_slot": 0,
       "type": "CONDITIONING"
      },
      {
-      "id": 61,
-      "origin_id": 41,
+      "id": 64,
+      "origin_id": 44,
       "origin_slot": 1,
-      "target_id": 43,
+      "target_id": 46,
       "target_slot": 1,
       "type": "CONDITIONING"
      },
      {
-      "id": 63,
-      "origin_id": 42,
+      "id": 66,
+      "origin_id": 45,
       "origin_slot": 0,
-      "target_id": 43,
+      "target_id": 46,
       "target_slot": 3,
       "type": "LATENT"
      },
      {
-      "id": 64,
-      "origin_id": 38,
+      "id": 67,
+      "origin_id": 41,
       "origin_slot": 0,
-      "target_id": 43,
+      "target_id": 46,
       "target_slot": 4,
       "type": "IMAGE"
      },
      {
-      "id": 86,
-      "origin_id": 47,
+      "id": 89,
+      "origin_id": 50,
       "origin_slot": 0,
-      "target_id": 51,
+      "target_id": 54,
       "target_slot": 1,
       "type": "CONDITIONING"
      },
      {
-      "id": 87,
-      "origin_id": 48,
+      "id": 90,
+      "origin_id": 51,
       "origin_slot": 0,
-      "target_id": 51,
+      "target_id": 54,
       "target_slot": 2,
       "type": "CONDITIONING"
      },
      {
-      "id": 114,
-      "origin_id": 62,
+      "id": 116,
+      "origin_id": 66,
       "origin_slot": 0,
-      "target_id": 64,
-      "target_slot": 1,
-      "type": "CONDITIONING"
-     },
-     {
-      "id": 115,
-      "origin_id": 62,
-      "origin_slot": 1,
-      "target_id": 64,
-      "target_slot": 2,
-      "type": "CONDITIONING"
-     },
-     {
-      "id": 98,
-      "origin_id": 57,
-      "origin_slot": 2,
-      "target_id": 58,
+      "target_id": 67,
       "target_slot": 0,
       "type": "LATENT"
      },
      {
-      "id": 106,
-      "origin_id": 60,
+      "id": 117,
+      "origin_id": 65,
       "origin_slot": 0,
+      "target_id": 67,
+      "target_slot": 1,
+      "type": "CONDITIONING"
+     },
+     {
+      "id": 118,
+      "origin_id": 65,
+      "origin_slot": 1,
+      "target_id": 67,
+      "target_slot": 2,
+      "type": "CONDITIONING"
+     },
+     {
+      "id": 123,
+      "origin_id": 40,
+      "origin_slot": 0,
+      "target_id": 67,
+      "target_slot": 6,
+      "type": "MASK"
+     },
+     {
+      "id": 122,
+      "origin_id": 16,
+      "origin_slot": 5,
+      "target_id": 67,
+      "target_slot": 9,
+      "type": "FLOAT"
+     },
+     {
+      "id": 125,
+      "origin_id": 67,
+      "origin_slot": 0,
+      "target_id": 68,
+      "target_slot": 1,
+      "type": "CONDITIONING"
+     },
+     {
+      "id": 126,
+      "origin_id": 67,
+      "origin_slot": 1,
+      "target_id": 68,
+      "target_slot": 2,
+      "type": "CONDITIONING"
+     },
+     {
+      "id": 101,
+      "origin_id": 60,
+      "origin_slot": 2,
       "target_id": 61,
+      "target_slot": 0,
+      "type": "LATENT"
+     },
+     {
+      "id": 109,
+      "origin_id": 63,
+      "origin_slot": 0,
+      "target_id": 64,
       "target_slot": 0,
       "type": "IMAGE"
      },
      {
-      "id": 122,
-      "origin_id": 68,
+      "id": 133,
+      "origin_id": 72,
       "origin_slot": 0,
-      "target_id": 69,
+      "target_id": 73,
       "target_slot": 0,
       "type": "LATENT"
      },
      {
-      "id": 72,
+      "id": 75,
       "origin_id": 24,
       "origin_slot": 1,
-      "target_id": 46,
+      "target_id": 49,
       "target_slot": 1,
       "type": "INT"
      },
      {
-      "id": 73,
+      "id": 76,
       "origin_id": 16,
       "origin_slot": 5,
-      "target_id": 46,
+      "target_id": 49,
       "target_slot": 2,
       "type": "FLOAT"
      },
@@ -7058,406 +7463,366 @@
      },
      {
       "id": 48,
-      "origin_id": 34,
-      "origin_slot": 0,
+      "origin_id": 32,
+      "origin_slot": 1,
       "target_id": 38,
+      "target_slot": 0,
+      "type": "MASK"
+     },
+     {
+      "id": 49,
+      "origin_id": 38,
+      "origin_slot": 0,
+      "target_id": 39,
       "target_slot": 0,
       "type": "IMAGE"
      },
      {
-      "id": 49,
+      "id": 50,
+      "origin_id": 39,
+      "origin_slot": 0,
+      "target_id": 40,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 51,
+      "origin_id": 34,
+      "origin_slot": 0,
+      "target_id": 41,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 52,
       "origin_id": 37,
       "origin_slot": 0,
-      "target_id": 38,
+      "target_id": 41,
       "target_slot": 1,
       "type": "MASK"
      },
      {
-      "id": 54,
-      "origin_id": 39,
+      "id": 57,
+      "origin_id": 42,
       "origin_slot": 0,
-      "target_id": 41,
+      "target_id": 44,
       "target_slot": 0,
       "type": "CONDITIONING"
      },
      {
-      "id": 55,
-      "origin_id": 40,
+      "id": 58,
+      "origin_id": 43,
       "origin_slot": 0,
-      "target_id": 41,
+      "target_id": 44,
       "target_slot": 1,
       "type": "CONDITIONING"
      },
      {
-      "id": 56,
+      "id": 59,
       "origin_id": 16,
       "origin_slot": 5,
-      "target_id": 41,
+      "target_id": 44,
       "target_slot": 2,
       "type": "FLOAT"
      },
      {
-      "id": 57,
+      "id": 60,
       "origin_id": 22,
       "origin_slot": 1,
-      "target_id": 42,
+      "target_id": 45,
       "target_slot": 0,
       "type": "INT"
      },
      {
-      "id": 58,
+      "id": 61,
       "origin_id": 23,
       "origin_slot": 1,
-      "target_id": 42,
+      "target_id": 45,
       "target_slot": 1,
       "type": "INT"
      },
      {
-      "id": 59,
+      "id": 62,
       "origin_id": 24,
       "origin_slot": 1,
-      "target_id": 42,
+      "target_id": 45,
       "target_slot": 2,
       "type": "INT"
      },
      {
-      "id": 68,
-      "origin_id": 43,
+      "id": 71,
+      "origin_id": 46,
       "origin_slot": 0,
-      "target_id": 45,
+      "target_id": 48,
       "target_slot": 0,
       "type": "CONDITIONING"
      },
      {
-      "id": 69,
-      "origin_id": 43,
+      "id": 72,
+      "origin_id": 46,
       "origin_slot": 1,
-      "target_id": 45,
+      "target_id": 48,
       "target_slot": 1,
       "type": "CONDITIONING"
      },
      {
-      "id": 70,
-      "origin_id": 44,
+      "id": 73,
+      "origin_id": 47,
       "origin_slot": 0,
-      "target_id": 45,
+      "target_id": 48,
       "target_slot": 2,
       "type": "LATENT"
      },
      {
-      "id": 83,
-      "origin_id": 43,
+      "id": 86,
+      "origin_id": 46,
       "origin_slot": 2,
-      "target_id": 50,
+      "target_id": 53,
       "target_slot": 0,
       "type": "LATENT"
      },
      {
-      "id": 84,
-      "origin_id": 49,
+      "id": 87,
+      "origin_id": 52,
       "origin_slot": 0,
-      "target_id": 50,
+      "target_id": 53,
       "target_slot": 1,
       "type": "LATENT"
      },
      {
-      "id": 89,
-      "origin_id": 52,
+      "id": 92,
+      "origin_id": 55,
       "origin_slot": 0,
-      "target_id": 55,
+      "target_id": 58,
       "target_slot": 0,
       "type": "NOISE"
      },
      {
-      "id": 90,
-      "origin_id": 51,
+      "id": 93,
+      "origin_id": 54,
       "origin_slot": 0,
-      "target_id": 55,
+      "target_id": 58,
       "target_slot": 1,
       "type": "GUIDER"
      },
      {
-      "id": 91,
-      "origin_id": 53,
+      "id": 94,
+      "origin_id": 56,
       "origin_slot": 0,
-      "target_id": 55,
+      "target_id": 58,
       "target_slot": 2,
       "type": "SAMPLER"
      },
      {
-      "id": 92,
-      "origin_id": 54,
+      "id": 95,
+      "origin_id": 57,
       "origin_slot": 0,
-      "target_id": 55,
+      "target_id": 58,
       "target_slot": 3,
       "type": "SIGMAS"
      },
      {
-      "id": 93,
-      "origin_id": 50,
+      "id": 96,
+      "origin_id": 53,
       "origin_slot": 0,
-      "target_id": 55,
+      "target_id": 58,
       "target_slot": 4,
       "type": "LATENT"
      },
      {
-      "id": 94,
-      "origin_id": 55,
+      "id": 97,
+      "origin_id": 58,
       "origin_slot": 1,
-      "target_id": 56,
+      "target_id": 59,
       "target_slot": 0,
       "type": "LATENT"
      },
      {
-      "id": 95,
-      "origin_id": 47,
+      "id": 98,
+      "origin_id": 50,
       "origin_slot": 0,
-      "target_id": 57,
+      "target_id": 60,
       "target_slot": 0,
       "type": "CONDITIONING"
      },
      {
-      "id": 96,
-      "origin_id": 48,
+      "id": 99,
+      "origin_id": 51,
       "origin_slot": 0,
-      "target_id": 57,
+      "target_id": 60,
       "target_slot": 1,
       "type": "CONDITIONING"
-     },
-     {
-      "id": 97,
-      "origin_id": 56,
-      "origin_slot": 0,
-      "target_id": 57,
-      "target_slot": 2,
-      "type": "LATENT"
      },
      {
       "id": 100,
-      "origin_id": 58,
-      "origin_slot": 0,
-      "target_id": 59,
-      "target_slot": 0,
-      "type": "IMAGE"
-     },
-     {
-      "id": 101,
-      "origin_id": 38,
-      "origin_slot": 0,
-      "target_id": 59,
-      "target_slot": 1,
-      "type": "IMAGE"
-     },
-     {
-      "id": 102,
-      "origin_id": 37,
-      "origin_slot": 0,
-      "target_id": 59,
-      "target_slot": 2,
-      "type": "MASK"
-     },
-     {
-      "id": 103,
       "origin_id": 59,
       "origin_slot": 0,
       "target_id": 60,
+      "target_slot": 2,
+      "type": "LATENT"
+     },
+     {
+      "id": 103,
+      "origin_id": 61,
+      "origin_slot": 0,
+      "target_id": 62,
       "target_slot": 0,
       "type": "IMAGE"
      },
      {
       "id": 104,
-      "origin_id": 20,
-      "origin_slot": 1,
-      "target_id": 60,
-      "target_slot": 2,
-      "type": "INT"
+      "origin_id": 41,
+      "origin_slot": 0,
+      "target_id": 62,
+      "target_slot": 1,
+      "type": "IMAGE"
      },
      {
       "id": 105,
-      "origin_id": 21,
+      "origin_id": 37,
+      "origin_slot": 0,
+      "target_id": 62,
+      "target_slot": 2,
+      "type": "MASK"
+     },
+     {
+      "id": 106,
+      "origin_id": 62,
+      "origin_slot": 0,
+      "target_id": 63,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 107,
+      "origin_id": 20,
       "origin_slot": 1,
-      "target_id": 60,
-      "target_slot": 3,
+      "target_id": 63,
+      "target_slot": 2,
       "type": "INT"
      },
      {
       "id": 108,
-      "origin_id": 57,
+      "origin_id": 21,
+      "origin_slot": 1,
+      "target_id": 63,
+      "target_slot": 3,
+      "type": "INT"
+     },
+     {
+      "id": 111,
+      "origin_id": 60,
       "origin_slot": 0,
-      "target_id": 62,
+      "target_id": 65,
       "target_slot": 0,
       "type": "CONDITIONING"
      },
      {
-      "id": 109,
-      "origin_id": 57,
+      "id": 112,
+      "origin_id": 60,
       "origin_slot": 1,
-      "target_id": 62,
+      "target_id": 65,
       "target_slot": 1,
       "type": "CONDITIONING"
      },
      {
-      "id": 110,
-      "origin_id": 56,
+      "id": 113,
+      "origin_id": 59,
       "origin_slot": 1,
-      "target_id": 62,
+      "target_id": 65,
       "target_slot": 2,
       "type": "LATENT"
      },
      {
-      "id": 111,
-      "origin_id": 61,
+      "id": 114,
+      "origin_id": 64,
       "origin_slot": 0,
-      "target_id": 63,
+      "target_id": 66,
       "target_slot": 0,
       "type": "LATENT"
      },
      {
-      "id": 112,
-      "origin_id": 62,
+      "id": 115,
+      "origin_id": 65,
       "origin_slot": 2,
-      "target_id": 63,
+      "target_id": 66,
       "target_slot": 1,
       "type": "LATENT"
      },
      {
-      "id": 116,
-      "origin_id": 52,
+      "id": 127,
+      "origin_id": 55,
       "origin_slot": 0,
-      "target_id": 67,
+      "target_id": 71,
       "target_slot": 0,
       "type": "NOISE"
      },
      {
-      "id": 117,
-      "origin_id": 64,
+      "id": 128,
+      "origin_id": 68,
       "origin_slot": 0,
-      "target_id": 67,
+      "target_id": 71,
       "target_slot": 1,
       "type": "GUIDER"
      },
      {
-      "id": 118,
-      "origin_id": 65,
+      "id": 129,
+      "origin_id": 69,
       "origin_slot": 0,
-      "target_id": 67,
+      "target_id": 71,
       "target_slot": 2,
       "type": "SAMPLER"
      },
      {
-      "id": 119,
-      "origin_id": 66,
+      "id": 130,
+      "origin_id": 70,
       "origin_slot": 0,
-      "target_id": 67,
+      "target_id": 71,
       "target_slot": 3,
       "type": "SIGMAS"
      },
      {
-      "id": 120,
-      "origin_id": 63,
-      "origin_slot": 0,
-      "target_id": 67,
-      "target_slot": 4,
-      "type": "LATENT"
-     },
-     {
-      "id": 121,
+      "id": 131,
       "origin_id": 67,
-      "origin_slot": 0,
-      "target_id": 68,
-      "target_slot": 0,
+      "origin_slot": 2,
+      "target_id": 71,
+      "target_slot": 4,
       "type": "LATENT"
      },
      {
-      "id": 124,
-      "origin_id": 69,
+      "id": 132,
+      "origin_id": 71,
       "origin_slot": 0,
-      "target_id": 70,
+      "target_id": 72,
       "target_slot": 0,
-      "type": "IMAGE"
-     },
-     {
-      "id": 125,
-      "origin_id": 18,
-      "origin_slot": 1,
-      "target_id": 70,
-      "target_slot": 2,
-      "type": "INT"
-     },
-     {
-      "id": 126,
-      "origin_id": 19,
-      "origin_slot": 1,
-      "target_id": 70,
-      "target_slot": 3,
-      "type": "INT"
-     },
-     {
-      "id": 127,
-      "origin_id": 70,
-      "origin_slot": 0,
-      "target_id": 71,
-      "target_slot": 0,
-      "type": "IMAGE"
-     },
-     {
-      "id": 128,
-      "origin_id": 31,
-      "origin_slot": 0,
-      "target_id": 71,
-      "target_slot": 1,
-      "type": "IMAGE"
-     },
-     {
-      "id": 129,
-      "origin_id": 26,
-      "origin_slot": 1,
-      "target_id": 71,
-      "target_slot": 3,
-      "type": "INT"
-     },
-     {
-      "id": 130,
-      "origin_id": 27,
-      "origin_slot": 1,
-      "target_id": 71,
-      "target_slot": 4,
-      "type": "INT"
-     },
-     {
-      "id": 134,
-      "origin_id": 72,
-      "origin_slot": 0,
-      "target_id": 73,
-      "target_slot": 0,
-      "type": "IMAGE"
+      "type": "LATENT"
      },
      {
       "id": 135,
-      "origin_id": 31,
+      "origin_id": 73,
       "origin_slot": 0,
-      "target_id": 73,
-      "target_slot": 1,
+      "target_id": 74,
+      "target_slot": 0,
       "type": "IMAGE"
      },
      {
       "id": 136,
-      "origin_id": 26,
+      "origin_id": 18,
       "origin_slot": 1,
-      "target_id": 73,
-      "target_slot": 3,
+      "target_id": 74,
+      "target_slot": 2,
       "type": "INT"
      },
      {
       "id": 137,
-      "origin_id": 27,
+      "origin_id": 19,
       "origin_slot": 1,
-      "target_id": 73,
-      "target_slot": 4,
+      "target_id": 74,
+      "target_slot": 3,
       "type": "INT"
      },
      {
-      "id": 142,
+      "id": 138,
       "origin_id": 74,
       "origin_slot": 0,
       "target_id": 75,
@@ -7465,10 +7830,74 @@
       "type": "IMAGE"
      },
      {
-      "id": 143,
+      "id": 139,
+      "origin_id": 31,
+      "origin_slot": 0,
+      "target_id": 75,
+      "target_slot": 1,
+      "type": "IMAGE"
+     },
+     {
+      "id": 140,
+      "origin_id": 26,
+      "origin_slot": 1,
+      "target_id": 75,
+      "target_slot": 3,
+      "type": "INT"
+     },
+     {
+      "id": 141,
+      "origin_id": 27,
+      "origin_slot": 1,
+      "target_id": 75,
+      "target_slot": 4,
+      "type": "INT"
+     },
+     {
+      "id": 145,
+      "origin_id": 76,
+      "origin_slot": 0,
+      "target_id": 77,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 146,
+      "origin_id": 31,
+      "origin_slot": 0,
+      "target_id": 77,
+      "target_slot": 1,
+      "type": "IMAGE"
+     },
+     {
+      "id": 147,
+      "origin_id": 26,
+      "origin_slot": 1,
+      "target_id": 77,
+      "target_slot": 3,
+      "type": "INT"
+     },
+     {
+      "id": 148,
+      "origin_id": 27,
+      "origin_slot": 1,
+      "target_id": 77,
+      "target_slot": 4,
+      "type": "INT"
+     },
+     {
+      "id": 153,
+      "origin_id": 78,
+      "origin_slot": 0,
+      "target_id": 79,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 154,
       "origin_id": 17,
       "origin_slot": 2,
-      "target_id": 75,
+      "target_id": 79,
       "target_slot": 2,
       "type": "INT"
      },
@@ -7505,50 +7934,50 @@
       "type": "IMAGE"
      },
      {
-      "id": 66,
+      "id": 69,
       "origin_id": -10,
       "origin_slot": 2,
-      "target_id": 44,
-      "target_slot": 0,
-      "type": "AUDIO"
-     },
-     {
-      "id": 144,
-      "origin_id": -10,
-      "origin_slot": 2,
-      "target_id": 76,
-      "target_slot": 1,
-      "type": "AUDIO"
-     },
-     {
-      "id": 67,
-      "origin_id": -10,
-      "origin_slot": 3,
-      "target_id": 44,
-      "target_slot": 1,
-      "type": "VAE"
-     },
-     {
-      "id": 71,
-      "origin_id": -10,
-      "origin_slot": 3,
-      "target_id": 46,
-      "target_slot": 0,
-      "type": "VAE"
-     },
-     {
-      "id": 145,
-      "origin_id": -10,
-      "origin_slot": 4,
-      "target_id": 76,
-      "target_slot": 2,
-      "type": "BOOLEAN"
-     },
-     {
-      "id": 76,
-      "origin_id": -10,
-      "origin_slot": 4,
       "target_id": 47,
+      "target_slot": 0,
+      "type": "AUDIO"
+     },
+     {
+      "id": 155,
+      "origin_id": -10,
+      "origin_slot": 2,
+      "target_id": 80,
+      "target_slot": 1,
+      "type": "AUDIO"
+     },
+     {
+      "id": 70,
+      "origin_id": -10,
+      "origin_slot": 3,
+      "target_id": 47,
+      "target_slot": 1,
+      "type": "VAE"
+     },
+     {
+      "id": 121,
+      "origin_id": -10,
+      "origin_slot": 3,
+      "target_id": 67,
+      "target_slot": 5,
+      "type": "VAE"
+     },
+     {
+      "id": 74,
+      "origin_id": -10,
+      "origin_slot": 3,
+      "target_id": 49,
+      "target_slot": 0,
+      "type": "VAE"
+     },
+     {
+      "id": 156,
+      "origin_id": -10,
+      "origin_slot": 4,
+      "target_id": 80,
       "target_slot": 2,
       "type": "BOOLEAN"
      },
@@ -7556,7 +7985,7 @@
       "id": 79,
       "origin_id": -10,
       "origin_slot": 4,
-      "target_id": 48,
+      "target_id": 50,
       "target_slot": 2,
       "type": "BOOLEAN"
      },
@@ -7564,7 +7993,15 @@
       "id": 82,
       "origin_id": -10,
       "origin_slot": 4,
-      "target_id": 49,
+      "target_id": 51,
+      "target_slot": 2,
+      "type": "BOOLEAN"
+     },
+     {
+      "id": 85,
+      "origin_id": -10,
+      "origin_slot": 4,
+      "target_id": 52,
       "target_slot": 2,
       "type": "BOOLEAN"
      },
@@ -7601,34 +8038,34 @@
       "type": "INT"
      },
      {
-      "id": 50,
+      "id": 53,
       "origin_id": -10,
       "origin_slot": 7,
-      "target_id": 39,
+      "target_id": 42,
       "target_slot": 0,
       "type": "CLIP"
      },
      {
-      "id": 52,
+      "id": 55,
       "origin_id": -10,
       "origin_slot": 7,
-      "target_id": 40,
+      "target_id": 43,
       "target_slot": 0,
       "type": "CLIP"
      },
      {
-      "id": 51,
+      "id": 54,
       "origin_id": -10,
       "origin_slot": 8,
-      "target_id": 39,
+      "target_id": 42,
       "target_slot": 1,
       "type": "STRING"
      },
      {
-      "id": 53,
+      "id": 56,
       "origin_id": -10,
       "origin_slot": 9,
-      "target_id": 40,
+      "target_id": 43,
       "target_slot": 1,
       "type": "STRING"
      },
@@ -7649,47 +8086,47 @@
       "type": "INT"
      },
      {
-      "id": 88,
+      "id": 91,
       "origin_id": -10,
       "origin_slot": 11,
-      "target_id": 52,
+      "target_id": 55,
       "target_slot": 0,
       "type": "INT"
      },
      {
-      "id": 133,
+      "id": 144,
       "origin_id": -10,
       "origin_slot": 12,
-      "target_id": 72,
+      "target_id": 76,
       "target_slot": 3,
       "type": "FLOAT"
      },
      {
-      "id": 141,
+      "id": 152,
       "origin_id": -10,
       "origin_slot": 13,
-      "target_id": 74,
+      "target_id": 78,
       "target_slot": 4,
       "type": "INT"
      },
      {
-      "id": 62,
+      "id": 65,
       "origin_id": -10,
       "origin_slot": 14,
-      "target_id": 43,
+      "target_id": 46,
       "target_slot": 2,
       "type": "VAE"
      },
      {
-      "id": 99,
+      "id": 120,
       "origin_id": -10,
       "origin_slot": 14,
-      "target_id": 58,
-      "target_slot": 1,
+      "target_id": 67,
+      "target_slot": 4,
       "type": "VAE"
      },
      {
-      "id": 107,
+      "id": 102,
       "origin_id": -10,
       "origin_slot": 14,
       "target_id": 61,
@@ -7697,39 +8134,55 @@
       "type": "VAE"
      },
      {
-      "id": 123,
+      "id": 110,
       "origin_id": -10,
       "origin_slot": 14,
-      "target_id": 69,
+      "target_id": 64,
       "target_slot": 1,
       "type": "VAE"
      },
      {
-      "id": 65,
+      "id": 134,
+      "origin_id": -10,
+      "origin_slot": 14,
+      "target_id": 73,
+      "target_slot": 1,
+      "type": "VAE"
+     },
+     {
+      "id": 68,
       "origin_id": -10,
       "origin_slot": 15,
-      "target_id": 43,
+      "target_id": 46,
       "target_slot": 8,
       "type": "FLOAT"
      },
      {
-      "id": 85,
+      "id": 88,
       "origin_id": -10,
       "origin_slot": 16,
-      "target_id": 51,
+      "target_id": 54,
       "target_slot": 0,
       "type": "MODEL"
      },
      {
-      "id": 113,
+      "id": 119,
       "origin_id": -10,
       "origin_slot": 16,
-      "target_id": 64,
+      "target_id": 67,
+      "target_slot": 3,
+      "type": "MODEL"
+     },
+     {
+      "id": 124,
+      "origin_id": -10,
+      "origin_slot": 16,
+      "target_id": 68,
       "target_slot": 0,
       "type": "MODEL"
      },
      {
-      "id": 148,
+      "id": 159,
       "origin_id": 16,
       "origin_slot": 5,
       "target_id": -20,
@@ -7737,16 +8190,16 @@
       "type": "FLOAT"
      },
      {
-      "id": 147,
-      "origin_id": 76,
+      "id": 158,
+      "origin_id": 80,
       "origin_slot": 0,
       "target_id": -20,
       "target_slot": 1,
       "type": "AUDIO"
      },
      {
-      "id": 146,
-      "origin_id": 75,
+      "id": 157,
+      "origin_id": 79,
       "origin_slot": 0,
       "target_id": -20,
       "target_slot": 2,
