@@ -1,0 +1,1111 @@
+{
+  "id": "7f177202-af72-4dd6-a7a2-2e20b6bd85fa",
+  "revision": 0,
+  "last_node_id": 490,
+  "last_link_id": 822,
+  "nodes": [
+    {
+      "id": 477,
+      "type": "LoadImage",
+      "pos": [
+        -420,
+        2440
+      ],
+      "size": [
+        275,
+        319
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            805,
+            812
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "244008d93c680947482b26948378658637d9f977fcc05e1066165e9f5d843f2f.png",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "244008d93c680947482b26948378658637d9f977fcc05e1066165e9f5d843f2f.png",
+        "upload": "image"
+      }
+    },
+    {
+      "id": 13,
+      "type": "ResolutionSelector",
+      "pos": [
+        -420,
+        2900
+      ],
+      "size": [
+        308,
+        198
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "showAdvanced": true,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            806
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            807
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ResolutionSelector"
+      },
+      "widgets_values": [
+        "1:1 (Square)",
+        4,
+        32
+      ],
+      "widgets_values_named": {
+        "aspect_ratio": "1:1 (Square)",
+        "megapixels": 4,
+        "multiple": 32
+      }
+    },
+    {
+      "id": 451,
+      "type": "UNETLoader",
+      "pos": [
+        -60,
+        2440
+      ],
+      "size": [
+        420,
+        82
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "모델",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            801
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "directory": "diffusion_models",
+            "name": "qwen_image_2.1_int8_convrot.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/diffusion_models/qwen_image_2.1_int8_convrot.safetensors"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen_image_2.1_int8_convrot.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    {
+      "id": 453,
+      "type": "CLIPLoader",
+      "pos": [
+        -60,
+        2560
+      ],
+      "size": [
+        420,
+        106
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            803
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "directory": "text_encoders",
+            "name": "qwen3vl_8b_int8_convrot.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3vl_8b_int8_convrot.safetensors"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen3vl_8b_int8_convrot.safetensors",
+        "qwen_image",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen3vl_8b_int8_convrot.safetensors",
+        "type": "qwen_image",
+        "device": "default"
+      }
+    },
+    {
+      "id": 454,
+      "type": "VAELoader",
+      "pos": [
+        -60,
+        2700
+      ],
+      "size": [
+        420,
+        58
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            804,
+            810
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "directory": "vae",
+            "name": "qwen_image_2.1_vae_bf16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/vae/qwen_image_2.1_vae_bf16.safetensors"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen_image_2.1_vae_bf16.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+      }
+    },
+    {
+      "id": 480,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        420,
+        2440
+      ],
+      "size": [
+        420,
+        82
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 801
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            802
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "models": [
+          {
+            "directory": "loras",
+            "name": "Qwen-Image-2.1-viggle-turbo-v0.2-5step-lora-r256_comfy.safetensors",
+            "url": "https://huggingface.co/xingewh/Qwen-Image-2.1-viggle-turbo-v0.2-5step-lora-r256_comfy/resolve/main/Qwen-Image-2.1-viggle-turbo-v0.2-5step-lora-r256_comfy.safetensors"
+          }
+        ]
+      },
+      "widgets_values": [
+        "Qwen-Image-2.1-viggle-turbo-v0.2-5step-lora-r256_comfy.safetensors",
+        1.0
+      ],
+      "widgets_values_named": {
+        "lora_name": "Qwen-Image-2.1-viggle-turbo-v0.2-5step-lora-r256_comfy.safetensors",
+        "strength_model": 1.0
+      },
+      "title": "Turbo LoRA (Viggle v0.2, 5 step) — strength 1.0 고정"
+    },
+    {
+      "id": 469,
+      "type": "QwenImage21Cache",
+      "pos": [
+        900,
+        2440
+      ],
+      "size": [
+        275,
+        99
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 802
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "모델",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            814
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "QwenImage21Cache"
+      },
+      "widgets_values": [
+        "auto",
+        "default"
+      ],
+      "widgets_values_named": {
+        "device": "auto",
+        "dtype": "default"
+      }
+    },
+    {
+      "id": 474,
+      "type": "TextEncodeQwenImage21",
+      "pos": [
+        420,
+        2640
+      ],
+      "size": [
+        440,
+        420
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 803
+        },
+        {
+          "localized_name": "image_1",
+          "name": "images.image_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 805
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 804
+        },
+        {
+          "localized_name": "prompt",
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "negative_prompt",
+          "name": "negative_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "negative_prompt"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "resolution",
+          "name": "resolution",
+          "type": "INT",
+          "widget": {
+            "name": "resolution"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "image_2",
+          "name": "images.image_2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "positive",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            815
+          ]
+        },
+        {
+          "localized_name": "negative",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            816
+          ]
+        },
+        {
+          "localized_name": "latent",
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            808
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImage21"
+      },
+      "widgets_values": [
+        "",
+        "",
+        2048
+      ],
+      "widgets_values_named": {
+        "prompt": "",
+        "negative_prompt": "",
+        "resolution": 2048
+      },
+      "title": "Prompt — <image1> 로 원본 지칭, 유지할 항목 명시"
+    },
+    {
+      "id": 456,
+      "type": "EmptyLatentImage",
+      "pos": [
+        420,
+        3100
+      ],
+      "size": [
+        308,
+        121
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "너비",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 806
+        },
+        {
+          "localized_name": "높이",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 807
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "잠재 데이터",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            809
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        2048,
+        2048,
+        1
+      ],
+      "widgets_values_named": {
+        "width": 2048,
+        "height": 2048,
+        "batch_size": 1
+      }
+    },
+    {
+      "id": 468,
+      "type": "ComfySwitchNode",
+      "pos": [
+        900,
+        3100
+      ],
+      "size": [
+        275,
+        88
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "거짓일 때",
+          "name": "on_false",
+          "shape": 7,
+          "type": "LATENT",
+          "link": 808
+        },
+        {
+          "localized_name": "참일 때",
+          "name": "on_true",
+          "shape": 7,
+          "type": "LATENT",
+          "link": 809
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "출력",
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            821
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfySwitchNode"
+      },
+      "widgets_values": [
+        false
+      ],
+      "widgets_values_named": {
+        "switch": false
+      },
+      "title": "custom_size (false = image_1 비율 유지, 권장)"
+    },
+    {
+      "id": 482,
+      "type": "RandomNoise",
+      "pos": [
+        900,
+        2560
+      ],
+      "size": [
+        300,
+        82
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "NOISE",
+          "name": "NOISE",
+          "type": "NOISE",
+          "links": [
+            817
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RandomNoise"
+      },
+      "widgets_values": [
+        90946806439488,
+        "randomize"
+      ],
+      "widgets_values_named": {
+        "noise_seed": 90946806439488,
+        "control_after_generate": "randomize"
+      }
+    },
+    {
+      "id": 483,
+      "type": "CFGGuider",
+      "pos": [
+        900,
+        2680
+      ],
+      "size": [
+        300,
+        98
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 814
+        },
+        {
+          "localized_name": "positive",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 815
+        },
+        {
+          "localized_name": "negative",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 816
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "GUIDER",
+          "name": "GUIDER",
+          "type": "GUIDER",
+          "links": [
+            818
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CFGGuider"
+      },
+      "widgets_values": [
+        1.0
+      ],
+      "widgets_values_named": {
+        "cfg": 1.0
+      },
+      "title": "CFGGuider (cfg 1.0 고정)"
+    },
+    {
+      "id": 484,
+      "type": "KSamplerSelect",
+      "pos": [
+        900,
+        2820
+      ],
+      "size": [
+        300,
+        58
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "SAMPLER",
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "links": [
+            819
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "widgets_values": [
+        "euler"
+      ],
+      "widgets_values_named": {
+        "sampler_name": "euler"
+      }
+    },
+    {
+      "id": 485,
+      "type": "ManualSigmas",
+      "pos": [
+        900,
+        2920
+      ],
+      "size": [
+        300,
+        58
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "localized_name": "SIGMAS",
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "links": [
+            820
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ManualSigmas"
+      },
+      "widgets_values": [
+        "1.0, 0.875, 0.75, 0.5, 0.25, 0.0"
+      ],
+      "widgets_values_named": {
+        "sigmas": "1.0, 0.875, 0.75, 0.5, 0.25, 0.0"
+      },
+      "title": "Viggle v0.2 공식 5-step sigmas (수정 금지)"
+    },
+    {
+      "id": 486,
+      "type": "SamplerCustomAdvanced",
+      "pos": [
+        1240,
+        2560
+      ],
+      "size": [
+        280,
+        106
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "noise",
+          "name": "noise",
+          "type": "NOISE",
+          "link": 817
+        },
+        {
+          "localized_name": "guider",
+          "name": "guider",
+          "type": "GUIDER",
+          "link": 818
+        },
+        {
+          "localized_name": "sampler",
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 819
+        },
+        {
+          "localized_name": "sigmas",
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 820
+        },
+        {
+          "localized_name": "latent_image",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 821
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "output",
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            822
+          ]
+        },
+        {
+          "localized_name": "denoised_output",
+          "name": "denoised_output",
+          "type": "LATENT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamplerCustomAdvanced"
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 457,
+      "type": "VAEDecode",
+      "pos": [
+        1560,
+        2440
+      ],
+      "size": [
+        231,
+        66
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "잠재 데이터",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 822
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 810
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "이미지",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            811
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 461,
+      "type": "SaveImageAdvanced",
+      "pos": [
+        1820,
+        2440
+      ],
+      "size": [
+        640,
+        700
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 811
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            813
+          ]
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "Qwen_image_2.1_turbo",
+        "png",
+        "8-bit",
+        "sRGB"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "Qwen_image_2.1_turbo",
+        "format": "png",
+        "format.bit_depth": "8-bit",
+        "format.input_color_space": "sRGB"
+      }
+    },
+    {
+      "id": 472,
+      "type": "ImageCompare",
+      "pos": [
+        2500,
+        2440
+      ],
+      "size": [
+        640,
+        700
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_a",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 812
+        },
+        {
+          "name": "image_b",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 813
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "ImageCompare"
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 490,
+      "type": "MarkdownNote",
+      "pos": [
+        -980,
+        2440
+      ],
+      "size": [
+        520,
+        720
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "## Turbo (5 step · 약 8배 빠름)\n\n**원본 대비 변경점**\n- Viggle Turbo v0.2 (DMD 증류) LoRA, strength **1.0**\n- SamplerCustomAdvanced + ManualSigmas `1.0, 0.875, 0.75, 0.5, 0.25, 0.0` (5 step), euler, cfg 1\n- DiT / CLIP → `int8_convrot` (공식 템플릿 기본값, VRAM↓ 속도↑). 24GB+면 bf16으로 바꿔도 됨\n- custom_size **false** → 출력이 image_1 비율을 따름\n\n**모델**\n- diffusion_models/qwen_image_2.1_int8_convrot.safetensors\n- text_encoders/qwen3vl_8b_int8_convrot.safetensors\n- loras/Qwen-Image-2.1-viggle-turbo-v0.2-5step-lora-r256_comfy.safetensors\n- vae/qwen_image_2.1_vae_bf16.safetensors\n\n**주의**\n- cfg 1 / sigmas 고정. 스텝·cfg를 올리면 오히려 타거나 뭉개짐\n- 참조 이미지 **최대 3장**\n- 복잡한 편집(얼굴 교체, 다중 조건)은 40 step base보다 약함 → 그땐 Max Quality 사용\n- resolution **1024 정확값 금지** (ComfyUI #16435) → 1056 / 1536 / 2048\n- Qwen-Image 1.0 / 2512용 LoRA는 2.1(7B)과 호환 안 됨\n"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    }
+  ],
+  "links": [
+    [
+      801,
+      451,
+      0,
+      480,
+      0,
+      "MODEL"
+    ],
+    [
+      802,
+      480,
+      0,
+      469,
+      0,
+      "MODEL"
+    ],
+    [
+      803,
+      453,
+      0,
+      474,
+      0,
+      "CLIP"
+    ],
+    [
+      804,
+      454,
+      0,
+      474,
+      2,
+      "VAE"
+    ],
+    [
+      805,
+      477,
+      0,
+      474,
+      1,
+      "IMAGE"
+    ],
+    [
+      806,
+      13,
+      0,
+      456,
+      0,
+      "INT"
+    ],
+    [
+      807,
+      13,
+      1,
+      456,
+      1,
+      "INT"
+    ],
+    [
+      808,
+      474,
+      2,
+      468,
+      0,
+      "LATENT"
+    ],
+    [
+      809,
+      456,
+      0,
+      468,
+      1,
+      "LATENT"
+    ],
+    [
+      810,
+      454,
+      0,
+      457,
+      1,
+      "VAE"
+    ],
+    [
+      811,
+      457,
+      0,
+      461,
+      0,
+      "IMAGE"
+    ],
+    [
+      812,
+      477,
+      0,
+      472,
+      0,
+      "IMAGE"
+    ],
+    [
+      813,
+      461,
+      0,
+      472,
+      1,
+      "IMAGE"
+    ],
+    [
+      814,
+      469,
+      0,
+      483,
+      0,
+      "MODEL"
+    ],
+    [
+      815,
+      474,
+      0,
+      483,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      816,
+      474,
+      1,
+      483,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      817,
+      482,
+      0,
+      486,
+      0,
+      "NOISE"
+    ],
+    [
+      818,
+      483,
+      0,
+      486,
+      1,
+      "GUIDER"
+    ],
+    [
+      819,
+      484,
+      0,
+      486,
+      2,
+      "SAMPLER"
+    ],
+    [
+      820,
+      485,
+      0,
+      486,
+      3,
+      "SIGMAS"
+    ],
+    [
+      821,
+      468,
+      0,
+      486,
+      4,
+      "LATENT"
+    ],
+    [
+      822,
+      486,
+      0,
+      457,
+      0,
+      "LATENT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        1100,
+        -2300
+      ]
+    },
+    "frontendVersion": "1.53.7"
+  },
+  "version": 0.4
+}
