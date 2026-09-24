@@ -6,7 +6,8 @@ After Effects 합성 전에 ComfyUI에서 쓰는 영상 생성 워크플로 4종
 |---|---|---|---|
 | `workflows/LTX2.5_Extend_Retake.json` | 길이 연장 | 2.5 distilled | 원본 마지막 2초를 latent에 **고정**하고 뒤만 생성 (Retake 방식) |
 | `workflows/LTX2.5_Outpaint_Original1to1.json` | 아웃페인트 | 2.5 distilled + 2.3 In/Outpaint IC-LoRA | 공식 2-stage 구조 + **Laplacian 블렌드**로 원본 1:1 복원 |
-| `workflows/LTX2.5_CleanPlate.json` | 사람·차량 제거 | 2.5 distilled + Clean Plate IC-LoRA (클라우드 기본 2.3판) | 2.5 트랜스포머로 교체 + 2-stage |
+| `workflows/LTX2.3_CleanPlate_Cloud.json` | 사람·차량 제거 (**Comfy Cloud용**) | **2.3** dev FP8 + distilled LoRA + 2.3 Clean Plate LoRA | 기존 2.3 엔진 유지 + 원본 해상도·프레임·fps 보존, 색 일치 |
+| `workflows/LTX2.5_CleanPlate.json` | 사람·차량 제거 (2.5 LoRA 있는 환경) | 2.5 distilled + **2.5 Clean Plate IC-LoRA** | 2.5 트랜스포머 + 2-stage |
 | `workflows/LTX2.5_UnionControl_MoGe.json` | 깊이 제어 v2v | 2.5 distilled + 2.3 Union IC-LoRA | 공식 sigma, 2-stage, 제어 영상 비율·fps 자동 |
 
 ### 구조: 메인 그래프 + CORE 서브그래프
@@ -36,7 +37,7 @@ CORE를 더블클릭하면 안에 그룹별로 정리된 엔진이 있다: 자�
 |---|---|---|
 | 길이 연장 | **2.5** | IC-LoRA가 필요 없는 기본 모델 기능이다. 2.5가 최신 기본 모델이고 공식 Comfy 템플릿도 2.5 기준이다. |
 | 아웃페인트 | **2.5 + 2.3 LoRA** | 2.5 전용 In/Outpaint LoRA는 아직 없다. Lightricks 공식 `LTX-2.5_ICLoRA_Outpaint_Two_Stage_Distilled.json`도 2.5 distilled에 `ltx-2.3-22b-ic-lora-in-outpainting-0.9`를 얹는다. |
-| Clean Plate | **2.5 + 2.3 LoRA (클라우드)** | 2.5 전용 공식 `LTX-2.5-22b-IC-LoRA-Clean-Plate`가 나왔지만 Comfy Cloud에는 아직 없어서 기본값은 2.3판이다. 로컬에서 2.5판을 받으면 로더 파일명만 바꾼다. |
+| Clean Plate | **클라우드는 2.3** / 2.5 LoRA가 있으면 2.5 | 2.5 트랜스포머에 2.3 Clean Plate LoRA를 얹으면 **회색 화면**이 나왔다(사용자 클라우드 실행 결과). Clean Plate는 Lightricks가 2.5용을 다시 학습해 낸 LoRA라 2.3판이 2.5에서 동작하지 않는다. Comfy Cloud에는 2.5판이 없으므로 클라우드는 2.3 엔진을 유지한다. |
 | Union Control | **2.5 + 2.3 LoRA** | 공식 `LTX-2.5_ICLoRA_Union_Control_Distilled.json`이 같은 조합을 쓴다. |
 
 > LTX-2 README에는 "LoRA는 학습에 쓴 모델에서만 동작한다"는 문장이 있다. 그런데 공식 2.5 예제 워크플로가 2.3 IC-LoRA를 그대로 쓰므로 IC-LoRA는 예외로 보고 공식 예제를 따랐다. 2.5 전용판이 나오면 로더의 파일명만 바꾸면 된다.
@@ -89,8 +90,9 @@ CORE를 더블클릭하면 안에 그룹별로 정리된 엔진이 있다: 자�
 - 원본 오디오는 모델에 고정 입력(`LTXVSetAudioRefTokens`)하고, 출력에는 원본 파형을 그대로 넣는다.
 
 ### Clean Plate — `LTX2.5_CleanPlate.json`
-- 모델 구성을 2.5로 바꿨다.
-  - LoRA: 기본 `ltx-2.3-22b-ic-lora-clean-plate-1.0` (Comfy Cloud에 있는 파일). 로컬에서 `ltx-2.5-22b-ic-lora-clean-plate-1.0`을 받으면 교체
+- **클라우드용 `LTX2.3_CleanPlate_Cloud.json`**: 기존 2.3 모델 구성(dev FP8 + distilled LoRA 0.6 + 2.3 Clean Plate LoRA, Gemma 3, 2.3 VAE, `euler_ancestral_cfg_pp` 8 step)을 그대로 쓰고, 아래 개선만 넣었다: 원본 해상도·프레임 수 유지, 8n+1 자동 패딩, 원본 fps, 색 일치, 메인/서브그래프 구조.
+- **2.5용 `LTX2.5_CleanPlate.json`**: 2.5 전용 LoRA(`ltx-2.5-22b-ic-lora-clean-plate-1.0`)가 반드시 필요하다. 2.3판을 넣으면 회색 화면이 나온다. 모델 구성은 다음과 같다.
+  - LoRA: `ltx-2.5-22b-ic-lora-clean-plate-1.0`
   - 트랜스포머: 2.5 distilled
   - 텍스트 인코더: Gemma 4 12B
   - VAE: 2.5
