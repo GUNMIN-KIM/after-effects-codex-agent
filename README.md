@@ -10,6 +10,7 @@ After Effects를 실제로 읽고 수정하는 After Effects MCP와 Codex의 판
 | `SKILL.md` | 조사→계획→수정→시각 검수→저장 workflow |
 | `references/` | 합성, 매트, 색상, 애니메이션, 렌더, 문제 해결 기준 |
 | `templates/task-brief.md` | 실제 작업 지시 템플릿 |
+| `tools/pointcloud4d/` | RGB+Depth+Alpha 영상을 4D 포인트클라우드 시네마틱 영상으로 렌더하는 Python 도구 |
 | `THIRD_PARTY_NOTICES.md` | 외부 프로젝트·상표·문서 고지 |
 
 ## 사용 순서
