@@ -1,10 +1,30 @@
 {
   "name": "after-effects-codex-agent",
-  "version": "1.0.0",
-  "description": "Codex operating rules and quality references for Adobe After Effects workflows using an external AE MCP.",
+  "version": "1.1.0",
+  "description": "Codex operating rules and quality references for Adobe After Effects workflows using an external AE MCP, plus a ComfyUI workflow pack for generative VFX steps.",
   "entrypoint": "AGENTS.md",
   "skill": "SKILL.md",
-  "references": ["operations-and-safety", "compositing", "matte-roto", "color", "animation", "qc-render", "troubleshooting"],
+  "references": [
+    "operations-and-safety",
+    "compositing",
+    "matte-roto",
+    "color",
+    "animation",
+    "qc-render",
+    "troubleshooting",
+    "comfyui-pipeline"
+  ],
   "template": "templates/task-brief.md",
-  "repositoryPolicy": "create-new-project-or-version; never overwrite source by default"
+  "repositoryPolicy": "create-new-project-or-version; never overwrite source by default",
+  "templates": [
+    "templates/task-brief.md",
+    "templates/comfyui-handoff.md"
+  ],
+  "comfyui": {
+    "pack": "comfyui/workflows",
+    "index": "comfyui/workflows/README.md",
+    "models": "comfyui/MODELS.md",
+    "reviewed": "2026-11-06",
+    "comfyui_min_version": "0.44.0"
+  }
 }

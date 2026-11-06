@@ -1,0 +1,5963 @@
+{
+ "id": "308d1393-0d2f-532b-81f5-d663a4ec8d0c",
+ "revision": 0,
+ "last_node_id": 53,
+ "last_link_id": 127,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "LoadVideo",
+   "title": "원본 영상 · 연장 전 구간 그대로 사용",
+   "pos": [
+    80,
+    160
+   ],
+   "size": [
+    420,
+    420
+   ],
+   "flags": {
+    "collapsed": false
+   },
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      126
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadVideo",
+    "cnr_id": "comfy-core",
+    "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+   },
+   "widgets_values": [
+    "",
+    "image"
+   ],
+   "color": "#477eac",
+   "bgcolor": "#252d38"
+  },
+  {
+   "id": 46,
+   "type": "SaveVideo",
+   "title": "최종 출력 · 원본 FPS",
+   "pos": [
+    1520,
+    160
+   ],
+   "size": [
+    450,
+    420
+   ],
+   "flags": {
+    "collapsed": false
+   },
+   "order": 3,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "link": 85
+    }
+   ],
+   "outputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "links": [],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SaveVideo",
+    "cnr_id": "comfy-core",
+    "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+   },
+   "widgets_values": [
+    "H3/H3_영상연장_원본보존",
+    "auto",
+    "auto"
+   ],
+   "color": "#5b946f",
+   "bgcolor": "#252d38"
+  },
+  {
+   "id": 47,
+   "type": "MarkdownNote",
+   "title": "사용법 · 정확 타겟 · 무음",
+   "pos": [
+    80,
+    940
+   ],
+   "size": [
+    900,
+    300
+   ],
+   "flags": {
+    "collapsed": false
+   },
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "MarkdownNote",
+    "cnr_id": "comfy-core",
+    "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+   },
+   "widgets_values": [
+    "## 영상 연장 · 원본 전체 보존 (H3 FL2VA)\n\n**입력**: 원본 영상, 추가 길이(초). **출력**: 원본 전체(픽셀 그대로) + 연장분 1개.\n- 기존 구조가 이미 원본 프레임을 그대로 쓰고 연장분만 붙임.\n- **연결성 수정 (2026-10-14)**: 원본 끝 참조 구간이 22프레임(≈0.9초) 고정 → **기본 39프레임(≈1.6초)**, 메인 노드에서 22/39/56 선택 (H3 가이드 규격 17k+5로 자동 내림). 길수록 인물·움직임 연결이 안정적, 계산량 증가.\n- 권장 총 길이(참조 + 연장) ≤ 15초 (H3 학습 범위 124~362프레임).\n- H3는 768p(1.03MP) 생성 후 원본 크기로 확대 → 1080p 원본에서 연장분이 상대적으로 부드러움. **원본 해상도 그대로 이어야 하면 LTX2.5_영상연장_원본보존·인물연결** (1920 생성) 권장.\n- 출력 = 원본 **가로×세로 · 프레임 수 · FPS** 그대로 (32배수 패딩·17k+5 프레임 패딩 후 정확히 복원 · 마지막에 W/H/N 검사, 다르면 중단) — 기존 구조 유지.\n- 실행 1회 = **결과 1개** (마스크 미리보기 출력 제거).\n- **내부 추론 MP 기본 1.03** = H3 공식 학습 캔버스(짧은 변 768 · 최대 768×1344, ComfyUI H3 노드 소스). 1080p 원본을 원본 크기(2.1MP)로 돌리면 학습 범위 2배 밖 → 반복·뭉개짐 위험과 2~3배 시간. 0 = 원본 크기(실험용).\n\n[검증] 로컬 ComfyUI(코어+LTXVideo+KJ+VHS 최신)에서 노드 스키마 검증 + 모델 단계를 대체한 전후처리 실행 검증 완료 (가로×세로·프레임 수·FPS·프레임 정렬·보호영역 픽셀). Cloud GPU 실제 생성은 미실행.\n\n**2026-10-14 재검토 수정**: 메인 노드 안쪽 값이 프런트엔드에서 한 칸씩 밀려 원본 끝 참조 프레임 수(22 / 39 / 56) 값이 사라져 계산이 깨지던 것 (위젯이 수식 소켓으로 끝나 프런트엔드가 버림 → 안쪽에 정수 노드 추가) → 값 순서를 프런트엔드 규칙대로 재정렬 (실제 로드 후 실행 그래프 일치 확인).\n\n### 2026-10-21 · Comfy Cloud 실행 검증 수정\n- 연장 구간 중간에 다른 장면으로 컷 전환 (Cloud 실측: 기본 프롬프트·시드 904234 → 연장 2.9초 지점에서 어두운 배경 클로즈업으로 하드컷) — 'No scene change, cuts' 같은 부정문은 CFG 1(네거티브 없음)에서 효과가 약함 → 기본 프롬프트를 'A single continuous shot that seamlessly continues the source clip with no cut…' 긍정형으로 교체 (같은 시드에서 컷 없이 같은 스튜디오에서 이어짐 · 연결부 변화량 4.6 = 원본 구간 프레임 변화 5.2 수준). 직접 쓸 때도 첫 문장을 'A single continuous shot …'으로 시작하세요."
+   ],
+   "color": "#897343",
+   "bgcolor": "#302b22"
+  },
+  {
+   "id": 52,
+   "type": "a5736b3c-f7db-5f9b-b663-6b4f67598b28",
+   "title": "H3 · 영상연장 · 원본보존",
+   "pos": [
+    640,
+    160
+   ],
+   "size": [
+    740,
+    560
+   ],
+   "flags": {
+    "collapsed": false
+   },
+   "order": 2,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "in_00_VIDEO",
+     "type": "VIDEO",
+     "label": "원본 영상 · 연장 전 구간 그대로 사용",
+     "localized_name": "원본 영상 · 연장 전 구간 그대로 사용",
+     "link": 126
+    },
+    {
+     "name": "ctl_3_value",
+     "type": "STRING",
+     "label": "편집 지시 · 영어 권장",
+     "localized_name": "편집 지시 · 영어 권장",
+     "link": null,
+     "widget": {
+      "name": "ctl_3_value"
+     }
+    },
+    {
+     "name": "ctl_4_value",
+     "type": "FLOAT",
+     "label": "내부 추론 MP (공식 1.03 · 0=원본)",
+     "localized_name": "내부 추론 MP · 0=원본 / 선택 상한",
+     "link": null,
+     "widget": {
+      "name": "ctl_4_value"
+     }
+    },
+    {
+     "name": "ctl_5_value",
+     "type": "INT",
+     "label": "고정 시드 · 재현성",
+     "localized_name": "고정 시드 · 재현성",
+     "link": 127,
+     "widget": {
+      "name": "ctl_5_value"
+     }
+    },
+    {
+     "name": "ctl_7_value",
+     "type": "FLOAT",
+     "label": "추가할 길이 · 초 / 최대 15초",
+     "localized_name": "추가할 길이 · 초 / 최대 15초",
+     "link": null,
+     "widget": {
+      "name": "ctl_7_value"
+     }
+    },
+    {
+     "label": "인물·움직임 참조 프레임 (기본 39 ≈ 1.6초 · 22/39/56)",
+     "localized_name": "p_frames",
+     "name": "p_frames",
+     "type": "INT",
+     "link": null,
+     "widget": {
+      "name": "p_frames"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "out_00_out_00_VIDEO",
+     "type": "VIDEO",
+     "label": "VIDEO",
+     "localized_name": "VIDEO",
+     "links": [
+      85
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "previewExposures": []
+   },
+   "widgets_values": [
+    "A single continuous shot that seamlessly continues the source clip with no cut and no scene change: the same people keep moving naturally in the same place, framed by the same static camera. Match the original lighting, exposure and white balance.",
+    1.03,
+    904234,
+    5,
+    39
+   ],
+   "widgets_values_named": {
+    "ctl_3_value": "A single continuous shot that seamlessly continues the source clip with no cut and no scene change: the same people keep moving naturally in the same place, framed by the same static camera. Match the original lighting, exposure and white balance.",
+    "ctl_4_value": 1.03,
+    "ctl_5_value": 904234,
+    "ctl_7_value": 5,
+    "p_frames": 39
+   },
+   "color": "#8870ae",
+   "bgcolor": "#252d38"
+  },
+  {
+   "id": 53,
+   "type": "PrimitiveInt",
+   "pos": [
+    -260,
+    160
+   ],
+   "size": [
+    300,
+    110
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "INT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      127
+     ]
+    }
+   ],
+   "title": "시드 · 매 실행 랜덤",
+   "properties": {
+    "Node name for S&R": "PrimitiveInt",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    904234,
+    "randomize"
+   ],
+   "widgets_values_named": {
+    "value": 904234,
+    "control_after_generate": "randomize"
+   },
+   "color": "#68532c",
+   "bgcolor": "#342b1d"
+  }
+ ],
+ "links": [
+  [
+   85,
+   52,
+   0,
+   46,
+   0,
+   "VIDEO"
+  ],
+  [
+   126,
+   1,
+   0,
+   52,
+   0,
+   "VIDEO"
+  ],
+  [
+   127,
+   53,
+   0,
+   52,
+   3,
+   "INT"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "01  입력 · 영상 / 이미지 / 마스크",
+   "bounding": [
+    56,
+    80,
+    468,
+    580
+   ],
+   "color": "#477eac",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "02  통합 컨트롤",
+   "bounding": [
+    616,
+    80,
+    788,
+    720
+   ],
+   "color": "#8870ae",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "03  확인 / 저장",
+   "bounding": [
+    1496,
+    80,
+    498,
+    580
+   ],
+   "color": "#5b946f",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 4,
+   "title": "안내 · 입력 조건 / 보존 범위",
+   "bounding": [
+    56,
+    872,
+    1910,
+    400
+   ],
+   "color": "#897343",
+   "font_size": 24,
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "version": 0.4,
+ "extra": {
+  "ds": {
+   "scale": 0.65,
+   "offset": [
+    35,
+    30
+   ]
+  },
+  "h3_vfx": {
+   "title": "연장 · 원본 전체 보존",
+   "recipe_status": "author_recipe_core_rebuild",
+   "source_review_date": "2026-10-11",
+   "comfy_core_revision": "0df64eb242b7c5759c3e86afd5d1846d923b1033",
+   "models": [
+    {
+     "name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+     "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/e5eb578a89295337b8ff433a035929ce0279e0b6/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+     "directory": "diffusion_models",
+     "repo": "Comfy-Org/MiniMax-H3",
+     "source_path": "diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+     "revision": "e5eb578a89295337b8ff433a035929ce0279e0b6",
+     "weight_updated_at_utc": "2026-07-30T22:36:12.000Z",
+     "weight_commit": "3f57e8291d2ef846f9a074b1b76d2767db434abe"
+    },
+    {
+     "name": "minimax_h3_video_vae_int8_convrot.safetensors",
+     "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/e5eb578a89295337b8ff433a035929ce0279e0b6/vae/minimax_h3_video_vae_int8_convrot.safetensors",
+     "directory": "vae",
+     "repo": "Comfy-Org/MiniMax-H3",
+     "source_path": "vae/minimax_h3_video_vae_int8_convrot.safetensors",
+     "revision": "e5eb578a89295337b8ff433a035929ce0279e0b6",
+     "weight_updated_at_utc": "2026-09-15T17:04:52.000Z",
+     "weight_commit": "7a2065e37f5ff9d3c4e605f164d4cac388eff8e8"
+    },
+    {
+     "name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+     "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/e5eb578a89295337b8ff433a035929ce0279e0b6/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+     "directory": "text_encoders",
+     "repo": "Comfy-Org/MiniMax-H3",
+     "source_path": "text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+     "revision": "e5eb578a89295337b8ff433a035929ce0279e0b6",
+     "weight_updated_at_utc": "2026-07-30T22:36:12.000Z",
+     "weight_commit": "3f57e8291d2ef846f9a074b1b76d2767db434abe"
+    }
+   ],
+   "preservation_policy": {
+    "video_input": "entire decoded CFR source; no frame cap, forced fps, frame skip or interpolation",
+    "spatial": "right/bottom pad to 32, inference MP=0 by default, crop to exact original dimensions",
+    "temporal": "hold last frame to ceil 17k+5; sample once; trim to exact original N",
+    "audio": "no audio VAE, decode, conditioning, link or output in core builds; H3 internal joint AV latent remains",
+    "preservation": "protected workflows composite decoded original outside white editable mask before encoding",
+    "color": "SDR sRGB; optional uniform color transfer default 0; no HDR reinterpretation or automatic creative grade",
+    "limitations": [
+     "GPU rendering not tested",
+     "single-pass full-length may exceed VRAM and trained length (~5–15 s)",
+     "native H3 temporal clock is 24 fps; original output fps does not guarantee motion equivalence",
+     "CFR only; VFR timestamps/HDR/master codec are not preserved",
+     "edited pixels are generative; exact motion/color inside mask not guaranteed",
+     "MP cap >0 reduces internal detail even when final dimensions are restored"
+    ]
+   },
+   "notes": "FL2VA + 마지막 22/5/1프레임 문맥 자동 선택. 생성 문맥은 제거하고 새 프레임만 원본 전체 뒤에 붙임. 기존 구간은 생성 결과로 덮어쓰지 않음. 출력 N=원본 N+round(추가초×원본FPS), W/H/FPS 원본. 새 구간의 동작·색상·접속은 모델 오차가 남음. 자동 반복 여러 구간 연장은 추가 노드 자료 폴더 참고.",
+   "details": {
+    "protected": true,
+    "length_exception": "explicit added seconds, <=15 per run"
+   },
+   "cloud_status": "core H3 library observed; all-node import and GPU execution not validated",
+   "static_audit": {
+    "node_count": 43,
+    "native_subgraphs": 4,
+    "issues": [],
+    "static_pass": true
+   }
+  },
+  "final_review": {
+   "date": "2026-10-11",
+   "source_sha256": "50e9d93094ef6f2d8eab4976a106b345548903f1f5ebe0cc250fd1d546e6694a",
+   "source_file": "06_길이연장/16_연장_원본전체보존.json",
+   "main_controller": "a5736b3c-f7db-5f9b-b663-6b4f67598b28",
+   "editable_settings_added": 16,
+   "native_layout": true,
+   "reversible_promotion_check": true,
+   "cloud_import_tested": false,
+   "gpu_render_tested": false,
+   "fixes": []
+  }
+ },
+ "definitions": {
+  "subgraphs": [
+   {
+    "id": "314dd271-aa50-5c2b-9417-9e904e812721",
+    "version": 1,
+    "state": {
+     "lastNodeId": 54,
+     "lastLinkId": 107,
+     "lastGroupId": 6,
+     "lastRerouteId": 0
+    },
+    "revision": 0,
+    "config": {},
+    "name": "01 원본 규격 · 길이 · 입력 검증",
+    "inputNode": {
+     "id": -10,
+     "bounding": [
+      -420,
+      0,
+      300,
+      144
+     ]
+    },
+    "outputNode": {
+     "id": -20,
+     "bounding": [
+      4794,
+      0,
+      260,
+      404
+     ]
+    },
+    "inputs": [
+     {
+      "id": "cbed8d54-3aad-5c44-8f54-3a9e2b43bfdc",
+      "name": "in_00_VIDEO",
+      "type": "VIDEO",
+      "label": "원본 영상 · 연장 전 구간 그대로 사용",
+      "localized_name": "원본 영상 · 연장 전 구간 그대로 사용",
+      "linkIds": [
+       1
+      ],
+      "pos": [
+       -120,
+       162
+      ]
+     },
+     {
+      "id": "28702756-dd3a-5c5b-8f8c-abf52455d7b8",
+      "name": "in_01_FLOAT",
+      "type": "FLOAT",
+      "label": "내부 추론 MP · 0=원본 / 선택 상한",
+      "localized_name": "내부 추론 MP · 0=원본 / 선택 상한",
+      "linkIds": [
+       13,
+       16
+      ],
+      "pos": [
+       -120,
+       184
+      ]
+     },
+     {
+      "id": "bfe2b18a-20e4-50a3-a485-f8dea1fdc51c",
+      "name": "in_02_FLOAT",
+      "type": "FLOAT",
+      "label": "추가할 길이 · 초 / 최대 15초",
+      "localized_name": "추가할 길이 · 초 / 최대 15초",
+      "linkIds": [
+       32
+      ],
+      "pos": [
+       -120,
+       206
+      ]
+     },
+     {
+      "id": "d326de55-d771-493b-a79e-ac925e2e8239",
+      "name": "ctx_frames",
+      "type": "INT",
+      "linkIds": [
+       106
+      ],
+      "localized_name": "ctx_frames",
+      "label": "참조 프레임 수 (끝부분 · 17k+5)",
+      "pos": [
+       0,
+       0
+      ]
+     }
+    ],
+    "outputs": [
+     {
+      "id": "ced2289e-c639-5450-8aab-85deecbe942a",
+      "name": "out_00_INT",
+      "type": "INT",
+      "label": "내부 가로 · MP 0=원본",
+      "localized_name": "내부 가로 · MP 0=원본",
+      "linkIds": [
+       86
+      ],
+      "pos": [
+       3300,
+       162
+      ]
+     },
+     {
+      "id": "9a7a12b4-0c68-5921-a2f2-214cf670d70f",
+      "name": "out_01_INT",
+      "type": "INT",
+      "label": "내부 세로 · MP 0=원본",
+      "localized_name": "내부 세로 · MP 0=원본",
+      "linkIds": [
+       87
+      ],
+      "pos": [
+       3300,
+       184
+      ]
+     },
+     {
+      "id": "bb0bdda5-9ee9-5c74-8fdf-b3c18d0aedc1",
+      "name": "out_02_INT",
+      "type": "INT",
+      "label": "연장 생성부 · 모델 17k+5",
+      "localized_name": "연장 생성부 · 모델 17k+5",
+      "linkIds": [
+       88
+      ],
+      "pos": [
+       3300,
+       206
+      ]
+     },
+     {
+      "id": "7c6ec5e3-0ce3-51aa-8899-70d125a2427a",
+      "name": "out_03_IMAGE",
+      "type": "IMAGE",
+      "label": "IMAGE",
+      "localized_name": "IMAGE",
+      "linkIds": [
+       89
+      ],
+      "pos": [
+       3300,
+       228
+      ]
+     },
+     {
+      "id": "af3d0cb7-d96e-53c3-94c1-7b0f19b6c74e",
+      "name": "out_04_IMAGE",
+      "type": "IMAGE",
+      "label": "IMAGE",
+      "localized_name": "IMAGE",
+      "linkIds": [
+       90
+      ],
+      "pos": [
+       3300,
+       250
+      ]
+     },
+     {
+      "id": "f341ae76-ed3c-5518-abea-d2c2471eec3c",
+      "name": "out_05_INT",
+      "type": "INT",
+      "label": "32 배수 가로 패딩",
+      "localized_name": "32 배수 가로 패딩",
+      "linkIds": [
+       91
+      ],
+      "pos": [
+       3300,
+       272
+      ]
+     },
+     {
+      "id": "83b2cc31-dff7-5d02-99c3-ebc509777516",
+      "name": "out_06_INT",
+      "type": "INT",
+      "label": "32 배수 세로 패딩",
+      "localized_name": "32 배수 세로 패딩",
+      "linkIds": [
+       92
+      ],
+      "pos": [
+       3300,
+       294
+      ]
+     },
+     {
+      "id": "75c55e03-3bff-572a-bc58-d84190a7ee29",
+      "name": "out_07_width",
+      "type": "INT",
+      "label": "width",
+      "localized_name": "width",
+      "linkIds": [
+       93
+      ],
+      "pos": [
+       3300,
+       316
+      ]
+     },
+     {
+      "id": "50d40466-1d18-5bf7-ac4b-b4f44205372c",
+      "name": "out_08_height",
+      "type": "INT",
+      "label": "height",
+      "localized_name": "height",
+      "linkIds": [
+       94
+      ],
+      "pos": [
+       3300,
+       338
+      ]
+     },
+     {
+      "id": "2b37e819-8ae7-5549-9fcc-26894a183ad3",
+      "name": "out_09_INT",
+      "type": "INT",
+      "label": "자동 마지막 문맥 · 22 / 5 / 1",
+      "localized_name": "자동 마지막 문맥 · 22 / 5 / 1",
+      "linkIds": [
+       105
+      ],
+      "pos": [
+       3300,
+       360
+      ]
+     },
+     {
+      "id": "ec43f918-6425-59ae-8a80-f495f49cd804",
+      "name": "out_10_INT",
+      "type": "INT",
+      "label": "추가 프레임 · 원본 FPS",
+      "localized_name": "추가 프레임 · 원본 FPS",
+      "linkIds": [
+       96
+      ],
+      "pos": [
+       3300,
+       382
+      ]
+     },
+     {
+      "id": "13f6fc99-4aeb-5f6c-90cd-afff071b374c",
+      "name": "out_11_images",
+      "type": "IMAGE",
+      "label": "images",
+      "localized_name": "images",
+      "linkIds": [
+       97
+      ],
+      "pos": [
+       3300,
+       404
+      ]
+     },
+     {
+      "id": "15185fc8-3eac-5277-b2d6-ac2c8f67181e",
+      "name": "out_12_batch_size",
+      "type": "INT",
+      "label": "batch_size",
+      "localized_name": "batch_size",
+      "linkIds": [
+       98
+      ],
+      "pos": [
+       3300,
+       426
+      ]
+     },
+     {
+      "id": "517aab95-dd55-5f39-92e6-3caf842de8e5",
+      "name": "out_13_fps",
+      "type": "FLOAT",
+      "label": "fps",
+      "localized_name": "fps",
+      "linkIds": [
+       99
+      ],
+      "pos": [
+       3300,
+       448
+      ]
+     }
+    ],
+    "widgets": [],
+    "nodes": [
+     {
+      "id": 2,
+      "type": "GetVideoComponents",
+      "title": "프레임 · FPS 추출 / 오디오 미사용",
+      "pos": [
+       24,
+       84
+      ],
+      "size": [
+       350,
+       166
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "video",
+        "type": "VIDEO",
+        "link": 1
+       }
+      ],
+      "outputs": [
+       {
+        "name": "images",
+        "type": "IMAGE",
+        "links": [
+         2,
+         10,
+         97
+        ],
+        "slot_index": 0
+       },
+       {
+        "name": "audio",
+        "type": "AUDIO",
+        "links": [],
+        "slot_index": 1
+       },
+       {
+        "name": "fps",
+        "type": "FLOAT",
+        "links": [
+         33,
+         99
+        ],
+        "slot_index": 2
+       },
+       {
+        "name": "bit_depth",
+        "type": "INT",
+        "links": [],
+        "slot_index": 3
+       },
+       {
+        "name": "color_space",
+        "type": "STRING",
+        "links": [],
+        "slot_index": 4
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "GetVideoComponents",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 8,
+      "type": "GetImageSize",
+      "title": "원본 W / H / N",
+      "pos": [
+       434,
+       84
+      ],
+      "size": [
+       350,
+       122
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "image",
+        "type": "IMAGE",
+        "link": 2
+       }
+      ],
+      "outputs": [
+       {
+        "name": "width",
+        "type": "INT",
+        "links": [
+         3,
+         93
+        ],
+        "slot_index": 0
+       },
+       {
+        "name": "height",
+        "type": "INT",
+        "links": [
+         4,
+         94
+        ],
+        "slot_index": 1
+       },
+       {
+        "name": "batch_size",
+        "type": "INT",
+        "links": [
+         8,
+         34,
+         98,
+         100
+        ],
+        "slot_index": 2
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "GetImageSize",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 9,
+      "type": "ComfyMathExpression",
+      "title": "32 배수 가로 패딩",
+      "pos": [
+       948,
+       84
+      ],
+      "size": [
+       350,
+       150
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "values.a",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 3
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [],
+        "slot_index": 0,
+        "label": "32 배수 가로 패딩"
+       },
+       {
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         6,
+         11,
+         14,
+         91
+        ],
+        "slot_index": 1,
+        "label": "32 배수 가로 패딩"
+       },
+       {
+        "name": "BOOL",
+        "type": "BOOLEAN",
+        "links": [],
+        "slot_index": 2,
+        "label": "32 배수 가로 패딩"
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ComfyMathExpression",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "ceil(a/32)*32"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 10,
+      "type": "ComfyMathExpression",
+      "title": "32 배수 세로 패딩",
+      "pos": [
+       948,
+       294
+      ],
+      "size": [
+       350,
+       150
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "values.a",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 4
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [],
+        "slot_index": 0,
+        "label": "32 배수 세로 패딩"
+       },
+       {
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         7,
+         12,
+         15,
+         92
+        ],
+        "slot_index": 1,
+        "label": "32 배수 세로 패딩"
+       },
+       {
+        "name": "BOOL",
+        "type": "BOOLEAN",
+        "links": [],
+        "slot_index": 2,
+        "label": "32 배수 세로 패딩"
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ComfyMathExpression",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "ceil(a/32)*32"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 12,
+      "type": "EmptyImage",
+      "title": "확대 없이 임시 캔버스",
+      "pos": [
+       1358,
+       84
+      ],
+      "size": [
+       350,
+       234
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "width",
+        "type": "INT",
+        "link": 6,
+        "widget": {
+         "name": "width"
+        }
+       },
+       {
+        "name": "height",
+        "type": "INT",
+        "link": 7,
+        "widget": {
+         "name": "height"
+        }
+       },
+       {
+        "name": "batch_size",
+        "type": "INT",
+        "link": 8,
+        "widget": {
+         "name": "batch_size"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         9
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "EmptyImage",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       960,
+       544,
+       1,
+       0
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 13,
+      "type": "ImageCompositeMasked",
+      "title": "원본 픽셀 그대로 좌상단 배치",
+      "pos": [
+       2900,
+       84
+      ],
+      "size": [
+       350,
+       184
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "destination",
+        "type": "IMAGE",
+        "link": 9
+       },
+       {
+        "name": "source",
+        "type": "IMAGE",
+        "link": 10
+       }
+      ],
+      "outputs": [
+       {
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         17
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ImageCompositeMasked",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       0,
+       0,
+       false
+      ],
+      "color": "#68503c",
+      "bgcolor": "#382a20"
+     },
+     {
+      "id": 14,
+      "type": "ComfyMathExpression",
+      "title": "내부 가로 · MP 0=원본",
+      "pos": [
+       1872,
+       84
+      ],
+      "size": [
+       350,
+       150
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "values.a",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 11
+       },
+       {
+        "name": "values.b",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 12
+       },
+       {
+        "name": "values.c",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 13
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [],
+        "slot_index": 0,
+        "label": "내부 가로 · MP 0=원본"
+       },
+       {
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         18,
+         86
+        ],
+        "slot_index": 1,
+        "label": "내부 가로 · MP 0=원본"
+       },
+       {
+        "name": "BOOL",
+        "type": "BOOLEAN",
+        "links": [],
+        "slot_index": 2,
+        "label": "내부 가로 · MP 0=원본"
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ComfyMathExpression",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "max(32,round(a*min(1,sqrt(c*1000000/(a*b)) if c>0 else 1)/32)*32)"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 15,
+      "type": "ComfyMathExpression",
+      "title": "내부 세로 · MP 0=원본",
+      "pos": [
+       1872,
+       294
+      ],
+      "size": [
+       350,
+       150
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "values.a",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 14
+       },
+       {
+        "name": "values.b",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 15
+       },
+       {
+        "name": "values.c",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 16
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [],
+        "slot_index": 0,
+        "label": "내부 세로 · MP 0=원본"
+       },
+       {
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         19,
+         87
+        ],
+        "slot_index": 1,
+        "label": "내부 세로 · MP 0=원본"
+       },
+       {
+        "name": "BOOL",
+        "type": "BOOLEAN",
+        "links": [],
+        "slot_index": 2,
+        "label": "내부 세로 · MP 0=원본"
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ComfyMathExpression",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "max(32,round(b*min(1,sqrt(c*1000000/(a*b)) if c>0 else 1)/32)*32)"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 16,
+      "type": "ImageScale",
+      "title": "MP 선택 · 0은 원본 패딩 규격",
+      "pos": [
+       2386,
+       84
+      ],
+      "size": [
+       350,
+       234
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "image",
+        "type": "IMAGE",
+        "link": 17
+       },
+       {
+        "name": "width",
+        "type": "INT",
+        "link": 18,
+        "widget": {
+         "name": "width"
+        }
+       },
+       {
+        "name": "height",
+        "type": "INT",
+        "link": 19,
+        "widget": {
+         "name": "height"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         36
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ImageScale",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "lanczos",
+       960,
+       544,
+       "disabled"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 24,
+      "type": "ComfyMathExpression",
+      "title": "추가 프레임 · 원본 FPS",
+      "pos": [
+       434,
+       266
+      ],
+      "size": [
+       350,
+       150
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "values.a",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 32
+       },
+       {
+        "name": "values.b",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 33
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [],
+        "slot_index": 0,
+        "label": "추가 프레임 · 원본 FPS"
+       },
+       {
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         40,
+         96
+        ],
+        "slot_index": 1,
+        "label": "추가 프레임 · 원본 FPS"
+       },
+       {
+        "name": "BOOL",
+        "type": "BOOLEAN",
+        "links": [],
+        "slot_index": 2,
+        "label": "추가 프레임 · 원본 FPS"
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ComfyMathExpression",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "max(1,round(a*b)) if a>0 and a<=15 else 1/0"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 25,
+      "type": "ComfyMathExpression",
+      "title": "마지막 문맥 시작",
+      "pos": [
+       1872,
+       504
+      ],
+      "size": [
+       350,
+       150
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "values.a",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 34
+       },
+       {
+        "name": "values.b",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 102
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [],
+        "slot_index": 0,
+        "label": "마지막 문맥 시작"
+       },
+       {
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         37
+        ],
+        "slot_index": 1,
+        "label": "마지막 문맥 시작"
+       },
+       {
+        "name": "BOOL",
+        "type": "BOOLEAN",
+        "links": [],
+        "slot_index": 2,
+        "label": "마지막 문맥 시작"
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ComfyMathExpression",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "a-b"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 26,
+      "type": "ImageFromBatch",
+      "title": "마지막 원본 문맥 · 재생성부의 앞부분",
+      "pos": [
+       3874,
+       84
+      ],
+      "size": [
+       350,
+       178
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "image",
+        "type": "IMAGE",
+        "link": 36
+       },
+       {
+        "name": "batch_index",
+        "type": "INT",
+        "link": 37,
+        "widget": {
+         "name": "batch_index"
+        }
+       },
+       {
+        "name": "length",
+        "type": "INT",
+        "link": 103,
+        "widget": {
+         "name": "length"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         41,
+         90
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ImageFromBatch",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       0,
+       1
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 27,
+      "type": "ComfyMathExpression",
+      "title": "연장 생성부 · 모델 17k+5",
+      "pos": [
+       1872,
+       714
+      ],
+      "size": [
+       350,
+       150
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "values.a",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 104
+       },
+       {
+        "name": "values.b",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 40
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [],
+        "slot_index": 0,
+        "label": "연장 생성부 · 모델 17k+5"
+       },
+       {
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         88
+        ],
+        "slot_index": 1,
+        "label": "연장 생성부 · 모델 17k+5"
+       },
+       {
+        "name": "BOOL",
+        "type": "BOOLEAN",
+        "links": [],
+        "slot_index": 2,
+        "label": "연장 생성부 · 모델 17k+5"
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ComfyMathExpression",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "5+17*ceil(max(0,a+b-5)/17)"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 28,
+      "type": "ImageFromBatch",
+      "title": "연장 시작 첫 프레임",
+      "pos": [
+       4284,
+       84
+      ],
+      "size": [
+       350,
+       134
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "image",
+        "type": "IMAGE",
+        "link": 41
+       }
+      ],
+      "outputs": [
+       {
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         89
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ImageFromBatch",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       0,
+       1
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 53,
+      "type": "ComfyMathExpression",
+      "pos": [
+       3414,
+       84
+      ],
+      "size": [
+       400,
+       140
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+       {
+        "label": "a",
+        "localized_name": "values.a",
+        "name": "values.a",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 100
+       },
+       {
+        "label": "b",
+        "localized_name": "values.b",
+        "name": "values.b",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 107
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [],
+        "slot_index": 0,
+        "label": "32 배수 가로 패딩"
+       },
+       {
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         102,
+         103,
+         104,
+         105
+        ],
+        "slot_index": 1,
+        "label": "32 배수 가로 패딩"
+       },
+       {
+        "name": "BOOL",
+        "type": "BOOLEAN",
+        "links": [],
+        "slot_index": 2,
+        "label": "32 배수 가로 패딩"
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ComfyMathExpression",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "max(1, 5 + 17 * floor((min(a, b) - 5) / 17)) if min(a, b) >= 5 else 1"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538",
+      "title": "참조 프레임 · 17k+5로 내림 (원본보다 길면 원본 길이)"
+     },
+     {
+      "id": 54,
+      "type": "PrimitiveInt",
+      "pos": [
+       3414,
+       294
+      ],
+      "size": [
+       380,
+       110
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "value",
+        "name": "value",
+        "type": "INT",
+        "link": 106,
+        "widget": {
+         "name": "value"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "INT",
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         107
+        ]
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "PrimitiveInt",
+       "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+       39,
+       "fixed"
+      ],
+      "title": "원본 끝 참조 프레임 수 (22 / 39 / 56)",
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     }
+    ],
+    "groups": [
+     {
+      "id": 1,
+      "title": "01  입력 정리 · 크기 / 길이",
+      "bounding": [
+       0,
+       0,
+       844,
+       496
+      ],
+      "color": "#489193",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 2,
+      "title": "02  입력 정리 · 크기 / 길이",
+      "bounding": [
+       924,
+       0,
+       844,
+       524
+      ],
+      "color": "#489193",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 3,
+      "title": "03  입력 정리 · 크기 / 길이",
+      "bounding": [
+       1848,
+       0,
+       434,
+       944
+      ],
+      "color": "#489193",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 4,
+      "title": "04  입력 정리 · 크기 / 길이",
+      "bounding": [
+       2362,
+       0,
+       434,
+       398
+      ],
+      "color": "#489193",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 5,
+      "title": "05  복원 · 디코드 / 합성",
+      "bounding": [
+       2876,
+       0,
+       434,
+       348
+      ],
+      "color": "#ae835d",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 6,
+      "title": "06  입력 정리 · 크기 / 길이",
+      "bounding": [
+       3390,
+       0,
+       1304,
+       434
+      ],
+      "color": "#489193",
+      "font_size": 24,
+      "flags": {}
+     }
+    ],
+    "links": [
+     {
+      "id": 1,
+      "origin_id": -10,
+      "origin_slot": 0,
+      "target_id": 2,
+      "target_slot": 0,
+      "type": "VIDEO"
+     },
+     {
+      "id": 2,
+      "origin_id": 2,
+      "origin_slot": 0,
+      "target_id": 8,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 3,
+      "origin_id": 8,
+      "origin_slot": 0,
+      "target_id": 9,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 4,
+      "origin_id": 8,
+      "origin_slot": 1,
+      "target_id": 10,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 6,
+      "origin_id": 9,
+      "origin_slot": 1,
+      "target_id": 12,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 7,
+      "origin_id": 10,
+      "origin_slot": 1,
+      "target_id": 12,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 8,
+      "origin_id": 8,
+      "origin_slot": 2,
+      "target_id": 12,
+      "target_slot": 2,
+      "type": "INT"
+     },
+     {
+      "id": 9,
+      "origin_id": 12,
+      "origin_slot": 0,
+      "target_id": 13,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 10,
+      "origin_id": 2,
+      "origin_slot": 0,
+      "target_id": 13,
+      "target_slot": 1,
+      "type": "IMAGE"
+     },
+     {
+      "id": 11,
+      "origin_id": 9,
+      "origin_slot": 1,
+      "target_id": 14,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 12,
+      "origin_id": 10,
+      "origin_slot": 1,
+      "target_id": 14,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 13,
+      "origin_id": -10,
+      "origin_slot": 1,
+      "target_id": 14,
+      "target_slot": 2,
+      "type": "FLOAT"
+     },
+     {
+      "id": 14,
+      "origin_id": 9,
+      "origin_slot": 1,
+      "target_id": 15,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 15,
+      "origin_id": 10,
+      "origin_slot": 1,
+      "target_id": 15,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 16,
+      "origin_id": -10,
+      "origin_slot": 1,
+      "target_id": 15,
+      "target_slot": 2,
+      "type": "FLOAT"
+     },
+     {
+      "id": 17,
+      "origin_id": 13,
+      "origin_slot": 0,
+      "target_id": 16,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 18,
+      "origin_id": 14,
+      "origin_slot": 1,
+      "target_id": 16,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 19,
+      "origin_id": 15,
+      "origin_slot": 1,
+      "target_id": 16,
+      "target_slot": 2,
+      "type": "INT"
+     },
+     {
+      "id": 32,
+      "origin_id": -10,
+      "origin_slot": 2,
+      "target_id": 24,
+      "target_slot": 0,
+      "type": "FLOAT"
+     },
+     {
+      "id": 33,
+      "origin_id": 2,
+      "origin_slot": 2,
+      "target_id": 24,
+      "target_slot": 1,
+      "type": "FLOAT"
+     },
+     {
+      "id": 34,
+      "origin_id": 8,
+      "origin_slot": 2,
+      "target_id": 25,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 36,
+      "origin_id": 16,
+      "origin_slot": 0,
+      "target_id": 26,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 37,
+      "origin_id": 25,
+      "origin_slot": 1,
+      "target_id": 26,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 40,
+      "origin_id": 24,
+      "origin_slot": 1,
+      "target_id": 27,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 41,
+      "origin_id": 26,
+      "origin_slot": 0,
+      "target_id": 28,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 86,
+      "origin_id": 14,
+      "origin_slot": 1,
+      "target_id": -20,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 87,
+      "origin_id": 15,
+      "origin_slot": 1,
+      "target_id": -20,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 88,
+      "origin_id": 27,
+      "origin_slot": 1,
+      "target_id": -20,
+      "target_slot": 2,
+      "type": "INT"
+     },
+     {
+      "id": 89,
+      "origin_id": 28,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 3,
+      "type": "IMAGE"
+     },
+     {
+      "id": 90,
+      "origin_id": 26,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 4,
+      "type": "IMAGE"
+     },
+     {
+      "id": 91,
+      "origin_id": 9,
+      "origin_slot": 1,
+      "target_id": -20,
+      "target_slot": 5,
+      "type": "INT"
+     },
+     {
+      "id": 92,
+      "origin_id": 10,
+      "origin_slot": 1,
+      "target_id": -20,
+      "target_slot": 6,
+      "type": "INT"
+     },
+     {
+      "id": 93,
+      "origin_id": 8,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 7,
+      "type": "INT"
+     },
+     {
+      "id": 94,
+      "origin_id": 8,
+      "origin_slot": 1,
+      "target_id": -20,
+      "target_slot": 8,
+      "type": "INT"
+     },
+     {
+      "id": 96,
+      "origin_id": 24,
+      "origin_slot": 1,
+      "target_id": -20,
+      "target_slot": 10,
+      "type": "INT"
+     },
+     {
+      "id": 97,
+      "origin_id": 2,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 11,
+      "type": "IMAGE"
+     },
+     {
+      "id": 98,
+      "origin_id": 8,
+      "origin_slot": 2,
+      "target_id": -20,
+      "target_slot": 12,
+      "type": "INT"
+     },
+     {
+      "id": 99,
+      "origin_id": 2,
+      "origin_slot": 2,
+      "target_id": -20,
+      "target_slot": 13,
+      "type": "FLOAT"
+     },
+     {
+      "id": 100,
+      "origin_id": 8,
+      "origin_slot": 2,
+      "target_id": 53,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 102,
+      "origin_id": 53,
+      "origin_slot": 1,
+      "target_id": 25,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 103,
+      "origin_id": 53,
+      "origin_slot": 1,
+      "target_id": 26,
+      "target_slot": 2,
+      "type": "INT"
+     },
+     {
+      "id": 104,
+      "origin_id": 53,
+      "origin_slot": 1,
+      "target_id": 27,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 105,
+      "origin_id": 53,
+      "origin_slot": 1,
+      "target_id": -20,
+      "target_slot": 9,
+      "type": "INT"
+     },
+     {
+      "id": 106,
+      "origin_id": -10,
+      "origin_slot": 3,
+      "target_id": 54,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 107,
+      "origin_id": 54,
+      "origin_slot": 0,
+      "target_id": 53,
+      "target_slot": 1,
+      "type": "INT"
+     }
+    ],
+    "extra": {
+     "codex_layout_inserted": true,
+     "codex_layout_role": "prepare",
+     "ds": {
+      "scale": 0.3791208791208791,
+      "offset": [
+       500,
+       25
+      ]
+     }
+    }
+   },
+   {
+    "id": "e8d4752e-784f-5703-9a71-de9847d69e67",
+    "version": 1,
+    "state": {
+     "lastNodeId": 32,
+     "lastLinkId": 112,
+     "lastGroupId": 2,
+     "lastRerouteId": 0
+    },
+    "revision": 0,
+    "config": {},
+    "name": "02 모델 · 용도별 LoRA",
+    "inputNode": {
+     "id": -10,
+     "bounding": [
+      -420,
+      120,
+      320,
+      224
+     ]
+    },
+    "outputNode": {
+     "id": -20,
+     "bounding": [
+      1160,
+      120,
+      320,
+      136
+     ]
+    },
+    "inputs": [
+     {
+      "id": "6eb5835c-cee2-596f-b5ce-37fac2c7e48d",
+      "name": "ctl_29_unet_name",
+      "type": "COMBO",
+      "label": "H3 생성 모델 · 생성 모델",
+      "localized_name": "H3 생성 모델 · 생성 모델",
+      "linkIds": [
+       106
+      ],
+      "pos": [
+       -120,
+       162
+      ]
+     },
+     {
+      "id": "725c45f0-931f-5924-8304-dd77e073e234",
+      "name": "ctl_29_weight_dtype",
+      "type": "COMBO",
+      "label": "H3 생성 모델 · 가중치 정밀도",
+      "localized_name": "H3 생성 모델 · 가중치 정밀도",
+      "linkIds": [
+       107
+      ],
+      "pos": [
+       -120,
+       184
+      ]
+     },
+     {
+      "id": "2cf83c77-2359-5acc-9362-b4f96d630894",
+      "name": "ctl_30_shift_video",
+      "type": "FLOAT",
+      "label": "H3 권장 Sigma · 12 / 3 · 영상 Sigma Shift",
+      "localized_name": "H3 권장 Sigma · 12 / 3 · 영상 Sigma Shift",
+      "linkIds": [
+       108
+      ],
+      "pos": [
+       -120,
+       206
+      ]
+     },
+     {
+      "id": "57e171dd-f8be-58a0-8ad9-c29202216d5e",
+      "name": "ctl_31_vae_name",
+      "type": "COMBO",
+      "label": "영상 VAE · 오디오 VAE 없음 · 영상 VAE",
+      "localized_name": "영상 VAE · 오디오 VAE 없음 · 영상 VAE",
+      "linkIds": [
+       109
+      ],
+      "pos": [
+       -120,
+       228
+      ]
+     },
+     {
+      "id": "12ad8c83-c884-516f-98ad-1e6a08029d18",
+      "name": "ctl_32_clip_name",
+      "type": "COMBO",
+      "label": "Qwen3-VL · H3 인코더 · 텍스트 인코더",
+      "localized_name": "Qwen3-VL · H3 인코더 · 텍스트 인코더",
+      "linkIds": [
+       110
+      ],
+      "pos": [
+       -120,
+       250
+      ]
+     },
+     {
+      "id": "7f3d0ee3-ccc9-5c17-bc9f-176c767b1e2e",
+      "name": "ctl_32_type",
+      "type": "COMBO",
+      "label": "Qwen3-VL · H3 인코더 · type",
+      "localized_name": "Qwen3-VL · H3 인코더 · type",
+      "linkIds": [
+       111
+      ],
+      "pos": [
+       -120,
+       272
+      ]
+     },
+     {
+      "id": "2fadafe3-dcfd-56f6-a00a-6131957a7aa5",
+      "name": "ctl_32_device",
+      "type": "COMBO",
+      "label": "Qwen3-VL · H3 인코더 · 장치",
+      "localized_name": "Qwen3-VL · H3 인코더 · 장치",
+      "linkIds": [
+       112
+      ],
+      "pos": [
+       -120,
+       294
+      ]
+     }
+    ],
+    "outputs": [
+     {
+      "id": "d858a456-f9d9-56f9-be0e-3353ed851e37",
+      "name": "out_00_CLIP",
+      "type": "CLIP",
+      "label": "CLIP",
+      "localized_name": "CLIP",
+      "linkIds": [
+       103
+      ],
+      "pos": [
+       1180,
+       162
+      ]
+     },
+     {
+      "id": "696283fb-c2ca-5253-a417-67b1af8ae038",
+      "name": "out_01_VAE",
+      "type": "VAE",
+      "label": "VAE",
+      "localized_name": "VAE",
+      "linkIds": [
+       104
+      ],
+      "pos": [
+       1180,
+       184
+      ]
+     },
+     {
+      "id": "ccd3c0c1-ba91-58d9-b70a-16c9b042d16a",
+      "name": "out_02_MODEL",
+      "type": "MODEL",
+      "label": "MODEL",
+      "localized_name": "MODEL",
+      "linkIds": [
+       105
+      ],
+      "pos": [
+       1180,
+       206
+      ]
+     }
+    ],
+    "widgets": [],
+    "nodes": [
+     {
+      "id": 29,
+      "type": "UNETLoader",
+      "title": "H3 생성 모델",
+      "pos": [
+       80,
+       160
+      ],
+      "size": [
+       350,
+       156
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "unet_name",
+        "type": "COMBO",
+        "link": 106,
+        "widget": {
+         "name": "unet_name"
+        }
+       },
+       {
+        "name": "weight_dtype",
+        "type": "COMBO",
+        "link": 107,
+        "widget": {
+         "name": "weight_dtype"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "MODEL",
+        "type": "MODEL",
+        "links": [
+         42
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "UNETLoader",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033",
+       "models": [
+        {
+         "name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+         "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/e5eb578a89295337b8ff433a035929ce0279e0b6/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+         "directory": "diffusion_models"
+        }
+       ]
+      },
+      "widgets_values": [
+       "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+       "default"
+      ],
+      "color": "#31506a",
+      "bgcolor": "#1d2f41"
+     },
+     {
+      "id": 30,
+      "type": "MiniMaxH3SigmaShift",
+      "title": "H3 권장 Sigma · 12 / 3",
+      "pos": [
+       610,
+       160
+      ],
+      "size": [
+       350,
+       156
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "model",
+        "type": "MODEL",
+        "link": 42
+       },
+       {
+        "name": "shift_video",
+        "type": "FLOAT",
+        "link": 108,
+        "widget": {
+         "name": "shift_video"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "MODEL",
+        "type": "MODEL",
+        "links": [
+         105
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "MiniMaxH3SigmaShift",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       12,
+       3
+      ],
+      "color": "#5d3c68",
+      "bgcolor": "#312039"
+     },
+     {
+      "id": 31,
+      "type": "VAELoader",
+      "title": "영상 VAE · 오디오 VAE 없음",
+      "pos": [
+       80,
+       384
+      ],
+      "size": [
+       350,
+       110
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "vae_name",
+        "type": "COMBO",
+        "link": 109,
+        "widget": {
+         "name": "vae_name"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "VAE",
+        "type": "VAE",
+        "links": [
+         104
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "VAELoader",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033",
+       "models": [
+        {
+         "name": "minimax_h3_video_vae_int8_convrot.safetensors",
+         "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/e5eb578a89295337b8ff433a035929ce0279e0b6/vae/minimax_h3_video_vae_int8_convrot.safetensors",
+         "directory": "vae"
+        }
+       ]
+      },
+      "widgets_values": [
+       "minimax_h3_video_vae_int8_convrot.safetensors"
+      ],
+      "color": "#31506a",
+      "bgcolor": "#1d2f41"
+     },
+     {
+      "id": 32,
+      "type": "CLIPLoader",
+      "title": "Qwen3-VL · H3 인코더",
+      "pos": [
+       80,
+       562
+      ],
+      "size": [
+       350,
+       206
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "clip_name",
+        "type": "COMBO",
+        "link": 110,
+        "widget": {
+         "name": "clip_name"
+        }
+       },
+       {
+        "name": "type",
+        "type": "COMBO",
+        "link": 111,
+        "widget": {
+         "name": "type"
+        }
+       },
+       {
+        "name": "device",
+        "type": "COMBO",
+        "link": 112,
+        "widget": {
+         "name": "device"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "CLIP",
+        "type": "CLIP",
+        "links": [
+         103
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "CLIPLoader",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033",
+       "models": [
+        {
+         "name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+         "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/e5eb578a89295337b8ff433a035929ce0279e0b6/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+         "directory": "text_encoders"
+        }
+       ]
+      },
+      "widgets_values": [
+       "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "minimax",
+       "default"
+      ],
+      "color": "#31506a",
+      "bgcolor": "#1d2f41"
+     }
+    ],
+    "groups": [
+     {
+      "id": 1,
+      "title": "01  모델 · 로딩 / LoRA",
+      "bounding": [
+       56,
+       80,
+       398,
+       756
+      ],
+      "color": "#59809d",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 2,
+      "title": "02  생성 · 샘플링 / 처리",
+      "bounding": [
+       586,
+       80,
+       398,
+       304
+      ],
+      "color": "#a572b4",
+      "font_size": 24,
+      "flags": {}
+     }
+    ],
+    "links": [
+     {
+      "id": 42,
+      "origin_id": 29,
+      "origin_slot": 0,
+      "target_id": 30,
+      "target_slot": 0,
+      "type": "MODEL"
+     },
+     {
+      "id": 103,
+      "origin_id": 32,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 0,
+      "type": "CLIP"
+     },
+     {
+      "id": 104,
+      "origin_id": 31,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 1,
+      "type": "VAE"
+     },
+     {
+      "id": 105,
+      "origin_id": 30,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 2,
+      "type": "MODEL"
+     },
+     {
+      "id": 106,
+      "origin_id": -10,
+      "origin_slot": 0,
+      "target_id": 29,
+      "target_slot": 0,
+      "type": "COMBO"
+     },
+     {
+      "id": 107,
+      "origin_id": -10,
+      "origin_slot": 1,
+      "target_id": 29,
+      "target_slot": 1,
+      "type": "COMBO"
+     },
+     {
+      "id": 108,
+      "origin_id": -10,
+      "origin_slot": 2,
+      "target_id": 30,
+      "target_slot": 1,
+      "type": "FLOAT"
+     },
+     {
+      "id": 109,
+      "origin_id": -10,
+      "origin_slot": 3,
+      "target_id": 31,
+      "target_slot": 0,
+      "type": "COMBO"
+     },
+     {
+      "id": 110,
+      "origin_id": -10,
+      "origin_slot": 4,
+      "target_id": 32,
+      "target_slot": 0,
+      "type": "COMBO"
+     },
+     {
+      "id": 111,
+      "origin_id": -10,
+      "origin_slot": 5,
+      "target_id": 32,
+      "target_slot": 1,
+      "type": "COMBO"
+     },
+     {
+      "id": 112,
+      "origin_id": -10,
+      "origin_slot": 6,
+      "target_id": 32,
+      "target_slot": 2,
+      "type": "COMBO"
+     }
+    ],
+    "extra": {
+     "codex_layout_inserted": true,
+     "codex_layout_role": "model",
+     "ds": {
+      "scale": 0.7,
+      "offset": [
+       500,
+       25
+      ]
+     }
+    }
+   },
+   {
+    "id": "9021f6f9-7623-5458-a00f-6ee89af82a37",
+    "version": 1,
+    "state": {
+     "lastNodeId": 36,
+     "lastLinkId": 108,
+     "lastGroupId": 3,
+     "lastRerouteId": 0
+    },
+    "revision": 0,
+    "config": {},
+    "name": "03 레퍼런스 · 모션 제어 · 생성",
+    "inputNode": {
+     "id": -10,
+     "bounding": [
+      -420,
+      120,
+      320,
+      400
+     ]
+    },
+    "outputNode": {
+     "id": -20,
+     "bounding": [
+      1690,
+      120,
+      320,
+      120
+     ]
+    },
+    "inputs": [
+     {
+      "id": "872e8e8a-52a3-54c4-8d1f-eea7f1e55dd8",
+      "name": "in_00_out_00_CLIP",
+      "type": "CLIP",
+      "label": "CLIP",
+      "localized_name": "CLIP",
+      "linkIds": [
+       43
+      ],
+      "pos": [
+       -120,
+       162
+      ]
+     },
+     {
+      "id": "7d367d41-8cb7-5a57-8572-3fd5422d113b",
+      "name": "in_01_out_01_VAE",
+      "type": "VAE",
+      "label": "VAE",
+      "localized_name": "VAE",
+      "linkIds": [
+       44,
+       51,
+       60
+      ],
+      "pos": [
+       -120,
+       184
+      ]
+     },
+     {
+      "id": "c593c729-998f-5e1b-bb0c-6e8e245fb4cf",
+      "name": "in_02_STRING",
+      "type": "STRING",
+      "label": "편집 지시 · 영어 권장",
+      "localized_name": "편집 지시 · 영어 권장",
+      "linkIds": [
+       45
+      ],
+      "pos": [
+       -120,
+       206
+      ]
+     },
+     {
+      "id": "1b22c313-f0cd-53f8-afb5-f4f941ea1102",
+      "name": "in_03_out_00_INT",
+      "type": "INT",
+      "label": "내부 가로 · MP 0=원본",
+      "localized_name": "내부 가로 · MP 0=원본",
+      "linkIds": [
+       46
+      ],
+      "pos": [
+       -120,
+       228
+      ]
+     },
+     {
+      "id": "a9c69a0f-ebcc-5919-b73a-3c698de8d696",
+      "name": "in_04_out_01_INT",
+      "type": "INT",
+      "label": "내부 세로 · MP 0=원본",
+      "localized_name": "내부 세로 · MP 0=원본",
+      "linkIds": [
+       47
+      ],
+      "pos": [
+       -120,
+       250
+      ]
+     },
+     {
+      "id": "a1389f8b-cc61-5cca-8ebb-f41d69f5a74c",
+      "name": "in_05_out_02_INT",
+      "type": "INT",
+      "label": "연장 생성부 · 모델 17k+5",
+      "localized_name": "연장 생성부 · 모델 17k+5",
+      "linkIds": [
+       48
+      ],
+      "pos": [
+       -120,
+       272
+      ]
+     },
+     {
+      "id": "73997a9c-ef02-59e4-9772-876e4258249c",
+      "name": "in_06_out_03_IMAGE",
+      "type": "IMAGE",
+      "label": "IMAGE",
+      "localized_name": "IMAGE",
+      "linkIds": [
+       49
+      ],
+      "pos": [
+       -120,
+       294
+      ]
+     },
+     {
+      "id": "c1f3c2ee-bdc1-57b3-98f5-08efc9cdd5b0",
+      "name": "in_07_out_04_IMAGE",
+      "type": "IMAGE",
+      "label": "IMAGE",
+      "localized_name": "IMAGE",
+      "linkIds": [
+       53
+      ],
+      "pos": [
+       -120,
+       316
+      ]
+     },
+     {
+      "id": "f4abe94d-1f84-5e15-9fce-1a120deaadaa",
+      "name": "in_08_out_02_MODEL",
+      "type": "MODEL",
+      "label": "MODEL",
+      "localized_name": "MODEL",
+      "linkIds": [
+       54
+      ],
+      "pos": [
+       -120,
+       338
+      ]
+     },
+     {
+      "id": "92ecd375-8342-5df7-8608-3638696859c5",
+      "name": "in_09_INT",
+      "type": "INT",
+      "label": "고정 시드 · 재현성",
+      "localized_name": "고정 시드 · 재현성",
+      "linkIds": [
+       58
+      ],
+      "pos": [
+       -120,
+       360
+      ]
+     },
+     {
+      "id": "38453a6e-1d2d-593f-b9cd-11f076b5333c",
+      "name": "ctl_35_steps",
+      "type": "INT",
+      "label": "生成 · CFG 1 / 고정 시드 · 스텝",
+      "localized_name": "生成 · CFG 1 / 고정 시드 · 스텝",
+      "linkIds": [
+       104
+      ],
+      "pos": [
+       -120,
+       382
+      ]
+     },
+     {
+      "id": "4bd7fa22-1a02-5391-98fa-e6cbeda3cd43",
+      "name": "ctl_35_cfg",
+      "type": "FLOAT",
+      "label": "生成 · CFG 1 / 고정 시드 · CFG",
+      "localized_name": "生成 · CFG 1 / 고정 시드 · CFG",
+      "linkIds": [
+       105
+      ],
+      "pos": [
+       -120,
+       404
+      ]
+     },
+     {
+      "id": "beebb01c-2d95-54d6-8815-bbf3df4f8db6",
+      "name": "ctl_35_sampler_name",
+      "type": "COMBO",
+      "label": "生成 · CFG 1 / 고정 시드 · 샘플러",
+      "localized_name": "生成 · CFG 1 / 고정 시드 · 샘플러",
+      "linkIds": [
+       106
+      ],
+      "pos": [
+       -120,
+       426
+      ]
+     },
+     {
+      "id": "fff5d9de-03cf-5ad8-9851-a3165496b83e",
+      "name": "ctl_35_scheduler",
+      "type": "COMBO",
+      "label": "生成 · CFG 1 / 고정 시드 · 스케줄러",
+      "localized_name": "生成 · CFG 1 / 고정 시드 · 스케줄러",
+      "linkIds": [
+       107
+      ],
+      "pos": [
+       -120,
+       448
+      ]
+     },
+     {
+      "id": "9e2cc39b-9bba-5eaf-8a24-c209421af7e2",
+      "name": "ctl_35_denoise",
+      "type": "FLOAT",
+      "label": "生成 · CFG 1 / 고정 시드 · 디노이즈",
+      "localized_name": "生成 · CFG 1 / 고정 시드 · 디노이즈",
+      "linkIds": [
+       108
+      ],
+      "pos": [
+       -120,
+       470
+      ]
+     }
+    ],
+    "outputs": [
+     {
+      "id": "176edf4c-63c1-5e7f-b0cf-aa95ba88d9ae",
+      "name": "out_00_IMAGE",
+      "type": "IMAGE",
+      "label": "IMAGE",
+      "localized_name": "IMAGE",
+      "linkIds": [
+       103
+      ],
+      "pos": [
+       1710,
+       162
+      ]
+     }
+    ],
+    "widgets": [],
+    "nodes": [
+     {
+      "id": 33,
+      "type": "MiniMaxH3ImageToVideo",
+      "title": "원본 규격 · 레퍼런스 조건",
+      "pos": [
+       80,
+       160
+      ],
+      "size": [
+       350,
+       322
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "clip",
+        "type": "CLIP",
+        "link": 43
+       },
+       {
+        "name": "vae",
+        "type": "VAE",
+        "link": 44
+       },
+       {
+        "name": "first_frame",
+        "type": "IMAGE",
+        "link": 49,
+        "shape": 7
+       },
+       {
+        "name": "prompt",
+        "type": "STRING",
+        "link": 45,
+        "widget": {
+         "name": "prompt"
+        }
+       },
+       {
+        "name": "width",
+        "type": "INT",
+        "link": 46,
+        "widget": {
+         "name": "width"
+        }
+       },
+       {
+        "name": "height",
+        "type": "INT",
+        "link": 47,
+        "widget": {
+         "name": "height"
+        }
+       },
+       {
+        "name": "length",
+        "type": "INT",
+        "link": 48,
+        "widget": {
+         "name": "length"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "positive",
+        "type": "CONDITIONING",
+        "links": [
+         50
+        ],
+        "slot_index": 0
+       },
+       {
+        "name": "LATENT",
+        "type": "LATENT",
+        "links": [
+         52,
+         57
+        ],
+        "slot_index": 1
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "MiniMaxH3ImageToVideo",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "",
+       960,
+       544,
+       124
+      ],
+      "color": "#4e4369",
+      "bgcolor": "#2a2540"
+     },
+     {
+      "id": 34,
+      "type": "MiniMaxH3AddGuide",
+      "title": "정렬된 원본 가이드 · 프레임 0",
+      "pos": [
+       80,
+       550
+      ],
+      "size": [
+       350,
+       172
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "positive",
+        "type": "CONDITIONING",
+        "link": 50
+       },
+       {
+        "name": "vae",
+        "type": "VAE",
+        "link": 51
+       },
+       {
+        "name": "latent",
+        "type": "LATENT",
+        "link": 52
+       },
+       {
+        "name": "image",
+        "type": "IMAGE",
+        "link": 53
+       }
+      ],
+      "outputs": [
+       {
+        "name": "positive",
+        "type": "CONDITIONING",
+        "links": [
+         55,
+         56
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "MiniMaxH3AddGuide",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       0
+      ],
+      "color": "#4e4369",
+      "bgcolor": "#2a2540"
+     },
+     {
+      "id": 35,
+      "type": "KSampler",
+      "title": "生成 · CFG 1 / 고정 시드",
+      "pos": [
+       610,
+       160
+      ],
+      "size": [
+       350,
+       472
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "model",
+        "type": "MODEL",
+        "link": 54
+       },
+       {
+        "name": "positive",
+        "type": "CONDITIONING",
+        "link": 55
+       },
+       {
+        "name": "negative",
+        "type": "CONDITIONING",
+        "link": 56
+       },
+       {
+        "name": "latent_image",
+        "type": "LATENT",
+        "link": 57
+       },
+       {
+        "name": "seed",
+        "type": "INT",
+        "link": 58,
+        "widget": {
+         "name": "seed"
+        }
+       },
+       {
+        "name": "steps",
+        "type": "INT",
+        "link": 104,
+        "widget": {
+         "name": "steps"
+        }
+       },
+       {
+        "name": "cfg",
+        "type": "FLOAT",
+        "link": 105,
+        "widget": {
+         "name": "cfg"
+        }
+       },
+       {
+        "name": "sampler_name",
+        "type": "COMBO",
+        "link": 106,
+        "widget": {
+         "name": "sampler_name"
+        }
+       },
+       {
+        "name": "scheduler",
+        "type": "COMBO",
+        "link": 107,
+        "widget": {
+         "name": "scheduler"
+        }
+       },
+       {
+        "name": "denoise",
+        "type": "FLOAT",
+        "link": 108,
+        "widget": {
+         "name": "denoise"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "LATENT",
+        "type": "LATENT",
+        "links": [
+         59
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "KSampler",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       904234,
+       "randomize",
+       28,
+       1,
+       "euler",
+       "simple",
+       1
+      ],
+      "color": "#5d3c68",
+      "bgcolor": "#312039"
+     },
+     {
+      "id": 36,
+      "type": "VAEDecode",
+      "title": "영상만 디코드 · AV의 영상 성분",
+      "pos": [
+       1140,
+       160
+      ],
+      "size": [
+       350,
+       110
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "samples",
+        "type": "LATENT",
+        "link": 59
+       },
+       {
+        "name": "vae",
+        "type": "VAE",
+        "link": 60
+       }
+      ],
+      "outputs": [
+       {
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         103
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "VAEDecode",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [],
+      "color": "#68503c",
+      "bgcolor": "#382a20"
+     }
+    ],
+    "groups": [
+     {
+      "id": 1,
+      "title": "01  조건 · 프롬프트 / 가이드",
+      "bounding": [
+       56,
+       80,
+       398,
+       710
+      ],
+      "color": "#8673ac",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 2,
+      "title": "02  생성 · 샘플링 / 처리",
+      "bounding": [
+       586,
+       80,
+       398,
+       620
+      ],
+      "color": "#a572b4",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 3,
+      "title": "03  복원 · 디코드 / 합성",
+      "bounding": [
+       1116,
+       80,
+       398,
+       258
+      ],
+      "color": "#ae835d",
+      "font_size": 24,
+      "flags": {}
+     }
+    ],
+    "links": [
+     {
+      "id": 43,
+      "origin_id": -10,
+      "origin_slot": 0,
+      "target_id": 33,
+      "target_slot": 0,
+      "type": "CLIP"
+     },
+     {
+      "id": 44,
+      "origin_id": -10,
+      "origin_slot": 1,
+      "target_id": 33,
+      "target_slot": 1,
+      "type": "VAE"
+     },
+     {
+      "id": 45,
+      "origin_id": -10,
+      "origin_slot": 2,
+      "target_id": 33,
+      "target_slot": 3,
+      "type": "STRING"
+     },
+     {
+      "id": 46,
+      "origin_id": -10,
+      "origin_slot": 3,
+      "target_id": 33,
+      "target_slot": 4,
+      "type": "INT"
+     },
+     {
+      "id": 47,
+      "origin_id": -10,
+      "origin_slot": 4,
+      "target_id": 33,
+      "target_slot": 5,
+      "type": "INT"
+     },
+     {
+      "id": 48,
+      "origin_id": -10,
+      "origin_slot": 5,
+      "target_id": 33,
+      "target_slot": 6,
+      "type": "INT"
+     },
+     {
+      "id": 49,
+      "origin_id": -10,
+      "origin_slot": 6,
+      "target_id": 33,
+      "target_slot": 2,
+      "type": "IMAGE"
+     },
+     {
+      "id": 50,
+      "origin_id": 33,
+      "origin_slot": 0,
+      "target_id": 34,
+      "target_slot": 0,
+      "type": "CONDITIONING"
+     },
+     {
+      "id": 51,
+      "origin_id": -10,
+      "origin_slot": 1,
+      "target_id": 34,
+      "target_slot": 1,
+      "type": "VAE"
+     },
+     {
+      "id": 52,
+      "origin_id": 33,
+      "origin_slot": 1,
+      "target_id": 34,
+      "target_slot": 2,
+      "type": "LATENT"
+     },
+     {
+      "id": 53,
+      "origin_id": -10,
+      "origin_slot": 7,
+      "target_id": 34,
+      "target_slot": 3,
+      "type": "IMAGE"
+     },
+     {
+      "id": 54,
+      "origin_id": -10,
+      "origin_slot": 8,
+      "target_id": 35,
+      "target_slot": 0,
+      "type": "MODEL"
+     },
+     {
+      "id": 55,
+      "origin_id": 34,
+      "origin_slot": 0,
+      "target_id": 35,
+      "target_slot": 1,
+      "type": "CONDITIONING"
+     },
+     {
+      "id": 56,
+      "origin_id": 34,
+      "origin_slot": 0,
+      "target_id": 35,
+      "target_slot": 2,
+      "type": "CONDITIONING"
+     },
+     {
+      "id": 57,
+      "origin_id": 33,
+      "origin_slot": 1,
+      "target_id": 35,
+      "target_slot": 3,
+      "type": "LATENT"
+     },
+     {
+      "id": 58,
+      "origin_id": -10,
+      "origin_slot": 9,
+      "target_id": 35,
+      "target_slot": 4,
+      "type": "INT"
+     },
+     {
+      "id": 59,
+      "origin_id": 35,
+      "origin_slot": 0,
+      "target_id": 36,
+      "target_slot": 0,
+      "type": "LATENT"
+     },
+     {
+      "id": 60,
+      "origin_id": -10,
+      "origin_slot": 1,
+      "target_id": 36,
+      "target_slot": 1,
+      "type": "VAE"
+     },
+     {
+      "id": 103,
+      "origin_id": 36,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 104,
+      "origin_id": -10,
+      "origin_slot": 10,
+      "target_id": 35,
+      "target_slot": 5,
+      "type": "INT"
+     },
+     {
+      "id": 105,
+      "origin_id": -10,
+      "origin_slot": 11,
+      "target_id": 35,
+      "target_slot": 6,
+      "type": "FLOAT"
+     },
+     {
+      "id": 106,
+      "origin_id": -10,
+      "origin_slot": 12,
+      "target_id": 35,
+      "target_slot": 7,
+      "type": "COMBO"
+     },
+     {
+      "id": 107,
+      "origin_id": -10,
+      "origin_slot": 13,
+      "target_id": 35,
+      "target_slot": 8,
+      "type": "COMBO"
+     },
+     {
+      "id": 108,
+      "origin_id": -10,
+      "origin_slot": 14,
+      "target_id": 35,
+      "target_slot": 9,
+      "type": "FLOAT"
+     }
+    ],
+    "extra": {
+     "codex_layout_inserted": true,
+     "codex_layout_role": "sample",
+     "ds": {
+      "scale": 0.6731707317073171,
+      "offset": [
+       500,
+       25
+      ]
+     }
+    }
+   },
+   {
+    "id": "d8673e3e-2aee-5315-ac12-b551d8543807",
+    "version": 1,
+    "state": {
+     "lastNodeId": 45,
+     "lastLinkId": 114,
+     "lastGroupId": 6,
+     "lastRerouteId": 0
+    },
+    "revision": 0,
+    "config": {},
+    "name": "04 원본 복원 · 보호 합성 · 무음 출력",
+    "inputNode": {
+     "id": -10,
+     "bounding": [
+      -420,
+      120,
+      320,
+      290
+     ]
+    },
+    "outputNode": {
+     "id": -20,
+     "bounding": [
+      3280,
+      120,
+      320,
+      120
+     ]
+    },
+    "inputs": [
+     {
+      "id": "830459ee-f1b2-52b1-8c10-191e8337580f",
+      "name": "in_00_out_00_IMAGE",
+      "type": "IMAGE",
+      "label": "IMAGE",
+      "localized_name": "IMAGE",
+      "linkIds": [
+       61
+      ],
+      "pos": [
+       -120,
+       162
+      ]
+     },
+     {
+      "id": "f507a9f4-1050-54ab-918b-46e64216f5e9",
+      "name": "in_01_out_05_INT",
+      "type": "INT",
+      "label": "32 배수 가로 패딩",
+      "localized_name": "32 배수 가로 패딩",
+      "linkIds": [
+       62
+      ],
+      "pos": [
+       -120,
+       184
+      ]
+     },
+     {
+      "id": "f0fa5f15-a2f5-5a69-ba30-84493760ade9",
+      "name": "in_02_out_06_INT",
+      "type": "INT",
+      "label": "32 배수 세로 패딩",
+      "localized_name": "32 배수 세로 패딩",
+      "linkIds": [
+       63
+      ],
+      "pos": [
+       -120,
+       206
+      ]
+     },
+     {
+      "id": "f12b9ea5-1f0a-5c21-b4a5-659e0f318b0d",
+      "name": "in_03_out_07_width",
+      "type": "INT",
+      "label": "width",
+      "localized_name": "width",
+      "linkIds": [
+       65,
+       78
+      ],
+      "pos": [
+       -120,
+       228
+      ]
+     },
+     {
+      "id": "a41a55d7-4bd0-552a-b248-e908f396fa22",
+      "name": "in_04_out_08_height",
+      "type": "INT",
+      "label": "height",
+      "localized_name": "height",
+      "linkIds": [
+       66,
+       80
+      ],
+      "pos": [
+       -120,
+       250
+      ]
+     },
+     {
+      "id": "0db24d04-3ed9-5b0f-ac62-371ef24d45bc",
+      "name": "in_05_out_09_INT",
+      "type": "INT",
+      "label": "자동 마지막 문맥 · 22 / 5 / 1",
+      "localized_name": "자동 마지막 문맥 · 22 / 5 / 1",
+      "linkIds": [
+       68
+      ],
+      "pos": [
+       -120,
+       272
+      ]
+     },
+     {
+      "id": "5288b1e1-9e95-51f9-8b23-b0296a00108d",
+      "name": "in_06_out_10_INT",
+      "type": "INT",
+      "label": "추가 프레임 · 원본 FPS",
+      "localized_name": "추가 프레임 · 원본 FPS",
+      "linkIds": [
+       69,
+       74
+      ],
+      "pos": [
+       -120,
+       294
+      ]
+     },
+     {
+      "id": "becc68b2-1b9f-525a-8dfa-d765cd0170c4",
+      "name": "in_07_out_11_images",
+      "type": "IMAGE",
+      "label": "images",
+      "localized_name": "images",
+      "linkIds": [
+       70
+      ],
+      "pos": [
+       -120,
+       316
+      ]
+     },
+     {
+      "id": "502ea873-1d9e-577b-b3ef-f3d2a96d560c",
+      "name": "in_08_out_12_batch_size",
+      "type": "INT",
+      "label": "batch_size",
+      "localized_name": "batch_size",
+      "linkIds": [
+       73
+      ],
+      "pos": [
+       -120,
+       338
+      ]
+     },
+     {
+      "id": "f2c40602-d968-588b-8928-0e919602ec58",
+      "name": "in_09_out_13_fps",
+      "type": "FLOAT",
+      "label": "fps",
+      "localized_name": "fps",
+      "linkIds": [
+       84
+      ],
+      "pos": [
+       -120,
+       360
+      ]
+     }
+    ],
+    "outputs": [
+     {
+      "id": "410f88ee-1b58-562b-bf0c-4b29249775ad",
+      "name": "out_00_VIDEO",
+      "type": "VIDEO",
+      "label": "VIDEO",
+      "localized_name": "VIDEO",
+      "linkIds": [
+       114
+      ],
+      "pos": [
+       3300,
+       162
+      ]
+     }
+    ],
+    "widgets": [],
+    "nodes": [
+     {
+      "id": 37,
+      "type": "ImageScale",
+      "title": "출력용 패딩 규격 복원",
+      "pos": [
+       80,
+       160
+      ],
+      "size": [
+       350,
+       234
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "image",
+        "type": "IMAGE",
+        "link": 61
+       },
+       {
+        "name": "width",
+        "type": "INT",
+        "link": 62,
+        "widget": {
+         "name": "width"
+        }
+       },
+       {
+        "name": "height",
+        "type": "INT",
+        "link": 63,
+        "widget": {
+         "name": "height"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         64
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ImageScale",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "lanczos",
+       960,
+       544,
+       "disabled"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 38,
+      "type": "ImageCrop",
+      "title": "원본 W×H 복원 · 임시 패딩 제거",
+      "pos": [
+       610,
+       160
+      ],
+      "size": [
+       350,
+       234
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "image",
+        "type": "IMAGE",
+        "link": 64
+       },
+       {
+        "name": "width",
+        "type": "INT",
+        "link": 65,
+        "widget": {
+         "name": "width"
+        }
+       },
+       {
+        "name": "height",
+        "type": "INT",
+        "link": 66,
+        "widget": {
+         "name": "height"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         67
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ImageCrop",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       960,
+       544,
+       0,
+       0
+      ],
+      "color": "#68503c",
+      "bgcolor": "#382a20"
+     },
+     {
+      "id": 39,
+      "type": "ImageFromBatch",
+      "title": "생성한 연장 부분만 선택",
+      "pos": [
+       1140,
+       160
+      ],
+      "size": [
+       350,
+       178
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "image",
+        "type": "IMAGE",
+        "link": 67
+       },
+       {
+        "name": "batch_index",
+        "type": "INT",
+        "link": 68,
+        "widget": {
+         "name": "batch_index"
+        }
+       },
+       {
+        "name": "length",
+        "type": "INT",
+        "link": 69,
+        "widget": {
+         "name": "length"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         71
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ImageFromBatch",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       0,
+       1
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 40,
+      "type": "ImageBatch",
+      "title": "원본 전체 + 새 연장부",
+      "pos": [
+       1140,
+       406
+      ],
+      "size": [
+       350,
+       110
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "image1",
+        "type": "IMAGE",
+        "link": 70
+       },
+       {
+        "name": "image2",
+        "type": "IMAGE",
+        "link": 71
+       }
+      ],
+      "outputs": [
+       {
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         72,
+         81
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ImageBatch",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 41,
+      "type": "GetImageSize",
+      "title": "최종 규격 검증",
+      "pos": [
+       1670,
+       160
+      ],
+      "size": [
+       350,
+       122
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "image",
+        "type": "IMAGE",
+        "link": 72
+       }
+      ],
+      "outputs": [
+       {
+        "name": "width",
+        "type": "INT",
+        "links": [
+         77
+        ],
+        "slot_index": 0
+       },
+       {
+        "name": "height",
+        "type": "INT",
+        "links": [
+         79
+        ],
+        "slot_index": 1
+       },
+       {
+        "name": "batch_size",
+        "type": "INT",
+        "links": [
+         75
+        ],
+        "slot_index": 2
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "GetImageSize",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 42,
+      "type": "ComfyMathExpression",
+      "title": "연장 출력 프레임 수",
+      "pos": [
+       80,
+       462
+      ],
+      "size": [
+       350,
+       150
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "values.a",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 73
+       },
+       {
+        "name": "values.b",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 74
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [],
+        "slot_index": 0,
+        "label": "연장 출력 프레임 수"
+       },
+       {
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         76
+        ],
+        "slot_index": 1,
+        "label": "연장 출력 프레임 수"
+       },
+       {
+        "name": "BOOL",
+        "type": "BOOLEAN",
+        "links": [],
+        "slot_index": 2,
+        "label": "연장 출력 프레임 수"
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ComfyMathExpression",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "a+b"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 43,
+      "type": "ComfyMathExpression",
+      "title": "최종 W / H / N 검사 · 다르면 중단",
+      "pos": [
+       1670,
+       350
+      ],
+      "size": [
+       350,
+       216
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "values.a",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 75
+       },
+       {
+        "name": "values.b",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 76
+       },
+       {
+        "name": "values.c",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 77
+       },
+       {
+        "name": "values.d",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 78
+       },
+       {
+        "name": "values.e",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 79
+       },
+       {
+        "name": "values.f",
+        "type": "FLOAT,INT,BOOLEAN",
+        "link": 80
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [],
+        "slot_index": 0,
+        "label": "최종 W / H / N 검사 · 다르면 중단"
+       },
+       {
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         82
+        ],
+        "slot_index": 1,
+        "label": "최종 W / H / N 검사 · 다르면 중단"
+       },
+       {
+        "name": "BOOL",
+        "type": "BOOLEAN",
+        "links": [],
+        "slot_index": 2,
+        "label": "최종 W / H / N 검사 · 다르면 중단"
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ComfyMathExpression",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "a if a==b and c==d and e==f else 1/0"
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 44,
+      "type": "ImageFromBatch",
+      "title": "정확한 프레임 수로 자르기",
+      "pos": [
+       2200,
+       160
+      ],
+      "size": [
+       350,
+       156
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "image",
+        "type": "IMAGE",
+        "link": 81
+       },
+       {
+        "name": "length",
+        "type": "INT",
+        "link": 82,
+        "widget": {
+         "name": "length"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "links": [
+         83
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "ImageFromBatch",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       0,
+       1
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538"
+     },
+     {
+      "id": 45,
+      "type": "CreateVideo",
+      "title": "원본 FPS · 무음 · SDR",
+      "pos": [
+       2730,
+       160
+      ],
+      "size": [
+       350,
+       212
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "images",
+        "type": "IMAGE",
+        "link": 83
+       },
+       {
+        "name": "fps",
+        "type": "FLOAT",
+        "link": 84,
+        "widget": {
+         "name": "fps"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "VIDEO",
+        "type": "VIDEO",
+        "links": [
+         114
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "CreateVideo",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       24,
+       "auto",
+       "sRGB",
+       "none"
+      ],
+      "color": "#315949",
+      "bgcolor": "#1c332a"
+     }
+    ],
+    "groups": [
+     {
+      "id": 1,
+      "title": "01  입력 정리 · 크기 / 길이",
+      "bounding": [
+       56,
+       80,
+       398,
+       600
+      ],
+      "color": "#489193",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 2,
+      "title": "02  복원 · 디코드 / 합성",
+      "bounding": [
+       586,
+       80,
+       398,
+       382
+      ],
+      "color": "#ae835d",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 3,
+      "title": "03  입력 정리 · 크기 / 길이",
+      "bounding": [
+       1116,
+       80,
+       398,
+       504
+      ],
+      "color": "#489193",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 4,
+      "title": "04  입력 정리 · 크기 / 길이",
+      "bounding": [
+       1646,
+       80,
+       398,
+       554
+      ],
+      "color": "#489193",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 5,
+      "title": "05  입력 정리 · 크기 / 길이",
+      "bounding": [
+       2176,
+       80,
+       398,
+       304
+      ],
+      "color": "#489193",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 6,
+      "title": "06  출력 · 확인 / 저장",
+      "bounding": [
+       2706,
+       80,
+       398,
+       360
+      ],
+      "color": "#5b947b",
+      "font_size": 24,
+      "flags": {}
+     }
+    ],
+    "links": [
+     {
+      "id": 61,
+      "origin_id": -10,
+      "origin_slot": 0,
+      "target_id": 37,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 62,
+      "origin_id": -10,
+      "origin_slot": 1,
+      "target_id": 37,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 63,
+      "origin_id": -10,
+      "origin_slot": 2,
+      "target_id": 37,
+      "target_slot": 2,
+      "type": "INT"
+     },
+     {
+      "id": 64,
+      "origin_id": 37,
+      "origin_slot": 0,
+      "target_id": 38,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 65,
+      "origin_id": -10,
+      "origin_slot": 3,
+      "target_id": 38,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 66,
+      "origin_id": -10,
+      "origin_slot": 4,
+      "target_id": 38,
+      "target_slot": 2,
+      "type": "INT"
+     },
+     {
+      "id": 67,
+      "origin_id": 38,
+      "origin_slot": 0,
+      "target_id": 39,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 68,
+      "origin_id": -10,
+      "origin_slot": 5,
+      "target_id": 39,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 69,
+      "origin_id": -10,
+      "origin_slot": 6,
+      "target_id": 39,
+      "target_slot": 2,
+      "type": "INT"
+     },
+     {
+      "id": 70,
+      "origin_id": -10,
+      "origin_slot": 7,
+      "target_id": 40,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 71,
+      "origin_id": 39,
+      "origin_slot": 0,
+      "target_id": 40,
+      "target_slot": 1,
+      "type": "IMAGE"
+     },
+     {
+      "id": 72,
+      "origin_id": 40,
+      "origin_slot": 0,
+      "target_id": 41,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 73,
+      "origin_id": -10,
+      "origin_slot": 8,
+      "target_id": 42,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 74,
+      "origin_id": -10,
+      "origin_slot": 6,
+      "target_id": 42,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 75,
+      "origin_id": 41,
+      "origin_slot": 2,
+      "target_id": 43,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 76,
+      "origin_id": 42,
+      "origin_slot": 1,
+      "target_id": 43,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 77,
+      "origin_id": 41,
+      "origin_slot": 0,
+      "target_id": 43,
+      "target_slot": 2,
+      "type": "INT"
+     },
+     {
+      "id": 78,
+      "origin_id": -10,
+      "origin_slot": 3,
+      "target_id": 43,
+      "target_slot": 3,
+      "type": "INT"
+     },
+     {
+      "id": 79,
+      "origin_id": 41,
+      "origin_slot": 1,
+      "target_id": 43,
+      "target_slot": 4,
+      "type": "INT"
+     },
+     {
+      "id": 80,
+      "origin_id": -10,
+      "origin_slot": 4,
+      "target_id": 43,
+      "target_slot": 5,
+      "type": "INT"
+     },
+     {
+      "id": 81,
+      "origin_id": 40,
+      "origin_slot": 0,
+      "target_id": 44,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 82,
+      "origin_id": 43,
+      "origin_slot": 1,
+      "target_id": 44,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 83,
+      "origin_id": 44,
+      "origin_slot": 0,
+      "target_id": 45,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 84,
+      "origin_id": -10,
+      "origin_slot": 9,
+      "target_id": 45,
+      "target_slot": 1,
+      "type": "FLOAT"
+     },
+     {
+      "id": 114,
+      "origin_id": 45,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 0,
+      "type": "VIDEO"
+     }
+    ],
+    "extra": {
+     "codex_layout_inserted": true,
+     "codex_layout_role": "decode",
+     "ds": {
+      "scale": 0.3791208791208791,
+      "offset": [
+       500,
+       25
+      ]
+     }
+    }
+   },
+   {
+    "id": "a5736b3c-f7db-5f9b-b663-6b4f67598b28",
+    "version": 1,
+    "state": {
+     "lastNodeId": 51,
+     "lastLinkId": 130,
+     "lastGroupId": 5,
+     "lastRerouteId": 0
+    },
+    "revision": 0,
+    "config": {},
+    "name": "연장 · 원본전체보존",
+    "inputNode": {
+     "id": -10,
+     "bounding": [
+      -420,
+      120,
+      320,
+      180
+     ]
+    },
+    "outputNode": {
+     "id": -20,
+     "bounding": [
+      3600,
+      120,
+      320,
+      120
+     ]
+    },
+    "inputs": [
+     {
+      "id": "e28327a1-26e8-5fa6-ade4-8312e3aab229",
+      "name": "in_00_VIDEO",
+      "type": "VIDEO",
+      "label": "원본 영상 · 연장 전 구간 그대로 사용",
+      "localized_name": "원본 영상 · 연장 전 구간 그대로 사용",
+      "linkIds": [
+       100
+      ],
+      "pos": [
+       -120,
+       162
+      ]
+     },
+     {
+      "id": "1e566285-0f6a-54ee-bdf5-620c3d1475b9",
+      "name": "ctl_3_value",
+      "type": "STRING",
+      "label": "편집 지시 · 영어 권장",
+      "localized_name": "편집 지시 · 영어 권장",
+      "linkIds": [
+       126
+      ],
+      "pos": [
+       -120,
+       184
+      ]
+     },
+     {
+      "id": "7ba8edcd-df0e-5ddf-9fa6-8cb4721d7942",
+      "name": "ctl_4_value",
+      "type": "FLOAT",
+      "label": "내부 추론 MP (공식 1.03 · 0=원본)",
+      "localized_name": "내부 추론 MP · 0=원본 / 선택 상한",
+      "linkIds": [
+       127
+      ],
+      "pos": [
+       -120,
+       206
+      ]
+     },
+     {
+      "id": "eabe4a04-70f1-54a0-ab50-229fb69cd3a7",
+      "name": "ctl_5_value",
+      "type": "INT",
+      "label": "고정 시드 · 재현성",
+      "localized_name": "고정 시드 · 재현성",
+      "linkIds": [
+       128
+      ],
+      "pos": [
+       -120,
+       228
+      ]
+     },
+     {
+      "id": "ffaf55b7-5d9d-5ea0-8528-30d7e20f4b7b",
+      "name": "ctl_7_value",
+      "type": "FLOAT",
+      "label": "추가할 길이 · 초 / 최대 15초",
+      "localized_name": "추가할 길이 · 초 / 최대 15초",
+      "linkIds": [
+       129
+      ],
+      "pos": [
+       -120,
+       250
+      ]
+     },
+     {
+      "id": "15c82e32-98da-4b94-9968-9a7b52aaccc5",
+      "name": "p_frames",
+      "type": "INT",
+      "linkIds": [
+       130
+      ],
+      "localized_name": "p_frames",
+      "label": "인물·움직임 참조 프레임 (기본 39 ≈ 1.6초 · 22/39/56)",
+      "pos": [
+       0,
+       0
+      ]
+     }
+    ],
+    "outputs": [
+     {
+      "id": "20a672b2-9a20-5db0-a8fd-1567d4a11340",
+      "name": "out_00_out_00_VIDEO",
+      "type": "VIDEO",
+      "label": "VIDEO",
+      "localized_name": "VIDEO",
+      "linkIds": [
+       125
+      ],
+      "pos": [
+       3620,
+       162
+      ]
+     }
+    ],
+    "widgets": [],
+    "nodes": [
+     {
+      "id": 3,
+      "type": "PrimitiveStringMultiline",
+      "title": "편집 지시 · 영어 권장",
+      "pos": [
+       920,
+       160
+      ],
+      "size": [
+       420,
+       246
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "value",
+        "type": "STRING",
+        "link": 126,
+        "widget": {
+         "name": "value"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "STRING",
+        "type": "STRING",
+        "links": [
+         106
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "PrimitiveStringMultiline",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       "A single continuous shot that seamlessly continues the source clip with no cut and no scene change: the same people keep moving naturally in the same place, framed by the same static camera. Match the original lighting, exposure and white balance."
+      ],
+      "color": "#68532c",
+      "bgcolor": "#342b1d"
+     },
+     {
+      "id": 4,
+      "type": "PrimitiveFloat",
+      "title": "내부 추론 MP · 공식 1.03 / 0 = 원본",
+      "pos": [
+       920,
+       474
+      ],
+      "size": [
+       350,
+       110
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "value",
+        "type": "FLOAT",
+        "link": 127,
+        "widget": {
+         "name": "value"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [
+         101
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "PrimitiveFloat",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       1.03
+      ],
+      "color": "#68532c",
+      "bgcolor": "#342b1d"
+     },
+     {
+      "id": 5,
+      "type": "PrimitiveInt",
+      "title": "고정 시드 · 재현성",
+      "pos": [
+       920,
+       652
+      ],
+      "size": [
+       350,
+       134
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "value",
+        "type": "INT",
+        "link": 128,
+        "widget": {
+         "name": "value"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "INT",
+        "type": "INT",
+        "links": [
+         113
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "PrimitiveInt",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       904234,
+       "randomize"
+      ],
+      "color": "#68532c",
+      "bgcolor": "#342b1d"
+     },
+     {
+      "id": 7,
+      "type": "PrimitiveFloat",
+      "title": "추가할 길이 · 초 / 최대 15초",
+      "pos": [
+       920,
+       854
+      ],
+      "size": [
+       350,
+       110
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "value",
+        "type": "FLOAT",
+        "link": 129,
+        "widget": {
+         "name": "value"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "FLOAT",
+        "type": "FLOAT",
+        "links": [
+         102
+        ],
+        "slot_index": 0
+       }
+      ],
+      "properties": {
+       "Node name for S&R": "PrimitiveFloat",
+       "cnr_id": "comfy-core",
+       "ver": "0df64eb242b7c5759c3e86afd5d1846d923b1033"
+      },
+      "widgets_values": [
+       5
+      ],
+      "color": "#68532c",
+      "bgcolor": "#342b1d"
+     },
+     {
+      "id": 48,
+      "type": "314dd271-aa50-5c2b-9417-9e904e812721",
+      "title": "원본 규격 · 길이 · 입력 검증",
+      "pos": [
+       1520,
+       160
+      ],
+      "size": [
+       430,
+       378
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "in_00_VIDEO",
+        "type": "VIDEO",
+        "label": "원본 영상 · 연장 전 구간 그대로 사용",
+        "localized_name": "원본 영상 · 연장 전 구간 그대로 사용",
+        "link": 100
+       },
+       {
+        "name": "in_01_FLOAT",
+        "type": "FLOAT",
+        "label": "내부 추론 MP · 0=원본 / 선택 상한",
+        "localized_name": "내부 추론 MP · 0=원본 / 선택 상한",
+        "link": 101
+       },
+       {
+        "name": "in_02_FLOAT",
+        "type": "FLOAT",
+        "label": "추가할 길이 · 초 / 최대 15초",
+        "localized_name": "추가할 길이 · 초 / 최대 15초",
+        "link": 102
+       },
+       {
+        "label": "참조 프레임 수 (끝부분 · 17k+5)",
+        "localized_name": "ctx_frames",
+        "name": "ctx_frames",
+        "type": "INT",
+        "link": 130,
+        "widget": {
+         "name": "ctx_frames"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "out_00_INT",
+        "type": "INT",
+        "label": "내부 가로 · MP 0=원본",
+        "localized_name": "내부 가로 · MP 0=원본",
+        "links": [
+         107
+        ]
+       },
+       {
+        "name": "out_01_INT",
+        "type": "INT",
+        "label": "내부 세로 · MP 0=원본",
+        "localized_name": "내부 세로 · MP 0=원본",
+        "links": [
+         108
+        ]
+       },
+       {
+        "name": "out_02_INT",
+        "type": "INT",
+        "label": "연장 생성부 · 모델 17k+5",
+        "localized_name": "연장 생성부 · 모델 17k+5",
+        "links": [
+         109
+        ]
+       },
+       {
+        "name": "out_03_IMAGE",
+        "type": "IMAGE",
+        "label": "IMAGE",
+        "localized_name": "IMAGE",
+        "links": [
+         110
+        ]
+       },
+       {
+        "name": "out_04_IMAGE",
+        "type": "IMAGE",
+        "label": "IMAGE",
+        "localized_name": "IMAGE",
+        "links": [
+         111
+        ]
+       },
+       {
+        "name": "out_05_INT",
+        "type": "INT",
+        "label": "32 배수 가로 패딩",
+        "localized_name": "32 배수 가로 패딩",
+        "links": [
+         116
+        ]
+       },
+       {
+        "name": "out_06_INT",
+        "type": "INT",
+        "label": "32 배수 세로 패딩",
+        "localized_name": "32 배수 세로 패딩",
+        "links": [
+         117
+        ]
+       },
+       {
+        "name": "out_07_width",
+        "type": "INT",
+        "label": "width",
+        "localized_name": "width",
+        "links": [
+         118
+        ]
+       },
+       {
+        "name": "out_08_height",
+        "type": "INT",
+        "label": "height",
+        "localized_name": "height",
+        "links": [
+         119
+        ]
+       },
+       {
+        "name": "out_09_INT",
+        "type": "INT",
+        "label": "자동 마지막 문맥 · 22 / 5 / 1",
+        "localized_name": "자동 마지막 문맥 · 22 / 5 / 1",
+        "links": [
+         120
+        ]
+       },
+       {
+        "name": "out_10_INT",
+        "type": "INT",
+        "label": "추가 프레임 · 원본 FPS",
+        "localized_name": "추가 프레임 · 원본 FPS",
+        "links": [
+         121
+        ]
+       },
+       {
+        "name": "out_11_images",
+        "type": "IMAGE",
+        "label": "images",
+        "localized_name": "images",
+        "links": [
+         122
+        ]
+       },
+       {
+        "name": "out_12_batch_size",
+        "type": "INT",
+        "label": "batch_size",
+        "localized_name": "batch_size",
+        "links": [
+         123
+        ]
+       },
+       {
+        "name": "out_13_fps",
+        "type": "FLOAT",
+        "label": "fps",
+        "localized_name": "fps",
+        "links": [
+         124
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "previewExposures": []
+      },
+      "widgets_values": [
+       39
+      ],
+      "color": "#27575a",
+      "bgcolor": "#1a3538",
+      "widgets_values_named": {
+       "ctx_frames": 39
+      }
+     },
+     {
+      "id": 49,
+      "type": "e8d4752e-784f-5703-9a71-de9847d69e67",
+      "title": "모델 · 용도별 LoRA",
+      "pos": [
+       80,
+       160
+      ],
+      "size": [
+       660,
+       448
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "ctl_29_unet_name",
+        "type": "COMBO",
+        "label": "H3 생성 모델 · 생성 모델",
+        "localized_name": "H3 생성 모델 · 생성 모델",
+        "link": null,
+        "widget": {
+         "name": "ctl_29_unet_name"
+        }
+       },
+       {
+        "name": "ctl_29_weight_dtype",
+        "type": "COMBO",
+        "label": "H3 생성 모델 · 가중치 정밀도",
+        "localized_name": "H3 생성 모델 · 가중치 정밀도",
+        "link": null,
+        "widget": {
+         "name": "ctl_29_weight_dtype"
+        }
+       },
+       {
+        "name": "ctl_30_shift_video",
+        "type": "FLOAT",
+        "label": "H3 권장 Sigma · 12 / 3 · 영상 Sigma Shift",
+        "localized_name": "H3 권장 Sigma · 12 / 3 · 영상 Sigma Shift",
+        "link": null,
+        "widget": {
+         "name": "ctl_30_shift_video"
+        }
+       },
+       {
+        "name": "ctl_31_vae_name",
+        "type": "COMBO",
+        "label": "영상 VAE · 오디오 VAE 없음 · 영상 VAE",
+        "localized_name": "영상 VAE · 오디오 VAE 없음 · 영상 VAE",
+        "link": null,
+        "widget": {
+         "name": "ctl_31_vae_name"
+        }
+       },
+       {
+        "name": "ctl_32_clip_name",
+        "type": "COMBO",
+        "label": "Qwen3-VL · H3 인코더 · 텍스트 인코더",
+        "localized_name": "Qwen3-VL · H3 인코더 · 텍스트 인코더",
+        "link": null,
+        "widget": {
+         "name": "ctl_32_clip_name"
+        }
+       },
+       {
+        "name": "ctl_32_type",
+        "type": "COMBO",
+        "label": "Qwen3-VL · H3 인코더 · type",
+        "localized_name": "Qwen3-VL · H3 인코더 · type",
+        "link": null,
+        "widget": {
+         "name": "ctl_32_type"
+        }
+       },
+       {
+        "name": "ctl_32_device",
+        "type": "COMBO",
+        "label": "Qwen3-VL · H3 인코더 · 장치",
+        "localized_name": "Qwen3-VL · H3 인코더 · 장치",
+        "link": null,
+        "widget": {
+         "name": "ctl_32_device"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "out_00_CLIP",
+        "type": "CLIP",
+        "label": "CLIP",
+        "localized_name": "CLIP",
+        "links": [
+         104
+        ]
+       },
+       {
+        "name": "out_01_VAE",
+        "type": "VAE",
+        "label": "VAE",
+        "localized_name": "VAE",
+        "links": [
+         105
+        ]
+       },
+       {
+        "name": "out_02_MODEL",
+        "type": "MODEL",
+        "label": "MODEL",
+        "localized_name": "MODEL",
+        "links": [
+         112
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "previewExposures": []
+      },
+      "widgets_values": [
+       "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+       "default",
+       12,
+       "minimax_h3_video_vae_int8_convrot.safetensors",
+       "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "minimax",
+       "default"
+      ],
+      "color": "#31506a",
+      "bgcolor": "#1d2f41",
+      "widgets_values_named": {
+       "ctl_29_unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+       "ctl_29_weight_dtype": "default",
+       "ctl_30_shift_video": 12,
+       "ctl_31_vae_name": "minimax_h3_video_vae_int8_convrot.safetensors",
+       "ctl_32_clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "ctl_32_type": "minimax",
+       "ctl_32_device": "default"
+      }
+     },
+     {
+      "id": 50,
+      "type": "9021f6f9-7623-5458-a00f-6ee89af82a37",
+      "title": "레퍼런스 · 모션 제어 · 생성",
+      "pos": [
+       2130,
+       160
+      ],
+      "size": [
+       660,
+       560
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "in_00_out_00_CLIP",
+        "type": "CLIP",
+        "label": "CLIP",
+        "localized_name": "CLIP",
+        "link": 104
+       },
+       {
+        "name": "in_01_out_01_VAE",
+        "type": "VAE",
+        "label": "VAE",
+        "localized_name": "VAE",
+        "link": 105
+       },
+       {
+        "name": "in_02_STRING",
+        "type": "STRING",
+        "label": "편집 지시 · 영어 권장",
+        "localized_name": "편집 지시 · 영어 권장",
+        "link": 106,
+        "widget": {
+         "name": "in_02_STRING"
+        }
+       },
+       {
+        "name": "in_03_out_00_INT",
+        "type": "INT",
+        "label": "내부 가로 · MP 0=원본",
+        "localized_name": "내부 가로 · MP 0=원본",
+        "link": 107,
+        "widget": {
+         "name": "in_03_out_00_INT"
+        }
+       },
+       {
+        "name": "in_04_out_01_INT",
+        "type": "INT",
+        "label": "내부 세로 · MP 0=원본",
+        "localized_name": "내부 세로 · MP 0=원본",
+        "link": 108,
+        "widget": {
+         "name": "in_04_out_01_INT"
+        }
+       },
+       {
+        "name": "in_05_out_02_INT",
+        "type": "INT",
+        "label": "연장 생성부 · 모델 17k+5",
+        "localized_name": "연장 생성부 · 모델 17k+5",
+        "link": 109,
+        "widget": {
+         "name": "in_05_out_02_INT"
+        }
+       },
+       {
+        "name": "in_06_out_03_IMAGE",
+        "type": "IMAGE",
+        "label": "IMAGE",
+        "localized_name": "IMAGE",
+        "link": 110
+       },
+       {
+        "name": "in_07_out_04_IMAGE",
+        "type": "IMAGE",
+        "label": "IMAGE",
+        "localized_name": "IMAGE",
+        "link": 111
+       },
+       {
+        "name": "in_08_out_02_MODEL",
+        "type": "MODEL",
+        "label": "MODEL",
+        "localized_name": "MODEL",
+        "link": 112
+       },
+       {
+        "name": "in_09_INT",
+        "type": "INT",
+        "label": "고정 시드 · 재현성",
+        "localized_name": "고정 시드 · 재현성",
+        "link": 113,
+        "widget": {
+         "name": "in_09_INT"
+        }
+       },
+       {
+        "name": "ctl_35_steps",
+        "type": "INT",
+        "label": "生成 · CFG 1 / 고정 시드 · 스텝",
+        "localized_name": "生成 · CFG 1 / 고정 시드 · 스텝",
+        "link": null,
+        "widget": {
+         "name": "ctl_35_steps"
+        }
+       },
+       {
+        "name": "ctl_35_cfg",
+        "type": "FLOAT",
+        "label": "生成 · CFG 1 / 고정 시드 · CFG",
+        "localized_name": "生成 · CFG 1 / 고정 시드 · CFG",
+        "link": null,
+        "widget": {
+         "name": "ctl_35_cfg"
+        }
+       },
+       {
+        "name": "ctl_35_sampler_name",
+        "type": "COMBO",
+        "label": "生成 · CFG 1 / 고정 시드 · 샘플러",
+        "localized_name": "生成 · CFG 1 / 고정 시드 · 샘플러",
+        "link": null,
+        "widget": {
+         "name": "ctl_35_sampler_name"
+        }
+       },
+       {
+        "name": "ctl_35_scheduler",
+        "type": "COMBO",
+        "label": "生成 · CFG 1 / 고정 시드 · 스케줄러",
+        "localized_name": "生成 · CFG 1 / 고정 시드 · 스케줄러",
+        "link": null,
+        "widget": {
+         "name": "ctl_35_scheduler"
+        }
+       },
+       {
+        "name": "ctl_35_denoise",
+        "type": "FLOAT",
+        "label": "生成 · CFG 1 / 고정 시드 · 디노이즈",
+        "localized_name": "生成 · CFG 1 / 고정 시드 · 디노이즈",
+        "link": null,
+        "widget": {
+         "name": "ctl_35_denoise"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "out_00_IMAGE",
+        "type": "IMAGE",
+        "label": "IMAGE",
+        "localized_name": "IMAGE",
+        "links": [
+         115
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "previewExposures": []
+      },
+      "widgets_values": [
+       "",
+       960,
+       544,
+       124,
+       904234,
+       28,
+       1,
+       "euler",
+       "simple",
+       1
+      ],
+      "color": "#5d3c68",
+      "bgcolor": "#312039",
+      "widgets_values_named": {
+       "in_02_STRING": "",
+       "in_03_out_00_INT": 960,
+       "in_04_out_01_INT": 544,
+       "in_05_out_02_INT": 124,
+       "in_09_INT": 904234,
+       "ctl_35_steps": 28,
+       "ctl_35_cfg": 1,
+       "ctl_35_sampler_name": "euler",
+       "ctl_35_scheduler": "simple",
+       "ctl_35_denoise": 1
+      }
+     },
+     {
+      "id": 51,
+      "type": "d8673e3e-2aee-5315-ac12-b551d8543807",
+      "title": "원본 복원 · 보호 합성 · 무음 출력",
+      "pos": [
+       2970,
+       160
+      ],
+      "size": [
+       430,
+       290
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+       {
+        "name": "in_00_out_00_IMAGE",
+        "type": "IMAGE",
+        "label": "IMAGE",
+        "localized_name": "IMAGE",
+        "link": 115
+       },
+       {
+        "name": "in_01_out_05_INT",
+        "type": "INT",
+        "label": "32 배수 가로 패딩",
+        "localized_name": "32 배수 가로 패딩",
+        "link": 116,
+        "widget": {
+         "name": "in_01_out_05_INT"
+        }
+       },
+       {
+        "name": "in_02_out_06_INT",
+        "type": "INT",
+        "label": "32 배수 세로 패딩",
+        "localized_name": "32 배수 세로 패딩",
+        "link": 117,
+        "widget": {
+         "name": "in_02_out_06_INT"
+        }
+       },
+       {
+        "name": "in_03_out_07_width",
+        "type": "INT",
+        "label": "width",
+        "localized_name": "width",
+        "link": 118,
+        "widget": {
+         "name": "in_03_out_07_width"
+        }
+       },
+       {
+        "name": "in_04_out_08_height",
+        "type": "INT",
+        "label": "height",
+        "localized_name": "height",
+        "link": 119,
+        "widget": {
+         "name": "in_04_out_08_height"
+        }
+       },
+       {
+        "name": "in_05_out_09_INT",
+        "type": "INT",
+        "label": "자동 마지막 문맥 · 22 / 5 / 1",
+        "localized_name": "자동 마지막 문맥 · 22 / 5 / 1",
+        "link": 120,
+        "widget": {
+         "name": "in_05_out_09_INT"
+        }
+       },
+       {
+        "name": "in_06_out_10_INT",
+        "type": "INT",
+        "label": "추가 프레임 · 원본 FPS",
+        "localized_name": "추가 프레임 · 원본 FPS",
+        "link": 121,
+        "widget": {
+         "name": "in_06_out_10_INT"
+        }
+       },
+       {
+        "name": "in_07_out_11_images",
+        "type": "IMAGE",
+        "label": "images",
+        "localized_name": "images",
+        "link": 122
+       },
+       {
+        "name": "in_08_out_12_batch_size",
+        "type": "INT",
+        "label": "batch_size",
+        "localized_name": "batch_size",
+        "link": 123
+       },
+       {
+        "name": "in_09_out_13_fps",
+        "type": "FLOAT",
+        "label": "fps",
+        "localized_name": "fps",
+        "link": 124,
+        "widget": {
+         "name": "in_09_out_13_fps"
+        }
+       }
+      ],
+      "outputs": [
+       {
+        "name": "out_00_VIDEO",
+        "type": "VIDEO",
+        "label": "VIDEO",
+        "localized_name": "VIDEO",
+        "links": [
+         125
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "previewExposures": []
+      },
+      "widgets_values": [
+       960,
+       544,
+       960,
+       544,
+       0,
+       1,
+       24
+      ],
+      "color": "#68503c",
+      "bgcolor": "#382a20",
+      "widgets_values_named": {
+       "in_01_out_05_INT": 960,
+       "in_02_out_06_INT": 544,
+       "in_03_out_07_width": 960,
+       "in_04_out_08_height": 544,
+       "in_05_out_09_INT": 0,
+       "in_06_out_10_INT": 1,
+       "in_09_out_13_fps": 24
+      }
+     }
+    ],
+    "groups": [
+     {
+      "id": 1,
+      "title": "01  모델 · 로딩 / LoRA",
+      "bounding": [
+       56,
+       80,
+       708,
+       596
+      ],
+      "color": "#59809d",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 2,
+      "title": "02  설정 · 프롬프트 / 시드",
+      "bounding": [
+       896,
+       80,
+       468,
+       952
+      ],
+      "color": "#a88a4a",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 3,
+      "title": "03  입력 정리 · 크기 / 길이",
+      "bounding": [
+       1496,
+       80,
+       478,
+       526
+      ],
+      "color": "#489193",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 4,
+      "title": "04  생성 · 샘플링 / 처리",
+      "bounding": [
+       2106,
+       80,
+       708,
+       708
+      ],
+      "color": "#a572b4",
+      "font_size": 24,
+      "flags": {}
+     },
+     {
+      "id": 5,
+      "title": "05  복원 · 디코드 / 합성",
+      "bounding": [
+       2946,
+       80,
+       478,
+       438
+      ],
+      "color": "#ae835d",
+      "font_size": 24,
+      "flags": {}
+     }
+    ],
+    "links": [
+     {
+      "id": 100,
+      "origin_id": -10,
+      "origin_slot": 0,
+      "target_id": 48,
+      "target_slot": 0,
+      "type": "VIDEO"
+     },
+     {
+      "id": 101,
+      "origin_id": 4,
+      "origin_slot": 0,
+      "target_id": 48,
+      "target_slot": 1,
+      "type": "FLOAT"
+     },
+     {
+      "id": 102,
+      "origin_id": 7,
+      "origin_slot": 0,
+      "target_id": 48,
+      "target_slot": 2,
+      "type": "FLOAT"
+     },
+     {
+      "id": 104,
+      "origin_id": 49,
+      "origin_slot": 0,
+      "target_id": 50,
+      "target_slot": 0,
+      "type": "CLIP"
+     },
+     {
+      "id": 105,
+      "origin_id": 49,
+      "origin_slot": 1,
+      "target_id": 50,
+      "target_slot": 1,
+      "type": "VAE"
+     },
+     {
+      "id": 106,
+      "origin_id": 3,
+      "origin_slot": 0,
+      "target_id": 50,
+      "target_slot": 2,
+      "type": "STRING"
+     },
+     {
+      "id": 107,
+      "origin_id": 48,
+      "origin_slot": 0,
+      "target_id": 50,
+      "target_slot": 3,
+      "type": "INT"
+     },
+     {
+      "id": 108,
+      "origin_id": 48,
+      "origin_slot": 1,
+      "target_id": 50,
+      "target_slot": 4,
+      "type": "INT"
+     },
+     {
+      "id": 109,
+      "origin_id": 48,
+      "origin_slot": 2,
+      "target_id": 50,
+      "target_slot": 5,
+      "type": "INT"
+     },
+     {
+      "id": 110,
+      "origin_id": 48,
+      "origin_slot": 3,
+      "target_id": 50,
+      "target_slot": 6,
+      "type": "IMAGE"
+     },
+     {
+      "id": 111,
+      "origin_id": 48,
+      "origin_slot": 4,
+      "target_id": 50,
+      "target_slot": 7,
+      "type": "IMAGE"
+     },
+     {
+      "id": 112,
+      "origin_id": 49,
+      "origin_slot": 2,
+      "target_id": 50,
+      "target_slot": 8,
+      "type": "MODEL"
+     },
+     {
+      "id": 113,
+      "origin_id": 5,
+      "origin_slot": 0,
+      "target_id": 50,
+      "target_slot": 9,
+      "type": "INT"
+     },
+     {
+      "id": 115,
+      "origin_id": 50,
+      "origin_slot": 0,
+      "target_id": 51,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 116,
+      "origin_id": 48,
+      "origin_slot": 5,
+      "target_id": 51,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 117,
+      "origin_id": 48,
+      "origin_slot": 6,
+      "target_id": 51,
+      "target_slot": 2,
+      "type": "INT"
+     },
+     {
+      "id": 118,
+      "origin_id": 48,
+      "origin_slot": 7,
+      "target_id": 51,
+      "target_slot": 3,
+      "type": "INT"
+     },
+     {
+      "id": 119,
+      "origin_id": 48,
+      "origin_slot": 8,
+      "target_id": 51,
+      "target_slot": 4,
+      "type": "INT"
+     },
+     {
+      "id": 120,
+      "origin_id": 48,
+      "origin_slot": 9,
+      "target_id": 51,
+      "target_slot": 5,
+      "type": "INT"
+     },
+     {
+      "id": 121,
+      "origin_id": 48,
+      "origin_slot": 10,
+      "target_id": 51,
+      "target_slot": 6,
+      "type": "INT"
+     },
+     {
+      "id": 122,
+      "origin_id": 48,
+      "origin_slot": 11,
+      "target_id": 51,
+      "target_slot": 7,
+      "type": "IMAGE"
+     },
+     {
+      "id": 123,
+      "origin_id": 48,
+      "origin_slot": 12,
+      "target_id": 51,
+      "target_slot": 8,
+      "type": "INT"
+     },
+     {
+      "id": 124,
+      "origin_id": 48,
+      "origin_slot": 13,
+      "target_id": 51,
+      "target_slot": 9,
+      "type": "FLOAT"
+     },
+     {
+      "id": 125,
+      "origin_id": 51,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 0,
+      "type": "VIDEO"
+     },
+     {
+      "id": 126,
+      "origin_id": -10,
+      "origin_slot": 1,
+      "target_id": 3,
+      "target_slot": 0,
+      "type": "STRING"
+     },
+     {
+      "id": 127,
+      "origin_id": -10,
+      "origin_slot": 2,
+      "target_id": 4,
+      "target_slot": 0,
+      "type": "FLOAT"
+     },
+     {
+      "id": 128,
+      "origin_id": -10,
+      "origin_slot": 3,
+      "target_id": 5,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 129,
+      "origin_id": -10,
+      "origin_slot": 4,
+      "target_id": 7,
+      "target_slot": 0,
+      "type": "FLOAT"
+     },
+     {
+      "id": 130,
+      "origin_id": -10,
+      "origin_slot": 5,
+      "target_id": 48,
+      "target_slot": 3,
+      "type": "INT"
+     }
+    ],
+    "extra": {
+     "codex_layout_inserted": true,
+     "codex_layout_role": "sample",
+     "ds": {
+      "scale": 0.3484848484848485,
+      "offset": [
+       500,
+       25
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "state": {
+  "lastNodeId": 52,
+  "lastLinkId": 126,
+  "lastGroupId": 7,
+  "lastRerouteId": 0
+ }
+}

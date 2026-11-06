@@ -1,0 +1,254 @@
+{
+  "id": "73f11911-3cad-47de-b2d2-65c1a8e3b65f",
+  "revision": 0,
+  "last_node_id": 5,
+  "last_link_id": 3,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadVideo",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        360,
+        420
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideo"
+      },
+      "title": "① 원본 영상 (60초 이하 · 비율 0.4~2.5)",
+      "widgets_values": [
+        "",
+        "image"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        480
+      ],
+      "size": [
+        360,
+        380
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "title": "② 새 장면 레퍼런스 (선택 · @Image1) · 안 쓰면 Ctrl+B",
+      "widgets_values": [
+        "",
+        "image"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "MinimaxHailuo03MaxInsertVideoNode",
+      "pos": [
+        420,
+        0
+      ],
+      "size": [
+        440,
+        620
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model.video",
+          "type": "VIDEO",
+          "link": 1
+        },
+        {
+          "name": "model.reference_images.image_1",
+          "type": "IMAGE",
+          "shape": 7,
+          "link": 2
+        },
+        {
+          "name": "model.reference_videos.video_1",
+          "type": "VIDEO",
+          "shape": 7,
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MinimaxHailuo03MaxInsertVideoNode"
+      },
+      "title": "MiniMax H3 Max Insert · start~resume 구간을 새로 생성",
+      "widgets_values": [
+        "MiniMax H3 Max",
+        "The boom microphone that dips into the top of the frame is gone; the ceiling and the back wall continue naturally behind it while the two actors keep talking exactly as before.",
+        2.0,
+        3.0,
+        5,
+        "768P",
+        true,
+        false,
+        42,
+        "fixed",
+        "fixed"
+      ],
+      "widgets_values_named": {
+        "model": "MiniMax H3 Max",
+        "model.prompt": "The boom microphone that dips into the top of the frame is gone; the ceiling and the back wall continue naturally behind it while the two actors keep talking exactly as before.",
+        "model.start_time": 2.0,
+        "model.resume_time": 3.0,
+        "model.duration": 5,
+        "model.resolution": "768P",
+        "model.color_match": true,
+        "model.prompt_expansion": false,
+        "model.seed": 42,
+        "control_after_generate#1": "fixed",
+        "control_after_generate": "fixed"
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 4,
+      "type": "SaveVideo",
+      "pos": [
+        900,
+        0
+      ],
+      "size": [
+        420,
+        420
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 3
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveVideo"
+      },
+      "title": "결과 영상 · 저장",
+      "widgets_values": [
+        "H3Max/insert",
+        "auto",
+        "auto"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "MarkdownNote",
+      "pos": [
+        -640,
+        0
+      ],
+      "size": [
+        600,
+        900
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "H3 Max Insert · 구간 교체 (KR 안내)",
+      "properties": {},
+      "widgets_values": [
+        "## [유료 API] MiniMax H3 Max Insert · 영상의 한 구간을 새로 생성해 끼우기 (시간축 인페인팅)\n\n**AE 용도**: NG 구간(붐마이크 진입, 스태프 노출, 깨진 프레임, 연기 실수)을 앞뒤가 이어지게 다시 생성. 마스크 영역 인페인팅이 아니라 **시간 구간 교체**입니다 — 공간 마스크 인페인팅은 `유료API/Bria_영상지우개…` 또는 로컬 `인페인팅/`을 쓰세요.\n\n**입력**: 원본 영상(60초 이하) + 선택 레퍼런스 이미지(최대 9장 · `@Image1`…)/영상(최대 3개 · `@Video1`…).\n\n**핵심 값**\n| 값 | 뜻 |\n|---|---|\n| start_time | 원본이 멈추고 새 장면이 시작되는 초 (1.625초 이상) |\n| resume_time | 원본이 다시 이어지는 초 (끝에서 1.375초 이상 앞) · 그 사이 원본은 **삭제** |\n| duration | 새 장면 길이 5~13초 · **원본 구간 길이와 다르면 전체 길이가 바뀜** |\n| color_match | 새 장면 색을 원본에 맞춤 (기본 켬) |\n| prompt_expansion | 끄면 같은 시드 재현성 ↑ (기본 끔으로 둠) |\n\n**AE 체크**: 결과 전체 길이 = 원본 − (resume−start) + duration. AE에서 원본과 겹쳐 놓고 start/resume 지점 앞뒤 1초를 프레임 단위로 비교하세요. 노드 스키마 기준으로 새로 구성한 그래프(공식 템플릿 없음)라 처음 열 때 위젯 값이 기본값과 맞는지 확인하세요.\n\n**요금**: Comfy 계정 크레딧 차감 (노드 오른쪽 위 가격 배지 확인). 실행 전 **짧은 구간·저해상도**로 먼저 확인하세요.\n**데이터**: 영상·이미지가 외부 서비스(MiniMax/fal, Bria)로 업로드됩니다. 공개 전 소스나 계약상 외부 반출이 금지된 소스는 넣지 마세요.\n\n### 모델 (로컬: 아래 파일명 그대로 · Cloud: 문제 패널에 없다고 나오면 '가져오기' 후 이름 확인)\n모델 다운로드 없음 (유료 API · Comfy 계정 크레딧 사용)\n\n### 출처 · 검증\n- 원본: ComfyUI `comfy_api_nodes/nodes_minimax.py` MinimaxHailuo03MaxInsertVideoNode (#17424 · 2026-10-31) — 노드 스키마로 구성\n- 상태: GPU/크레딧 실행 미검증 · 노드 스키마(입력·위젯 순서) 대조로 구성\n- 정리: 2026-11-06 · After Effects Codex Agent 팩 (`comfyui/README.md`)\n"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      0,
+      "VIDEO"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      1,
+      "IMAGE"
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      0,
+      "VIDEO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8,
+      "offset": [
+        700,
+        120
+      ]
+    },
+    "ae_pack": {
+      "added": "2026-11-06",
+      "kind": "api",
+      "source": "ComfyUI `comfy_api_nodes/nodes_minimax.py` MinimaxHailuo03MaxInsertVideoNode (#17424 · 2026-10-31) — 노드 스키마로 구성",
+      "gpu_render_tested": false
+    }
+  },
+  "version": 0.4
+}

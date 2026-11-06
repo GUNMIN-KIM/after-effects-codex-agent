@@ -1,0 +1,5618 @@
+{
+  "id": "34802128-4e3a-564a-8acd-e03401540ff7",
+  "revision": 1,
+  "last_node_id": 36,
+  "last_link_id": 67,
+  "nodes": [
+    {
+      "id": 2,
+      "type": "LoadVideo",
+      "pos": [
+        80,
+        160
+      ],
+      "size": [
+        420,
+        420
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            64
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideo",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "원본 영상 업로드",
+      "color": "#477eac",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 16,
+      "type": "LoadImage",
+      "pos": [
+        80,
+        680
+      ],
+      "size": [
+        420,
+        420
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            65
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "새 캐릭터 참조 이미지",
+      "color": "#477eac",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 32,
+      "type": "SaveVideo",
+      "pos": [
+        1520,
+        160
+      ],
+      "size": [
+        450,
+        420
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 66
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveVideo",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "WAN/WAN2.2_Bernini-R_영상+참조이미지편집",
+        "mp4",
+        "h264",
+        "re-encode",
+        16
+      ],
+      "title": "완성 MP4 저장",
+      "color": "#5b946f",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 34,
+      "type": "4c10c813-72f4-5b67-9435-6d3609673355",
+      "pos": [
+        640,
+        160
+      ],
+      "size": [
+        740,
+        924
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "원본 영상 업로드",
+          "localized_name": "video",
+          "name": "video",
+          "type": "VIDEO",
+          "link": 64
+        },
+        {
+          "label": "새 캐릭터 참조 이미지",
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 65
+        },
+        {
+          "label": "편집 지시 · 바꿀 요소만 구체적으로 작성",
+          "localized_name": "value",
+          "name": "value",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "value"
+          }
+        },
+        {
+          "label": "네거티브 프롬프트",
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "text"
+          }
+        },
+        {
+          "label": "시드",
+          "localized_name": "noise_seed",
+          "name": "noise_seed",
+          "type": "INT",
+          "link": 67,
+          "widget": {
+            "name": "noise_seed"
+          }
+        },
+        {
+          "label": "고노이즈 편집 모델 · 전반부",
+          "localized_name": "unet_name",
+          "name": "unet_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "unet_name"
+          }
+        },
+        {
+          "label": "저노이즈 편집 모델 · 후반부",
+          "localized_name": "unet_name_1",
+          "name": "unet_name_1",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "unet_name_1"
+          }
+        },
+        {
+          "label": "텍스트 인코더",
+          "localized_name": "clip_name",
+          "name": "clip_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "clip_name"
+          }
+        },
+        {
+          "label": "영상 VAE",
+          "localized_name": "vae_name",
+          "name": "vae_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "vae_name"
+          }
+        },
+        {
+          "name": "ctl_17_weight_dtype",
+          "type": "COMBO",
+          "label": "고노이즈 편집 모델 · 전반부 · 가중치 정밀도",
+          "localized_name": "고노이즈 편집 모델 · 전반부 · 가중치 정밀도",
+          "link": null,
+          "widget": {
+            "name": "ctl_17_weight_dtype"
+          }
+        },
+        {
+          "name": "ctl_18_weight_dtype",
+          "type": "COMBO",
+          "label": "저노이즈 편집 모델 · 후반부 · 가중치 정밀도",
+          "localized_name": "저노이즈 편집 모델 · 후반부 · 가중치 정밀도",
+          "link": null,
+          "widget": {
+            "name": "ctl_18_weight_dtype"
+          }
+        },
+        {
+          "name": "ctl_19_type",
+          "type": "COMBO",
+          "label": "텍스트 인코더 · type",
+          "localized_name": "텍스트 인코더 · type",
+          "link": null,
+          "widget": {
+            "name": "ctl_19_type"
+          }
+        },
+        {
+          "name": "ctl_19_device",
+          "type": "COMBO",
+          "label": "텍스트 인코더 · 장치",
+          "localized_name": "텍스트 인코더 · 장치",
+          "link": null,
+          "widget": {
+            "name": "ctl_19_device"
+          }
+        },
+        {
+          "name": "ctl_24_sampler_name",
+          "type": "COMBO",
+          "label": "공식 Bernini 샘플러 · 샘플러",
+          "localized_name": "공식 Bernini 샘플러 · 샘플러",
+          "link": null,
+          "widget": {
+            "name": "ctl_24_sampler_name"
+          }
+        },
+        {
+          "name": "ctl_27_add_noise",
+          "type": "BOOLEAN",
+          "label": "전반부 · 고노이즈 모델 · add_noise",
+          "localized_name": "전반부 · 고노이즈 모델 · add_noise",
+          "link": null,
+          "widget": {
+            "name": "ctl_27_add_noise"
+          }
+        },
+        {
+          "name": "ctl_27_cfg",
+          "type": "FLOAT",
+          "label": "전반부 · 고노이즈 모델 · CFG",
+          "localized_name": "전반부 · 고노이즈 모델 · CFG",
+          "link": null,
+          "widget": {
+            "name": "ctl_27_cfg"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "VIDEO",
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            66
+          ],
+          "label": "완성 영상"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "previewExposures": []
+      },
+      "widgets_values": [
+        "You are a helpful assistant specialized in video editing with reference.\nReplace only the foreground character in <Video 1> with the character from <Picture 1>. Preserve the original body motion, gestures, facial expression timing, camera movement, framing and background.",
+        "blurry, low quality, flicker, distorted anatomy, extra limbs, extra fingers, duplicate subjects, text, subtitles, watermark, camera shake",
+        42,
+        "wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+        "wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+        "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "Wan2_1_VAE_bf16.safetensors",
+        "default",
+        "default",
+        "wan",
+        "default",
+        "res_multistep",
+        true,
+        1.0
+      ],
+      "widgets_values_named": {
+        "value": "You are a helpful assistant specialized in video editing with reference.\nReplace only the foreground character in <Video 1> with the character from <Picture 1>. Preserve the original body motion, gestures, facial expression timing, camera movement, framing and background.",
+        "text": "blurry, low quality, flicker, distorted anatomy, extra limbs, extra fingers, duplicate subjects, text, subtitles, watermark, camera shake",
+        "noise_seed": 42,
+        "unet_name": "wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+        "unet_name_1": "wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+        "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "vae_name": "Wan2_1_VAE_bf16.safetensors",
+        "ctl_17_weight_dtype": "default",
+        "ctl_18_weight_dtype": "default",
+        "ctl_19_type": "wan",
+        "ctl_19_device": "default",
+        "ctl_24_sampler_name": "res_multistep",
+        "ctl_27_add_noise": true,
+        "ctl_27_cfg": 1.0
+      },
+      "color": "#8870ae",
+      "bgcolor": "#252d38",
+      "title": "WAN2.2 · Bernini-R · 영상+참조이미지편집"
+    },
+    {
+      "id": 35,
+      "type": "MarkdownNote",
+      "title": "사용법 · 정확 타겟 · 무음",
+      "pos": [
+        80,
+        1320
+      ],
+      "size": [
+        900,
+        300
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "MarkdownNote",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "## WAN2.2_Bernini-R_영상+참조이미지편집\n\nRGB 차이 감지 합성을 제거했습니다. 생성 프레임을 그대로 전달하며, 명시적으로 연결된 사용자/SAM 마스크 합성은 유지합니다. 마스크 없는 편집은 변경 영역 밖 픽셀 보존을 보장하지 않습니다.\n\n2026-10-14 재검증본입니다. 노드 연결·서브그래프 입력·수식을 점검했습니다. 실제 GPU 생성 품질과 설치 환경 호환성은 별도 실행 확인이 필요합니다. 작업별 규격 및 제한은 패키지 검증 보고서를 참고하세요.\n\n입력 파일을 선택하고 작은 구간으로 확인한 뒤 전체 구간을 실행하세요. 국소 편집은 마스크가 실제 수정 영역과 시간에 맞는지 확인하세요.\n\n### 2026-10-23 · 공식 모델로 교체\n- 편집 모델을 커뮤니티 머지(rzgar/Bernini-R-n4w · int8 convrot)에서 Comfy-Org 공식 `wan2.2_bernini_r_high_noise_fp8_scaled.safetensors` · `wan2.2_bernini_r_low_noise_fp8_scaled.safetensors`로 교체. ComfyUI 기본 템플릿(video_bernini_r_video_editing)과 같은 파일이며 Cloud·로컬 모두 이 이름 그대로 사용 (각 15.6GB · models/diffusion_models).\n- 아래 빠른 모드 실측값(2.7분 · ΔE 1.9 · 모션 0.93)과 폴더의 결과 영상·대조시트는 이전 n4w 모델 기준. 공식 모델 + 4스텝 LoRA 조합은 GPU 미검증 — 짧은 구간으로 먼저 확인하세요.\n\n### 2026-10-22 · Comfy Cloud 실행 검증 수정\n- 모델 파일명을 Comfy Cloud 등록명으로 교정 (기존 이름은 Cloud에서 `value_not_in_list` 검증 오류): `wan2.2_bernini_r_high_noise_int8_convrot_n4w.safetensors` → `rzgar__…` · `wan2.2_bernini_r_low_noise_int8_convrot_n4w.safetensors` → `rzgar__…`. (10-23 공식 모델 교체로 더 이상 해당 없음)\n- 서브그래프 노드 안쪽 값이 편집기 규칙과 한 칸 어긋나 저장되어 있었음 — 편집기는 연결된 입력(in_xx_…)에도 위젯 칸을 만들기 때문에, 그 칸을 빼고 저장된 값 배열이 한 칸씩 밀려 들어감 (Cloud 실측: BasicScheduler에 scheduler=40 · denoise=20이 들어가 검증 실패). 이름별 저장값(widgets_values_named) 기준으로 편집기 순서에 맞춰 다시 정렬.\n\n### 빠른 모드 (기본)\n- 기존 품질 경로(40스텝 · CFG 5)는 2초 클립 하나에 30분 넘게 걸려 실사용이 어려웠음 → **lightx2v 4스텝 가속 LoRA(고·저 노이즈) + 6스텝(3+3) · CFG 1**을 기본으로. 예시 소스(댄스 + 핑크머리 캐릭터) 실측 2.7분, 핑크머리·의상 교체, 배경 ΔE 1.9, 모션 0.93.\n- 품질 경로로 되돌리기: LoRA 노드 2개를 바이패스(Ctrl+B) → 스텝 40 · 전환 20 · CFG 5(전반부·후반부 모두).\n\n### 2026-11-06 · 검토 수정\n- lightx2v 4스텝 LoRA(고·저) 다운로드 정보 추가 (Comfy-Org/Wan_2.2_ComfyUI_Repackaged · split_files/loras). Bernini-R 공식 파일은 그대로 최신.\n"
+      ],
+      "color": "#897343",
+      "bgcolor": "#302b22"
+    },
+    {
+      "id": 36,
+      "type": "SeedNode",
+      "pos": [
+        -260,
+        160
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "seed",
+          "type": "INT",
+          "links": [
+            67
+          ]
+        }
+      ],
+      "title": "시드 · 매 실행 랜덤",
+      "properties": {
+        "Node name for S&R": "SeedNode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        42,
+        "randomize"
+      ],
+      "widgets_values_named": {
+        "seed": 42,
+        "control_after_generate": "randomize"
+      },
+      "color": "#68532c",
+      "bgcolor": "#342b1d"
+    }
+  ],
+  "links": [
+    [
+      64,
+      2,
+      0,
+      34,
+      0,
+      "VIDEO"
+    ],
+    [
+      65,
+      16,
+      0,
+      34,
+      1,
+      "IMAGE"
+    ],
+    [
+      66,
+      34,
+      0,
+      32,
+      0,
+      "VIDEO"
+    ],
+    [
+      67,
+      36,
+      0,
+      34,
+      4,
+      "INT"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "01  입력 · 영상 / 이미지 / 마스크",
+      "bounding": [
+        56,
+        80,
+        468,
+        1100
+      ],
+      "color": "#477eac",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "02  통합 컨트롤",
+      "bounding": [
+        616,
+        80,
+        788,
+        1084
+      ],
+      "color": "#8870ae",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "03  확인 / 저장",
+      "bounding": [
+        1496,
+        80,
+        498,
+        580
+      ],
+      "color": "#5b946f",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "안내 · 입력 조건 / 보존 범위",
+      "bounding": [
+        56,
+        1252,
+        1910,
+        400
+      ],
+      "color": "#897343",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.65,
+      "offset": [
+        35,
+        30
+      ]
+    },
+    "workflow_name": "Bernini-R 공식 fp8 · 참조 캐릭터 교체",
+    "verified_on": "2026-10-05",
+    "source_urls": [
+      "https://github.com/bytedance/Bernini",
+      "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/video_bernini_r_video_editing.json",
+      "https://huggingface.co/Comfy-Org/Bernini-R"
+    ],
+    "validation": "JSON/graph checked; key nodes observed in Comfy Cloud library; GPU execution and account model availability not verified",
+    "cloud_node_library_checked_on": "2026-10-05",
+    "main_subgraph_structure": "main inputs/prompts -> model subgraph -> processing subgraph -> save",
+    "subgraph_organized_on": "2026-10-05",
+    "execution_settings_preserved": true,
+    "frontendVersion": "1.54.15",
+    "codex_provenance": {
+      "source_file": "SILENT_MASTERS_메인서브그래프 2/추가_11종 2/WAN_Bernini/83_Bernini_R_n4w_개발자커스텀_참조캐릭터교체.json",
+      "source_sha256": "c74142ac45606a4c362543f635eb987980884de5a4300a8a2f2fca14bb776424",
+      "drive_original_modified": false,
+      "changes": [
+        "Removed 5-second slice; full source sequence and FLOAT FPS",
+        "Removed 832px reduction; /16 padding and exact output crop",
+        "Original conditioning method retained; no additional inpainting on Animate/Bernini"
+      ],
+      "limitations": [
+        "Native-resolution generation can exceed Cloud memory",
+        "Source dimensions/timing are retained; motion/expression/camera fidelity needs a render comparison"
+      ],
+      "cloud_import_verified": false,
+      "cloud_render_verified": false,
+      "forced_inpainting_added": false
+    },
+    "codex_layout": {
+      "version": 1,
+      "source_relative_path": "02_동일모델_설정변형/40_83_Bernini_R_n4w_개발자커스텀_참조캐릭터교체.json",
+      "source_sha256": "4c76b17509364a210dadaea9fa17632747b5fab53db900f9ab8eb14680efe4fb",
+      "existing_widget_promotion_preserved": true,
+      "node_rectangle_overlaps": 0,
+      "main_layout": "입력 → 설정 → 처리 → 출력; 안내는 아래",
+      "nested_subgraph_groups_added": 2,
+      "cloud_import_verified": false,
+      "cloud_render_verified": false,
+      "historical_before_final_review": true
+    },
+    "final_review": {
+      "date": "2026-10-11",
+      "source_sha256": "861338174edddad0342730576bfc75691a5512858bde5217afd74729cf2f76c0",
+      "source_file": "99_다른설정_비교용/캐릭터교체/WAN2.2_Bernini_R_n4w_개발자설정판.json",
+      "main_controller": "4c10c813-72f4-5b67-9435-6d3609673355",
+      "editable_settings_added": 14,
+      "native_layout": true,
+      "reversible_promotion_check": true,
+      "cloud_import_tested": false,
+      "gpu_render_tested": false,
+      "fixes": [
+        "네이티브 위젯 이름 캐시 1곳을 현재 설정과 동기화; 삭제된 오디오 필드/이전 설정 캐시 제거."
+      ]
+    },
+    "workflow_audit": {
+      "date": "2026-10-14",
+      "source_file": "WAN/2_편집/WAN2.2_Bernini-R_영상+참조이미지편집.json",
+      "source_sha256": "d0b40d151527dae75c3d660f7841e03fe54d402b8854b58d1deb6e537da1c8cc",
+      "structural_checks": "passed",
+      "gpu_inference": "not_run"
+    },
+    "model_swap": {
+      "date": "2026-10-23",
+      "from": "rzgar/Bernini-R-n4w · wan2.2_bernini_r_{high,low}_noise_int8_convrot_n4w (Cloud name rzgar__Bernini-R-n4w__…)",
+      "to": "Comfy-Org/Bernini-R · wan2.2_bernini_r_{high,low}_noise_fp8_scaled",
+      "unchanged": "LoRA, text encoder, VAE, steps, CFG, graph links",
+      "gpu_inference": "not_run"
+    }
+  },
+  "version": 0.4,
+  "definitions": {
+    "subgraphs": [
+      {
+        "id": "4c10c813-72f4-5b67-9435-6d3609673355",
+        "version": 1,
+        "state": {
+          "lastGroupId": 8,
+          "lastNodeId": 45,
+          "lastLinkId": 131,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "WAN2.2 · Bernini · R · 공식 fp8 · 개발자설정판",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -420,
+            120,
+            320,
+            422
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            5100,
+            120,
+            320,
+            120
+          ]
+        },
+        "inputs": [
+          {
+            "id": "36c2af00-fb1a-4530-81f7-7905c61c42d6",
+            "name": "video",
+            "type": "VIDEO",
+            "linkIds": [
+              43
+            ],
+            "localized_name": "video",
+            "label": "원본 영상 업로드",
+            "pos": [
+              -120,
+              162
+            ]
+          },
+          {
+            "id": "a43d7a69-144f-457a-9f7b-8299d12968ab",
+            "name": "image",
+            "type": "IMAGE",
+            "linkIds": [
+              101
+            ],
+            "localized_name": "image",
+            "label": "새 캐릭터 참조 이미지",
+            "pos": [
+              -120,
+              184
+            ]
+          },
+          {
+            "id": "68e3a346-ff1a-44a2-9749-da9c7e31b8eb",
+            "name": "value",
+            "type": "STRING",
+            "linkIds": [
+              54
+            ],
+            "localized_name": "value",
+            "label": "편집 지시 · 바꿀 요소만 구체적으로 작성",
+            "pos": [
+              -120,
+              206
+            ]
+          },
+          {
+            "id": "777c6fdb-e2ba-41be-8ca4-ad02098d4e97",
+            "name": "text",
+            "type": "STRING",
+            "linkIds": [
+              55
+            ],
+            "localized_name": "text",
+            "label": "네거티브 프롬프트",
+            "pos": [
+              -120,
+              228
+            ]
+          },
+          {
+            "id": "69926a1f-094f-4481-ac1f-9701b8f0bf8c",
+            "name": "noise_seed",
+            "type": "INT",
+            "linkIds": [
+              58
+            ],
+            "localized_name": "noise_seed",
+            "label": "시드",
+            "pos": [
+              -120,
+              250
+            ]
+          },
+          {
+            "id": "ef18dc37-9eaf-4772-bece-e74c4a980c6f",
+            "name": "unet_name",
+            "type": "COMBO",
+            "linkIds": [
+              59
+            ],
+            "localized_name": "unet_name",
+            "label": "고노이즈 편집 모델 · 전반부",
+            "pos": [
+              -120,
+              272
+            ]
+          },
+          {
+            "id": "5b5aefee-6f51-4f79-a729-1b4b28482029",
+            "name": "unet_name_1",
+            "type": "COMBO",
+            "linkIds": [
+              60
+            ],
+            "localized_name": "unet_name_1",
+            "label": "저노이즈 편집 모델 · 후반부",
+            "pos": [
+              -120,
+              294
+            ]
+          },
+          {
+            "id": "8ac5421e-6d80-4625-b1b8-a653a23690ad",
+            "name": "clip_name",
+            "type": "COMBO",
+            "linkIds": [
+              61
+            ],
+            "localized_name": "clip_name",
+            "label": "텍스트 인코더",
+            "pos": [
+              -120,
+              316
+            ]
+          },
+          {
+            "id": "77dceba5-70cf-4f04-a14a-b96bfdd6f029",
+            "name": "vae_name",
+            "type": "COMBO",
+            "linkIds": [
+              62
+            ],
+            "localized_name": "vae_name",
+            "label": "영상 VAE",
+            "pos": [
+              -120,
+              338
+            ]
+          },
+          {
+            "id": "c78c02f5-5401-50f5-930a-006aa41c9eb0",
+            "name": "ctl_17_weight_dtype",
+            "type": "COMBO",
+            "label": "고노이즈 편집 모델 · 전반부 · 가중치 정밀도",
+            "localized_name": "고노이즈 편집 모델 · 전반부 · 가중치 정밀도",
+            "linkIds": [
+              117
+            ],
+            "pos": [
+              -120,
+              360
+            ]
+          },
+          {
+            "id": "eca3fbf1-a025-5f52-8094-416d9153eefd",
+            "name": "ctl_18_weight_dtype",
+            "type": "COMBO",
+            "label": "저노이즈 편집 모델 · 후반부 · 가중치 정밀도",
+            "localized_name": "저노이즈 편집 모델 · 후반부 · 가중치 정밀도",
+            "linkIds": [
+              118
+            ],
+            "pos": [
+              -120,
+              382
+            ]
+          },
+          {
+            "id": "02ca8225-0368-5566-9f61-ba2f28ff227f",
+            "name": "ctl_19_type",
+            "type": "COMBO",
+            "label": "텍스트 인코더 · type",
+            "localized_name": "텍스트 인코더 · type",
+            "linkIds": [
+              119
+            ],
+            "pos": [
+              -120,
+              404
+            ]
+          },
+          {
+            "id": "31bbe981-b4ef-5641-a7b8-8a1beade9697",
+            "name": "ctl_19_device",
+            "type": "COMBO",
+            "label": "텍스트 인코더 · 장치",
+            "localized_name": "텍스트 인코더 · 장치",
+            "linkIds": [
+              120
+            ],
+            "pos": [
+              -120,
+              426
+            ]
+          },
+          {
+            "id": "50c43a5e-7735-5cf2-a981-46ba8b1eda35",
+            "name": "ctl_24_sampler_name",
+            "type": "COMBO",
+            "label": "공식 Bernini 샘플러 · 샘플러",
+            "localized_name": "공식 Bernini 샘플러 · 샘플러",
+            "linkIds": [
+              121
+            ],
+            "pos": [
+              -120,
+              448
+            ]
+          },
+          {
+            "id": "aeee44d6-676c-5cfe-839f-0710e7942c49",
+            "name": "ctl_27_add_noise",
+            "type": "BOOLEAN",
+            "label": "전반부 · 고노이즈 모델 · add_noise",
+            "localized_name": "전반부 · 고노이즈 모델 · add_noise",
+            "linkIds": [
+              122
+            ],
+            "pos": [
+              -120,
+              470
+            ]
+          },
+          {
+            "id": "10924d69-78eb-548e-a0d7-643c66afe6be",
+            "name": "ctl_27_cfg",
+            "type": "FLOAT",
+            "label": "전반부 · 고노이즈 모델 · CFG",
+            "localized_name": "전반부 · 고노이즈 모델 · CFG",
+            "linkIds": [
+              123
+            ],
+            "pos": [
+              -120,
+              492
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "898ba8ba-96c4-4d34-aee5-26f1733f2efb",
+            "name": "VIDEO",
+            "type": "VIDEO",
+            "linkIds": [
+              63
+            ],
+            "localized_name": "VIDEO",
+            "pos": [
+              5120,
+              162
+            ],
+            "label": "완성 영상"
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 17,
+            "type": "UNETLoader",
+            "pos": [
+              80,
+              160
+            ],
+            "size": [
+              350,
+              156
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "unet_name",
+                "name": "unet_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "unet_name"
+                },
+                "link": 59
+              },
+              {
+                "name": "weight_dtype",
+                "type": "COMBO",
+                "link": 117,
+                "widget": {
+                  "name": "weight_dtype"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  129
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "UNETLoader",
+              "cnr_id": "comfy-core",
+              "models": [
+                {
+                  "name": "wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Bernini-R/resolve/main/diffusion_models/wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+                  "directory": "diffusion_models"
+                }
+              ]
+            },
+            "widgets_values": [
+              "wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+              "default"
+            ],
+            "title": "고노이즈 편집 모델 · 전반부",
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 18,
+            "type": "UNETLoader",
+            "pos": [
+              80,
+              384
+            ],
+            "size": [
+              350,
+              156
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "unet_name",
+                "name": "unet_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "unet_name"
+                },
+                "link": 60
+              },
+              {
+                "name": "weight_dtype",
+                "type": "COMBO",
+                "link": 118,
+                "widget": {
+                  "name": "weight_dtype"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  131
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "UNETLoader",
+              "cnr_id": "comfy-core",
+              "models": [
+                {
+                  "name": "wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Bernini-R/resolve/main/diffusion_models/wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+                  "directory": "diffusion_models"
+                }
+              ]
+            },
+            "widgets_values": [
+              "wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+              "default"
+            ],
+            "title": "저노이즈 편집 모델 · 후반부",
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 19,
+            "type": "CLIPLoader",
+            "pos": [
+              80,
+              608
+            ],
+            "size": [
+              350,
+              206
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "clip_name",
+                "name": "clip_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "clip_name"
+                },
+                "link": 61
+              },
+              {
+                "name": "type",
+                "type": "COMBO",
+                "link": 119,
+                "widget": {
+                  "name": "type"
+                }
+              },
+              {
+                "name": "device",
+                "type": "COMBO",
+                "link": 120,
+                "widget": {
+                  "name": "device"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "CLIP",
+                "name": "CLIP",
+                "type": "CLIP",
+                "links": [
+                  45,
+                  97
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "CLIPLoader",
+              "cnr_id": "comfy-core",
+              "models": [
+                {
+                  "name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Wan-Animate-2/resolve/main/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+                  "directory": "text_encoders"
+                }
+              ]
+            },
+            "widgets_values": [
+              "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+              "wan",
+              "default"
+            ],
+            "title": "텍스트 인코더",
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 20,
+            "type": "VAELoader",
+            "pos": [
+              80,
+              882
+            ],
+            "size": [
+              350,
+              110
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "vae_name",
+                "name": "vae_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "vae_name"
+                },
+                "link": 62
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "VAE",
+                "name": "VAE",
+                "type": "VAE",
+                "links": [
+                  98,
+                  109
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "VAELoader",
+              "cnr_id": "comfy-core",
+              "models": [
+                {
+                  "name": "Wan2_1_VAE_bf16.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Wan-Animate-2/resolve/main/vae/Wan2_1_VAE_bf16.safetensors",
+                  "directory": "vae"
+                }
+              ]
+            },
+            "widgets_values": [
+              "Wan2_1_VAE_bf16.safetensors"
+            ],
+            "title": "영상 VAE",
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 24,
+            "type": "KSamplerSelect",
+            "pos": [
+              2340,
+              160
+            ],
+            "size": [
+              350,
+              110
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 7,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "sampler_name",
+                "type": "COMBO",
+                "link": 121,
+                "widget": {
+                  "name": "sampler_name"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "SAMPLER",
+                "name": "SAMPLER",
+                "type": "SAMPLER",
+                "links": [
+                  30,
+                  105
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "KSamplerSelect",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "res_multistep"
+            ],
+            "title": "공식 Bernini 샘플러",
+            "color": "#5d3c68",
+            "bgcolor": "#312039"
+          },
+          {
+            "id": 33,
+            "type": "PrimitiveStringMultiline",
+            "title": "편집 지시 · 바꿀 요소만 구체적으로 작성",
+            "pos": [
+              610,
+              160
+            ],
+            "size": [
+              420,
+              246
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 4,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "value",
+                "type": "STRING",
+                "widget": {
+                  "name": "value"
+                },
+                "link": 54
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  100
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "PrimitiveStringMultiline",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "You are a helpful assistant specialized in video editing with reference.\nReplace only the foreground character in <Video 1> with the character from <Picture 1>. Preserve the original body motion, gestures, facial expression timing, camera movement, framing and background."
+            ],
+            "color": "#68532c",
+            "bgcolor": "#342b1d"
+          },
+          {
+            "id": 4,
+            "type": "GetVideoComponents",
+            "pos": [
+              1210,
+              160
+            ],
+            "size": [
+              350,
+              144
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 5,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "video",
+                "type": "VIDEO",
+                "link": 43
+              }
+            ],
+            "outputs": [
+              {
+                "name": "images",
+                "type": "IMAGE",
+                "links": [
+                  95
+                ]
+              },
+              {
+                "name": "audio",
+                "type": "AUDIO",
+                "links": []
+              },
+              {
+                "name": "fps",
+                "type": "FLOAT",
+                "links": [
+                  113
+                ]
+              },
+              {
+                "name": "bit_depth",
+                "type": "INT",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "GetVideoComponents",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [],
+            "title": "원본 프레임·FPS 추출",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 22,
+            "type": "CLIPTextEncode",
+            "pos": [
+              1740,
+              160
+            ],
+            "size": [
+              420,
+              268
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 6,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 45
+              },
+              {
+                "localized_name": "text",
+                "name": "text",
+                "type": "STRING",
+                "widget": {
+                  "name": "text"
+                },
+                "link": 55
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "links": [
+                  96
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "CLIPTextEncode",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "blurry, low quality, flicker, distorted anatomy, extra limbs, extra fingers, duplicate subjects, text, subtitles, watermark, camera shake"
+            ],
+            "color": "#4e4369",
+            "bgcolor": "#2a2540",
+            "title": "네거티브 프롬프트"
+          },
+          {
+            "id": 27,
+            "type": "SamplerCustom",
+            "pos": [
+              3710,
+              160
+            ],
+            "size": [
+              350,
+              366
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 9,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 127
+              },
+              {
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "link": 28
+              },
+              {
+                "localized_name": "negative",
+                "name": "negative",
+                "type": "CONDITIONING",
+                "link": 29
+              },
+              {
+                "localized_name": "sampler",
+                "name": "sampler",
+                "type": "SAMPLER",
+                "link": 30
+              },
+              {
+                "localized_name": "sigmas",
+                "name": "sigmas",
+                "type": "SIGMAS",
+                "link": 31
+              },
+              {
+                "localized_name": "latent_image",
+                "name": "latent_image",
+                "type": "LATENT",
+                "link": 36
+              },
+              {
+                "localized_name": "noise_seed",
+                "name": "noise_seed",
+                "type": "INT",
+                "widget": {
+                  "name": "noise_seed"
+                },
+                "link": 58
+              },
+              {
+                "localized_name": "cfg",
+                "name": "cfg",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "cfg"
+                },
+                "link": 123
+              },
+              {
+                "name": "add_noise",
+                "type": "BOOLEAN",
+                "link": 122,
+                "widget": {
+                  "name": "add_noise"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "output",
+                "name": "output",
+                "type": "LATENT",
+                "links": [
+                  107
+                ]
+              },
+              {
+                "localized_name": "denoised_output",
+                "name": "denoised_output",
+                "type": "LATENT",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "SamplerCustom",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              true,
+              42,
+              "randomize",
+              1.0
+            ],
+            "title": "전반부 · 고노이즈 모델",
+            "color": "#5d3c68",
+            "bgcolor": "#312039"
+          },
+          {
+            "id": 41,
+            "type": "f799b871-3ddc-531d-9bee-82b55a353432",
+            "title": "입력 정리 · 크기 / 길이",
+            "pos": [
+              2870,
+              160
+            ],
+            "size": [
+              660,
+              440
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 8,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "in_00_images",
+                "type": "IMAGE",
+                "label": "image",
+                "localized_name": "image",
+                "link": 95
+              },
+              {
+                "name": "in_01_CONDITIONING",
+                "type": "CONDITIONING",
+                "label": "negative",
+                "localized_name": "negative",
+                "link": 96
+              },
+              {
+                "name": "in_02_CLIP",
+                "type": "CLIP",
+                "label": "clip",
+                "localized_name": "clip",
+                "link": 97
+              },
+              {
+                "name": "in_03_VAE",
+                "type": "VAE",
+                "label": "vae",
+                "localized_name": "vae",
+                "link": 98
+              },
+              {
+                "name": "in_04_MODEL",
+                "type": "MODEL",
+                "label": "model",
+                "localized_name": "model",
+                "link": 128
+              },
+              {
+                "name": "in_05_STRING",
+                "type": "STRING",
+                "label": "text",
+                "localized_name": "text",
+                "link": 100
+              },
+              {
+                "name": "in_06_image",
+                "type": "IMAGE",
+                "label": "reference_image_0",
+                "localized_name": "reference_image_0",
+                "link": 101
+              },
+              {
+                "name": "ctl_25_scheduler",
+                "type": "COMBO",
+                "label": "품질 경로 · 40스텝 · 스케줄러",
+                "localized_name": "품질 경로 · 40스텝 · 스케줄러",
+                "link": null,
+                "widget": {
+                  "name": "ctl_25_scheduler"
+                }
+              },
+              {
+                "name": "ctl_25_steps",
+                "type": "INT",
+                "label": "품질 경로 · 40스텝 · 스텝",
+                "localized_name": "품질 경로 · 40스텝 · 스텝",
+                "link": null,
+                "widget": {
+                  "name": "ctl_25_steps"
+                }
+              },
+              {
+                "name": "ctl_25_denoise",
+                "type": "FLOAT",
+                "label": "품질 경로 · 40스텝 · 디노이즈",
+                "localized_name": "품질 경로 · 40스텝 · 디노이즈",
+                "link": null,
+                "widget": {
+                  "name": "ctl_25_denoise"
+                }
+              },
+              {
+                "name": "ctl_26_step",
+                "type": "INT",
+                "label": "고·저 노이즈 모델 전환 · 20스텝 · step",
+                "localized_name": "고·저 노이즈 모델 전환 · 20스텝 · step",
+                "link": null,
+                "widget": {
+                  "name": "ctl_26_step"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "out_00_positive",
+                "type": "CONDITIONING",
+                "label": "positive",
+                "localized_name": "positive",
+                "links": [
+                  28,
+                  103
+                ]
+              },
+              {
+                "name": "out_01_negative",
+                "type": "CONDITIONING",
+                "label": "negative",
+                "localized_name": "negative",
+                "links": [
+                  29,
+                  104
+                ]
+              },
+              {
+                "name": "out_02_high_sigmas",
+                "type": "SIGMAS",
+                "label": "high_sigmas",
+                "localized_name": "high_sigmas",
+                "links": [
+                  31
+                ]
+              },
+              {
+                "name": "out_03_low_sigmas",
+                "type": "SIGMAS",
+                "label": "low_sigmas",
+                "localized_name": "low_sigmas",
+                "links": [
+                  106
+                ]
+              },
+              {
+                "name": "out_04_latent",
+                "type": "LATENT",
+                "label": "latent",
+                "localized_name": "latent",
+                "links": [
+                  36
+                ]
+              },
+              {
+                "name": "out_05_batch_size",
+                "type": "INT",
+                "label": "batch_size",
+                "localized_name": "batch_size",
+                "links": [
+                  108
+                ]
+              },
+              {
+                "name": "out_06_width",
+                "type": "INT",
+                "label": "width",
+                "localized_name": "width",
+                "links": [
+                  111
+                ]
+              },
+              {
+                "name": "out_07_height",
+                "type": "INT",
+                "label": "height",
+                "localized_name": "height",
+                "links": [
+                  112
+                ]
+              },
+              {
+                "name": "out_08_width",
+                "type": "INT",
+                "label": "width",
+                "localized_name": "width",
+                "links": [
+                  114
+                ]
+              },
+              {
+                "name": "out_09_height",
+                "type": "INT",
+                "label": "height",
+                "localized_name": "height",
+                "links": [
+                  115
+                ]
+              },
+              {
+                "name": "out_10_batch_size",
+                "type": "INT",
+                "label": "batch_size",
+                "localized_name": "batch_size",
+                "links": [
+                  116
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "previewExposures": []
+            },
+            "widgets_values": [
+              "",
+              "simple",
+              6,
+              1,
+              3
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538",
+            "widgets_values_named": {
+              "ctl_25_scheduler": "simple",
+              "ctl_25_steps": 40,
+              "ctl_25_denoise": 1,
+              "ctl_26_step": 20
+            }
+          },
+          {
+            "id": 42,
+            "type": "4a6c2666-8218-5e15-a78e-389e531c001d",
+            "title": "복원 · 합성 / 출력",
+            "pos": [
+              4240,
+              160
+            ],
+            "size": [
+              660,
+              540
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 10,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "in_00_out_00_positive",
+                "type": "CONDITIONING",
+                "label": "positive",
+                "localized_name": "positive",
+                "link": 103
+              },
+              {
+                "name": "in_01_out_01_negative",
+                "type": "CONDITIONING",
+                "label": "negative",
+                "localized_name": "negative",
+                "link": 104
+              },
+              {
+                "name": "in_02_SAMPLER",
+                "type": "SAMPLER",
+                "label": "sampler",
+                "localized_name": "sampler",
+                "link": 105
+              },
+              {
+                "name": "in_03_out_03_low_sigmas",
+                "type": "SIGMAS",
+                "label": "sigmas",
+                "localized_name": "sigmas",
+                "link": 106
+              },
+              {
+                "name": "in_04_output",
+                "type": "LATENT",
+                "label": "latent_image",
+                "localized_name": "latent_image",
+                "link": 107
+              },
+              {
+                "name": "in_05_out_05_batch_size",
+                "type": "INT",
+                "label": "length",
+                "localized_name": "length",
+                "link": 108
+              },
+              {
+                "name": "in_06_VAE",
+                "type": "VAE",
+                "label": "vae",
+                "localized_name": "vae",
+                "link": 109
+              },
+              {
+                "name": "in_07_MODEL",
+                "type": "MODEL",
+                "label": "model",
+                "localized_name": "model",
+                "link": 130
+              },
+              {
+                "name": "in_08_out_06_width",
+                "type": "INT",
+                "label": "width",
+                "localized_name": "width",
+                "link": 111
+              },
+              {
+                "name": "in_09_out_07_height",
+                "type": "INT",
+                "label": "height",
+                "localized_name": "height",
+                "link": 112
+              },
+              {
+                "name": "in_10_fps",
+                "type": "FLOAT",
+                "label": "values.a",
+                "localized_name": "values.a",
+                "link": 113
+              },
+              {
+                "name": "in_11_out_08_width",
+                "type": "INT",
+                "label": "values.c",
+                "localized_name": "values.c",
+                "link": 114
+              },
+              {
+                "name": "in_12_out_09_height",
+                "type": "INT",
+                "label": "values.e",
+                "localized_name": "values.e",
+                "link": 115
+              },
+              {
+                "name": "in_13_out_10_batch_size",
+                "type": "INT",
+                "label": "values.g",
+                "localized_name": "values.g",
+                "link": 116
+              },
+              {
+                "name": "ctl_28_add_noise",
+                "type": "BOOLEAN",
+                "label": "후반부 · 저노이즈 모델 · add_noise",
+                "localized_name": "후반부 · 저노이즈 모델 · add_noise",
+                "link": null,
+                "widget": {
+                  "name": "ctl_28_add_noise"
+                }
+              },
+              {
+                "name": "ctl_28_noise_seed",
+                "type": "INT",
+                "label": "후반부 · 저노이즈 모델 · 시드",
+                "localized_name": "후반부 · 저노이즈 모델 · 시드",
+                "link": 126,
+                "widget": {
+                  "name": "ctl_28_noise_seed"
+                }
+              },
+              {
+                "name": "ctl_28_cfg",
+                "type": "FLOAT",
+                "label": "후반부 · 저노이즈 모델 · CFG",
+                "localized_name": "후반부 · 저노이즈 모델 · CFG",
+                "link": null,
+                "widget": {
+                  "name": "ctl_28_cfg"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "out_00_VIDEO",
+                "type": "VIDEO",
+                "label": "VIDEO",
+                "localized_name": "VIDEO",
+                "links": [
+                  63
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "previewExposures": []
+            },
+            "widgets_values": [
+              false,
+              0,
+              1.0
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538",
+            "widgets_values_named": {
+              "ctl_28_add_noise": false,
+              "ctl_28_noise_seed": 0,
+              "ctl_28_cfg": 1.0
+            }
+          },
+          {
+            "id": 43,
+            "type": "SeedNode",
+            "pos": [
+              -260,
+              160
+            ],
+            "size": [
+              300,
+              110
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "seed",
+                "type": "INT",
+                "widget": {
+                  "name": "seed"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "name": "seed",
+                "type": "INT",
+                "links": [
+                  126
+                ]
+              }
+            ],
+            "title": "시드 · 매 실행 랜덤",
+            "properties": {
+              "Node name for S&R": "SeedNode",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              0,
+              "randomize"
+            ],
+            "widgets_values_named": {
+              "seed": 0,
+              "control_after_generate": "randomize"
+            },
+            "color": "#68532c",
+            "bgcolor": "#342b1d"
+          },
+          {
+            "id": 44,
+            "type": "LoraLoaderModelOnly",
+            "pos": [
+              80,
+              460
+            ],
+            "size": [
+              350,
+              100
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "model",
+                "localized_name": "model",
+                "type": "MODEL",
+                "link": 129
+              }
+            ],
+            "outputs": [
+              {
+                "name": "MODEL",
+                "localized_name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  127,
+                  128
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "LoraLoaderModelOnly",
+              "models": [
+                {
+                  "name": "wan2.2_t2v_lightx2v_4steps_lora_v1.1_high_noise.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_t2v_lightx2v_4steps_lora_v1.1_high_noise.safetensors",
+                  "directory": "loras"
+                }
+              ]
+            },
+            "widgets_values": [
+              "wan2.2_t2v_lightx2v_4steps_lora_v1.1_high_noise.safetensors",
+              1.0
+            ],
+            "title": "빠른 모드 LoRA · 고노이즈 (끄려면 Ctrl+B 바이패스)"
+          },
+          {
+            "id": 45,
+            "type": "LoraLoaderModelOnly",
+            "pos": [
+              80,
+              684
+            ],
+            "size": [
+              350,
+              100
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "model",
+                "localized_name": "model",
+                "type": "MODEL",
+                "link": 131
+              }
+            ],
+            "outputs": [
+              {
+                "name": "MODEL",
+                "localized_name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  130
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "LoraLoaderModelOnly",
+              "models": [
+                {
+                  "name": "wan2.2_t2v_lightx2v_4steps_lora_v1.1_low_noise.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_t2v_lightx2v_4steps_lora_v1.1_low_noise.safetensors",
+                  "directory": "loras"
+                }
+              ]
+            },
+            "widgets_values": [
+              "wan2.2_t2v_lightx2v_4steps_lora_v1.1_low_noise.safetensors",
+              1.0
+            ],
+            "title": "빠른 모드 LoRA · 저노이즈 (끄려면 Ctrl+B 바이패스)"
+          }
+        ],
+        "groups": [
+          {
+            "id": 1,
+            "title": "01  모델 · 로딩 / LoRA",
+            "bounding": [
+              56,
+              80,
+              398,
+              980
+            ],
+            "color": "#59809d",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 2,
+            "title": "02  설정 · 프롬프트 / 시드",
+            "bounding": [
+              586,
+              80,
+              468,
+              394
+            ],
+            "color": "#a88a4a",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 3,
+            "title": "03  입력 정리 · 크기 / 길이",
+            "bounding": [
+              1186,
+              80,
+              398,
+              292
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 4,
+            "title": "04  조건 · 프롬프트 / 가이드",
+            "bounding": [
+              1716,
+              80,
+              468,
+              416
+            ],
+            "color": "#8673ac",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 5,
+            "title": "05  생성 · 샘플링 / 처리",
+            "bounding": [
+              2316,
+              80,
+              398,
+              258
+            ],
+            "color": "#a572b4",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 6,
+            "title": "06  입력 정리 · 크기 / 길이",
+            "bounding": [
+              2846,
+              80,
+              708,
+              588
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 7,
+            "title": "07  생성 · 샘플링 / 처리",
+            "bounding": [
+              3686,
+              80,
+              398,
+              514
+            ],
+            "color": "#a572b4",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 8,
+            "title": "08  입력 정리 · 크기 / 길이",
+            "bounding": [
+              4216,
+              80,
+              708,
+              688
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          }
+        ],
+        "links": [
+          {
+            "id": 28,
+            "origin_id": 41,
+            "origin_slot": 0,
+            "target_id": 27,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 29,
+            "origin_id": 41,
+            "origin_slot": 1,
+            "target_id": 27,
+            "target_slot": 2,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 30,
+            "origin_id": 24,
+            "origin_slot": 0,
+            "target_id": 27,
+            "target_slot": 3,
+            "type": "SAMPLER"
+          },
+          {
+            "id": 31,
+            "origin_id": 41,
+            "origin_slot": 2,
+            "target_id": 27,
+            "target_slot": 4,
+            "type": "SIGMAS"
+          },
+          {
+            "id": 36,
+            "origin_id": 41,
+            "origin_slot": 4,
+            "target_id": 27,
+            "target_slot": 5,
+            "type": "LATENT"
+          },
+          {
+            "id": 43,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 4,
+            "target_slot": 0,
+            "type": "VIDEO"
+          },
+          {
+            "id": 45,
+            "origin_id": 19,
+            "origin_slot": 0,
+            "target_id": 22,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 54,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 33,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 55,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 22,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 58,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 27,
+            "target_slot": 6,
+            "type": "INT"
+          },
+          {
+            "id": 59,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 17,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 60,
+            "origin_id": -10,
+            "origin_slot": 6,
+            "target_id": 18,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 61,
+            "origin_id": -10,
+            "origin_slot": 7,
+            "target_id": 19,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 62,
+            "origin_id": -10,
+            "origin_slot": 8,
+            "target_id": 20,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 63,
+            "origin_id": 42,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "VIDEO"
+          },
+          {
+            "id": 95,
+            "origin_id": 4,
+            "origin_slot": 0,
+            "target_id": 41,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 96,
+            "origin_id": 22,
+            "origin_slot": 0,
+            "target_id": 41,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 97,
+            "origin_id": 19,
+            "origin_slot": 0,
+            "target_id": 41,
+            "target_slot": 2,
+            "type": "CLIP"
+          },
+          {
+            "id": 98,
+            "origin_id": 20,
+            "origin_slot": 0,
+            "target_id": 41,
+            "target_slot": 3,
+            "type": "VAE"
+          },
+          {
+            "id": 100,
+            "origin_id": 33,
+            "origin_slot": 0,
+            "target_id": 41,
+            "target_slot": 5,
+            "type": "STRING"
+          },
+          {
+            "id": 101,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 41,
+            "target_slot": 6,
+            "type": "IMAGE"
+          },
+          {
+            "id": 103,
+            "origin_id": 41,
+            "origin_slot": 0,
+            "target_id": 42,
+            "target_slot": 0,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 104,
+            "origin_id": 41,
+            "origin_slot": 1,
+            "target_id": 42,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 105,
+            "origin_id": 24,
+            "origin_slot": 0,
+            "target_id": 42,
+            "target_slot": 2,
+            "type": "SAMPLER"
+          },
+          {
+            "id": 106,
+            "origin_id": 41,
+            "origin_slot": 3,
+            "target_id": 42,
+            "target_slot": 3,
+            "type": "SIGMAS"
+          },
+          {
+            "id": 107,
+            "origin_id": 27,
+            "origin_slot": 0,
+            "target_id": 42,
+            "target_slot": 4,
+            "type": "LATENT"
+          },
+          {
+            "id": 108,
+            "origin_id": 41,
+            "origin_slot": 5,
+            "target_id": 42,
+            "target_slot": 5,
+            "type": "INT"
+          },
+          {
+            "id": 109,
+            "origin_id": 20,
+            "origin_slot": 0,
+            "target_id": 42,
+            "target_slot": 6,
+            "type": "VAE"
+          },
+          {
+            "id": 111,
+            "origin_id": 41,
+            "origin_slot": 6,
+            "target_id": 42,
+            "target_slot": 8,
+            "type": "INT"
+          },
+          {
+            "id": 112,
+            "origin_id": 41,
+            "origin_slot": 7,
+            "target_id": 42,
+            "target_slot": 9,
+            "type": "INT"
+          },
+          {
+            "id": 113,
+            "origin_id": 4,
+            "origin_slot": 2,
+            "target_id": 42,
+            "target_slot": 10,
+            "type": "FLOAT"
+          },
+          {
+            "id": 114,
+            "origin_id": 41,
+            "origin_slot": 8,
+            "target_id": 42,
+            "target_slot": 11,
+            "type": "INT"
+          },
+          {
+            "id": 115,
+            "origin_id": 41,
+            "origin_slot": 9,
+            "target_id": 42,
+            "target_slot": 12,
+            "type": "INT"
+          },
+          {
+            "id": 116,
+            "origin_id": 41,
+            "origin_slot": 10,
+            "target_id": 42,
+            "target_slot": 13,
+            "type": "INT"
+          },
+          {
+            "id": 117,
+            "origin_id": -10,
+            "origin_slot": 9,
+            "target_id": 17,
+            "target_slot": 1,
+            "type": "COMBO"
+          },
+          {
+            "id": 118,
+            "origin_id": -10,
+            "origin_slot": 10,
+            "target_id": 18,
+            "target_slot": 1,
+            "type": "COMBO"
+          },
+          {
+            "id": 119,
+            "origin_id": -10,
+            "origin_slot": 11,
+            "target_id": 19,
+            "target_slot": 1,
+            "type": "COMBO"
+          },
+          {
+            "id": 120,
+            "origin_id": -10,
+            "origin_slot": 12,
+            "target_id": 19,
+            "target_slot": 2,
+            "type": "COMBO"
+          },
+          {
+            "id": 121,
+            "origin_id": -10,
+            "origin_slot": 13,
+            "target_id": 24,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 122,
+            "origin_id": -10,
+            "origin_slot": 14,
+            "target_id": 27,
+            "target_slot": 8,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 123,
+            "origin_id": -10,
+            "origin_slot": 15,
+            "target_id": 27,
+            "target_slot": 7,
+            "type": "FLOAT"
+          },
+          {
+            "id": 126,
+            "origin_id": 43,
+            "origin_slot": 0,
+            "target_id": 42,
+            "target_slot": 15,
+            "type": "INT"
+          },
+          {
+            "id": 127,
+            "origin_id": 44,
+            "origin_slot": 0,
+            "target_id": 27,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 128,
+            "origin_id": 44,
+            "origin_slot": 0,
+            "target_id": 41,
+            "target_slot": 4,
+            "type": "MODEL"
+          },
+          {
+            "id": 129,
+            "origin_id": 17,
+            "origin_slot": 0,
+            "target_id": 44,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 130,
+            "origin_id": 45,
+            "origin_slot": 0,
+            "target_id": 42,
+            "target_slot": 7,
+            "type": "MODEL"
+          },
+          {
+            "id": 131,
+            "origin_id": 18,
+            "origin_slot": 0,
+            "target_id": 45,
+            "target_slot": 0,
+            "type": "MODEL"
+          }
+        ],
+        "extra": {
+          "codex_layout_role": "sample",
+          "ds": {
+            "scale": 0.25274725274725274,
+            "offset": [
+              500,
+              25
+            ]
+          }
+        }
+      },
+      {
+        "id": "f799b871-3ddc-531d-9bee-82b55a353432",
+        "version": 1,
+        "state": {
+          "lastNodeId": 38,
+          "lastLinkId": 98,
+          "lastGroupId": 9,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "01 입력 정리 · 크기 / 길이",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -420,
+            120,
+            320,
+            312
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            4940,
+            120,
+            320,
+            312
+          ]
+        },
+        "inputs": [
+          {
+            "id": "ca24d920-9dfd-5b76-9f37-9893dca63985",
+            "name": "in_00_images",
+            "type": "IMAGE",
+            "label": "image",
+            "localized_name": "image",
+            "linkIds": [
+              1,
+              64,
+              69,
+              74
+            ],
+            "pos": [
+              -120,
+              162
+            ]
+          },
+          {
+            "id": "30115794-b31e-57c2-9f4f-f76ff785d3cb",
+            "name": "in_01_CONDITIONING",
+            "type": "CONDITIONING",
+            "label": "negative",
+            "localized_name": "negative",
+            "linkIds": [
+              22
+            ],
+            "pos": [
+              -120,
+              184
+            ]
+          },
+          {
+            "id": "2b47f4de-7b1d-552b-915c-baa2ccffb37b",
+            "name": "in_02_CLIP",
+            "type": "CLIP",
+            "label": "clip",
+            "localized_name": "clip",
+            "linkIds": [
+              44
+            ],
+            "pos": [
+              -120,
+              206
+            ]
+          },
+          {
+            "id": "79f3cb66-6751-5fbf-82d9-18e80d71aa87",
+            "name": "in_03_VAE",
+            "type": "VAE",
+            "label": "vae",
+            "localized_name": "vae",
+            "linkIds": [
+              46
+            ],
+            "pos": [
+              -120,
+              228
+            ]
+          },
+          {
+            "id": "ff649534-96ab-5dff-a929-341adaf96de9",
+            "name": "in_04_MODEL",
+            "type": "MODEL",
+            "label": "model",
+            "localized_name": "model",
+            "linkIds": [
+              48
+            ],
+            "pos": [
+              -120,
+              250
+            ]
+          },
+          {
+            "id": "7c25ebeb-6d34-5e0c-9e3f-371076b64dee",
+            "name": "in_05_STRING",
+            "type": "STRING",
+            "label": "text",
+            "localized_name": "text",
+            "linkIds": [
+              51
+            ],
+            "pos": [
+              -120,
+              272
+            ]
+          },
+          {
+            "id": "27bf51da-862e-5dfe-a22d-b5764aaad2ef",
+            "name": "in_06_image",
+            "type": "IMAGE",
+            "label": "reference_image_0",
+            "localized_name": "reference_image_0",
+            "linkIds": [
+              53
+            ],
+            "pos": [
+              -120,
+              294
+            ]
+          },
+          {
+            "id": "dcc2b16a-567f-5bee-a99d-65f304cdcf45",
+            "name": "ctl_25_scheduler",
+            "type": "COMBO",
+            "label": "품질 경로 · 40스텝 · 스케줄러",
+            "localized_name": "품질 경로 · 40스텝 · 스케줄러",
+            "linkIds": [
+              95
+            ],
+            "pos": [
+              -120,
+              316
+            ]
+          },
+          {
+            "id": "3c09624d-435d-5367-89d0-fc91a2514f88",
+            "name": "ctl_25_steps",
+            "type": "INT",
+            "label": "품질 경로 · 40스텝 · 스텝",
+            "localized_name": "품질 경로 · 40스텝 · 스텝",
+            "linkIds": [
+              96
+            ],
+            "pos": [
+              -120,
+              338
+            ]
+          },
+          {
+            "id": "a08115b8-8116-56b4-8056-b4cfedbc3fcf",
+            "name": "ctl_25_denoise",
+            "type": "FLOAT",
+            "label": "품질 경로 · 40스텝 · 디노이즈",
+            "localized_name": "품질 경로 · 40스텝 · 디노이즈",
+            "linkIds": [
+              97
+            ],
+            "pos": [
+              -120,
+              360
+            ]
+          },
+          {
+            "id": "7e0835d8-4983-5b8d-ad62-7fa555eb4169",
+            "name": "ctl_26_step",
+            "type": "INT",
+            "label": "고·저 노이즈 모델 전환 · 20스텝 · step",
+            "localized_name": "고·저 노이즈 모델 전환 · 20스텝 · step",
+            "linkIds": [
+              98
+            ],
+            "pos": [
+              -120,
+              382
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "9e338884-17bc-5305-b66b-e72cdf47717f",
+            "name": "out_00_positive",
+            "type": "CONDITIONING",
+            "label": "positive",
+            "localized_name": "positive",
+            "linkIds": [
+              84
+            ],
+            "pos": [
+              4960,
+              162
+            ]
+          },
+          {
+            "id": "77cd0f3d-5f8c-5770-8c9b-8d2e502a3ec6",
+            "name": "out_01_negative",
+            "type": "CONDITIONING",
+            "label": "negative",
+            "localized_name": "negative",
+            "linkIds": [
+              85
+            ],
+            "pos": [
+              4960,
+              184
+            ]
+          },
+          {
+            "id": "2ce3b24a-8066-54d4-bd51-a198f47dc1f1",
+            "name": "out_02_high_sigmas",
+            "type": "SIGMAS",
+            "label": "high_sigmas",
+            "localized_name": "high_sigmas",
+            "linkIds": [
+              86
+            ],
+            "pos": [
+              4960,
+              206
+            ]
+          },
+          {
+            "id": "e905682c-7b6c-5d1b-bd96-91af50bd490f",
+            "name": "out_03_low_sigmas",
+            "type": "SIGMAS",
+            "label": "low_sigmas",
+            "localized_name": "low_sigmas",
+            "linkIds": [
+              87
+            ],
+            "pos": [
+              4960,
+              228
+            ]
+          },
+          {
+            "id": "d66f273f-2caa-56c2-b662-c3bceffbf3ce",
+            "name": "out_04_latent",
+            "type": "LATENT",
+            "label": "latent",
+            "localized_name": "latent",
+            "linkIds": [
+              88
+            ],
+            "pos": [
+              4960,
+              250
+            ]
+          },
+          {
+            "id": "fb4a8bf1-e789-5a7c-965a-c2618c753eaf",
+            "name": "out_05_batch_size",
+            "type": "INT",
+            "label": "batch_size",
+            "localized_name": "batch_size",
+            "linkIds": [
+              89
+            ],
+            "pos": [
+              4960,
+              272
+            ]
+          },
+          {
+            "id": "5ec19099-87e8-54af-8ef3-817e52e29b6d",
+            "name": "out_06_width",
+            "type": "INT",
+            "label": "width",
+            "localized_name": "width",
+            "linkIds": [
+              90
+            ],
+            "pos": [
+              4960,
+              294
+            ]
+          },
+          {
+            "id": "d371955e-0843-5109-84b0-c3d958b16f0f",
+            "name": "out_07_height",
+            "type": "INT",
+            "label": "height",
+            "localized_name": "height",
+            "linkIds": [
+              91
+            ],
+            "pos": [
+              4960,
+              316
+            ]
+          },
+          {
+            "id": "5fdfe004-8dd3-59ad-ba37-adae31ed25c1",
+            "name": "out_08_width",
+            "type": "INT",
+            "label": "width",
+            "localized_name": "width",
+            "linkIds": [
+              92
+            ],
+            "pos": [
+              4960,
+              338
+            ]
+          },
+          {
+            "id": "ab6340f0-ec70-55b4-9663-92268506d7b5",
+            "name": "out_09_height",
+            "type": "INT",
+            "label": "height",
+            "localized_name": "height",
+            "linkIds": [
+              93
+            ],
+            "pos": [
+              4960,
+              360
+            ]
+          },
+          {
+            "id": "1e776ea7-ff8e-592e-8fbe-04009a6c94ca",
+            "name": "out_10_batch_size",
+            "type": "INT",
+            "label": "batch_size",
+            "localized_name": "batch_size",
+            "linkIds": [
+              94
+            ],
+            "pos": [
+              4960,
+              382
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 5,
+            "type": "GetImageSize",
+            "pos": [
+              80,
+              160
+            ],
+            "size": [
+              350,
+              122
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 1
+              }
+            ],
+            "outputs": [
+              {
+                "name": "width",
+                "type": "INT",
+                "links": [
+                  2,
+                  4
+                ]
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "links": [
+                  3,
+                  5
+                ]
+              },
+              {
+                "name": "batch_size",
+                "type": "INT",
+                "links": [
+                  9,
+                  11,
+                  12,
+                  89
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "GetImageSize",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [],
+            "title": "입력 해상도·실제 프레임 수",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 21,
+            "type": "CLIPTextEncode",
+            "pos": [
+              1140,
+              160
+            ],
+            "size": [
+              420,
+              268
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 7,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 44
+              },
+              {
+                "name": "text",
+                "type": "STRING",
+                "widget": {
+                  "name": "text"
+                },
+                "link": 51
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "links": [
+                  21
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "CLIPTextEncode",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "You are a helpful assistant specialized in video editing with reference.\nReplace only the foreground character in <Video 1> with the character from <Picture 1>. Preserve the original body motion, gestures, facial expression timing, camera movement, framing and background."
+            ],
+            "color": "#4e4369",
+            "bgcolor": "#2a2540",
+            "title": "편집 지시 · 바꿀 요소만 구체적으로 작성"
+          },
+          {
+            "id": 25,
+            "type": "BasicScheduler",
+            "pos": [
+              1740,
+              160
+            ],
+            "size": [
+              350,
+              228
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 8,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 48
+              },
+              {
+                "localized_name": "steps",
+                "name": "steps",
+                "type": "INT",
+                "widget": {
+                  "name": "steps"
+                },
+                "link": 96
+              },
+              {
+                "name": "scheduler",
+                "type": "COMBO",
+                "link": 95,
+                "widget": {
+                  "name": "scheduler"
+                }
+              },
+              {
+                "name": "denoise",
+                "type": "FLOAT",
+                "link": 97,
+                "widget": {
+                  "name": "denoise"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "SIGMAS",
+                "name": "SIGMAS",
+                "type": "SIGMAS",
+                "links": [
+                  27
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "BasicScheduler",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "simple",
+              6,
+              1
+            ],
+            "title": "빠른 모드 · 6스텝 (품질 경로는 40)",
+            "color": "#5d3c68",
+            "bgcolor": "#312039"
+          },
+          {
+            "id": 34,
+            "type": "GetImageSize",
+            "title": "원본 전체 W/H/N · FPS는 FLOAT 유지",
+            "pos": [
+              80,
+              350
+            ],
+            "size": [
+              350,
+              122
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 64
+              }
+            ],
+            "outputs": [
+              {
+                "name": "width",
+                "type": "INT",
+                "links": [
+                  90
+                ],
+                "slot_index": 0
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "links": [
+                  91
+                ],
+                "slot_index": 1
+              },
+              {
+                "name": "batch_size",
+                "type": "INT",
+                "links": [
+                  67
+                ],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "GetImageSize",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 38,
+            "type": "GetImageSize",
+            "title": "최종 검사 기준 · 원본 W/H/N",
+            "pos": [
+              80,
+              540
+            ],
+            "size": [
+              350,
+              122
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 74
+              }
+            ],
+            "outputs": [
+              {
+                "name": "width",
+                "type": "INT",
+                "links": [
+                  92
+                ],
+                "slot_index": 0
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "links": [
+                  93
+                ],
+                "slot_index": 1
+              },
+              {
+                "name": "batch_size",
+                "type": "INT",
+                "links": [
+                  94
+                ],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "GetImageSize",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 6,
+            "type": "ComfyMathExpression",
+            "pos": [
+              80,
+              730
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 2
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 3,
+                "shape": 7
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  24,
+                  65
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(16,ceil(a/16)*16)"
+            ],
+            "title": "추론 너비 · 16배수 패딩 · 원본 해상도",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 7,
+            "type": "ComfyMathExpression",
+            "pos": [
+              80,
+              948
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 4,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 4
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 5,
+                "shape": 7
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  25,
+                  66
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(16,ceil(b/16)*16)"
+            ],
+            "title": "추론 높이 · 16배수 패딩 · 원본 해상도",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 9,
+            "type": "ComfyMathExpression",
+            "pos": [
+              610,
+              160
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 5,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 9
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": null,
+                "shape": 7
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  10,
+                  20,
+                  26
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "1 + 4 * ceil((a-1)/4)"
+            ],
+            "title": "모델 프레임 규격까지 자동 올림",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 11,
+            "type": "ComfyMathExpression",
+            "pos": [
+              610,
+              378
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 6,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 12
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": null,
+                "shape": 7
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  14
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(0,a-1)"
+            ],
+            "title": "원본 마지막 프레임 인덱스",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 26,
+            "type": "SplitSigmas",
+            "pos": [
+              1740,
+              456
+            ],
+            "size": [
+              350,
+              128
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 9,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "sigmas",
+                "name": "sigmas",
+                "type": "SIGMAS",
+                "link": 27
+              },
+              {
+                "localized_name": "step",
+                "name": "step",
+                "type": "INT",
+                "widget": {
+                  "name": "step"
+                },
+                "link": 98
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "high_sigmas",
+                "name": "high_sigmas",
+                "type": "SIGMAS",
+                "links": [
+                  86
+                ]
+              },
+              {
+                "localized_name": "low_sigmas",
+                "name": "low_sigmas",
+                "type": "SIGMAS",
+                "links": [
+                  87
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "SplitSigmas",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              3
+            ],
+            "title": "고·저 노이즈 모델 전환 · 3스텝 (품질 경로는 20)",
+            "color": "#5d3c68",
+            "bgcolor": "#312039"
+          },
+          {
+            "id": 10,
+            "type": "ComfyMathExpression",
+            "pos": [
+              2270,
+              160
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 10,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 10
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 11,
+                "shape": 7
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  16
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(1,a-b)"
+            ],
+            "title": "마지막 프레임 패딩 개수",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 35,
+            "type": "EmptyImage",
+            "title": "원본 /16 오른쪽·아래 임시 패딩",
+            "pos": [
+              2270,
+              378
+            ],
+            "size": [
+              350,
+              234
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 11,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "width",
+                "type": "INT",
+                "link": 65,
+                "widget": {
+                  "name": "width"
+                }
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "link": 66,
+                "widget": {
+                  "name": "height"
+                }
+              },
+              {
+                "name": "batch_size",
+                "type": "INT",
+                "link": 67,
+                "widget": {
+                  "name": "batch_size"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  68
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "EmptyImage",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              832,
+              480,
+              1,
+              0
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 36,
+            "type": "ImageCompositeMasked",
+            "title": "추론 입력 · 원본 픽셀을 좌상단에 유지",
+            "pos": [
+              2800,
+              160
+            ],
+            "size": [
+              350,
+              184
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 12,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "destination",
+                "type": "IMAGE",
+                "link": 68
+              },
+              {
+                "name": "source",
+                "type": "IMAGE",
+                "link": 69
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  13,
+                  17
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageCompositeMasked",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              0,
+              0,
+              false
+            ],
+            "color": "#68503c",
+            "bgcolor": "#382a20"
+          },
+          {
+            "id": 12,
+            "type": "ImageFromBatch",
+            "pos": [
+              3330,
+              160
+            ],
+            "size": [
+              350,
+              178
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 13,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "type": "IMAGE",
+                "link": 13
+              },
+              {
+                "localized_name": "length",
+                "name": "length",
+                "type": "INT",
+                "widget": {
+                  "name": "length"
+                },
+                "link": null
+              },
+              {
+                "name": "batch_index",
+                "type": "INT",
+                "link": 14,
+                "widget": {
+                  "name": "batch_index"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  15
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageFromBatch",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              0,
+              1
+            ],
+            "title": "마지막 프레임 추출",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 13,
+            "type": "RepeatImageBatch",
+            "pos": [
+              3330,
+              406
+            ],
+            "size": [
+              350,
+              128
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 14,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "이미지",
+                "name": "image",
+                "type": "IMAGE",
+                "link": 15
+              },
+              {
+                "localized_name": "개수",
+                "name": "amount",
+                "type": "INT",
+                "widget": {
+                  "name": "amount"
+                },
+                "link": 16
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "이미지",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  18
+                ]
+              }
+            ],
+            "title": "모델 길이 부족분 · 마지막 프레임 반복",
+            "properties": {
+              "Node name for S&R": "RepeatImageBatch",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              1
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 14,
+            "type": "ImageBatch",
+            "pos": [
+              3860,
+              160
+            ],
+            "size": [
+              350,
+              110
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 15,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image1",
+                "name": "image1",
+                "type": "IMAGE",
+                "link": 17
+              },
+              {
+                "localized_name": "image2",
+                "name": "image2",
+                "type": "IMAGE",
+                "link": 18
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  19
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageBatch",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [],
+            "title": "원본 뒤에 패딩 프레임 추가",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 15,
+            "type": "ImageFromBatch",
+            "pos": [
+              3860,
+              338
+            ],
+            "size": [
+              350,
+              156
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 16,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "type": "IMAGE",
+                "link": 19
+              },
+              {
+                "localized_name": "length",
+                "name": "length",
+                "type": "INT",
+                "widget": {
+                  "name": "length"
+                },
+                "link": 20
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  23
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageFromBatch",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              0,
+              81
+            ],
+            "title": "모델 유효 길이로 자르기",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 23,
+            "type": "BerniniConditioning",
+            "pos": [
+              4390,
+              160
+            ],
+            "size": [
+              350,
+              438
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 17,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "link": 21
+              },
+              {
+                "localized_name": "negative",
+                "name": "negative",
+                "type": "CONDITIONING",
+                "link": 22
+              },
+              {
+                "localized_name": "vae",
+                "name": "vae",
+                "type": "VAE",
+                "link": 46
+              },
+              {
+                "localized_name": "source_video",
+                "name": "source_video",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 23
+              },
+              {
+                "localized_name": "reference_video",
+                "name": "reference_video",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "label": "reference_image_0",
+                "localized_name": "reference_images.reference_image_0",
+                "name": "reference_images.reference_image_0",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 53
+              },
+              {
+                "label": "reference_image_1",
+                "localized_name": "reference_images.reference_image_1",
+                "name": "reference_images.reference_image_1",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "localized_name": "width",
+                "name": "width",
+                "type": "INT",
+                "widget": {
+                  "name": "width"
+                },
+                "link": 24
+              },
+              {
+                "localized_name": "height",
+                "name": "height",
+                "type": "INT",
+                "widget": {
+                  "name": "height"
+                },
+                "link": 25
+              },
+              {
+                "localized_name": "length",
+                "name": "length",
+                "type": "INT",
+                "widget": {
+                  "name": "length"
+                },
+                "link": 26
+              },
+              {
+                "localized_name": "ref_max_size",
+                "name": "ref_max_size",
+                "shape": 7,
+                "type": "INT",
+                "widget": {
+                  "name": "ref_max_size"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "links": [
+                  84
+                ]
+              },
+              {
+                "localized_name": "negative",
+                "name": "negative",
+                "type": "CONDITIONING",
+                "links": [
+                  85
+                ]
+              },
+              {
+                "localized_name": "latent",
+                "name": "latent",
+                "type": "LATENT",
+                "links": [
+                  88
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "BerniniConditioning",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              832,
+              480,
+              81,
+              1,
+              848
+            ],
+            "color": "#4e4369",
+            "bgcolor": "#2a2540",
+            "title": "원본 영상 동작 + 이미지 레퍼런스 · 카메…"
+          }
+        ],
+        "groups": [
+          {
+            "id": 1,
+            "title": "01  입력 정리 · 크기 / 길이",
+            "bounding": [
+              56,
+              80,
+              398,
+              1086
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 2,
+            "title": "02  입력 정리 · 크기 / 길이",
+            "bounding": [
+              586,
+              80,
+              398,
+              516
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 3,
+            "title": "03  조건 · 프롬프트 / 가이드",
+            "bounding": [
+              1116,
+              80,
+              468,
+              416
+            ],
+            "color": "#8673ac",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 4,
+            "title": "04  생성 · 샘플링 / 처리",
+            "bounding": [
+              1716,
+              80,
+              398,
+              572
+            ],
+            "color": "#a572b4",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 5,
+            "title": "05  입력 정리 · 크기 / 길이",
+            "bounding": [
+              2246,
+              80,
+              398,
+              600
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 6,
+            "title": "06  복원 · 디코드 / 합성",
+            "bounding": [
+              2776,
+              80,
+              398,
+              332
+            ],
+            "color": "#ae835d",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 7,
+            "title": "07  입력 정리 · 크기 / 길이",
+            "bounding": [
+              3306,
+              80,
+              398,
+              522
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 8,
+            "title": "08  입력 정리 · 크기 / 길이",
+            "bounding": [
+              3836,
+              80,
+              398,
+              482
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 9,
+            "title": "09  조건 · 프롬프트 / 가이드",
+            "bounding": [
+              4366,
+              80,
+              398,
+              586
+            ],
+            "color": "#8673ac",
+            "font_size": 24,
+            "flags": {}
+          }
+        ],
+        "links": [
+          {
+            "id": 1,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 5,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 2,
+            "origin_id": 5,
+            "origin_slot": 0,
+            "target_id": 6,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 3,
+            "origin_id": 5,
+            "origin_slot": 1,
+            "target_id": 6,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 4,
+            "origin_id": 5,
+            "origin_slot": 0,
+            "target_id": 7,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 5,
+            "origin_id": 5,
+            "origin_slot": 1,
+            "target_id": 7,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 9,
+            "origin_id": 5,
+            "origin_slot": 2,
+            "target_id": 9,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 10,
+            "origin_id": 9,
+            "origin_slot": 1,
+            "target_id": 10,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 11,
+            "origin_id": 5,
+            "origin_slot": 2,
+            "target_id": 10,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 12,
+            "origin_id": 5,
+            "origin_slot": 2,
+            "target_id": 11,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 13,
+            "origin_id": 36,
+            "origin_slot": 0,
+            "target_id": 12,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 14,
+            "origin_id": 11,
+            "origin_slot": 1,
+            "target_id": 12,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 15,
+            "origin_id": 12,
+            "origin_slot": 0,
+            "target_id": 13,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 16,
+            "origin_id": 10,
+            "origin_slot": 1,
+            "target_id": 13,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 17,
+            "origin_id": 36,
+            "origin_slot": 0,
+            "target_id": 14,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 18,
+            "origin_id": 13,
+            "origin_slot": 0,
+            "target_id": 14,
+            "target_slot": 1,
+            "type": "IMAGE"
+          },
+          {
+            "id": 19,
+            "origin_id": 14,
+            "origin_slot": 0,
+            "target_id": 15,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 20,
+            "origin_id": 9,
+            "origin_slot": 1,
+            "target_id": 15,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 21,
+            "origin_id": 21,
+            "origin_slot": 0,
+            "target_id": 23,
+            "target_slot": 0,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 22,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 23,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 23,
+            "origin_id": 15,
+            "origin_slot": 0,
+            "target_id": 23,
+            "target_slot": 3,
+            "type": "IMAGE"
+          },
+          {
+            "id": 24,
+            "origin_id": 6,
+            "origin_slot": 1,
+            "target_id": 23,
+            "target_slot": 7,
+            "type": "INT"
+          },
+          {
+            "id": 25,
+            "origin_id": 7,
+            "origin_slot": 1,
+            "target_id": 23,
+            "target_slot": 8,
+            "type": "INT"
+          },
+          {
+            "id": 26,
+            "origin_id": 9,
+            "origin_slot": 1,
+            "target_id": 23,
+            "target_slot": 9,
+            "type": "INT"
+          },
+          {
+            "id": 27,
+            "origin_id": 25,
+            "origin_slot": 0,
+            "target_id": 26,
+            "target_slot": 0,
+            "type": "SIGMAS"
+          },
+          {
+            "id": 44,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 21,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 46,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 23,
+            "target_slot": 2,
+            "type": "VAE"
+          },
+          {
+            "id": 48,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 25,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 51,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 21,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 53,
+            "origin_id": -10,
+            "origin_slot": 6,
+            "target_id": 23,
+            "target_slot": 5,
+            "type": "IMAGE"
+          },
+          {
+            "id": 64,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 34,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 65,
+            "origin_id": 6,
+            "origin_slot": 1,
+            "target_id": 35,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 66,
+            "origin_id": 7,
+            "origin_slot": 1,
+            "target_id": 35,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 67,
+            "origin_id": 34,
+            "origin_slot": 2,
+            "target_id": 35,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 68,
+            "origin_id": 35,
+            "origin_slot": 0,
+            "target_id": 36,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 69,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 36,
+            "target_slot": 1,
+            "type": "IMAGE"
+          },
+          {
+            "id": 74,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 38,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 84,
+            "origin_id": 23,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 85,
+            "origin_id": 23,
+            "origin_slot": 1,
+            "target_id": -20,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 86,
+            "origin_id": 26,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 2,
+            "type": "SIGMAS"
+          },
+          {
+            "id": 87,
+            "origin_id": 26,
+            "origin_slot": 1,
+            "target_id": -20,
+            "target_slot": 3,
+            "type": "SIGMAS"
+          },
+          {
+            "id": 88,
+            "origin_id": 23,
+            "origin_slot": 2,
+            "target_id": -20,
+            "target_slot": 4,
+            "type": "LATENT"
+          },
+          {
+            "id": 89,
+            "origin_id": 5,
+            "origin_slot": 2,
+            "target_id": -20,
+            "target_slot": 5,
+            "type": "INT"
+          },
+          {
+            "id": 90,
+            "origin_id": 34,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 6,
+            "type": "INT"
+          },
+          {
+            "id": 91,
+            "origin_id": 34,
+            "origin_slot": 1,
+            "target_id": -20,
+            "target_slot": 7,
+            "type": "INT"
+          },
+          {
+            "id": 92,
+            "origin_id": 38,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 8,
+            "type": "INT"
+          },
+          {
+            "id": 93,
+            "origin_id": 38,
+            "origin_slot": 1,
+            "target_id": -20,
+            "target_slot": 9,
+            "type": "INT"
+          },
+          {
+            "id": 94,
+            "origin_id": 38,
+            "origin_slot": 2,
+            "target_id": -20,
+            "target_slot": 10,
+            "type": "INT"
+          },
+          {
+            "id": 95,
+            "origin_id": -10,
+            "origin_slot": 7,
+            "target_id": 25,
+            "target_slot": 2,
+            "type": "COMBO"
+          },
+          {
+            "id": 96,
+            "origin_id": -10,
+            "origin_slot": 8,
+            "target_id": 25,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 97,
+            "origin_id": -10,
+            "origin_slot": 9,
+            "target_id": 25,
+            "target_slot": 3,
+            "type": "FLOAT"
+          },
+          {
+            "id": 98,
+            "origin_id": -10,
+            "origin_slot": 10,
+            "target_id": 26,
+            "target_slot": 1,
+            "type": "INT"
+          }
+        ],
+        "extra": {
+          "codex_layout_inserted": true,
+          "codex_layout_role": "prepare",
+          "ds": {
+            "scale": 0.26037735849056604,
+            "offset": [
+              500,
+              25
+            ]
+          }
+        }
+      },
+      {
+        "id": "4a6c2666-8218-5e15-a78e-389e531c001d",
+        "version": 1,
+        "state": {
+          "lastNodeId": 54,
+          "lastLinkId": 126,
+          "lastGroupId": 6,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "02 복원 · 합성 / 출력",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -420,
+            0,
+            300,
+            534
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            7454,
+            0,
+            260,
+            66
+          ]
+        },
+        "inputs": [
+          {
+            "id": "c7999ffc-d399-5920-ba34-be6fe50e452b",
+            "name": "in_00_out_00_positive",
+            "type": "CONDITIONING",
+            "label": "positive",
+            "localized_name": "positive",
+            "linkIds": [
+              32
+            ],
+            "pos": [
+              -120,
+              162
+            ]
+          },
+          {
+            "id": "05662be3-e462-58d5-b659-3e1a94ee748a",
+            "name": "in_01_out_01_negative",
+            "type": "CONDITIONING",
+            "label": "negative",
+            "localized_name": "negative",
+            "linkIds": [
+              33
+            ],
+            "pos": [
+              -120,
+              184
+            ]
+          },
+          {
+            "id": "e13df758-20e5-5991-aac8-2b2fdbbb2f58",
+            "name": "in_02_SAMPLER",
+            "type": "SAMPLER",
+            "label": "sampler",
+            "localized_name": "sampler",
+            "linkIds": [
+              34
+            ],
+            "pos": [
+              -120,
+              206
+            ]
+          },
+          {
+            "id": "906d5658-9355-57cd-aa13-839cc574f815",
+            "name": "in_03_out_03_low_sigmas",
+            "type": "SIGMAS",
+            "label": "sigmas",
+            "localized_name": "sigmas",
+            "linkIds": [
+              35
+            ],
+            "pos": [
+              -120,
+              228
+            ]
+          },
+          {
+            "id": "341bfb6c-fa14-5397-ae10-0c35a2fbbf00",
+            "name": "in_04_output",
+            "type": "LATENT",
+            "label": "latent_image",
+            "localized_name": "latent_image",
+            "linkIds": [
+              37
+            ],
+            "pos": [
+              -120,
+              250
+            ]
+          },
+          {
+            "id": "992789b5-6f51-5d89-905c-d2d28680378b",
+            "name": "in_05_out_05_batch_size",
+            "type": "INT",
+            "label": "length",
+            "localized_name": "length",
+            "linkIds": [
+              40
+            ],
+            "pos": [
+              -120,
+              272
+            ]
+          },
+          {
+            "id": "f2fd02e9-3486-504e-98b2-1eddf2f77aa9",
+            "name": "in_06_VAE",
+            "type": "VAE",
+            "label": "vae",
+            "localized_name": "vae",
+            "linkIds": [
+              47
+            ],
+            "pos": [
+              -120,
+              294
+            ]
+          },
+          {
+            "id": "24cf8464-dddf-50fa-ac18-8b2f88e855c0",
+            "name": "in_07_MODEL",
+            "type": "MODEL",
+            "label": "model",
+            "localized_name": "model",
+            "linkIds": [
+              50
+            ],
+            "pos": [
+              -120,
+              316
+            ]
+          },
+          {
+            "id": "8ea79598-8cba-5d0d-a0bb-67439ce229ff",
+            "name": "in_08_out_06_width",
+            "type": "INT",
+            "label": "width",
+            "localized_name": "width",
+            "linkIds": [
+              71
+            ],
+            "pos": [
+              -120,
+              338
+            ]
+          },
+          {
+            "id": "9e216f7d-4eef-55a0-97c1-6b7c922dcc98",
+            "name": "in_09_out_07_height",
+            "type": "INT",
+            "label": "height",
+            "localized_name": "height",
+            "linkIds": [
+              72
+            ],
+            "pos": [
+              -120,
+              360
+            ]
+          },
+          {
+            "id": "16feee7b-ea61-5d45-a085-0ab2f155e3bb",
+            "name": "in_10_fps",
+            "type": "FLOAT",
+            "label": "values.a",
+            "localized_name": "values.a",
+            "linkIds": [
+              76
+            ],
+            "pos": [
+              -120,
+              382
+            ]
+          },
+          {
+            "id": "c6dbb9f1-c276-52a1-9fac-1b9018f98756",
+            "name": "in_11_out_08_width",
+            "type": "INT",
+            "label": "values.c",
+            "localized_name": "values.c",
+            "linkIds": [
+              78
+            ],
+            "pos": [
+              -120,
+              404
+            ]
+          },
+          {
+            "id": "3a1b96b7-8492-58d4-8744-a2cbf9c4f6f4",
+            "name": "in_12_out_09_height",
+            "type": "INT",
+            "label": "values.e",
+            "localized_name": "values.e",
+            "linkIds": [
+              80
+            ],
+            "pos": [
+              -120,
+              426
+            ]
+          },
+          {
+            "id": "6ceaa60a-07e7-5a77-b685-8633caa20d73",
+            "name": "in_13_out_10_batch_size",
+            "type": "INT",
+            "label": "values.g",
+            "localized_name": "values.g",
+            "linkIds": [
+              82
+            ],
+            "pos": [
+              -120,
+              448
+            ]
+          },
+          {
+            "id": "02c5be6d-a5db-5992-96a7-91ac8a2fd642",
+            "name": "ctl_28_add_noise",
+            "type": "BOOLEAN",
+            "label": "후반부 · 저노이즈 모델 · add_noise",
+            "localized_name": "후반부 · 저노이즈 모델 · add_noise",
+            "linkIds": [
+              103
+            ],
+            "pos": [
+              -120,
+              470
+            ]
+          },
+          {
+            "id": "e84b4be0-4dd3-5a41-98bf-feae6a3f1000",
+            "name": "ctl_28_noise_seed",
+            "type": "INT",
+            "label": "후반부 · 저노이즈 모델 · 시드",
+            "localized_name": "후반부 · 저노이즈 모델 · 시드",
+            "linkIds": [
+              104
+            ],
+            "pos": [
+              -120,
+              492
+            ]
+          },
+          {
+            "id": "114f8acf-d446-5ff6-a7b5-f463b5856112",
+            "name": "ctl_28_cfg",
+            "type": "FLOAT",
+            "label": "후반부 · 저노이즈 모델 · CFG",
+            "localized_name": "후반부 · 저노이즈 모델 · CFG",
+            "linkIds": [
+              105
+            ],
+            "pos": [
+              -120,
+              514
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "c8dd6d17-04a2-5d64-9349-c183d82e1ef8",
+            "name": "out_00_VIDEO",
+            "type": "VIDEO",
+            "label": "VIDEO",
+            "localized_name": "VIDEO",
+            "linkIds": [
+              102
+            ],
+            "pos": [
+              3300,
+              162
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 28,
+            "type": "SamplerCustom",
+            "pos": [
+              24,
+              84
+            ],
+            "size": [
+              350,
+              366
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 50
+              },
+              {
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "link": 32
+              },
+              {
+                "localized_name": "negative",
+                "name": "negative",
+                "type": "CONDITIONING",
+                "link": 33
+              },
+              {
+                "localized_name": "sampler",
+                "name": "sampler",
+                "type": "SAMPLER",
+                "link": 34
+              },
+              {
+                "localized_name": "sigmas",
+                "name": "sigmas",
+                "type": "SIGMAS",
+                "link": 35
+              },
+              {
+                "localized_name": "latent_image",
+                "name": "latent_image",
+                "type": "LATENT",
+                "link": 37
+              },
+              {
+                "localized_name": "noise_seed",
+                "name": "noise_seed",
+                "type": "INT",
+                "widget": {
+                  "name": "noise_seed"
+                },
+                "link": 104
+              },
+              {
+                "localized_name": "cfg",
+                "name": "cfg",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "cfg"
+                },
+                "link": 105
+              },
+              {
+                "name": "add_noise",
+                "type": "BOOLEAN",
+                "link": 103,
+                "widget": {
+                  "name": "add_noise"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "output",
+                "name": "output",
+                "type": "LATENT",
+                "links": [
+                  38
+                ]
+              },
+              {
+                "localized_name": "denoised_output",
+                "name": "denoised_output",
+                "type": "LATENT",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "SamplerCustom",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              false,
+              0,
+              "randomize",
+              1.0
+            ],
+            "title": "후반부 · 저노이즈 모델",
+            "color": "#5d3c68",
+            "bgcolor": "#312039"
+          },
+          {
+            "id": 29,
+            "type": "VAEDecode",
+            "pos": [
+              538,
+              84
+            ],
+            "size": [
+              350,
+              110
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "samples",
+                "name": "samples",
+                "type": "LATENT",
+                "link": 38
+              },
+              {
+                "localized_name": "vae",
+                "name": "vae",
+                "type": "VAE",
+                "link": 47
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  39
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "VAEDecode",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [],
+            "title": "영상 프레임 디코딩",
+            "color": "#68503c",
+            "bgcolor": "#382a20"
+          },
+          {
+            "id": 30,
+            "type": "ImageFromBatch",
+            "pos": [
+              1052,
+              84
+            ],
+            "size": [
+              350,
+              156
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "type": "IMAGE",
+                "link": 39
+              },
+              {
+                "localized_name": "length",
+                "name": "length",
+                "type": "INT",
+                "widget": {
+                  "name": "length"
+                },
+                "link": 40
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  70
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageFromBatch",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              0,
+              81
+            ],
+            "title": "패딩 제거 · 입력 프레임 수 복원",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 37,
+            "type": "ImageCrop",
+            "title": "임시 오른쪽/아래 패딩 제거 · 원본 W×H",
+            "pos": [
+              1566,
+              84
+            ],
+            "size": [
+              350,
+              234
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 70
+              },
+              {
+                "name": "width",
+                "type": "INT",
+                "link": 71,
+                "widget": {
+                  "name": "width"
+                }
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "link": 72,
+                "widget": {
+                  "name": "height"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  125,
+                  126
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageCrop",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              960,
+              544,
+              0,
+              0
+            ],
+            "color": "#68503c",
+            "bgcolor": "#382a20"
+          },
+          {
+            "id": 39,
+            "type": "GetImageSize",
+            "title": "출력 W/H/N 실측 · 부족한 결과 저장 중단",
+            "pos": [
+              2080,
+              84
+            ],
+            "size": [
+              350,
+              122
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 4,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 126
+              }
+            ],
+            "outputs": [
+              {
+                "name": "width",
+                "type": "INT",
+                "links": [
+                  77
+                ],
+                "slot_index": 0
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "links": [
+                  79
+                ],
+                "slot_index": 1
+              },
+              {
+                "name": "batch_size",
+                "type": "INT",
+                "links": [
+                  81
+                ],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "GetImageSize",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 40,
+            "type": "ComfyMathExpression",
+            "title": "원본 출력 규격 검사 · 불일치 시 중단",
+            "pos": [
+              2490,
+              84
+            ],
+            "size": [
+              350,
+              238
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 5,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 76
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 77
+              },
+              {
+                "name": "values.c",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 78
+              },
+              {
+                "name": "values.d",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 79
+              },
+              {
+                "name": "values.e",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 80
+              },
+              {
+                "name": "values.f",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 81
+              },
+              {
+                "name": "values.g",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 82
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": [
+                  83
+                ],
+                "slot_index": 0
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [],
+                "slot_index": 1
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": [],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "a if (b==c and d==e and f==g) else 1/0"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 31,
+            "type": "CreateVideo",
+            "pos": [
+              6944,
+              84
+            ],
+            "size": [
+              350,
+              234
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 18,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "images",
+                "name": "images",
+                "type": "IMAGE",
+                "link": 125
+              },
+              {
+                "localized_name": "audio",
+                "name": "audio",
+                "shape": 7,
+                "type": "AUDIO",
+                "link": null
+              },
+              {
+                "localized_name": "fps",
+                "name": "fps",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "fps"
+                },
+                "link": 83
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "VIDEO",
+                "name": "VIDEO",
+                "type": "VIDEO",
+                "links": [
+                  102
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "CreateVideo",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              24,
+              "auto",
+              "sRGB",
+              "none"
+            ],
+            "title": "입력 타이밍으로 무음 영상 저장",
+            "color": "#315949",
+            "bgcolor": "#1c332a"
+          }
+        ],
+        "groups": [
+          {
+            "id": 1,
+            "title": "01  생성 · 샘플링 / 처리",
+            "bounding": [
+              0,
+              0,
+              434,
+              530
+            ],
+            "color": "#a572b4",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 2,
+            "title": "02  복원 · 디코드 / 합성",
+            "bounding": [
+              514,
+              0,
+              434,
+              274
+            ],
+            "color": "#ae835d",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 3,
+            "title": "03  입력 정리 · 크기 / 길이",
+            "bounding": [
+              1028,
+              0,
+              434,
+              320
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 4,
+            "title": "04  복원 · 디코드 / 합성",
+            "bounding": [
+              1542,
+              0,
+              434,
+              398
+            ],
+            "color": "#ae835d",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 5,
+            "title": "05  입력 정리 · 크기 / 길이",
+            "bounding": [
+              2056,
+              0,
+              844,
+              402
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 6,
+            "title": "06  출력 · 확인 / 저장",
+            "bounding": [
+              2980,
+              0,
+              4374,
+              524
+            ],
+            "color": "#5b947b",
+            "font_size": 24,
+            "flags": {}
+          }
+        ],
+        "links": [
+          {
+            "id": 32,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 28,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 33,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 28,
+            "target_slot": 2,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 34,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 28,
+            "target_slot": 3,
+            "type": "SAMPLER"
+          },
+          {
+            "id": 35,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 28,
+            "target_slot": 4,
+            "type": "SIGMAS"
+          },
+          {
+            "id": 37,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 28,
+            "target_slot": 5,
+            "type": "LATENT"
+          },
+          {
+            "id": 38,
+            "origin_id": 28,
+            "origin_slot": 0,
+            "target_id": 29,
+            "target_slot": 0,
+            "type": "LATENT"
+          },
+          {
+            "id": 39,
+            "origin_id": 29,
+            "origin_slot": 0,
+            "target_id": 30,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 40,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 30,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 47,
+            "origin_id": -10,
+            "origin_slot": 6,
+            "target_id": 29,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 50,
+            "origin_id": -10,
+            "origin_slot": 7,
+            "target_id": 28,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 70,
+            "origin_id": 30,
+            "origin_slot": 0,
+            "target_id": 37,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 71,
+            "origin_id": -10,
+            "origin_slot": 8,
+            "target_id": 37,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 72,
+            "origin_id": -10,
+            "origin_slot": 9,
+            "target_id": 37,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 76,
+            "origin_id": -10,
+            "origin_slot": 10,
+            "target_id": 40,
+            "target_slot": 0,
+            "type": "FLOAT"
+          },
+          {
+            "id": 77,
+            "origin_id": 39,
+            "origin_slot": 0,
+            "target_id": 40,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 78,
+            "origin_id": -10,
+            "origin_slot": 11,
+            "target_id": 40,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 79,
+            "origin_id": 39,
+            "origin_slot": 1,
+            "target_id": 40,
+            "target_slot": 3,
+            "type": "INT"
+          },
+          {
+            "id": 80,
+            "origin_id": -10,
+            "origin_slot": 12,
+            "target_id": 40,
+            "target_slot": 4,
+            "type": "INT"
+          },
+          {
+            "id": 81,
+            "origin_id": 39,
+            "origin_slot": 2,
+            "target_id": 40,
+            "target_slot": 5,
+            "type": "INT"
+          },
+          {
+            "id": 82,
+            "origin_id": -10,
+            "origin_slot": 13,
+            "target_id": 40,
+            "target_slot": 6,
+            "type": "INT"
+          },
+          {
+            "id": 83,
+            "origin_id": 40,
+            "origin_slot": 0,
+            "target_id": 31,
+            "target_slot": 2,
+            "type": "FLOAT"
+          },
+          {
+            "id": 102,
+            "origin_id": 31,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "VIDEO"
+          },
+          {
+            "id": 103,
+            "origin_id": -10,
+            "origin_slot": 14,
+            "target_id": 28,
+            "target_slot": 8,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 104,
+            "origin_id": -10,
+            "origin_slot": 15,
+            "target_id": 28,
+            "target_slot": 6,
+            "type": "INT"
+          },
+          {
+            "id": 105,
+            "origin_id": -10,
+            "origin_slot": 16,
+            "target_id": 28,
+            "target_slot": 7,
+            "type": "FLOAT"
+          },
+          {
+            "id": 125,
+            "origin_id": 37,
+            "origin_slot": 0,
+            "target_id": 31,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 126,
+            "origin_id": 37,
+            "origin_slot": 0,
+            "target_id": 39,
+            "target_slot": 0,
+            "type": "IMAGE"
+          }
+        ],
+        "extra": {
+          "codex_layout_inserted": true,
+          "codex_layout_role": "prepare",
+          "ds": {
+            "scale": 0.3791208791208791,
+            "offset": [
+              500,
+              25
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "name": ""
+}

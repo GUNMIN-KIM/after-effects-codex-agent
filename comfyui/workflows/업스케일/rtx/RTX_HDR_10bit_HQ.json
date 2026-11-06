@@ -1,0 +1,1282 @@
+{
+  "id": "6c1f3a5e-9d2b-4f7a-8e11-5a0c7b2d4e01",
+  "revision": 0,
+  "last_node_id": 21,
+  "last_link_id": 20,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadVideo",
+      "pos": [
+        -2120,
+        -560
+      ],
+      "size": [
+        400,
+        560
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            1,
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideo",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      },
+      "widgets_values": [
+        "input.mp4",
+        "image"
+      ],
+      "widgets_values_named": {
+        "file": "input.mp4",
+        "upload": "image"
+      },
+      "title": "Load Video (원본)"
+    },
+    {
+      "id": 2,
+      "type": "GetVideoComponents",
+      "pos": [
+        -1690,
+        -560
+      ],
+      "size": [
+        240,
+        130
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            6
+          ]
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "links": [
+            7
+          ]
+        },
+        {
+          "name": "bit_depth",
+          "type": "COMBO",
+          "links": null
+        },
+        {
+          "name": "color_space",
+          "type": "COMBO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GetVideoComponents",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      }
+    },
+    {
+      "id": 3,
+      "type": "RTXVideoSuperResolution",
+      "pos": [
+        -1360,
+        -560
+      ],
+      "size": [
+        330,
+        200
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RTXVideoSuperResolution",
+        "cnr_id": "comfyui_nvidia_rtx_nodes",
+        "ver": "0.2.1"
+      },
+      "widgets_values": [
+        "scale by multiplier",
+        1.0,
+        "DENOISE_LOW",
+        0.5,
+        "10-bit RGB (RGB10A2)"
+      ],
+      "widgets_values_named": {
+        "resize_type": "scale by multiplier",
+        "resize_type.scale": 1.0,
+        "quality": "DENOISE_LOW",
+        "strength": 0.5,
+        "image_encoding": "10-bit RGB (RGB10A2)"
+      },
+      "title": "RTX VSR · 정리 (DENOISE_LOW, 원본 해상도)"
+    },
+    {
+      "id": 4,
+      "type": "RTXVideoSuperResolution",
+      "pos": [
+        -1360,
+        -310
+      ],
+      "size": [
+        330,
+        200
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RTXVideoSuperResolution",
+        "cnr_id": "comfyui_nvidia_rtx_nodes",
+        "ver": "0.2.1"
+      },
+      "widgets_values": [
+        "scale by multiplier",
+        2.0,
+        "HIGHBITRATE_ULTRA",
+        1.0,
+        "10-bit RGB (RGB10A2)"
+      ],
+      "widgets_values_named": {
+        "resize_type": "scale by multiplier",
+        "resize_type.scale": 2.0,
+        "quality": "HIGHBITRATE_ULTRA",
+        "strength": 1.0,
+        "image_encoding": "10-bit RGB (RGB10A2)"
+      },
+      "title": "RTX VSR · 2× 업스케일 (옵션)"
+    },
+    {
+      "id": 5,
+      "type": "RTXTrueHDR",
+      "pos": [
+        -960,
+        -560
+      ],
+      "size": [
+        320,
+        230
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "hdr_images",
+          "type": "IMAGE",
+          "links": [
+            5,
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RTXTrueHDR",
+        "cnr_id": "comfyui_nvidia_rtx_nodes",
+        "ver": "0.2.1"
+      },
+      "widgets_values": [
+        100,
+        100,
+        50,
+        1000,
+        true,
+        "HDR PQ"
+      ],
+      "widgets_values_named": {
+        "contrast": 100,
+        "saturation": 100,
+        "middle_gray": 50,
+        "luminance": 1000,
+        "debanding": true,
+        "output_colorspace": "HDR PQ"
+      },
+      "title": "RTX Video HDR → BT.2020 PQ"
+    },
+    {
+      "id": 6,
+      "type": "CreateVideo",
+      "pos": [
+        -570,
+        -560
+      ],
+      "size": [
+        300,
+        170
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 6,
+          "shape": 7
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "link": 7,
+          "widget": {
+            "name": "fps"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            8,
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateVideo",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      },
+      "widgets_values": [
+        30,
+        10,
+        "HDR PQ",
+        "none"
+      ],
+      "widgets_values_named": {
+        "fps": 30,
+        "bit_depth": 10,
+        "color_space": "HDR PQ",
+        "codec": "none"
+      },
+      "title": "Create Video · 10bit HDR PQ"
+    },
+    {
+      "id": 7,
+      "type": "SaveVideo",
+      "pos": [
+        -230,
+        -560
+      ],
+      "size": [
+        420,
+        520
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveVideo",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      },
+      "widgets_values": [
+        "RTX_HDR/HDR10_PQ_AV1",
+        "mp4",
+        "av1",
+        "re-encode",
+        16,
+        "auto"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "RTX_HDR/HDR10_PQ_AV1",
+        "format": "mp4",
+        "format.codec": "av1",
+        "format.codec.encoding": "re-encode",
+        "format.codec.encoding.crf": 16,
+        "codec": "auto"
+      },
+      "title": "Save · AV1 10bit HDR10 (메인)"
+    },
+    {
+      "id": 8,
+      "type": "SaveVideo",
+      "pos": [
+        230,
+        -560
+      ],
+      "size": [
+        420,
+        520
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveVideo",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      },
+      "widgets_values": [
+        "RTX_HDR/HDR10_PQ_H264",
+        "mp4",
+        "h264",
+        "re-encode",
+        12,
+        "auto"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "RTX_HDR/HDR10_PQ_H264",
+        "format": "mp4",
+        "format.codec": "h264",
+        "format.codec.encoding": "re-encode",
+        "format.codec.encoding.crf": 12,
+        "codec": "auto"
+      },
+      "title": "Save · H.264 10bit (편집 호환, 옵션)"
+    },
+    {
+      "id": 9,
+      "type": "ImageColorSpace",
+      "pos": [
+        -570,
+        -340
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageColorSpace",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      },
+      "widgets_values": [
+        "HDR PQ",
+        "linear"
+      ],
+      "widgets_values_named": {
+        "source": "HDR PQ",
+        "destination": "linear"
+      },
+      "title": "PQ → Linear Rec.709 (EXR용, 옵션)"
+    },
+    {
+      "id": 10,
+      "type": "SaveImageAdvanced",
+      "pos": [
+        -570,
+        -180
+      ],
+      "size": [
+        300,
+        160
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImageAdvanced",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      },
+      "widgets_values": [
+        "RTX_HDR/exr/HDR_linear",
+        "exr",
+        "16-bit float",
+        "linear"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "RTX_HDR/exr/HDR_linear",
+        "format": "exr",
+        "format.bit_depth": "16-bit float",
+        "format.input_color_space": "linear"
+      },
+      "title": "Save · EXR 16bit half 시퀀스 (마스터, 옵션)"
+    },
+    {
+      "id": 11,
+      "type": "VideoFrameSample",
+      "pos": [
+        -2120,
+        220
+      ],
+      "size": [
+        300,
+        130
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VideoFrameSample",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      },
+      "widgets_values": [
+        6,
+        "uniform",
+        0
+      ],
+      "widgets_values_named": {
+        "num_frames": 6,
+        "strategy": "uniform",
+        "seed": 0
+      },
+      "title": "샘플 6프레임"
+    },
+    {
+      "id": 12,
+      "type": "GetVideoComponents",
+      "pos": [
+        -1780,
+        220
+      ],
+      "size": [
+        240,
+        130
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            14
+          ]
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "bit_depth",
+          "type": "COMBO",
+          "links": null
+        },
+        {
+          "name": "color_space",
+          "type": "COMBO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GetVideoComponents",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      }
+    },
+    {
+      "id": 13,
+      "type": "RTXVideoSuperResolution",
+      "pos": [
+        -1500,
+        220
+      ],
+      "size": [
+        330,
+        200
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            15,
+            17,
+            19
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RTXVideoSuperResolution",
+        "cnr_id": "comfyui_nvidia_rtx_nodes",
+        "ver": "0.2.1"
+      },
+      "widgets_values": [
+        "scale by multiplier",
+        1.0,
+        "DENOISE_LOW",
+        0.5,
+        "10-bit RGB (RGB10A2)"
+      ],
+      "widgets_values_named": {
+        "resize_type": "scale by multiplier",
+        "resize_type.scale": 1.0,
+        "quality": "DENOISE_LOW",
+        "strength": 0.5,
+        "image_encoding": "10-bit RGB (RGB10A2)"
+      },
+      "title": "VSR 정리 (메인과 동일)"
+    },
+    {
+      "id": 14,
+      "type": "RTXTrueHDR",
+      "pos": [
+        -1120,
+        220
+      ],
+      "size": [
+        320,
+        230
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "hdr_images",
+          "type": "IMAGE",
+          "links": [
+            16
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RTXTrueHDR",
+        "cnr_id": "comfyui_nvidia_rtx_nodes",
+        "ver": "0.2.1"
+      },
+      "widgets_values": [
+        100,
+        100,
+        50,
+        1000,
+        true,
+        "HDR PQ"
+      ],
+      "widgets_values_named": {
+        "contrast": 100,
+        "saturation": 100,
+        "middle_gray": 50,
+        "luminance": 1000,
+        "debanding": true,
+        "output_colorspace": "HDR PQ"
+      },
+      "title": "HDR A 기본"
+    },
+    {
+      "id": 17,
+      "type": "SaveImageAdvanced",
+      "pos": [
+        -760,
+        220
+      ],
+      "size": [
+        320,
+        230
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImageAdvanced",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      },
+      "widgets_values": [
+        "RTX_HDR/tune/A_default",
+        "avif",
+        "10-bit YUV420",
+        "HDR PQ",
+        10,
+        "still images"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "RTX_HDR/tune/A_default",
+        "format": "avif",
+        "format.bit_depth": "10-bit YUV420",
+        "format.input_color_space": "HDR PQ",
+        "format.crf": 10,
+        "format.save_mode": "still images"
+      },
+      "title": "AVIF 10bit PQ · A 기본"
+    },
+    {
+      "id": 15,
+      "type": "RTXTrueHDR",
+      "pos": [
+        -1120,
+        490
+      ],
+      "size": [
+        320,
+        230
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "hdr_images",
+          "type": "IMAGE",
+          "links": [
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RTXTrueHDR",
+        "cnr_id": "comfyui_nvidia_rtx_nodes",
+        "ver": "0.2.1"
+      },
+      "widgets_values": [
+        120,
+        80,
+        50,
+        1000,
+        true,
+        "HDR PQ"
+      ],
+      "widgets_values_named": {
+        "contrast": 120,
+        "saturation": 80,
+        "middle_gray": 50,
+        "luminance": 1000,
+        "debanding": true,
+        "output_colorspace": "HDR PQ"
+      },
+      "title": "HDR B 자연채도"
+    },
+    {
+      "id": 18,
+      "type": "SaveImageAdvanced",
+      "pos": [
+        -760,
+        490
+      ],
+      "size": [
+        320,
+        230
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImageAdvanced",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      },
+      "widgets_values": [
+        "RTX_HDR/tune/B_contrast120_sat80",
+        "avif",
+        "10-bit YUV420",
+        "HDR PQ",
+        10,
+        "still images"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "RTX_HDR/tune/B_contrast120_sat80",
+        "format": "avif",
+        "format.bit_depth": "10-bit YUV420",
+        "format.input_color_space": "HDR PQ",
+        "format.crf": 10,
+        "format.save_mode": "still images"
+      },
+      "title": "AVIF 10bit PQ · B 자연채도"
+    },
+    {
+      "id": 16,
+      "type": "RTXTrueHDR",
+      "pos": [
+        -1120,
+        760
+      ],
+      "size": [
+        320,
+        230
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "hdr_images",
+          "type": "IMAGE",
+          "links": [
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RTXTrueHDR",
+        "cnr_id": "comfyui_nvidia_rtx_nodes",
+        "ver": "0.2.1"
+      },
+      "widgets_values": [
+        100,
+        100,
+        40,
+        1000,
+        true,
+        "HDR PQ"
+      ],
+      "widgets_values_named": {
+        "contrast": 100,
+        "saturation": 100,
+        "middle_gray": 40,
+        "luminance": 1000,
+        "debanding": true,
+        "output_colorspace": "HDR PQ"
+      },
+      "title": "HDR C 미드톤다운"
+    },
+    {
+      "id": 19,
+      "type": "SaveImageAdvanced",
+      "pos": [
+        -760,
+        760
+      ],
+      "size": [
+        320,
+        230
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImageAdvanced",
+        "cnr_id": "comfy-core",
+        "ver": "0.41.0"
+      },
+      "widgets_values": [
+        "RTX_HDR/tune/C_midgray40",
+        "avif",
+        "10-bit YUV420",
+        "HDR PQ",
+        10,
+        "still images"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "RTX_HDR/tune/C_midgray40",
+        "format": "avif",
+        "format.bit_depth": "10-bit YUV420",
+        "format.input_color_space": "HDR PQ",
+        "format.crf": 10,
+        "format.save_mode": "still images"
+      },
+      "title": "AVIF 10bit PQ · C 미드톤다운"
+    },
+    {
+      "id": 20,
+      "type": "MarkdownNote",
+      "pos": [
+        -2120,
+        -1250
+      ],
+      "size": [
+        1060,
+        600
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "# RTX Video HDR → HDR10 (PQ) 10bit · HQ 단일 패스\n\n**사용법:** ① 그룹의 *Load Video*에 원본 영상만 넣고 실행 → `output/RTX_HDR/` 에 10bit HDR10 영상 저장.\n\n| 단계 | 기본 상태 | 내용 |\n|---|---|---|\n| ② VSR 정리 | ON | DENOISE_LOW · 0.5 · 10bit — 압축 블록/노이즈가 HDR 확장 때 증폭되는 것 방지 |\n| ② VSR 2× 업스케일 | OFF | 켜면 HIGHBITRATE_ULTRA 2× (RAM 4배) |\n| ③ RTX Video HDR | ON | PQ 출력(SDK 원본 신호, 변환 손실 없음) · 1000nit · 디밴딩 ON |\n| ④ AV1 10bit | ON | mp4 · BT.2020/PQ 태그 · CRF 16 (유튜브 HDR 권장 코덱) |\n| ④ H.264 10bit | OFF | 편집툴 호환용 · CRF 12 |\n| ④ EXR 마스터 | OFF | 16bit half · Linear Rec.709 (1.0 = 203nit) → Resolve/Nuke에서 HEVC·ProRes 마스터링 |\n| ⑤ 튜닝 A/B | OFF | 6프레임만 뽑아 3가지 세팅을 HDR AVIF 스틸로 비교 |\n\n**토글:** 노드/그룹 선택 후 `Ctrl+B` (Bypass 해제/설정)\n\n**주의**\n- RTX GPU 로컬 전용 (nvidia-vfx). 커스텀 노드: *ComfyUI Nvidia VFX Nodes* (`comfyui_nvidia_rtx_nodes` ≥0.2.1), ComfyUI ≥0.41, PyTorch cu130+\n- 1080p 기준 ~20초 넘는 영상 / 4K 는 RAM 부족 위험 → **RTX_HDR_10bit_Long.json** 사용\n- 원본이 필름 그레인/클린 플레이트면 VSR 정리 Bypass + HDR 디밴딩 OFF 테스트 권장\n- HLG가 필요하면 HDR 노드 output_colorspace와 Create Video color_space를 둘 다 `HDR`로 변경\n- ComfyUI 브라우저 미리보기는 SDR 표시라 어둡거나 탁해 보이는 게 정상. HDR 모니터 + 지원 플레이어(mpv, Chrome, Resolve)로 확인\n"
+      ],
+      "color": "#432",
+      "bgcolor": "#653",
+      "title": "📖 사용법 (HQ)"
+    },
+    {
+      "id": 21,
+      "type": "MarkdownNote",
+      "pos": [
+        -2120,
+        420
+      ],
+      "size": [
+        600,
+        380
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "### ⑤ 튜닝 A/B (기본 OFF)\n그룹 전체 선택 → `Ctrl+B` 로 켜고, 필요하면 ④의 Save 노드는 꺼둔 채 실행.\n`output/RTX_HDR/tune/` 에 10bit PQ AVIF 스틸 6장 × 3세트 저장 → HDR 모니터에서 Chrome/Windows 사진 앱으로 비교.\n\n- **A 기본**: NVIDIA 기본값 (대비100 · 채도100 · 미드그레이50) @1000nit\n- **B 자연채도**: 대비120 · 채도80 — RTX HDR 특유의 과채도 완화\n- **C 미드톤 다운**: 미드그레이40 — 전체 밝기 낮추고 하이라이트 여유 확보\n\n고른 값을 ③ 메인 HDR 노드에 그대로 옮기면 됩니다.\n"
+      ],
+      "color": "#432",
+      "bgcolor": "#653",
+      "title": "🎛 튜닝 A/B"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "VIDEO"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      0,
+      "IMAGE"
+    ],
+    [
+      4,
+      4,
+      0,
+      5,
+      0,
+      "IMAGE"
+    ],
+    [
+      5,
+      5,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      6,
+      2,
+      1,
+      6,
+      1,
+      "AUDIO"
+    ],
+    [
+      7,
+      2,
+      2,
+      6,
+      2,
+      "FLOAT"
+    ],
+    [
+      8,
+      6,
+      0,
+      7,
+      0,
+      "VIDEO"
+    ],
+    [
+      9,
+      6,
+      0,
+      8,
+      0,
+      "VIDEO"
+    ],
+    [
+      10,
+      5,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      11,
+      9,
+      0,
+      10,
+      0,
+      "IMAGE"
+    ],
+    [
+      12,
+      1,
+      0,
+      11,
+      0,
+      "VIDEO"
+    ],
+    [
+      13,
+      11,
+      0,
+      12,
+      0,
+      "VIDEO"
+    ],
+    [
+      14,
+      12,
+      0,
+      13,
+      0,
+      "IMAGE"
+    ],
+    [
+      15,
+      13,
+      0,
+      14,
+      0,
+      "IMAGE"
+    ],
+    [
+      16,
+      14,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ],
+    [
+      17,
+      13,
+      0,
+      15,
+      0,
+      "IMAGE"
+    ],
+    [
+      18,
+      15,
+      0,
+      18,
+      0,
+      "IMAGE"
+    ],
+    [
+      19,
+      13,
+      0,
+      16,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      16,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "① 입력 — 원본 영상만 넣으세요",
+      "bounding": [
+        -2150,
+        -640,
+        730,
+        670
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "② SDR 전처리 · RTX Video Super Resolution",
+      "bounding": [
+        -1390,
+        -640,
+        390,
+        560
+      ],
+      "color": "#8A8",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "③ RTX Video HDR (SDR → HDR10 PQ)",
+      "bounding": [
+        -990,
+        -640,
+        380,
+        340
+      ],
+      "color": "#a1309b",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "④ 10bit HDR 출력",
+      "bounding": [
+        -600,
+        -640,
+        1280,
+        650
+      ],
+      "color": "#b06634",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "⑤ 튜닝 A/B 스틸 (옵션 · 기본 OFF)",
+      "bounding": [
+        -2150,
+        140,
+        1740,
+        880
+      ],
+      "color": "#444",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6,
+      "offset": [
+        2300,
+        1300
+      ]
+    },
+    "workflowRendererVersion": "LG",
+    "info": {
+      "name": "RTX_HDR_10bit_HQ"
+    }
+  },
+  "version": 0.4
+}

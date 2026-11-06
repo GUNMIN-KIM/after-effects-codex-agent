@@ -1,0 +1,1494 @@
+{
+  "id": "8df8581b-95b5-491e-acc0-4440be4cc91d",
+  "revision": 0,
+  "last_node_id": 18,
+  "last_link_id": 27,
+  "nodes": [
+    {
+      "id": 16,
+      "type": "MarkdownNote",
+      "pos": [
+        -600,
+        0
+      ],
+      "size": [
+        540,
+        640
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "사용 안내",
+      "properties": {
+        "Node name for S&R": "MarkdownNote",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "## Z-Image Turbo 저강도 리파인 · GPT 이미지 AI감 제거 + 업스케일\n\n공식 템플릿 `utility_z_image_turbo_2k_upscaler` 구조 (전부 코어 노드).\n흐름: 입력 → 기준 MP로 정규화 → RealESRGAN ×4 → ×0.5 → Z-Image img2img (5스텝) → 저장\n\n**사용법**: 이미지 넣고 실행. 어떤 크기가 들어와도 기본 약 4MP(정사각 2048², 3:2 약 2450×1630)로 나옵니다.\n\n| denoise | 효과 |\n|---|---|\n| 0.15~0.25 | 원본 거의 유지, 질감만 살짝 |\n| **0.30 (기본)** | GPT 특유의 매끈함·뭉개짐 → 실사 질감 |\n| 0.35 이상 | 얼굴·글자·로고가 바뀔 수 있음 |\n\n- **추천 순서**: 열화가 심하면 SeedVR2 이미지 업스케일 → 이 워크플로. 가벼운 열화는 이것만으로 충분.\n- **글자·로고가 중요하면** denoise 0.2 이하.\n- **기준 MP**: 1 = 약 4MP 출력, 2 = 약 8MP (메모리·시간 증가).\n- **프롬프트**: 맨 앞에 장면 한 줄을 붙이면 더 정확 (예: 'A woman in a red coat on a rainy Seoul street.').\n- **시드**: 왼쪽 🎲 노드가 매 실행 자동 랜덤. 마음에 드는 결과는 🎲 노드를 fixed로.\n\n모델: [Comfy-Org/z_image_turbo](https://huggingface.co/Comfy-Org/z_image_turbo) · [Real-ESRGAN_repackaged](https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged)\n\n메인 서브그래프 구조 · 구조 검증 완료 · GPU 실행 검증 전."
+      ],
+      "color": "#897343",
+      "bgcolor": "#302b22"
+    },
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        380,
+        420
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "이미지",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "업로드할 파일 선택",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "이미지",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            25
+          ]
+        },
+        {
+          "localized_name": "마스크",
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.56"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "color": "#477eac",
+      "bgcolor": "#252d38",
+      "title": "입력 이미지 (GPT·AI 이미지 / SeedVR2 결과)"
+    },
+    {
+      "id": 15,
+      "type": "SaveImage",
+      "pos": [
+        1120,
+        0
+      ],
+      "size": [
+        520,
+        560
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 26
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.64",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65
+      },
+      "widgets_values": [
+        "ZImage/저강도리파인"
+      ],
+      "color": "#5b946f",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 17,
+      "type": "6bd3c6bb-14fb-4333-b0e0-8a72765e2b3c",
+      "pos": [
+        460,
+        0
+      ],
+      "size": [
+        560,
+        294
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "입력 이미지 (GPT·AI 이미지 / SeedVR2 결과)",
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 25
+        },
+        {
+          "label": "프롬프트 (사실감 묘사 · 장면 한 줄을 앞에 추가 가능)",
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "text"
+          }
+        },
+        {
+          "label": "denoise (0.15~0.25 원본 유지 · 0.30 기본 · 0.35↑ 얼굴·글자 변형)",
+          "localized_name": "denoise",
+          "name": "denoise",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "denoise"
+          }
+        },
+        {
+          "label": "기준 해상도 MP (출력 ≈ 4배 · 1 = 약 4MP)",
+          "localized_name": "megapixels",
+          "name": "megapixels",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "megapixels"
+          }
+        },
+        {
+          "label": "시드 (왼쪽 🎲 노드에서 자동 랜덤)",
+          "localized_name": "seed",
+          "name": "seed",
+          "type": "INT",
+          "link": 27,
+          "widget": {
+            "name": "seed"
+          }
+        },
+        {
+          "label": "Z-Image 모델",
+          "localized_name": "unet_name",
+          "name": "unet_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "unet_name"
+          }
+        },
+        {
+          "label": "텍스트 인코더",
+          "localized_name": "clip_name",
+          "name": "clip_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "clip_name"
+          }
+        },
+        {
+          "label": "VAE",
+          "localized_name": "vae_name",
+          "name": "vae_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "vae_name"
+          }
+        },
+        {
+          "label": "ESRGAN 업스케일 모델",
+          "localized_name": "model_name",
+          "name": "model_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "model_name"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            26
+          ],
+          "label": "리파인 이미지"
+        }
+      ],
+      "title": "Z-Image · 저강도 리파인 · GPT 이미지 AI감 제거 + 업스케일",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "previewExposures": []
+      },
+      "widgets_values": [
+        "High resolution photograph, photorealistic, natural skin texture with visible pores, fine fabric and material detail, crisp sharp focus, realistic natural lighting, true-to-life colors, clean image without noise or compression artifacts.",
+        0.3,
+        1,
+        162282565627618,
+        "z_image_turbo_bf16.safetensors",
+        "qwen_3_4b.safetensors",
+        "ae.safetensors",
+        "RealESRGAN_x4plus.safetensors"
+      ],
+      "widgets_values_named": {
+        "text": "High resolution photograph, photorealistic, natural skin texture with visible pores, fine fabric and material detail, crisp sharp focus, realistic natural lighting, true-to-life colors, clean image without noise or compression artifacts.",
+        "denoise": 0.3,
+        "megapixels": 1,
+        "seed": 162282565627618,
+        "unet_name": "z_image_turbo_bf16.safetensors",
+        "clip_name": "qwen_3_4b.safetensors",
+        "vae_name": "ae.safetensors",
+        "model_name": "RealESRGAN_x4plus.safetensors"
+      },
+      "color": "#8870ae",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 18,
+      "type": "PrimitiveInt",
+      "pos": [
+        0,
+        470
+      ],
+      "size": [
+        380,
+        110
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "값",
+          "name": "value",
+          "type": "INT",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "정수",
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            27
+          ]
+        }
+      ],
+      "title": "🎲 시드 · 매 실행 자동 랜덤 (고정하려면 fixed)",
+      "properties": {
+        "Node name for S&R": "PrimitiveInt",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        1375440579,
+        "randomize"
+      ],
+      "color": "#68532c",
+      "bgcolor": "#342b1d"
+    }
+  ],
+  "links": [
+    [
+      25,
+      1,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ],
+    [
+      26,
+      17,
+      0,
+      15,
+      0,
+      "IMAGE"
+    ],
+    [
+      27,
+      18,
+      0,
+      17,
+      4,
+      "INT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        620,
+        120
+      ]
+    }
+  },
+  "version": 0.4,
+  "definitions": {
+    "subgraphs": [
+      {
+        "id": "6bd3c6bb-14fb-4333-b0e0-8a72765e2b3c",
+        "version": 1,
+        "state": {
+          "lastGroupId": 0,
+          "lastNodeId": 14,
+          "lastLinkId": 24,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "Z-Image Turbo 저강도 리파인 (코어)",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -420,
+            0,
+            300,
+            220
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            2460,
+            0,
+            260,
+            66
+          ]
+        },
+        "inputs": [
+          {
+            "id": "d7324266-7266-497d-83b2-5eba0b737a02",
+            "name": "image",
+            "type": "IMAGE",
+            "linkIds": [
+              1
+            ],
+            "localized_name": "image",
+            "label": "입력 이미지 (GPT·AI 이미지 / SeedVR2 결과)",
+            "pos": [
+              -140,
+              20
+            ]
+          },
+          {
+            "id": "588e185a-76f7-4167-ab12-f33fc908b9c8",
+            "name": "text",
+            "type": "STRING",
+            "linkIds": [
+              17
+            ],
+            "localized_name": "text",
+            "label": "프롬프트 (사실감 묘사 · 장면 한 줄을 앞에 추가 가능)",
+            "pos": [
+              -140,
+              40
+            ]
+          },
+          {
+            "id": "8f61ed3f-44ab-4bfc-8e78-212d864598ac",
+            "name": "denoise",
+            "type": "FLOAT",
+            "linkIds": [
+              18
+            ],
+            "localized_name": "denoise",
+            "label": "denoise (0.15~0.25 원본 유지 · 0.30 기본 · 0.35↑ 얼굴·글자 변형)",
+            "pos": [
+              -140,
+              60
+            ]
+          },
+          {
+            "id": "ab57cb6a-61d6-4a65-9f14-8efc69e81163",
+            "name": "megapixels",
+            "type": "FLOAT",
+            "linkIds": [
+              19
+            ],
+            "localized_name": "megapixels",
+            "label": "기준 해상도 MP (출력 ≈ 4배 · 1 = 약 4MP)",
+            "pos": [
+              -140,
+              80
+            ]
+          },
+          {
+            "id": "ee93d03b-819e-41ad-bbba-b52a35d7785f",
+            "name": "seed",
+            "type": "INT",
+            "linkIds": [
+              20
+            ],
+            "localized_name": "seed",
+            "label": "시드 (왼쪽 🎲 노드에서 자동 랜덤)",
+            "pos": [
+              -140,
+              100
+            ]
+          },
+          {
+            "id": "a2348f7c-cad2-4fa9-b1cc-f0a115c04ded",
+            "name": "unet_name",
+            "type": "COMBO",
+            "linkIds": [
+              21
+            ],
+            "localized_name": "unet_name",
+            "label": "Z-Image 모델",
+            "pos": [
+              -140,
+              120
+            ]
+          },
+          {
+            "id": "6fa4d3a3-eeea-4bc4-a65f-71453681388d",
+            "name": "clip_name",
+            "type": "COMBO",
+            "linkIds": [
+              22
+            ],
+            "localized_name": "clip_name",
+            "label": "텍스트 인코더",
+            "pos": [
+              -140,
+              140
+            ]
+          },
+          {
+            "id": "e0534ab0-48fa-4b44-9528-77f153134fe1",
+            "name": "vae_name",
+            "type": "COMBO",
+            "linkIds": [
+              23
+            ],
+            "localized_name": "vae_name",
+            "label": "VAE",
+            "pos": [
+              -140,
+              160
+            ]
+          },
+          {
+            "id": "509b92c0-9d5b-410f-834f-cb0a1ba929b7",
+            "name": "model_name",
+            "type": "COMBO",
+            "linkIds": [
+              24
+            ],
+            "localized_name": "model_name",
+            "label": "ESRGAN 업스케일 모델",
+            "pos": [
+              -140,
+              180
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "0e96c433-c567-413a-b905-9ed113cab11a",
+            "name": "IMAGE",
+            "type": "IMAGE",
+            "linkIds": [
+              16
+            ],
+            "localized_name": "IMAGE",
+            "label": "리파인 이미지",
+            "pos": [
+              2480,
+              20
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 2,
+            "type": "ImageScaleToTotalPixels",
+            "pos": [
+              460,
+              0
+            ],
+            "size": [
+              400,
+              130
+            ],
+            "flags": {},
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "type": "IMAGE",
+                "link": 1
+              },
+              {
+                "localized_name": "megapixels",
+                "name": "megapixels",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "megapixels"
+                },
+                "link": 19
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  3
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageScaleToTotalPixels",
+              "cnr_id": "comfy-core",
+              "ver": "0.13.0"
+            },
+            "widgets_values": [
+              "lanczos",
+              1,
+              1
+            ],
+            "title": "기준 해상도 MP · 출력 ≈ 4배 (1 = 약 4MP·2K급, 2 = 약 8MP)",
+            "color": "#68532c",
+            "bgcolor": "#342b1d"
+          },
+          {
+            "id": 3,
+            "type": "UpscaleModelLoader",
+            "pos": [
+              460,
+              180
+            ],
+            "size": [
+              388.78125,
+              108
+            ],
+            "flags": {},
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model_name",
+                "name": "model_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "model_name"
+                },
+                "link": 24
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "UPSCALE_MODEL",
+                "name": "UPSCALE_MODEL",
+                "type": "UPSCALE_MODEL",
+                "links": [
+                  2
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "UpscaleModelLoader",
+              "cnr_id": "comfy-core",
+              "ver": "0.13.0",
+              "models": [
+                {
+                  "name": "RealESRGAN_x4plus.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/resolve/main/RealESRGAN_x4plus.safetensors",
+                  "directory": "upscale_models"
+                }
+              ]
+            },
+            "widgets_values": [
+              "RealESRGAN_x4plus.safetensors"
+            ],
+            "title": "ESRGAN 업스케일 모델",
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 4,
+            "type": "ImageUpscaleWithModel",
+            "pos": [
+              460,
+              310
+            ],
+            "size": [
+              280.28125,
+              96
+            ],
+            "flags": {},
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "upscale_model",
+                "name": "upscale_model",
+                "type": "UPSCALE_MODEL",
+                "link": 2
+              },
+              {
+                "localized_name": "image",
+                "name": "image",
+                "type": "IMAGE",
+                "link": 3
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  4
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageUpscaleWithModel",
+              "cnr_id": "comfy-core",
+              "ver": "0.13.0"
+            },
+            "widgets_values": [],
+            "title": "ESRGAN ×4 (노이즈·압축 정리)",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 5,
+            "type": "ImageScaleBy",
+            "pos": [
+              460,
+              430
+            ],
+            "size": [
+              270,
+              138.65625
+            ],
+            "flags": {},
+            "order": 4,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "type": "IMAGE",
+                "link": 4
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  5
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageScaleBy",
+              "cnr_id": "comfy-core",
+              "ver": "0.13.0"
+            },
+            "widgets_values": [
+              "lanczos",
+              0.5
+            ],
+            "title": "×0.5 → 최종 크기",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 6,
+            "type": "UNETLoader",
+            "pos": [
+              920,
+              0
+            ],
+            "size": [
+              388.78125,
+              142.65625
+            ],
+            "flags": {},
+            "order": 5,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "unet_name",
+                "name": "unet_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "unet_name"
+                },
+                "link": 21
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  7
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "UNETLoader",
+              "cnr_id": "comfy-core",
+              "ver": "0.3.73",
+              "models": [
+                {
+                  "name": "z_image_turbo_bf16.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors",
+                  "directory": "diffusion_models"
+                }
+              ],
+              "enableTabs": false,
+              "tabWidth": 65,
+              "tabXOffset": 10,
+              "hasSecondTab": false,
+              "secondTabText": "Send Back",
+              "secondTabOffset": 80,
+              "secondTabWidth": 65
+            },
+            "widgets_values": [
+              "z_image_turbo_bf16.safetensors",
+              "default"
+            ],
+            "title": "Z-Image Turbo 모델",
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 7,
+            "type": "CLIPLoader",
+            "pos": [
+              920,
+              140
+            ],
+            "size": [
+              388.78125,
+              180.78125
+            ],
+            "flags": {},
+            "order": 6,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "clip_name",
+                "name": "clip_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "clip_name"
+                },
+                "link": 22
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "CLIP",
+                "name": "CLIP",
+                "type": "CLIP",
+                "links": [
+                  8,
+                  9
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "CLIPLoader",
+              "cnr_id": "comfy-core",
+              "ver": "0.3.73",
+              "models": [
+                {
+                  "name": "qwen_3_4b.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors",
+                  "directory": "text_encoders"
+                }
+              ],
+              "enableTabs": false,
+              "tabWidth": 65,
+              "tabXOffset": 10,
+              "hasSecondTab": false,
+              "secondTabText": "Send Back",
+              "secondTabOffset": 80,
+              "secondTabWidth": 65
+            },
+            "widgets_values": [
+              "qwen_3_4b.safetensors",
+              "lumina2",
+              "default"
+            ],
+            "title": "텍스트 인코더 (Qwen3 4B)",
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 8,
+            "type": "VAELoader",
+            "pos": [
+              920,
+              300
+            ],
+            "size": [
+              388.78125,
+              108
+            ],
+            "flags": {},
+            "order": 7,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "vae_name",
+                "name": "vae_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "vae_name"
+                },
+                "link": 23
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "VAE",
+                "name": "VAE",
+                "type": "VAE",
+                "links": [
+                  6,
+                  15
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "VAELoader",
+              "cnr_id": "comfy-core",
+              "ver": "0.3.73",
+              "models": [
+                {
+                  "name": "ae.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/vae/ae.safetensors",
+                  "directory": "vae"
+                }
+              ],
+              "enableTabs": false,
+              "tabWidth": 65,
+              "tabXOffset": 10,
+              "hasSecondTab": false,
+              "secondTabText": "Send Back",
+              "secondTabOffset": 80,
+              "secondTabWidth": 65
+            },
+            "widgets_values": [
+              "ae.safetensors"
+            ],
+            "title": "VAE",
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 9,
+            "type": "ModelSamplingAuraFlow",
+            "pos": [
+              920,
+              420
+            ],
+            "size": [
+              446.375,
+              104
+            ],
+            "flags": {},
+            "order": 8,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 7
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "slot_index": 0,
+                "links": [
+                  10
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ModelSamplingAuraFlow",
+              "cnr_id": "comfy-core",
+              "ver": "0.3.64",
+              "enableTabs": false,
+              "tabWidth": 65,
+              "tabXOffset": 10,
+              "hasSecondTab": false,
+              "secondTabText": "Send Back",
+              "secondTabOffset": 80,
+              "secondTabWidth": 65
+            },
+            "widgets_values": [
+              3
+            ],
+            "title": "ModelSamplingAuraFlow (shift 3)",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 10,
+            "type": "CLIPTextEncode",
+            "pos": [
+              1380,
+              0
+            ],
+            "size": [
+              420,
+              220
+            ],
+            "flags": {},
+            "order": 9,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 8
+              },
+              {
+                "localized_name": "text",
+                "name": "text",
+                "type": "STRING",
+                "widget": {
+                  "name": "text"
+                },
+                "link": 17
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "links": [
+                  11
+                ]
+              }
+            ],
+            "title": "프롬프트 · 사실감 묘사 (장면 한 줄 앞에 추가 가능)",
+            "properties": {
+              "Node name for S&R": "CLIPTextEncode",
+              "cnr_id": "comfy-core",
+              "ver": "0.3.73",
+              "enableTabs": false,
+              "tabWidth": 65,
+              "tabXOffset": 10,
+              "hasSecondTab": false,
+              "secondTabText": "Send Back",
+              "secondTabOffset": 80,
+              "secondTabWidth": 65
+            },
+            "widgets_values": [
+              "High resolution photograph, photorealistic, natural skin texture with visible pores, fine fabric and material detail, crisp sharp focus, realistic natural lighting, true-to-life colors, clean image without noise or compression artifacts."
+            ],
+            "color": "#4e4369",
+            "bgcolor": "#2a2540"
+          },
+          {
+            "id": 11,
+            "type": "CLIPTextEncode",
+            "pos": [
+              1380,
+              260
+            ],
+            "size": [
+              420,
+              120
+            ],
+            "flags": {},
+            "order": 10,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 9
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "links": [
+                  12
+                ]
+              }
+            ],
+            "title": "네거티브 (CFG 1이라 미적용 · 비워둠)",
+            "properties": {
+              "Node name for S&R": "CLIPTextEncode",
+              "cnr_id": "comfy-core",
+              "ver": "0.3.73",
+              "enableTabs": false,
+              "tabWidth": 65,
+              "tabXOffset": 10,
+              "hasSecondTab": false,
+              "secondTabText": "Send Back",
+              "secondTabOffset": 80,
+              "secondTabWidth": 65
+            },
+            "widgets_values": [
+              ""
+            ],
+            "color": "#4e4369",
+            "bgcolor": "#2a2540"
+          },
+          {
+            "id": 12,
+            "type": "VAEEncode",
+            "pos": [
+              1380,
+              420
+            ],
+            "size": [
+              225,
+              96
+            ],
+            "flags": {},
+            "order": 11,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "pixels",
+                "name": "pixels",
+                "type": "IMAGE",
+                "link": 5
+              },
+              {
+                "localized_name": "vae",
+                "name": "vae",
+                "type": "VAE",
+                "link": 6
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "LATENT",
+                "name": "LATENT",
+                "type": "LATENT",
+                "links": [
+                  13
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "VAEEncode",
+              "cnr_id": "comfy-core",
+              "ver": "0.13.0"
+            },
+            "widgets_values": [],
+            "title": "VAE 인코드",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 13,
+            "type": "KSampler",
+            "pos": [
+              1860,
+              0
+            ],
+            "size": [
+              400,
+              320
+            ],
+            "flags": {},
+            "order": 12,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 10
+              },
+              {
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "link": 11
+              },
+              {
+                "localized_name": "negative",
+                "name": "negative",
+                "type": "CONDITIONING",
+                "link": 12
+              },
+              {
+                "localized_name": "latent_image",
+                "name": "latent_image",
+                "type": "LATENT",
+                "link": 13
+              },
+              {
+                "localized_name": "denoise",
+                "name": "denoise",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "denoise"
+                },
+                "link": 18
+              },
+              {
+                "localized_name": "seed",
+                "name": "seed",
+                "type": "INT",
+                "widget": {
+                  "name": "seed"
+                },
+                "link": 20
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "LATENT",
+                "name": "LATENT",
+                "type": "LATENT",
+                "slot_index": 0,
+                "links": [
+                  14
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "KSampler",
+              "cnr_id": "comfy-core",
+              "ver": "0.3.64",
+              "enableTabs": false,
+              "tabWidth": 65,
+              "tabXOffset": 10,
+              "hasSecondTab": false,
+              "secondTabText": "Send Back",
+              "secondTabOffset": 80,
+              "secondTabWidth": 65
+            },
+            "widgets_values": [
+              162282565627618,
+              "randomize",
+              5,
+              1,
+              "dpmpp_2m_sde",
+              "beta",
+              0.3
+            ],
+            "title": "리파인 · denoise 0.30 (0.15~0.25 원본 유지 / 0.25~0.35 질감 재생성) · 시드 자동 랜덤",
+            "color": "#5d3c68",
+            "bgcolor": "#312039"
+          },
+          {
+            "id": 14,
+            "type": "VAEDecode",
+            "pos": [
+              1860,
+              370
+            ],
+            "size": [
+              302.375,
+              96
+            ],
+            "flags": {},
+            "order": 13,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "samples",
+                "name": "samples",
+                "type": "LATENT",
+                "link": 14
+              },
+              {
+                "localized_name": "vae",
+                "name": "vae",
+                "type": "VAE",
+                "link": 15
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "slot_index": 0,
+                "links": [
+                  16
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "VAEDecode",
+              "cnr_id": "comfy-core",
+              "ver": "0.3.64",
+              "enableTabs": false,
+              "tabWidth": 65,
+              "tabXOffset": 10,
+              "hasSecondTab": false,
+              "secondTabText": "Send Back",
+              "secondTabOffset": 80,
+              "secondTabWidth": 65
+            },
+            "widgets_values": [],
+            "title": "VAE 디코드",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          }
+        ],
+        "groups": [],
+        "links": [
+          {
+            "id": 1,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 2,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 2,
+            "origin_id": 3,
+            "origin_slot": 0,
+            "target_id": 4,
+            "target_slot": 0,
+            "type": "UPSCALE_MODEL"
+          },
+          {
+            "id": 3,
+            "origin_id": 2,
+            "origin_slot": 0,
+            "target_id": 4,
+            "target_slot": 1,
+            "type": "IMAGE"
+          },
+          {
+            "id": 4,
+            "origin_id": 4,
+            "origin_slot": 0,
+            "target_id": 5,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 5,
+            "origin_id": 5,
+            "origin_slot": 0,
+            "target_id": 12,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 6,
+            "origin_id": 8,
+            "origin_slot": 0,
+            "target_id": 12,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 7,
+            "origin_id": 6,
+            "origin_slot": 0,
+            "target_id": 9,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 8,
+            "origin_id": 7,
+            "origin_slot": 0,
+            "target_id": 10,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 9,
+            "origin_id": 7,
+            "origin_slot": 0,
+            "target_id": 11,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 10,
+            "origin_id": 9,
+            "origin_slot": 0,
+            "target_id": 13,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 11,
+            "origin_id": 10,
+            "origin_slot": 0,
+            "target_id": 13,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 12,
+            "origin_id": 11,
+            "origin_slot": 0,
+            "target_id": 13,
+            "target_slot": 2,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 13,
+            "origin_id": 12,
+            "origin_slot": 0,
+            "target_id": 13,
+            "target_slot": 3,
+            "type": "LATENT"
+          },
+          {
+            "id": 14,
+            "origin_id": 13,
+            "origin_slot": 0,
+            "target_id": 14,
+            "target_slot": 0,
+            "type": "LATENT"
+          },
+          {
+            "id": 15,
+            "origin_id": 8,
+            "origin_slot": 0,
+            "target_id": 14,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 16,
+            "origin_id": 14,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 17,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 10,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 18,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 13,
+            "target_slot": 4,
+            "type": "FLOAT"
+          },
+          {
+            "id": 19,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 2,
+            "target_slot": 1,
+            "type": "FLOAT"
+          },
+          {
+            "id": 20,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 13,
+            "target_slot": 5,
+            "type": "INT"
+          },
+          {
+            "id": 21,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 6,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 22,
+            "origin_id": -10,
+            "origin_slot": 6,
+            "target_id": 7,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 23,
+            "origin_id": -10,
+            "origin_slot": 7,
+            "target_id": 8,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 24,
+            "origin_id": -10,
+            "origin_slot": 8,
+            "target_id": 3,
+            "target_slot": 0,
+            "type": "COMBO"
+          }
+        ],
+        "extra": {}
+      }
+    ]
+  }
+}

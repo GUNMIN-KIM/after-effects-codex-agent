@@ -1,0 +1,229 @@
+{
+  "id": "ae8017a9-cc8e-4f78-a99c-0fec211c35f9",
+  "revision": 0,
+  "last_node_id": 5,
+  "last_link_id": 3,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadVideo",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        360,
+        420
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideo"
+      },
+      "title": "① 원본 영상 (5.1초 이하 · 20~30fps · 짝수 W/H)",
+      "widgets_values": [
+        "",
+        "image"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LoadVideo",
+      "pos": [
+        0,
+        480
+      ],
+      "size": [
+        360,
+        420
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideo"
+      },
+      "title": "② 마스크 영상 (흰색 = 지울 곳 · 원본과 같은 크기·프레임 수)",
+      "widgets_values": [
+        "",
+        "image"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "BriaVideoEraser",
+      "pos": [
+        420,
+        0
+      ],
+      "size": [
+        420,
+        300
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 1
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "shape": 7,
+          "link": null
+        },
+        {
+          "name": "mask_video",
+          "type": "VIDEO",
+          "shape": 7,
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BriaVideoEraser"
+      },
+      "title": "Bria Video Eraser · 마스크 영역 지우고 채우기",
+      "widgets_values": [
+        true
+      ],
+      "widgets_values_named": {
+        "preserve_audio": true
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 4,
+      "type": "SaveVideo",
+      "pos": [
+        880,
+        0
+      ],
+      "size": [
+        420,
+        420
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 3
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveVideo"
+      },
+      "title": "결과 영상 · 저장",
+      "widgets_values": [
+        "Bria/video_eraser",
+        "auto",
+        "auto"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "MarkdownNote",
+      "pos": [
+        -640,
+        0
+      ],
+      "size": [
+        600,
+        900
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Bria Video Eraser · 마스크 인페인팅 (KR 안내)",
+      "properties": {},
+      "widgets_values": [
+        "## [유료 API] Bria Video Eraser · 마스크 영상으로 지정한 물체 지우기\n\n**현재 ComfyUI 유료 노드 중 유일한 '마스크 기반' 영상 인페인팅**(2026-11-06 기준). MiniMax H3 Max에는 마스크 입력 노드가 없습니다 (Insert = 시간 구간 교체).\n\n**AE 용도**: 리그·와이어·로고·지나가는 사람 제거. AE에서 로토/트래킹 매트를 흑백 영상(흰색 = 지울 곳)으로 렌더해 ②에 넣습니다. 로컬 대안: `인페인팅/` (H3 Fun ControlNet · LTX2.5), `제거/`.\n\n**제한**: 클립 **5.1초 이하 · 20~30fps · 짝수 픽셀 크기** · 마스크는 원본과 같은 크기·프레임 수 · `mask`(MASK 배치)와 `mask_video` 중 하나만 · 오디오 유지 기본 켬.\n\n**AE 체크**: 결과가 원본보다 **몇 프레임 짧게** 올 수 있습니다 → AE에서 첫 프레임 기준으로 맞춰 놓고 끝 프레임 수를 확인, 모자라면 원본 끝 프레임으로 채우거나 구간을 나눠 실행.\n\n**요금**: Comfy 계정 크레딧 차감 (노드 오른쪽 위 가격 배지 확인). 실행 전 **짧은 구간·저해상도**로 먼저 확인하세요.\n**데이터**: 영상·이미지가 외부 서비스(MiniMax/fal, Bria)로 업로드됩니다. 공개 전 소스나 계약상 외부 반출이 금지된 소스는 넣지 마세요.\n\n### 모델 (로컬: 아래 파일명 그대로 · Cloud: 문제 패널에 없다고 나오면 '가져오기' 후 이름 확인)\n모델 다운로드 없음 (유료 API · Comfy 계정 크레딧 사용)\n\n### 출처 · 검증\n- 원본: ComfyUI `comfy_api_nodes/nodes_bria.py` BriaVideoEraser (2026-09-12) — 노드 스키마로 구성\n- 상태: GPU/크레딧 실행 미검증 · 노드 스키마(입력·위젯 순서) 대조로 구성\n- 정리: 2026-11-06 · After Effects Codex Agent 팩 (`comfyui/README.md`)\n"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      0,
+      "VIDEO"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      2,
+      "VIDEO"
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      0,
+      "VIDEO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8,
+      "offset": [
+        700,
+        120
+      ]
+    },
+    "ae_pack": {
+      "added": "2026-11-06",
+      "kind": "api",
+      "source": "ComfyUI `comfy_api_nodes/nodes_bria.py` BriaVideoEraser (2026-09-12) — 노드 스키마로 구성",
+      "gpu_render_tested": false
+    }
+  },
+  "version": 0.4
+}

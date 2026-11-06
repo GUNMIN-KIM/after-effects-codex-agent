@@ -1,0 +1,3019 @@
+{
+  "id": "b1c1e539-e8bf-4c48-b295-ff5fc071b78b",
+  "version": 0.4,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "title": "이미지 1 · 원본 (편집할 사진) · 필수",
+      "pos": [
+        80,
+        160
+      ],
+      "size": [
+        600,
+        360
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            31
+          ],
+          "slot_index": 0,
+          "label": "원본 이미지",
+          "localized_name": "원본 이미지"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [],
+          "slot_index": 1,
+          "label": "흑백 마스크 · 흰색=선택/불투명",
+          "localized_name": "흑백 마스크 · 흰색=선택/불투명"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "source.png",
+        "image"
+      ],
+      "color": "#477eac",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 31,
+      "type": "LoadImage",
+      "title": "② 레퍼런스 이미지 · 이 파일에서는 필수 (사진 1장은 단일 편집 파일 사용)",
+      "pos": [
+        80,
+        600
+      ],
+      "size": [
+        600,
+        360
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            36
+          ],
+          "slot_index": 0,
+          "label": "레퍼런스 이미지",
+          "localized_name": "레퍼런스 이미지"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [],
+          "slot_index": 1,
+          "label": "흑백 마스크 · 흰색=선택/불투명",
+          "localized_name": "흑백 마스크 · 흰색=선택/불투명"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "reference.png",
+        "image"
+      ],
+      "color": "#477eac",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 18,
+      "type": "SaveImage",
+      "title": "RGB 이미지/프레임 | 03 편집 결과 · PNG / 원본 크기 또는 추론 크기",
+      "pos": [
+        2780,
+        160
+      ],
+      "size": [
+        520,
+        310
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 29,
+          "label": "images · RGB 이미지/프레임",
+          "localized_name": "images · RGB 이미지/프레임"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "cnr_id": "comfy-core",
+        "content_kind": "RGB 이미지/프레임"
+      },
+      "widgets_values": [
+        "Qwen2.1-Turbo_이미지편집_레퍼런스"
+      ],
+      "color": "#5b946f",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 19,
+      "type": "MarkdownNote",
+      "title": "사용법 · Qwen-Image 2.1 Turbo · 원본 + 레퍼런스",
+      "pos": [
+        80,
+        1366
+      ],
+      "size": [
+        1100,
+        560
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "MarkdownNote",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "## Qwen-Image 2.1 Turbo · 이미지 1 원본 + 이미지 2 레퍼런스(선택) + 편집 지시\n\n- **이미지 1 = 원본** (편집할 사진). 결과 캔버스·구도·출력 크기는 항상 이미지 1 기준 → 편집 전용.\n- **이미지 2 = 레퍼런스** (바꿔 넣을 대상). 프롬프트에서 원본은 `image 1`, 레퍼런스는 `image 2`로 부름.\n- **레퍼런스는 선택**: 쓸 때는 이미지 노드를 서브그래프의 `image 2 · 레퍼런스` 슬롯에 연결. 안 쓸 때는 노드를 **삭제**하거나 **뮤트(Ctrl+M)** → 원본 1장 편집으로 그대로 실행. (Qwen 2.1 노드의 이미지 입력은 전부 선택 입력이고, 레퍼런스 경로에는 다른 노드가 없어서 빠져도 오류가 나지 않음)\n- ⚠ 이미지를 고르지 않은 레퍼런스 노드를 켜 둔 채 실행하면 이미지 검증 오류 → 지우거나 뮤트.\n- 레퍼런스 없이 쓸 때는 기본 프롬프트의 `image 2` 문장을 지우고 편집 지시만 쓰기.\n- 크기: 이미지 1은 추론 캔버스(긴 변 2048)로 맞추고, Qwen 노드 `resolution`을 캔버스와 같은 면적(√폭×높이 · 32배수)으로 자동 계산 → 레퍼런스도 같은 면적으로 줄어듦 (큰 사진도 그대로 넣어도 됨).\n- 모델: Qwen 공식 Turbo (2026-10-09, 7B) · int8 · 8 steps\n- 샘플링: Comfy-Org 공식 Turbo 템플릿과 같은 값 (고정 시그마 8 steps · euler · CFG 1) — CFG 1이라 네거티브는 영향 없음\n- 출력: 기본 = 원본 W×H (끄면 추론 크기)\n- 라이선스: Qwen Research License (비상업)\n\n### 2026-10-23 · 레퍼런스 버전\n- 원본 `Qwen2.1-Turbo_이미지편집_8스텝`에서 갈라져 나옴: 레퍼런스 슬롯 추가, Qwen 참조 해상도를 0(원본 크기) → 캔버스 면적 자동으로 바꿈 (레퍼런스가 없으면 결과는 원본 버전과 같은 캔버스).\n- 검증: JSON 구조·링크만 확인. ComfyUI·Cloud 실제 실행은 아직 안 함."
+      ],
+      "color": "#897343",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 22,
+      "type": "a4873619-e7bf-584f-9626-127379b9ceda",
+      "title": "01 모델 · 인코더 · VAE",
+      "pos": [
+        780,
+        160
+      ],
+      "size": [
+        800,
+        528
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ctl_8_unet_name",
+          "type": "COMBO",
+          "label": "Qwen-Image 2.1 Turbo · 모델 로더 · 생성 모델",
+          "localized_name": "Qwen-Image 2.1 Turbo · 모델 로더 · 생성 모델",
+          "link": null,
+          "widget": {
+            "name": "ctl_8_unet_name"
+          }
+        },
+        {
+          "name": "ctl_8_weight_dtype",
+          "type": "COMBO",
+          "label": "NoctQ V4 · 모델 로더 · 가중치 정밀도",
+          "localized_name": "NoctQ V4 · 모델 로더 · 가중치 정밀도",
+          "link": null,
+          "widget": {
+            "name": "ctl_8_weight_dtype"
+          }
+        },
+        {
+          "name": "ctl_9_clip_name",
+          "type": "COMBO",
+          "label": "Qwen 2.1 · 전용 텍스트 인코더 · 텍스트 인코더",
+          "localized_name": "Qwen 2.1 · 전용 텍스트 인코더 · 텍스트 인코더",
+          "link": null,
+          "widget": {
+            "name": "ctl_9_clip_name"
+          }
+        },
+        {
+          "name": "ctl_9_type",
+          "type": "COMBO",
+          "label": "Qwen 2.1 · 전용 텍스트 인코더 · type",
+          "localized_name": "Qwen 2.1 · 전용 텍스트 인코더 · type",
+          "link": null,
+          "widget": {
+            "name": "ctl_9_type"
+          }
+        },
+        {
+          "name": "ctl_9_device",
+          "type": "COMBO",
+          "label": "Qwen 2.1 · 전용 텍스트 인코더 · 장치",
+          "localized_name": "Qwen 2.1 · 전용 텍스트 인코더 · 장치",
+          "link": null,
+          "widget": {
+            "name": "ctl_9_device"
+          }
+        },
+        {
+          "name": "ctl_10_vae_name",
+          "type": "COMBO",
+          "label": "Qwen 2.1 · 전용 VAE · VAE",
+          "localized_name": "Qwen 2.1 · 전용 VAE · VAE",
+          "link": null,
+          "widget": {
+            "name": "ctl_10_vae_name"
+          }
+        },
+        {
+          "name": "ctl_11_device",
+          "type": "COMBO",
+          "label": "레퍼런스 캐시 · 장치",
+          "localized_name": "레퍼런스 캐시 · 장치",
+          "link": null,
+          "widget": {
+            "name": "ctl_11_device"
+          }
+        },
+        {
+          "name": "ctl_11_dtype",
+          "type": "COMBO",
+          "label": "레퍼런스 캐시 · dtype",
+          "localized_name": "레퍼런스 캐시 · dtype",
+          "link": null,
+          "widget": {
+            "name": "ctl_11_dtype"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "out_00_CLIP",
+          "type": "CLIP",
+          "label": "CLIP",
+          "localized_name": "CLIP",
+          "links": [
+            32
+          ]
+        },
+        {
+          "name": "out_01_VAE",
+          "type": "VAE",
+          "label": "VAE",
+          "localized_name": "VAE",
+          "links": [
+            33
+          ]
+        },
+        {
+          "name": "out_02_MODEL",
+          "type": "MODEL",
+          "label": "MODEL",
+          "localized_name": "MODEL",
+          "links": [
+            34
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "previewExposures": []
+      },
+      "widgets_values": [
+        "qwen_image_2.1_turbo_int8_convrot.safetensors",
+        "default",
+        "qwen3vl_8b_int8_convrot.safetensors",
+        "qwen_image",
+        "default",
+        "qwen_image_2.1_vae_bf16.safetensors",
+        "auto",
+        "default"
+      ],
+      "widgets_values_named": {
+        "ctl_8_unet_name": "qwen_image_2.1_turbo_int8_convrot.safetensors",
+        "ctl_8_weight_dtype": "default",
+        "ctl_9_clip_name": "qwen3vl_8b_int8_convrot.safetensors",
+        "ctl_9_type": "qwen_image",
+        "ctl_9_device": "default",
+        "ctl_10_vae_name": "qwen_image_2.1_vae_bf16.safetensors",
+        "ctl_11_device": "auto",
+        "ctl_11_dtype": "default"
+      },
+      "color": "#8870ae",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 23,
+      "type": "54fdc927-c178-4382-a22a-fc3baab4e51d",
+      "title": "02 편집 지시 · 원본 + 레퍼런스 · 해상도 · 샘플링",
+      "pos": [
+        1760,
+        160
+      ],
+      "size": [
+        800,
+        906
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "in_00_IMAGE",
+          "type": "IMAGE",
+          "label": "image 1 · 원본 (편집할 이미지)",
+          "localized_name": "image 1 · 원본 (편집할 이미지)",
+          "link": 31
+        },
+        {
+          "name": "in_04_REF_IMAGE",
+          "type": "IMAGE",
+          "label": "image 2 · 레퍼런스 이미지 (선택 · 안 쓰면 비워 둠)",
+          "localized_name": "image 2 · 레퍼런스 이미지 (선택 · 안 쓰면 비워 둠)",
+          "link": 36
+        },
+        {
+          "name": "in_01_out_00_CLIP",
+          "type": "CLIP",
+          "label": "clip",
+          "localized_name": "clip",
+          "link": 32
+        },
+        {
+          "name": "in_02_out_01_VAE",
+          "type": "VAE",
+          "label": "vae",
+          "localized_name": "vae",
+          "link": 33
+        },
+        {
+          "name": "in_03_out_02_MODEL",
+          "type": "MODEL",
+          "label": "model",
+          "localized_name": "model",
+          "link": 34
+        },
+        {
+          "name": "ctl_3_value",
+          "type": "INT",
+          "label": "추론 긴 변 px · 기본 2048 / 가볍게 1536",
+          "localized_name": "추론 긴 변 px · 기본 2048 / 가볍게 1536",
+          "link": null,
+          "widget": {
+            "name": "ctl_3_value"
+          }
+        },
+        {
+          "name": "ctl_15_value",
+          "type": "BOOLEAN",
+          "label": "출력 크기 · ON 원본 W/H / OFF 추론 크기",
+          "localized_name": "출력 크기 · ON 원본 W/H / OFF 추론 크기",
+          "link": null,
+          "widget": {
+            "name": "ctl_15_value"
+          }
+        },
+        {
+          "name": "ctl_12_prompt",
+          "type": "STRING",
+          "label": "Qwen 편집 지시 + 네거티브 · 이미지 레퍼런스 · 긍정/편집 지시",
+          "localized_name": "Qwen 편집 지시 + 네거티브 · 이미지 레퍼런스 · 긍정/편집 지시",
+          "link": null,
+          "widget": {
+            "name": "ctl_12_prompt"
+          }
+        },
+        {
+          "name": "ctl_12_negative_prompt",
+          "type": "STRING",
+          "label": "Qwen 편집 지시 + 네거티브 · 이미지 레퍼런스 · 네거티브 · 피할 내용 / CFG=1 영향 없음",
+          "localized_name": "Qwen 편집 지시 + 네거티브 · 이미지 레퍼런스 · 네거티브 · 피할 내용 / CFG=1 영향 없음",
+          "link": null,
+          "widget": {
+            "name": "ctl_12_negative_prompt"
+          }
+        },
+        {
+          "name": "ctl_13_seed",
+          "type": "INT",
+          "label": "시드",
+          "localized_name": "시드",
+          "link": 35,
+          "widget": {
+            "name": "ctl_13_seed"
+          }
+        },
+        {
+          "name": "ctl_13_cfg",
+          "type": "FLOAT",
+          "label": "CFG · Turbo 권장 1",
+          "localized_name": "CFG · Turbo 권장 1",
+          "link": null,
+          "widget": {
+            "name": "ctl_13_cfg"
+          }
+        },
+        {
+          "name": "ctl_13_sampler_name",
+          "type": "COMBO",
+          "label": "샘플러 · Turbo 권장 euler",
+          "localized_name": "샘플러 · Turbo 권장 euler",
+          "link": null,
+          "widget": {
+            "name": "ctl_13_sampler_name"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "out_00_IMAGE",
+          "type": "IMAGE",
+          "label": "RGB 이미지/프레임",
+          "localized_name": "RGB 이미지/프레임",
+          "links": [
+            29
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "previewExposures": []
+      },
+      "widgets_values": [
+        2048,
+        true,
+        "Edit image 1 using image 2 as the reference for the requested change. Keep the subject, pose, camera framing, perspective, skin tone and lighting of image 1 everywhere else. Take only the referenced element from image 2; do not copy its background, framing or other content. Preserve fine texture and realistic photographic detail.",
+        "blur, low resolution, compression artifacts, malformed hands, duplicate limbs, unintended changes to identity, pose or framing",
+        42,
+        1,
+        "euler"
+      ],
+      "widgets_values_named": {
+        "ctl_3_value": 2048,
+        "ctl_15_value": true,
+        "ctl_12_prompt": "Edit image 1 using image 2 as the reference for the requested change. Keep the subject, pose, camera framing, perspective, skin tone and lighting of image 1 everywhere else. Take only the referenced element from image 2; do not copy its background, framing or other content. Preserve fine texture and realistic photographic detail.",
+        "ctl_12_negative_prompt": "blur, low resolution, compression artifacts, malformed hands, duplicate limbs, unintended changes to identity, pose or framing",
+        "ctl_13_seed": 42,
+        "ctl_13_cfg": 1,
+        "ctl_13_sampler_name": "euler"
+      },
+      "color": "#8870ae",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 24,
+      "type": "SeedNode",
+      "pos": [
+        -260,
+        160
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "seed",
+          "type": "INT",
+          "links": [
+            35
+          ]
+        }
+      ],
+      "title": "시드 · 매 실행 랜덤",
+      "properties": {
+        "Node name for S&R": "SeedNode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        42,
+        "randomize"
+      ],
+      "widgets_values_named": {
+        "seed": 42,
+        "control_after_generate": "randomize"
+      },
+      "color": "#68532c",
+      "bgcolor": "#342b1d"
+    },
+    {
+      "id": 30,
+      "type": "Note",
+      "pos": [
+        38,
+        -37
+      ],
+      "size": [
+        839,
+        100
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "모델 링크",
+      "properties": {},
+      "widgets_values": [
+        "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/diffusion_models/qwen_image_2.1_turbo_int8_convrot.safetensors\nhttps://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3vl_8b_int8_convrot.safetensors\nhttps://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/vae/qwen_image_2.1_vae_bf16.safetensors"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    }
+  ],
+  "links": [
+    [
+      29,
+      23,
+      0,
+      18,
+      0,
+      "IMAGE"
+    ],
+    [
+      31,
+      1,
+      0,
+      23,
+      0,
+      "IMAGE"
+    ],
+    [
+      32,
+      22,
+      0,
+      23,
+      2,
+      "CLIP"
+    ],
+    [
+      33,
+      22,
+      1,
+      23,
+      3,
+      "VAE"
+    ],
+    [
+      34,
+      22,
+      2,
+      23,
+      4,
+      "MODEL"
+    ],
+    [
+      35,
+      24,
+      0,
+      23,
+      9,
+      "INT"
+    ],
+    [
+      36,
+      31,
+      0,
+      23,
+      1,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "01 입력 · 이미지 1 원본 / 이미지 2 레퍼런스(선택)",
+      "bounding": [
+        56,
+        92,
+        648,
+        908
+      ],
+      "color": "#477eac",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "02 조작 · 모델 / 설정 / 처리",
+      "bounding": [
+        756,
+        92,
+        1828,
+        1006
+      ],
+      "color": "#8870ae",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "03 출력 · 비교 / 저장",
+      "bounding": [
+        2756,
+        92,
+        568,
+        410
+      ],
+      "color": "#5b946f",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "사용법 · 검증 범위",
+      "bounding": [
+        56,
+        1298,
+        1148,
+        460
+      ],
+      "color": "#897343",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.55,
+      "offset": [
+        35,
+        140.0
+      ]
+    },
+    "frontendVersion": "1.54.15",
+    "development": {
+      "date": "2026-10-11",
+      "changes": [
+        "이미지 한 장 + 편집 지시의 기본 구성으로 단순화",
+        "추론 긴 변 2048 자동 계산 및 원본 종횡비 반영",
+        "출력 원본 W/H 또는 추론 크기 선택을 메인에 노출",
+        "25 steps / CFG 3 / Euler / simple / denoise 1; 네거티브 연결",
+        "불필요한 ESRGAN 후처리 및 추가 모델 의존성 제거"
+      ],
+      "limitations": [
+        "Cloud GPU render not tested; no universal best setting claimed",
+        "Input/output dimensions validated symbolically; generation quality remains shot-dependent"
+      ],
+      "cloud_library_checked": "LTX Step7000, NoctQ V4, UC INT8 exact filenames observed in Cloud model library; runtime not tested",
+      "cloud_import_tested": false,
+      "gpu_render_tested": false,
+      "silent": true,
+      "controls_added": 19,
+      "output_layout": "3 columns × up to 3 rows per block when outputs >= 3",
+      "model_review_date": "2026-10-11"
+    }
+  },
+  "definitions": {
+    "subgraphs": [
+      {
+        "id": "a4873619-e7bf-584f-9626-127379b9ceda",
+        "version": 1,
+        "state": {
+          "lastNodeId": 11,
+          "lastLinkId": 40,
+          "lastGroupId": 2,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "01 모델 · 인코더 · VAE",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -420,
+            120,
+            320,
+            246
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            1160,
+            120,
+            320,
+            136
+          ]
+        },
+        "inputs": [
+          {
+            "id": "6c67d5e7-a552-5e69-afe8-ad1fb98b2a1f",
+            "name": "ctl_8_unet_name",
+            "type": "COMBO",
+            "label": "Qwen-Image 2.1 Turbo · 모델 로더 · 생성 모델",
+            "localized_name": "Qwen-Image 2.1 Turbo · 모델 로더 · 생성 모델",
+            "linkIds": [
+              33
+            ],
+            "pos": [
+              -120,
+              162
+            ]
+          },
+          {
+            "id": "6aada52f-6377-5647-9fc9-e8e1450e9f01",
+            "name": "ctl_8_weight_dtype",
+            "type": "COMBO",
+            "label": "NoctQ V4 · 모델 로더 · 가중치 정밀도",
+            "localized_name": "NoctQ V4 · 모델 로더 · 가중치 정밀도",
+            "linkIds": [
+              34
+            ],
+            "pos": [
+              -120,
+              184
+            ]
+          },
+          {
+            "id": "c879f05c-31a3-5610-ab43-98bee8f55784",
+            "name": "ctl_9_clip_name",
+            "type": "COMBO",
+            "label": "Qwen 2.1 · 전용 텍스트 인코더 · 텍스트 인코더",
+            "localized_name": "Qwen 2.1 · 전용 텍스트 인코더 · 텍스트 인코더",
+            "linkIds": [
+              35
+            ],
+            "pos": [
+              -120,
+              206
+            ]
+          },
+          {
+            "id": "b6915e43-d177-5722-9bf0-16054202344d",
+            "name": "ctl_9_type",
+            "type": "COMBO",
+            "label": "Qwen 2.1 · 전용 텍스트 인코더 · type",
+            "localized_name": "Qwen 2.1 · 전용 텍스트 인코더 · type",
+            "linkIds": [
+              36
+            ],
+            "pos": [
+              -120,
+              228
+            ]
+          },
+          {
+            "id": "aa84ced6-e8b5-5257-9054-ec0c4ce579ae",
+            "name": "ctl_9_device",
+            "type": "COMBO",
+            "label": "Qwen 2.1 · 전용 텍스트 인코더 · 장치",
+            "localized_name": "Qwen 2.1 · 전용 텍스트 인코더 · 장치",
+            "linkIds": [
+              37
+            ],
+            "pos": [
+              -120,
+              250
+            ]
+          },
+          {
+            "id": "c6b14afb-c9e0-5eb0-8b87-698641ccd5cd",
+            "name": "ctl_10_vae_name",
+            "type": "COMBO",
+            "label": "Qwen 2.1 · 전용 VAE · VAE",
+            "localized_name": "Qwen 2.1 · 전용 VAE · VAE",
+            "linkIds": [
+              38
+            ],
+            "pos": [
+              -120,
+              272
+            ]
+          },
+          {
+            "id": "6ace593c-d194-57db-8db1-f10f1cda59fc",
+            "name": "ctl_11_device",
+            "type": "COMBO",
+            "label": "레퍼런스 캐시 · 장치",
+            "localized_name": "레퍼런스 캐시 · 장치",
+            "linkIds": [
+              39
+            ],
+            "pos": [
+              -120,
+              294
+            ]
+          },
+          {
+            "id": "e4ce55ac-b2a4-5b8d-8fae-f6f22b560098",
+            "name": "ctl_11_dtype",
+            "type": "COMBO",
+            "label": "레퍼런스 캐시 · dtype",
+            "localized_name": "레퍼런스 캐시 · dtype",
+            "linkIds": [
+              40
+            ],
+            "pos": [
+              -120,
+              316
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "9dcf7ec8-6834-5e90-9a9d-2c3d7a4f67a8",
+            "name": "out_00_CLIP",
+            "type": "CLIP",
+            "label": "CLIP",
+            "localized_name": "CLIP",
+            "linkIds": [
+              30
+            ],
+            "pos": [
+              1180,
+              162
+            ]
+          },
+          {
+            "id": "83320cd8-c8cc-58b6-b2b4-2e5bfee5c6b7",
+            "name": "out_01_VAE",
+            "type": "VAE",
+            "label": "VAE",
+            "localized_name": "VAE",
+            "linkIds": [
+              31
+            ],
+            "pos": [
+              1180,
+              184
+            ]
+          },
+          {
+            "id": "9c4003b5-ee89-591c-8822-6f9c12e68eb6",
+            "name": "out_02_MODEL",
+            "type": "MODEL",
+            "label": "MODEL",
+            "localized_name": "MODEL",
+            "linkIds": [
+              32
+            ],
+            "pos": [
+              1180,
+              206
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 8,
+            "type": "UNETLoader",
+            "title": "Qwen-Image 2.1 Turbo · 모델 로더",
+            "pos": [
+              80,
+              160
+            ],
+            "size": [
+              350,
+              156
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "unet_name",
+                "type": "COMBO",
+                "link": 33,
+                "widget": {
+                  "name": "unet_name"
+                }
+              },
+              {
+                "name": "weight_dtype",
+                "type": "COMBO",
+                "link": 34,
+                "widget": {
+                  "name": "weight_dtype"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  13
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "UNETLoader",
+              "cnr_id": "comfy-core",
+              "models": [
+                {
+                  "name": "qwen_image_2.1_turbo_int8_convrot.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/diffusion_models/qwen_image_2.1_turbo_int8_convrot.safetensors",
+                  "directory": "diffusion_models"
+                }
+              ]
+            },
+            "widgets_values": [
+              "qwen_image_2.1_turbo_int8_convrot.safetensors",
+              "default"
+            ],
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 9,
+            "type": "CLIPLoader",
+            "title": "Qwen 2.1 · 전용 텍스트 인코더",
+            "pos": [
+              80,
+              384
+            ],
+            "size": [
+              350,
+              206
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "clip_name",
+                "type": "COMBO",
+                "link": 35,
+                "widget": {
+                  "name": "clip_name"
+                }
+              },
+              {
+                "name": "type",
+                "type": "COMBO",
+                "link": 36,
+                "widget": {
+                  "name": "type"
+                }
+              },
+              {
+                "name": "device",
+                "type": "COMBO",
+                "link": 37,
+                "widget": {
+                  "name": "device"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "CLIP",
+                "type": "CLIP",
+                "links": [
+                  30
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "CLIPLoader",
+              "cnr_id": "comfy-core",
+              "models": [
+                {
+                  "name": "qwen3vl_8b_int8_convrot.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3vl_8b_int8_convrot.safetensors",
+                  "directory": "text_encoders"
+                }
+              ]
+            },
+            "widgets_values": [
+              "qwen3vl_8b_int8_convrot.safetensors",
+              "qwen_image",
+              "default"
+            ],
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 10,
+            "type": "VAELoader",
+            "title": "Qwen 2.1 · 전용 VAE",
+            "pos": [
+              80,
+              658
+            ],
+            "size": [
+              350,
+              110
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "vae_name",
+                "type": "COMBO",
+                "link": 38,
+                "widget": {
+                  "name": "vae_name"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "VAE",
+                "type": "VAE",
+                "links": [
+                  31
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "VAELoader",
+              "cnr_id": "comfy-core",
+              "models": [
+                {
+                  "name": "qwen_image_2.1_vae_bf16.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/vae/qwen_image_2.1_vae_bf16.safetensors",
+                  "directory": "vae"
+                }
+              ]
+            },
+            "widgets_values": [
+              "qwen_image_2.1_vae_bf16.safetensors"
+            ],
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 11,
+            "type": "QwenImage21Cache",
+            "title": "레퍼런스 캐시",
+            "pos": [
+              610,
+              160
+            ],
+            "size": [
+              350,
+              178
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "model",
+                "type": "MODEL",
+                "link": 13
+              },
+              {
+                "name": "device",
+                "type": "COMBO",
+                "link": 39,
+                "widget": {
+                  "name": "device"
+                }
+              },
+              {
+                "name": "dtype",
+                "type": "COMBO",
+                "link": 40,
+                "widget": {
+                  "name": "dtype"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  32
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "QwenImage21Cache",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "auto",
+              "default"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          }
+        ],
+        "groups": [
+          {
+            "id": 1,
+            "title": "01  모델 · 로딩 / LoRA",
+            "bounding": [
+              56,
+              80,
+              398,
+              756
+            ],
+            "color": "#59809d",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 2,
+            "title": "02  입력 정리 · 크기 / 길이",
+            "bounding": [
+              586,
+              80,
+              398,
+              326
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          }
+        ],
+        "links": [
+          {
+            "id": 13,
+            "origin_id": 8,
+            "origin_slot": 0,
+            "target_id": 11,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 30,
+            "origin_id": 9,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 31,
+            "origin_id": 10,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 32,
+            "origin_id": 11,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 2,
+            "type": "MODEL"
+          },
+          {
+            "id": 33,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 8,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 34,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 8,
+            "target_slot": 1,
+            "type": "COMBO"
+          },
+          {
+            "id": 35,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 9,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 36,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 9,
+            "target_slot": 1,
+            "type": "COMBO"
+          },
+          {
+            "id": 37,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 9,
+            "target_slot": 2,
+            "type": "COMBO"
+          },
+          {
+            "id": 38,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 10,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 39,
+            "origin_id": -10,
+            "origin_slot": 6,
+            "target_id": 11,
+            "target_slot": 1,
+            "type": "COMBO"
+          },
+          {
+            "id": 40,
+            "origin_id": -10,
+            "origin_slot": 7,
+            "target_id": 11,
+            "target_slot": 2,
+            "type": "COMBO"
+          }
+        ],
+        "extra": {
+          "codex_layout_inserted": true,
+          "codex_layout_role": "model",
+          "ds": {
+            "scale": 0.7,
+            "offset": [
+              500,
+              25
+            ]
+          }
+        }
+      },
+      {
+        "id": "54fdc927-c178-4382-a22a-fc3baab4e51d",
+        "version": 1,
+        "state": {
+          "lastNodeId": 30,
+          "lastLinkId": 49,
+          "lastGroupId": 8,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "02 편집 지시 · 원본 + 레퍼런스 · 해상도 · 샘플링",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -420,
+            120,
+            320,
+            400
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            4410,
+            120,
+            320,
+            120
+          ]
+        },
+        "inputs": [
+          {
+            "id": "03c83163-6b60-527b-bd4b-194cb98e303b",
+            "name": "in_00_IMAGE",
+            "type": "IMAGE",
+            "label": "image 1 · 원본 (편집할 이미지)",
+            "localized_name": "image 1 · 원본 (편집할 이미지)",
+            "linkIds": [
+              1,
+              10
+            ],
+            "pos": [
+              -120,
+              162
+            ]
+          },
+          {
+            "id": "15bc80dd-7eee-4de9-a164-011c33739f16",
+            "name": "in_04_REF_IMAGE",
+            "type": "IMAGE",
+            "label": "image 2 · 레퍼런스 이미지 (선택 · 안 쓰면 비워 둠)",
+            "localized_name": "image 2 · 레퍼런스 이미지 (선택 · 안 쓰면 비워 둠)",
+            "linkIds": [
+              46
+            ],
+            "pos": [
+              -120,
+              184
+            ]
+          },
+          {
+            "id": "1169016c-1763-5a32-bcdb-f031b24510b6",
+            "name": "in_01_out_00_CLIP",
+            "type": "CLIP",
+            "label": "clip",
+            "localized_name": "clip",
+            "linkIds": [
+              14
+            ],
+            "pos": [
+              -120,
+              206
+            ]
+          },
+          {
+            "id": "b1ad6db5-3694-589e-a993-68455e5205f9",
+            "name": "in_02_out_01_VAE",
+            "type": "VAE",
+            "label": "vae",
+            "localized_name": "vae",
+            "linkIds": [
+              15,
+              22
+            ],
+            "pos": [
+              -120,
+              228
+            ]
+          },
+          {
+            "id": "21b5667e-6104-53f5-bba7-f5a624fc2f70",
+            "name": "in_03_out_02_MODEL",
+            "type": "MODEL",
+            "label": "model",
+            "localized_name": "model",
+            "linkIds": [
+              17
+            ],
+            "pos": [
+              -120,
+              250
+            ]
+          },
+          {
+            "id": "52ec4bfa-d484-56ec-8c08-3c9198df1c8f",
+            "name": "ctl_3_value",
+            "type": "INT",
+            "label": "추론 긴 변 px · 기본 2048 / 가볍게 1536",
+            "localized_name": "추론 긴 변 px · 기본 2048 / 가볍게 1536",
+            "linkIds": [
+              31
+            ],
+            "pos": [
+              -120,
+              272
+            ]
+          },
+          {
+            "id": "7e7a1167-f8f6-55cf-be4d-7d3c338f9183",
+            "name": "ctl_15_value",
+            "type": "BOOLEAN",
+            "label": "출력 크기 · ON 원본 W/H / OFF 추론 크기",
+            "localized_name": "출력 크기 · ON 원본 W/H / OFF 추론 크기",
+            "linkIds": [
+              32
+            ],
+            "pos": [
+              -120,
+              294
+            ]
+          },
+          {
+            "id": "72baf3a4-ab90-5546-9468-6afb132093d6",
+            "name": "ctl_12_prompt",
+            "type": "STRING",
+            "label": "Qwen 편집 지시 + 네거티브 · 이미지 레퍼런스 · 긍정/편집 지시",
+            "localized_name": "Qwen 편집 지시 + 네거티브 · 이미지 레퍼런스 · 긍정/편집 지시",
+            "linkIds": [
+              33
+            ],
+            "pos": [
+              -120,
+              316
+            ]
+          },
+          {
+            "id": "05cf3120-994a-5f0c-ba04-763f154a1214",
+            "name": "ctl_12_negative_prompt",
+            "type": "STRING",
+            "label": "Qwen 편집 지시 + 네거티브 · 이미지 레퍼런스 · 네거티브 · 피할 내용 / CFG=1 영향 없음",
+            "localized_name": "Qwen 편집 지시 + 네거티브 · 이미지 레퍼런스 · 네거티브 · 피할 내용 / CFG=1 영향 없음",
+            "linkIds": [
+              34
+            ],
+            "pos": [
+              -120,
+              338
+            ]
+          },
+          {
+            "id": "9c53fc44-2f08-533e-b143-a165fe2f8cbe",
+            "name": "ctl_13_seed",
+            "type": "INT",
+            "label": "시드",
+            "localized_name": "시드",
+            "linkIds": [
+              36
+            ],
+            "pos": [
+              -120,
+              360
+            ]
+          },
+          {
+            "id": "88d3de16-62a1-59e2-abde-1ce62009f8ac",
+            "name": "ctl_13_cfg",
+            "type": "FLOAT",
+            "label": "CFG · Turbo 권장 1",
+            "localized_name": "CFG · Turbo 권장 1",
+            "linkIds": [
+              38
+            ],
+            "pos": [
+              -120,
+              382
+            ]
+          },
+          {
+            "id": "3633e949-254f-5a0f-a199-c63e99f6d4ba",
+            "name": "ctl_13_sampler_name",
+            "type": "COMBO",
+            "label": "샘플러 · Turbo 권장 euler",
+            "localized_name": "샘플러 · Turbo 권장 euler",
+            "linkIds": [
+              39
+            ],
+            "pos": [
+              -120,
+              404
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "67ecb286-03a0-59f1-8283-31f8d6ce5990",
+            "name": "out_00_IMAGE",
+            "type": "IMAGE",
+            "label": "RGB 이미지/프레임",
+            "localized_name": "RGB 이미지/프레임",
+            "linkIds": [
+              30
+            ],
+            "pos": [
+              4430,
+              162
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 2,
+            "type": "GetImageSize",
+            "title": "image 1 원본 W/H",
+            "pos": [
+              610,
+              160
+            ],
+            "size": [
+              350,
+              122
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 1,
+                "label": "image · RGB 레퍼런스 이미지",
+                "localized_name": "image · RGB 레퍼런스 이미지"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "width",
+                "type": "INT",
+                "links": [
+                  2,
+                  4,
+                  24
+                ],
+                "slot_index": 0
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "links": [
+                  3,
+                  7,
+                  25
+                ],
+                "slot_index": 1
+              },
+              {
+                "name": "batch_size",
+                "type": "INT",
+                "links": [],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "GetImageSize",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 3,
+            "type": "PrimitiveInt",
+            "title": "추론 긴 변 px · 기본 2048 / 가볍게 153…",
+            "pos": [
+              80,
+              160
+            ],
+            "size": [
+              350,
+              134
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "value",
+                "type": "INT",
+                "link": 31,
+                "widget": {
+                  "name": "value"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  5,
+                  8
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "PrimitiveInt",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              2048,
+              "fixed"
+            ],
+            "color": "#68532c",
+            "bgcolor": "#342b1d"
+          },
+          {
+            "id": 4,
+            "type": "ComfyMathExpression",
+            "title": "추론 캔버스 · 입력 긴 변",
+            "pos": [
+              610,
+              350
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 2
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 3
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": [
+                  6,
+                  9
+                ],
+                "slot_index": 0
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [],
+                "slot_index": 1
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": [],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(a,b)"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 5,
+            "type": "ComfyMathExpression",
+            "title": "추론 캔버스 · 폭",
+            "pos": [
+              1140,
+              160
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 4,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 4
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 5
+              },
+              {
+                "name": "values.c",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 6
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": [],
+                "slot_index": 0
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  11,
+                  48
+                ],
+                "slot_index": 1
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": [],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(32,round(a*b/c/32)*32)"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 6,
+            "type": "ComfyMathExpression",
+            "title": "추론 캔버스 · 높이",
+            "pos": [
+              1140,
+              378
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 5,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 7
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 8
+              },
+              {
+                "name": "values.c",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 9
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": [],
+                "slot_index": 0
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  12,
+                  49
+                ],
+                "slot_index": 1
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": [],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(32,round(a*b/c/32)*32)"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 7,
+            "type": "ImageScale",
+            "title": "image 1 원본 · 추론 캔버스로 / 크롭 없음",
+            "pos": [
+              1140,
+              596
+            ],
+            "size": [
+              350,
+              234
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 6,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 10,
+                "label": "image · RGB 레퍼런스 이미지",
+                "localized_name": "image · RGB 레퍼런스 이미지"
+              },
+              {
+                "name": "width",
+                "type": "INT",
+                "link": 11,
+                "widget": {
+                  "name": "width"
+                }
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "link": 12,
+                "widget": {
+                  "name": "height"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  16
+                ],
+                "slot_index": 0,
+                "label": "RGB 레퍼런스 이미지",
+                "localized_name": "RGB 레퍼런스 이미지"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageScale",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "lanczos",
+              2048,
+              2048,
+              "disabled"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 30,
+            "type": "ComfyMathExpression",
+            "title": "Qwen 참조 해상도 · √(캔버스 폭×높이) · 32배수",
+            "pos": [
+              610,
+              560
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 4,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 48
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 49
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": [],
+                "slot_index": 0
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  47
+                ],
+                "slot_index": 1
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": [],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "max(32,round(sqrt(a*b)/32)*32)"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 12,
+            "type": "TextEncodeQwenImage21",
+            "title": "Qwen 편집 지시 · image 1 원본 + image 2 레퍼런스(선택)",
+            "pos": [
+              1670,
+              160
+            ],
+            "size": [
+              420,
+              412
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 7,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "clip",
+                "type": "CLIP",
+                "link": 14
+              },
+              {
+                "name": "vae",
+                "type": "VAE",
+                "link": 15
+              },
+              {
+                "name": "images.image_1",
+                "type": "IMAGE",
+                "link": 16,
+                "label": "images.image_1 · 원본 (편집할 이미지 · 출력 크기 기준)",
+                "localized_name": "images.image_1 · 원본 (편집할 이미지 · 출력 크기 기준)"
+              },
+              {
+                "name": "images.image_2",
+                "type": "IMAGE",
+                "link": 46,
+                "label": "images.image_2 · 레퍼런스 (선택)",
+                "localized_name": "images.image_2 · 레퍼런스 (선택)"
+              },
+              {
+                "name": "prompt",
+                "type": "STRING",
+                "link": 33,
+                "widget": {
+                  "name": "prompt"
+                }
+              },
+              {
+                "name": "negative_prompt",
+                "type": "STRING",
+                "link": 34,
+                "widget": {
+                  "name": "negative_prompt"
+                }
+              },
+              {
+                "name": "resolution",
+                "type": "INT",
+                "link": 47,
+                "widget": {
+                  "name": "resolution"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "positive",
+                "type": "CONDITIONING",
+                "links": [
+                  18
+                ],
+                "slot_index": 0
+              },
+              {
+                "name": "negative",
+                "type": "CONDITIONING",
+                "links": [
+                  19
+                ],
+                "slot_index": 1
+              },
+              {
+                "name": "latent",
+                "type": "LATENT",
+                "links": [
+                  20
+                ],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "TextEncodeQwenImage21",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "Edit image 1 using image 2 as the reference for the requested change. Keep the subject, pose, camera framing, perspective, skin tone and lighting of image 1 everywhere else. Take only the referenced element from image 2; do not copy its background, framing or other content. Preserve fine texture and realistic photographic detail.",
+              "blur, low resolution, compression artifacts, malformed hands, duplicate limbs, unintended changes to identity, pose or framing",
+              0
+            ],
+            "color": "#4e4369",
+            "bgcolor": "#2a2540"
+          },
+          {
+            "id": 14,
+            "type": "VAEDecode",
+            "title": "이미지 복원",
+            "pos": [
+              3330,
+              160
+            ],
+            "size": [
+              350,
+              110
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 10,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "samples",
+                "type": "LATENT",
+                "link": 21
+              },
+              {
+                "name": "vae",
+                "type": "VAE",
+                "link": 22
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  23,
+                  27
+                ],
+                "slot_index": 0,
+                "label": "RGB 이미지/프레임",
+                "localized_name": "RGB 이미지/프레임"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "VAEDecode",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [],
+            "color": "#68503c",
+            "bgcolor": "#382a20"
+          },
+          {
+            "id": 15,
+            "type": "PrimitiveBoolean",
+            "title": "출력 크기 · ON 원본 W/H / OFF 추론 크…",
+            "pos": [
+              80,
+              362
+            ],
+            "size": [
+              350,
+              110
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "value",
+                "type": "BOOLEAN",
+                "link": 32,
+                "widget": {
+                  "name": "value"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "BOOLEAN",
+                "type": "BOOLEAN",
+                "links": [
+                  26
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "PrimitiveBoolean",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              true
+            ],
+            "color": "#68532c",
+            "bgcolor": "#342b1d"
+          },
+          {
+            "id": 16,
+            "type": "ImageScale",
+            "title": "출력 원본 W/H · 종횡비 복원 / 크롭 없음",
+            "pos": [
+              2800,
+              160
+            ],
+            "size": [
+              350,
+              234
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 9,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 23,
+                "label": "image · RGB 이미지/프레임",
+                "localized_name": "image · RGB 이미지/프레임"
+              },
+              {
+                "name": "width",
+                "type": "INT",
+                "link": 24,
+                "widget": {
+                  "name": "width"
+                }
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "link": 25,
+                "widget": {
+                  "name": "height"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  28
+                ],
+                "slot_index": 0,
+                "label": "RGB 이미지/프레임",
+                "localized_name": "RGB 이미지/프레임"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageScale",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "lanczos",
+              2048,
+              2048,
+              "disabled"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 17,
+            "type": "ComfySwitchNode",
+            "title": "출력 규격 선택",
+            "pos": [
+              3860,
+              160
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 11,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "switch",
+                "type": "BOOLEAN",
+                "link": 26,
+                "widget": {
+                  "name": "switch"
+                }
+              },
+              {
+                "name": "on_false",
+                "type": "IMAGE",
+                "link": 27,
+                "label": "on_false · RGB 이미지/프레임",
+                "localized_name": "on_false · RGB 이미지/프레임"
+              },
+              {
+                "name": "on_true",
+                "type": "IMAGE",
+                "link": 28,
+                "label": "on_true · RGB 이미지/프레임",
+                "localized_name": "on_true · RGB 이미지/프레임"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  30
+                ],
+                "slot_index": 0,
+                "label": "RGB 이미지/프레임",
+                "localized_name": "RGB 이미지/프레임"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfySwitchNode",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              true
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 25,
+            "type": "RandomNoise",
+            "title": "시드 · 노이즈",
+            "pos": [
+              2270,
+              160
+            ],
+            "size": [
+              350,
+              82
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 8,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "noise_seed",
+                "name": "noise_seed",
+                "type": "INT",
+                "widget": {
+                  "name": "noise_seed"
+                },
+                "link": 36
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "NOISE",
+                "name": "NOISE",
+                "type": "NOISE",
+                "links": [
+                  42
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "RandomNoise",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              42,
+              "randomize"
+            ],
+            "color": "#5d3c68",
+            "bgcolor": "#312039"
+          },
+          {
+            "id": 26,
+            "type": "KSamplerSelect",
+            "title": "샘플러 · euler",
+            "pos": [
+              2270,
+              280
+            ],
+            "size": [
+              350,
+              58
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 8,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "sampler_name",
+                "name": "sampler_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "sampler_name"
+                },
+                "link": 39
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "SAMPLER",
+                "name": "SAMPLER",
+                "type": "SAMPLER",
+                "links": [
+                  44
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "KSamplerSelect",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "euler"
+            ],
+            "color": "#5d3c68",
+            "bgcolor": "#312039"
+          },
+          {
+            "id": 27,
+            "type": "ManualSigmas",
+            "title": "Turbo 8 steps 시그마 · 공식 템플릿 값",
+            "pos": [
+              2270,
+              376
+            ],
+            "size": [
+              350,
+              100
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 8,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "localized_name": "SIGMAS",
+                "name": "SIGMAS",
+                "type": "SIGMAS",
+                "links": [
+                  45
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ManualSigmas",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "1.0, 0.978453, 0.95418, 0.926626, 0.89508, 0.845148, 0.704534, 0.414568, 0"
+            ],
+            "color": "#5d3c68",
+            "bgcolor": "#312039"
+          },
+          {
+            "id": 28,
+            "type": "CFGGuider",
+            "title": "CFG 가이더 · Turbo 1",
+            "pos": [
+              2270,
+              514
+            ],
+            "size": [
+              350,
+              98
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 8,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 17
+              },
+              {
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "link": 18
+              },
+              {
+                "localized_name": "negative",
+                "name": "negative",
+                "type": "CONDITIONING",
+                "link": 19
+              },
+              {
+                "localized_name": "cfg",
+                "name": "cfg",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "cfg"
+                },
+                "link": 38
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "GUIDER",
+                "name": "GUIDER",
+                "type": "GUIDER",
+                "links": [
+                  43
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "CFGGuider",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              1
+            ],
+            "color": "#5d3c68",
+            "bgcolor": "#312039"
+          },
+          {
+            "id": 29,
+            "type": "SamplerCustomAdvanced",
+            "title": "생성 · Turbo 8 steps",
+            "pos": [
+              2270,
+              650
+            ],
+            "size": [
+              350,
+              326
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 8,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "noise",
+                "name": "noise",
+                "type": "NOISE",
+                "link": 42
+              },
+              {
+                "localized_name": "guider",
+                "name": "guider",
+                "type": "GUIDER",
+                "link": 43
+              },
+              {
+                "localized_name": "sampler",
+                "name": "sampler",
+                "type": "SAMPLER",
+                "link": 44
+              },
+              {
+                "localized_name": "sigmas",
+                "name": "sigmas",
+                "type": "SIGMAS",
+                "link": 45
+              },
+              {
+                "localized_name": "latent_image",
+                "name": "latent_image",
+                "type": "LATENT",
+                "link": 20
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "output",
+                "name": "output",
+                "type": "LATENT",
+                "links": [
+                  21
+                ]
+              },
+              {
+                "localized_name": "denoised_output",
+                "name": "denoised_output",
+                "type": "LATENT",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "SamplerCustomAdvanced",
+              "cnr_id": "comfy-core"
+            },
+            "color": "#5d3c68",
+            "bgcolor": "#312039"
+          }
+        ],
+        "groups": [
+          {
+            "id": 1,
+            "title": "01  설정 · 프롬프트 / 시드",
+            "bounding": [
+              56,
+              80,
+              398,
+              460
+            ],
+            "color": "#a88a4a",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 2,
+            "title": "02  입력 정리 · 크기 / 길이",
+            "bounding": [
+              586,
+              80,
+              398,
+              660
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 3,
+            "title": "03  입력 정리 · 크기 / 길이",
+            "bounding": [
+              1116,
+              80,
+              398,
+              818
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 4,
+            "title": "04  조건 · 프롬프트 / 가이드",
+            "bounding": [
+              1646,
+              80,
+              468,
+              560
+            ],
+            "color": "#8673ac",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 5,
+            "title": "05  생성 · 샘플링 / 처리",
+            "bounding": [
+              2246,
+              80,
+              398,
+              920
+            ],
+            "color": "#a572b4",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 6,
+            "title": "06  입력 정리 · 크기 / 길이",
+            "bounding": [
+              2776,
+              80,
+              398,
+              382
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 7,
+            "title": "07  복원 · 디코드 / 합성",
+            "bounding": [
+              3306,
+              80,
+              398,
+              258
+            ],
+            "color": "#ae835d",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 8,
+            "title": "08  입력 정리 · 크기 / 길이",
+            "bounding": [
+              3836,
+              80,
+              398,
+              298
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          }
+        ],
+        "links": [
+          {
+            "id": 1,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 2,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 2,
+            "origin_id": 2,
+            "origin_slot": 0,
+            "target_id": 4,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 3,
+            "origin_id": 2,
+            "origin_slot": 1,
+            "target_id": 4,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 4,
+            "origin_id": 2,
+            "origin_slot": 0,
+            "target_id": 5,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 5,
+            "origin_id": 3,
+            "origin_slot": 0,
+            "target_id": 5,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 6,
+            "origin_id": 4,
+            "origin_slot": 0,
+            "target_id": 5,
+            "target_slot": 2,
+            "type": "FLOAT"
+          },
+          {
+            "id": 7,
+            "origin_id": 2,
+            "origin_slot": 1,
+            "target_id": 6,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 8,
+            "origin_id": 3,
+            "origin_slot": 0,
+            "target_id": 6,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 9,
+            "origin_id": 4,
+            "origin_slot": 0,
+            "target_id": 6,
+            "target_slot": 2,
+            "type": "FLOAT"
+          },
+          {
+            "id": 10,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 7,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 11,
+            "origin_id": 5,
+            "origin_slot": 1,
+            "target_id": 7,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 12,
+            "origin_id": 6,
+            "origin_slot": 1,
+            "target_id": 7,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 14,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 12,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 15,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 12,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 16,
+            "origin_id": 7,
+            "origin_slot": 0,
+            "target_id": 12,
+            "target_slot": 2,
+            "type": "IMAGE"
+          },
+          {
+            "id": 17,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 28,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 18,
+            "origin_id": 12,
+            "origin_slot": 0,
+            "target_id": 28,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 19,
+            "origin_id": 12,
+            "origin_slot": 1,
+            "target_id": 28,
+            "target_slot": 2,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 20,
+            "origin_id": 12,
+            "origin_slot": 2,
+            "target_id": 29,
+            "target_slot": 4,
+            "type": "LATENT"
+          },
+          {
+            "id": 21,
+            "origin_id": 29,
+            "origin_slot": 0,
+            "target_id": 14,
+            "target_slot": 0,
+            "type": "LATENT"
+          },
+          {
+            "id": 22,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 14,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 23,
+            "origin_id": 14,
+            "origin_slot": 0,
+            "target_id": 16,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 24,
+            "origin_id": 2,
+            "origin_slot": 0,
+            "target_id": 16,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 25,
+            "origin_id": 2,
+            "origin_slot": 1,
+            "target_id": 16,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 26,
+            "origin_id": 15,
+            "origin_slot": 0,
+            "target_id": 17,
+            "target_slot": 0,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 27,
+            "origin_id": 14,
+            "origin_slot": 0,
+            "target_id": 17,
+            "target_slot": 1,
+            "type": "IMAGE"
+          },
+          {
+            "id": 28,
+            "origin_id": 16,
+            "origin_slot": 0,
+            "target_id": 17,
+            "target_slot": 2,
+            "type": "IMAGE"
+          },
+          {
+            "id": 30,
+            "origin_id": 17,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 31,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 3,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 32,
+            "origin_id": -10,
+            "origin_slot": 6,
+            "target_id": 15,
+            "target_slot": 0,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 33,
+            "origin_id": -10,
+            "origin_slot": 7,
+            "target_id": 12,
+            "target_slot": 4,
+            "type": "STRING"
+          },
+          {
+            "id": 34,
+            "origin_id": -10,
+            "origin_slot": 8,
+            "target_id": 12,
+            "target_slot": 5,
+            "type": "STRING"
+          },
+          {
+            "id": 36,
+            "origin_id": -10,
+            "origin_slot": 9,
+            "target_id": 25,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 38,
+            "origin_id": -10,
+            "origin_slot": 10,
+            "target_id": 28,
+            "target_slot": 3,
+            "type": "FLOAT"
+          },
+          {
+            "id": 39,
+            "origin_id": -10,
+            "origin_slot": 11,
+            "target_id": 26,
+            "target_slot": 0,
+            "type": "COMBO"
+          },
+          {
+            "id": 42,
+            "origin_id": 25,
+            "origin_slot": 0,
+            "target_id": 29,
+            "target_slot": 0,
+            "type": "NOISE"
+          },
+          {
+            "id": 43,
+            "origin_id": 28,
+            "origin_slot": 0,
+            "target_id": 29,
+            "target_slot": 1,
+            "type": "GUIDER"
+          },
+          {
+            "id": 44,
+            "origin_id": 26,
+            "origin_slot": 0,
+            "target_id": 29,
+            "target_slot": 2,
+            "type": "SAMPLER"
+          },
+          {
+            "id": 45,
+            "origin_id": 27,
+            "origin_slot": 0,
+            "target_id": 29,
+            "target_slot": 3,
+            "type": "SIGMAS"
+          },
+          {
+            "id": 46,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 12,
+            "target_slot": 3,
+            "type": "IMAGE"
+          },
+          {
+            "id": 48,
+            "origin_id": 5,
+            "origin_slot": 1,
+            "target_id": 30,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 49,
+            "origin_id": 6,
+            "origin_slot": 1,
+            "target_id": 30,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 47,
+            "origin_id": 30,
+            "origin_slot": 1,
+            "target_id": 12,
+            "target_slot": 6,
+            "type": "INT"
+          }
+        ],
+        "extra": {
+          "codex_layout_inserted": true,
+          "codex_layout_role": "prepare",
+          "ds": {
+            "scale": 0.2893081761006289,
+            "offset": [
+              500,
+              25
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "last_node_id": 31,
+  "last_link_id": 36,
+  "state": {
+    "lastNodeId": 31,
+    "lastLinkId": 36,
+    "lastGroupId": 0,
+    "lastRerouteId": 0
+  }
+}

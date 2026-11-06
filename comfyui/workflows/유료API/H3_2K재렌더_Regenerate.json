@@ -1,0 +1,258 @@
+{
+  "id": "459369d8-702c-438e-81af-85798a7352cc",
+  "revision": 0,
+  "last_node_id": 5,
+  "last_link_id": 3,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadVideo",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        360,
+        420
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideo"
+      },
+      "title": "① H3 768P 원본 출력 (수정하지 않은 파일 · 24fps · 4~15초)",
+      "widgets_values": [
+        "",
+        "image"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        480
+      ],
+      "size": [
+        360,
+        380
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "title": "② 원래 생성에 쓴 첫 프레임 (썼을 때만 · 아니면 Ctrl+B)",
+      "widgets_values": [
+        "",
+        "image"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "MinimaxHailuo03RegenerateNode",
+      "pos": [
+        420,
+        0
+      ],
+      "size": [
+        440,
+        520
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model.reference_images.image_1",
+          "type": "IMAGE",
+          "shape": 7,
+          "link": null
+        },
+        {
+          "name": "model.reference_videos.video_1",
+          "type": "VIDEO",
+          "shape": 7,
+          "link": null
+        },
+        {
+          "name": "model.reference_audios.audio_1",
+          "type": "AUDIO",
+          "shape": 7,
+          "link": null
+        },
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 1
+        },
+        {
+          "name": "first_frame",
+          "type": "IMAGE",
+          "shape": 7,
+          "link": 2
+        },
+        {
+          "name": "last_frame",
+          "type": "IMAGE",
+          "shape": 7,
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MinimaxHailuo03RegenerateNode"
+      },
+      "title": "MiniMax H3 Regenerate to 2K",
+      "widgets_values": [
+        "MiniMax H3",
+        "<원래 생성에 쓴 프롬프트를 글자 그대로 붙여 넣기>",
+        "2K",
+        false
+      ],
+      "widgets_values_named": {
+        "model": "MiniMax H3",
+        "model.prompt": "<원래 생성에 쓴 프롬프트를 글자 그대로 붙여 넣기>",
+        "model.resolution": "2K",
+        "watermark": false
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 4,
+      "type": "SaveVideo",
+      "pos": [
+        900,
+        0
+      ],
+      "size": [
+        420,
+        420
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 3
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveVideo"
+      },
+      "title": "결과 영상 · 저장",
+      "widgets_values": [
+        "H3Max/regenerate_2k",
+        "auto",
+        "auto"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "MarkdownNote",
+      "pos": [
+        -640,
+        0
+      ],
+      "size": [
+        600,
+        900
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "H3 Regenerate to 2K (KR 안내)",
+      "properties": {},
+      "widgets_values": [
+        "## [유료 API] MiniMax H3 Regenerate to 2K · 768P 결과를 같은 내용으로 2K 재렌더\n\n**AE 용도**: H3로 만든 768P 컷 중 채택본만 납품 해상도로. 원래 생성 조건(프롬프트·첫/끝 프레임·레퍼런스)을 **똑같이** 넣어야 같은 컷이 나옵니다. 로컬 대안: `업스케일/seedvr2`, `업스케일/ltx/LTX2.5_디테일리파인…`.\n\n**규칙**: 입력은 H3 노드가 낸 **수정하지 않은 768P 원본**(24fps · 4~15초) · 2K 결과는 다시 넣을 수 없음 · 레퍼런스는 원래 순서대로(이미지 최대 9 · 영상 3 · 오디오 3, 오디오만 단독 불가).\n\n**주의**: 로컬(오픈 웨이트) H3 결과도 받는지는 서비스 쪽 정책에 따릅니다 — 먼저 짧은 컷 1개로 확인하세요.\n\n**요금**: Comfy 계정 크레딧 차감 (노드 오른쪽 위 가격 배지 확인). 실행 전 **짧은 구간·저해상도**로 먼저 확인하세요.\n**데이터**: 영상·이미지가 외부 서비스(MiniMax/fal, Bria)로 업로드됩니다. 공개 전 소스나 계약상 외부 반출이 금지된 소스는 넣지 마세요.\n\n### 모델 (로컬: 아래 파일명 그대로 · Cloud: 문제 패널에 없다고 나오면 '가져오기' 후 이름 확인)\n모델 다운로드 없음 (유료 API · Comfy 계정 크레딧 사용)\n\n### 출처 · 검증\n- 원본: ComfyUI `comfy_api_nodes/nodes_minimax.py` MinimaxHailuo03RegenerateNode — 노드 스키마로 구성\n- 상태: GPU/크레딧 실행 미검증 · 노드 스키마(입력·위젯 순서) 대조로 구성\n- 정리: 2026-11-06 · After Effects Codex Agent 팩 (`comfyui/README.md`)\n"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      3,
+      "VIDEO"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      4,
+      "IMAGE"
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      0,
+      "VIDEO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8,
+      "offset": [
+        700,
+        120
+      ]
+    },
+    "ae_pack": {
+      "added": "2026-11-06",
+      "kind": "api",
+      "source": "ComfyUI `comfy_api_nodes/nodes_minimax.py` MinimaxHailuo03RegenerateNode — 노드 스키마로 구성",
+      "gpu_render_tested": false
+    }
+  },
+  "version": 0.4
+}

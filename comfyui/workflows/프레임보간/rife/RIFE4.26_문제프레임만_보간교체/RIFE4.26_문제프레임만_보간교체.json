@@ -1,0 +1,2307 @@
+{
+  "id": "7b2185d5-368d-5206-9272-52540a53ba0b",
+  "version": 0.4,
+  "revision": 1,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "VHS_LoadVideo",
+      "pos": [
+        80,
+        160
+      ],
+      "size": [
+        600,
+        360
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            37
+          ],
+          "label": "원본 RGB 영상",
+          "localized_name": "원본 RGB 영상"
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": [
+            36
+          ]
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": []
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": [
+            35
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_LoadVideo",
+        "studio_provider": "Local / Utility",
+        "studio_role": "video",
+        "development_origin": {
+          "path": [],
+          "node": 75,
+          "title": "VHS_LoadVideo",
+          "pos": [
+            50,
+            100
+          ],
+          "size": [
+            340,
+            566.03125
+          ],
+          "flags": {}
+        },
+        "cnr_id": "comfyui-videohelpersuite"
+      },
+      "widgets_values": {
+        "video": "",
+        "force_rate": 0,
+        "custom_width": 0,
+        "custom_height": 0,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "format": "None",
+        "choose video to upload": "image",
+        "generate_audio": false,
+        "enable_audio": false,
+        "with_audio": false
+      },
+      "color": "#477eac",
+      "bgcolor": "#252d38",
+      "title": "원본 RGB 영상 | VHS_LoadVideo"
+    },
+    {
+      "id": 3,
+      "type": "SaveVideo",
+      "pos": [
+        1800,
+        160
+      ],
+      "size": [
+        520,
+        400
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 21,
+          "label": "video · 선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임 · 무음 영상",
+          "localized_name": "video · 선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임 · 무음 영상"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": [],
+          "label": "RGB 결과 영상",
+          "localized_name": "RGB 결과 영상"
+        }
+      ],
+      "properties": {
+        "studio_provider": "Local / Utility",
+        "studio_role": "output",
+        "development_origin": {
+          "path": [],
+          "node": 80,
+          "title": "SaveVideo",
+          "pos": [
+            1320,
+            350
+          ],
+          "size": [
+            340,
+            148.078125
+          ],
+          "flags": {}
+        },
+        "content_kind": "선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임 · 무음 영상"
+      },
+      "widgets_values": [
+        "유틸/RIFE4.26_문제프레임만_보간교체",
+        "auto",
+        "auto"
+      ],
+      "color": "#5b946f",
+      "bgcolor": "#252d38",
+      "title": "선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임 · 무음 영상 | SaveVideo"
+    },
+    {
+      "id": 22,
+      "type": "MarkdownNote",
+      "title": "사용 안내",
+      "pos": [
+        80,
+        910
+      ],
+      "size": [
+        1100,
+        360
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "MarkdownNote",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "## RIFE4.26_문제프레임만_보간교체\n\n2026-10-14 재검증본입니다. 노드 연결·서브그래프 입력·수식을 점검했습니다. 실제 GPU 생성 품질과 설치 환경 호환성은 별도 실행 확인이 필요합니다. 작업별 규격 및 제한은 패키지 검증 보고서를 참고하세요.\n\n입력 파일을 선택하고 작은 구간으로 확인한 뒤 전체 구간을 실행하세요. 국소 편집은 마스크가 실제 수정 영역과 시간에 맞는지 확인하세요.\n\n"
+      ],
+      "color": "#897343",
+      "bgcolor": "#252d38"
+    },
+    {
+      "id": 25,
+      "type": "43d05573-156b-5f20-ab2c-13397461fbb5",
+      "title": "RIFE4.26 · 문제프레임만 · 보간교체",
+      "pos": [
+        780,
+        160
+      ],
+      "size": [
+        800,
+        450
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "in_00_video_info",
+          "type": "VHS_VIDEOINFO",
+          "label": "video_info",
+          "localized_name": "video_info",
+          "link": 35
+        },
+        {
+          "name": "in_01_frame_count",
+          "type": "INT",
+          "label": "values.b",
+          "localized_name": "values.b",
+          "link": 36
+        },
+        {
+          "name": "in_02_IMAGE",
+          "type": "IMAGE",
+          "label": "original_images · 원본 RGB 영상",
+          "localized_name": "original_images · 원본 RGB 영상",
+          "link": 37
+        },
+        {
+          "name": "ctl_6_value",
+          "type": "INT",
+          "label": "🎛 교체 시작 프레임 · 0 기준 / 1 이상",
+          "localized_name": "🎛 교체 시작 프레임 · 0 기준 / 1 이상",
+          "link": null,
+          "widget": {
+            "name": "ctl_6_value"
+          }
+        },
+        {
+          "name": "ctl_7_value",
+          "type": "INT",
+          "label": "🎛 교체할 프레임 수 · 같은 컷 내부",
+          "localized_name": "🎛 교체할 프레임 수 · 같은 컷 내부",
+          "link": null,
+          "widget": {
+            "name": "ctl_7_value"
+          }
+        },
+        {
+          "name": "ctl_18_model_name",
+          "type": "COMBO",
+          "label": "🧠 RIFE 4.26 · 기본 모델 · 모델",
+          "localized_name": "🧠 RIFE 4.26 · 기본 모델 · 모델",
+          "link": null,
+          "widget": {
+            "name": "ctl_18_model_name"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "out_00_VIDEO",
+          "type": "VIDEO",
+          "label": "선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임 · 무음 영상",
+          "localized_name": "선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임 · 무음 영상",
+          "links": [
+            21
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "previewExposures": []
+      },
+      "widgets_values": [
+        1,
+        1,
+        "rife_v4.26.safetensors"
+      ],
+      "widgets_values_named": {
+        "ctl_6_value": 1,
+        "ctl_7_value": 1,
+        "ctl_18_model_name": "rife_v4.26.safetensors"
+      },
+      "color": "#8870ae",
+      "bgcolor": "#252d38"
+    }
+  ],
+  "links": [
+    [
+      21,
+      25,
+      0,
+      3,
+      0,
+      "VIDEO"
+    ],
+    [
+      35,
+      1,
+      3,
+      25,
+      0,
+      "VHS_VIDEOINFO"
+    ],
+    [
+      36,
+      1,
+      1,
+      25,
+      1,
+      "INT"
+    ],
+    [
+      37,
+      1,
+      0,
+      25,
+      2,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "01 입력 · 영상 / 레퍼런스 / 포인터",
+      "bounding": [
+        56,
+        92,
+        648,
+        460
+      ],
+      "color": "#477eac",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "02 조작 · 모델 / 설정 / 처리",
+      "bounding": [
+        756,
+        92,
+        848,
+        550
+      ],
+      "color": "#8870ae",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "03 출력 · 비교 / 저장",
+      "bounding": [
+        1776,
+        92,
+        568,
+        500
+      ],
+      "color": "#5b946f",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "사용법 · 검증 범위",
+      "bounding": [
+        56,
+        842,
+        1148,
+        920
+      ],
+      "color": "#897343",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.55,
+      "offset": [
+        35,
+        30
+      ]
+    },
+    "frontendVersion": "1.54.15",
+    "development": {
+      "date": "2026-10-11",
+      "changes": [
+        "API generate_audio 비활성화",
+        "API enable_audio 비활성화",
+        "API with_audio 비활성화",
+        "API generate_audio 비활성화",
+        "API enable_audio 비활성화",
+        "API with_audio 비활성화",
+        "선택 복구: native multiplier 최대16에 맞춰 최대15프레임 복구; 1~2프레임 입력은 원본 통과"
+      ],
+      "limitations": [
+        "GPU 렌더 및 Cloud 가져오기 미검증. 입력 영상/이미지는 직접 선택해야 합니다."
+      ],
+      "cloud_library_checked": "selected models and node categories; not every dependency",
+      "cloud_import_tested": false,
+      "gpu_render_tested": false,
+      "silent": true,
+      "controls_added": 3,
+      "output_layout": "3 columns × up to 3 rows per block when outputs >= 3"
+    },
+    "workflow_audit": {
+      "date": "2026-10-14",
+      "source_file": "유틸/3_프레임보간·복구/RIFE4.26_문제프레임만_보간교체.json",
+      "source_sha256": "0a7ae6ee33de5b581ca6474689b66dfe73b561044771e488f61fe382af51d701",
+      "structural_checks": "passed",
+      "gpu_inference": "not_run"
+    }
+  },
+  "definitions": {
+    "subgraphs": [
+      {
+        "id": "43d05573-156b-5f20-ab2c-13397461fbb5",
+        "version": 1,
+        "state": {
+          "lastNodeId": 21,
+          "lastLinkId": 37,
+          "lastGroupId": 8,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "처리·설정",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -420,
+            120,
+            320,
+            202
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            4340,
+            120,
+            320,
+            120
+          ]
+        },
+        "inputs": [
+          {
+            "id": "086482ef-22bc-55f2-bca0-a0e6d1c1ab4b",
+            "name": "in_00_video_info",
+            "type": "VHS_VIDEOINFO",
+            "label": "video_info",
+            "localized_name": "video_info",
+            "linkIds": [
+              22
+            ],
+            "pos": [
+              -120,
+              162
+            ]
+          },
+          {
+            "id": "e0160f2c-7f07-51b6-8fd0-0bf1fa34803a",
+            "name": "in_01_frame_count",
+            "type": "INT",
+            "label": "values.b",
+            "localized_name": "values.b",
+            "linkIds": [
+              23,
+              24
+            ],
+            "pos": [
+              -120,
+              184
+            ]
+          },
+          {
+            "id": "6ddb188f-0990-575c-a614-dcbfc518fa70",
+            "name": "in_02_IMAGE",
+            "type": "IMAGE",
+            "label": "original_images · 원본 RGB 영상",
+            "localized_name": "original_images · 원본 RGB 영상",
+            "linkIds": [
+              25,
+              26,
+              27,
+              28,
+              31
+            ],
+            "pos": [
+              -120,
+              206
+            ]
+          },
+          {
+            "id": "3d74be2a-7c03-5382-a85c-63e1ea362d17",
+            "name": "ctl_6_value",
+            "type": "INT",
+            "label": "🎛 교체 시작 프레임 · 0 기준 / 1 이상",
+            "localized_name": "🎛 교체 시작 프레임 · 0 기준 / 1 이상",
+            "linkIds": [
+              35
+            ],
+            "pos": [
+              -120,
+              228
+            ]
+          },
+          {
+            "id": "57f1e943-bdc1-5f79-b178-d5c335e11558",
+            "name": "ctl_7_value",
+            "type": "INT",
+            "label": "🎛 교체할 프레임 수 · 같은 컷 내부",
+            "localized_name": "🎛 교체할 프레임 수 · 같은 컷 내부",
+            "linkIds": [
+              36
+            ],
+            "pos": [
+              -120,
+              250
+            ]
+          },
+          {
+            "id": "0534c05c-16ad-5d5c-96f1-ea0602a04b8a",
+            "name": "ctl_18_model_name",
+            "type": "COMBO",
+            "label": "🧠 RIFE 4.26 · 기본 모델 · 모델",
+            "localized_name": "🧠 RIFE 4.26 · 기본 모델 · 모델",
+            "linkIds": [
+              37
+            ],
+            "pos": [
+              -120,
+              272
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "ae038dda-8b17-5e02-ba02-21a8da42746f",
+            "name": "out_00_VIDEO",
+            "type": "VIDEO",
+            "label": "선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임 · 무음 영상",
+            "localized_name": "선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임 · 무음 영상",
+            "linkIds": [
+              34
+            ],
+            "pos": [
+              4360,
+              162
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 5,
+            "type": "VHS_VideoInfoLoaded",
+            "pos": [
+              1140,
+              160
+            ],
+            "size": [
+              350,
+              250
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "video_info",
+                "type": "VHS_VIDEOINFO",
+                "link": 22
+              }
+            ],
+            "outputs": [
+              {
+                "name": "fps",
+                "type": "FLOAT",
+                "links": [
+                  19
+                ]
+              },
+              {
+                "name": "frame_count",
+                "type": "INT",
+                "links": []
+              },
+              {
+                "name": "duration",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "width",
+                "type": "INT",
+                "links": []
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "VHS_VideoInfoLoaded",
+              "cnr_id": "comfyui-videohelpersuite",
+              "studio_provider": "Local / Utility",
+              "studio_role": "input",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 81,
+                "title": "Source FPS",
+                "pos": [
+                  530,
+                  567.85625
+                ],
+                "size": [
+                  340,
+                  100.0
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": {
+              "generate_audio": false,
+              "enable_audio": false,
+              "with_audio": false
+            },
+            "title": "Source FPS",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 6,
+            "type": "PrimitiveInt",
+            "title": "🎛 교체 시작 프레임 · 0 기준 / 1 이상",
+            "pos": [
+              610,
+              160
+            ],
+            "size": [
+              350,
+              134
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "value",
+                "type": "INT",
+                "link": 35,
+                "widget": {
+                  "name": "value"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  1
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "PrimitiveInt",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 83,
+                "title": "🎛 교체 시작 프레임 · 0 기준 / 1 이상",
+                "pos": [
+                  0,
+                  4200
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              1,
+              "fixed"
+            ],
+            "color": "#68532c",
+            "bgcolor": "#342b1d"
+          },
+          {
+            "id": 7,
+            "type": "PrimitiveInt",
+            "title": "🎛 교체할 프레임 수 · 같은 컷 내부",
+            "pos": [
+              610,
+              362
+            ],
+            "size": [
+              350,
+              134
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "value",
+                "type": "INT",
+                "link": 36,
+                "widget": {
+                  "name": "value"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  2
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "PrimitiveInt",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 84,
+                "title": "🎛 교체할 프레임 수 · 같은 컷 내부",
+                "pos": [
+                  0,
+                  4440
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              1,
+              "fixed"
+            ],
+            "color": "#68532c",
+            "bgcolor": "#342b1d"
+          },
+          {
+            "id": 8,
+            "type": "ComfyMathExpression",
+            "title": "유효 시작 프레임",
+            "pos": [
+              1140,
+              668
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 5,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 1
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 24
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 85,
+                "title": "유효 시작 프레임",
+                "pos": [
+                  0,
+                  4680
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              "max(1, min(a, b-2))"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 9,
+            "type": "ComfyMathExpression",
+            "title": "복구 구간 · 한 번에 최대 15프레임",
+            "pos": [
+              1670,
+              160
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 7,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 2
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 23
+              },
+              {
+                "name": "values.c",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 6
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  7,
+                  8,
+                  9
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 86,
+                "title": "유효 교체 길이",
+                "pos": [
+                  0,
+                  4920
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              "max(1,min(a,b-c-1,15))"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 10,
+            "type": "ComfyMathExpression",
+            "title": "왼쪽 정상 앵커",
+            "pos": [
+              1670,
+              378
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 8,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 5
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  10
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 87,
+                "title": "왼쪽 정상 앵커",
+                "pos": [
+                  400,
+                  4200
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              "a-1"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 11,
+            "type": "ComfyMathExpression",
+            "title": "오른쪽 정상 앵커",
+            "pos": [
+              1670,
+              596
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 9,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 4
+              },
+              {
+                "name": "values.b",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 9
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  11
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 88,
+                "title": "오른쪽 정상 앵커",
+                "pos": [
+                  400,
+                  4440
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              "a+b"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 12,
+            "type": "ComfyMathExpression",
+            "title": "보간 배수 = 교체 수 + 1",
+            "pos": [
+              1670,
+              814
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 10,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 8
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": []
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [
+                  15
+                ]
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": []
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 89,
+                "title": "보간 배수 = 교체 수 + 1",
+                "pos": [
+                  400,
+                  4680
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              "a+1"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 13,
+            "type": "ImageFromBatch",
+            "title": "정상 앵커 추출",
+            "pos": [
+              1670,
+              1032
+            ],
+            "size": [
+              350,
+              156
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 11,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 27,
+                "label": "image · 원본 RGB 영상",
+                "localized_name": "image · 원본 RGB 영상"
+              },
+              {
+                "name": "batch_index",
+                "type": "INT",
+                "link": 10,
+                "widget": {
+                  "name": "batch_index"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  12
+                ],
+                "label": "원본 RGB 영상",
+                "localized_name": "원본 RGB 영상"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageFromBatch",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 90,
+                "title": "정상 앵커 추출",
+                "pos": [
+                  800,
+                  4200
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              0,
+              1
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 14,
+            "type": "ImageFromBatch",
+            "title": "정상 앵커 추출",
+            "pos": [
+              2200,
+              160
+            ],
+            "size": [
+              350,
+              156
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 12,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 26,
+                "label": "image · 원본 RGB 영상",
+                "localized_name": "image · 원본 RGB 영상"
+              },
+              {
+                "name": "batch_index",
+                "type": "INT",
+                "link": 11,
+                "widget": {
+                  "name": "batch_index"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  13
+                ],
+                "label": "원본 RGB 영상",
+                "localized_name": "원본 RGB 영상"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageFromBatch",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 91,
+                "title": "정상 앵커 추출",
+                "pos": [
+                  800,
+                  4440
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              0,
+              1
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 15,
+            "type": "ImageBatch",
+            "title": "양쪽 정상 프레임만 보간",
+            "pos": [
+              2200,
+              384
+            ],
+            "size": [
+              350,
+              110
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 13,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image1",
+                "type": "IMAGE",
+                "link": 12,
+                "label": "image1 · 원본 RGB 영상",
+                "localized_name": "image1 · 원본 RGB 영상"
+              },
+              {
+                "name": "image2",
+                "type": "IMAGE",
+                "link": 13,
+                "label": "image2 · 원본 RGB 영상",
+                "localized_name": "image2 · 원본 RGB 영상"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  14
+                ],
+                "label": "RGB 이미지/프레임",
+                "localized_name": "RGB 이미지/프레임"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageBatch",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 92,
+                "title": "양쪽 정상 프레임만 보간",
+                "pos": [
+                  800,
+                  4680
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 18,
+            "type": "FrameInterpolationModelLoader",
+            "pos": [
+              80,
+              160
+            ],
+            "size": [
+              350,
+              110
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "model_name",
+                "type": "COMBO",
+                "link": 37,
+                "widget": {
+                  "name": "model_name"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "INTERP_MODEL",
+                "type": "INTERP_MODEL",
+                "links": [
+                  20
+                ]
+              }
+            ],
+            "widgets_values": [
+              "rife_v4.26.safetensors"
+            ],
+            "properties": {
+              "Node name for S&R": "FrameInterpolationModelLoader",
+              "cnr_id": "comfy-core",
+              "models": [
+                {
+                  "name": "rife_v4.26.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/frame_interpolation/resolve/main/frame_interpolation/rife_v4.26.safetensors",
+                  "directory": "frame_interpolation"
+                }
+              ],
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 97,
+                "title": "🧠 RIFE 4.26 · 기본 모델",
+                "pos": [
+                  120,
+                  290.15625
+                ],
+                "size": [
+                  350,
+                  100
+                ],
+                "flags": {}
+              }
+            },
+            "title": "🧠 RIFE 4.26 · 기본 모델",
+            "color": "#31506a",
+            "bgcolor": "#1d2f41"
+          },
+          {
+            "id": 4,
+            "type": "FrameInterpolate",
+            "pos": [
+              2730,
+              160
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 14,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "interp_model",
+                "type": "INTERP_MODEL",
+                "link": 20
+              },
+              {
+                "name": "images",
+                "type": "IMAGE",
+                "link": 14,
+                "label": "images · RGB 이미지/프레임",
+                "localized_name": "images · RGB 이미지/프레임"
+              },
+              {
+                "name": "multiplier",
+                "type": "INT",
+                "widget": {
+                  "name": "multiplier"
+                },
+                "link": 15
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  16
+                ],
+                "label": "RGB 이미지/프레임",
+                "localized_name": "RGB 이미지/프레임"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "FrameInterpolate",
+              "cnr_id": "comfy-core",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 72,
+                "title": "RIFE 4.26 · 기본 보간",
+                "pos": [
+                  530,
+                  290.15625
+                ],
+                "size": [
+                  340,
+                  207.7
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              2
+            ],
+            "title": "RIFE 4.26 · 기본 보간",
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 16,
+            "type": "ImageFromBatch",
+            "title": "생성된 중간 프레임만",
+            "pos": [
+              2730,
+              378
+            ],
+            "size": [
+              350,
+              156
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 15,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 16,
+                "label": "image · RGB 이미지/프레임",
+                "localized_name": "image · RGB 이미지/프레임"
+              },
+              {
+                "name": "length",
+                "type": "INT",
+                "link": 7,
+                "widget": {
+                  "name": "length"
+                }
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  17
+                ],
+                "label": "RGB 이미지/프레임",
+                "localized_name": "RGB 이미지/프레임"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ImageFromBatch",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 93,
+                "title": "생성된 중간 프레임만",
+                "pos": [
+                  800,
+                  4920
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              1,
+              1
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 17,
+            "type": "ReplaceImagesInBatch",
+            "title": "🏁 원본에 해당 프레임만 교체",
+            "pos": [
+              3260,
+              160
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 16,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "start_index",
+                "type": "INT",
+                "link": 3,
+                "widget": {
+                  "name": "start_index"
+                }
+              },
+              {
+                "name": "original_images",
+                "type": "IMAGE",
+                "link": 25,
+                "label": "original_images · 원본 RGB 영상",
+                "localized_name": "original_images · 원본 RGB 영상"
+              },
+              {
+                "name": "replacement_images",
+                "type": "IMAGE",
+                "link": 17,
+                "label": "replacement_images · RGB 이미지/프레임",
+                "localized_name": "replacement_images · RGB 이미지/프레임"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  32
+                ],
+                "label": "RGB 이미지/프레임",
+                "localized_name": "RGB 이미지/프레임"
+              },
+              {
+                "name": "MASK",
+                "type": "MASK",
+                "links": [],
+                "label": "흑백 마스크 · 흰색=선택/불투명",
+                "localized_name": "흑백 마스크 · 흰색=선택/불투명"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ReplaceImagesInBatch",
+              "cnr_id": "comfyui-kjnodes",
+              "development_origin": {
+                "path": [
+                  96
+                ],
+                "node": 94,
+                "title": "🏁 원본에 해당 프레임만 교체",
+                "pos": [
+                  800,
+                  5160
+                ],
+                "size": [
+                  340,
+                  180
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              1
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 19,
+            "type": "GetImageSize",
+            "title": "복구 가능한 원본 길이",
+            "pos": [
+              1140,
+              478
+            ],
+            "size": [
+              350,
+              122
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 4,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "image",
+                "type": "IMAGE",
+                "link": 28,
+                "label": "image · 원본 RGB 영상",
+                "localized_name": "image · 원본 RGB 영상"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "width",
+                "type": "INT",
+                "links": [],
+                "slot_index": 0
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "links": [],
+                "slot_index": 1
+              },
+              {
+                "name": "batch_size",
+                "type": "INT",
+                "links": [
+                  29
+                ],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "GetImageSize",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 20,
+            "type": "ComfyMathExpression",
+            "title": "3프레임 이상만 보간 복구",
+            "pos": [
+              1140,
+              886
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 6,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "values.a",
+                "type": "FLOAT,INT,BOOLEAN",
+                "link": 29
+              }
+            ],
+            "outputs": [
+              {
+                "name": "FLOAT",
+                "type": "FLOAT",
+                "links": [],
+                "slot_index": 0
+              },
+              {
+                "name": "INT",
+                "type": "INT",
+                "links": [],
+                "slot_index": 1
+              },
+              {
+                "name": "BOOL",
+                "type": "BOOLEAN",
+                "links": [
+                  30
+                ],
+                "slot_index": 2
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfyMathExpression",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              "a>=3"
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 21,
+            "type": "ComfySwitchNode",
+            "title": "아주 짧은 입력 · 원본 그대로",
+            "pos": [
+              3260,
+              378
+            ],
+            "size": [
+              350,
+              150
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 17,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "switch",
+                "type": "BOOLEAN",
+                "link": 30,
+                "widget": {
+                  "name": "switch"
+                }
+              },
+              {
+                "name": "on_false",
+                "type": "IMAGE",
+                "link": 31,
+                "label": "on_false · 원본 RGB 영상",
+                "localized_name": "on_false · 원본 RGB 영상"
+              },
+              {
+                "name": "on_true",
+                "type": "IMAGE",
+                "link": 32,
+                "label": "on_true · RGB 이미지/프레임",
+                "localized_name": "on_true · RGB 이미지/프레임"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  33
+                ],
+                "slot_index": 0,
+                "label": "선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임",
+                "localized_name": "선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ComfySwitchNode",
+              "cnr_id": "comfy-core"
+            },
+            "widgets_values": [
+              true
+            ],
+            "color": "#27575a",
+            "bgcolor": "#1a3538"
+          },
+          {
+            "id": 2,
+            "type": "CreateVideo",
+            "pos": [
+              3790,
+              160
+            ],
+            "size": [
+              350,
+              178
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 18,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "images",
+                "type": "IMAGE",
+                "link": 33,
+                "label": "images · 선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임",
+                "localized_name": "images · 선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임"
+              },
+              {
+                "name": "audio",
+                "shape": 7,
+                "type": "AUDIO",
+                "link": null
+              },
+              {
+                "name": "fps",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "fps"
+                },
+                "link": 19
+              }
+            ],
+            "outputs": [
+              {
+                "name": "VIDEO",
+                "type": "VIDEO",
+                "links": [
+                  34
+                ],
+                "label": "선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임 · 무음 영상",
+                "localized_name": "선택 분기 · 원본 RGB 영상 / RGB 이미지/프레임 · 무음 영상"
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "CreateVideo",
+              "studio_provider": "Local / Utility",
+              "studio_role": "decode",
+              "development_origin": {
+                "path": [],
+                "node": 79,
+                "title": "CreateVideo",
+                "pos": [
+                  1320,
+                  100
+                ],
+                "size": [
+                  340,
+                  136.125
+                ],
+                "flags": {}
+              }
+            },
+            "widgets_values": [
+              60,
+              8
+            ],
+            "color": "#315949",
+            "bgcolor": "#1c332a",
+            "title": "CreateVideo"
+          }
+        ],
+        "groups": [
+          {
+            "id": 1,
+            "title": "01  모델 · 로딩 / LoRA",
+            "bounding": [
+              56,
+              80,
+              398,
+              258
+            ],
+            "color": "#59809d",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 2,
+            "title": "02  설정 · 프롬프트 / 시드",
+            "bounding": [
+              586,
+              80,
+              398,
+              484
+            ],
+            "color": "#a88a4a",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 3,
+            "title": "03  입력 정리 · 크기 / 길이",
+            "bounding": [
+              1116,
+              80,
+              398,
+              1024
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 4,
+            "title": "04  입력 정리 · 크기 / 길이",
+            "bounding": [
+              1646,
+              80,
+              398,
+              1176
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 5,
+            "title": "05  입력 정리 · 크기 / 길이",
+            "bounding": [
+              2176,
+              80,
+              398,
+              482
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 6,
+            "title": "06  입력 정리 · 크기 / 길이",
+            "bounding": [
+              2706,
+              80,
+              398,
+              522
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 7,
+            "title": "07  입력 정리 · 크기 / 길이",
+            "bounding": [
+              3236,
+              80,
+              398,
+              516
+            ],
+            "color": "#489193",
+            "font_size": 24,
+            "flags": {}
+          },
+          {
+            "id": 8,
+            "title": "08  출력 · 확인 / 저장",
+            "bounding": [
+              3766,
+              80,
+              398,
+              326
+            ],
+            "color": "#5b947b",
+            "font_size": 24,
+            "flags": {}
+          }
+        ],
+        "links": [
+          {
+            "id": 1,
+            "origin_id": 6,
+            "origin_slot": 0,
+            "target_id": 8,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 2,
+            "origin_id": 7,
+            "origin_slot": 0,
+            "target_id": 9,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 3,
+            "origin_id": 8,
+            "origin_slot": 1,
+            "target_id": 17,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 4,
+            "origin_id": 8,
+            "origin_slot": 1,
+            "target_id": 11,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 5,
+            "origin_id": 8,
+            "origin_slot": 1,
+            "target_id": 10,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 6,
+            "origin_id": 8,
+            "origin_slot": 1,
+            "target_id": 9,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 7,
+            "origin_id": 9,
+            "origin_slot": 1,
+            "target_id": 16,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 8,
+            "origin_id": 9,
+            "origin_slot": 1,
+            "target_id": 12,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 9,
+            "origin_id": 9,
+            "origin_slot": 1,
+            "target_id": 11,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 10,
+            "origin_id": 10,
+            "origin_slot": 1,
+            "target_id": 13,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 11,
+            "origin_id": 11,
+            "origin_slot": 1,
+            "target_id": 14,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 12,
+            "origin_id": 13,
+            "origin_slot": 0,
+            "target_id": 15,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 13,
+            "origin_id": 14,
+            "origin_slot": 0,
+            "target_id": 15,
+            "target_slot": 1,
+            "type": "IMAGE"
+          },
+          {
+            "id": 14,
+            "origin_id": 15,
+            "origin_slot": 0,
+            "target_id": 4,
+            "target_slot": 1,
+            "type": "IMAGE"
+          },
+          {
+            "id": 15,
+            "origin_id": 12,
+            "origin_slot": 1,
+            "target_id": 4,
+            "target_slot": 2,
+            "type": "INT"
+          },
+          {
+            "id": 16,
+            "origin_id": 4,
+            "origin_slot": 0,
+            "target_id": 16,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 17,
+            "origin_id": 16,
+            "origin_slot": 0,
+            "target_id": 17,
+            "target_slot": 2,
+            "type": "IMAGE"
+          },
+          {
+            "id": 19,
+            "origin_id": 5,
+            "origin_slot": 0,
+            "target_id": 2,
+            "target_slot": 2,
+            "type": "FLOAT"
+          },
+          {
+            "id": 20,
+            "origin_id": 18,
+            "origin_slot": 0,
+            "target_id": 4,
+            "target_slot": 0,
+            "type": "INTERP_MODEL"
+          },
+          {
+            "id": 22,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 5,
+            "target_slot": 0,
+            "type": "VHS_VIDEOINFO"
+          },
+          {
+            "id": 23,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 9,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 24,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 8,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 25,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 17,
+            "target_slot": 1,
+            "type": "IMAGE"
+          },
+          {
+            "id": 26,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 14,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 27,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 13,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 28,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 19,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 29,
+            "origin_id": 19,
+            "origin_slot": 2,
+            "target_id": 20,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 30,
+            "origin_id": 20,
+            "origin_slot": 2,
+            "target_id": 21,
+            "target_slot": 0,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 31,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 21,
+            "target_slot": 1,
+            "type": "IMAGE"
+          },
+          {
+            "id": 32,
+            "origin_id": 17,
+            "origin_slot": 0,
+            "target_id": 21,
+            "target_slot": 2,
+            "type": "IMAGE"
+          },
+          {
+            "id": 33,
+            "origin_id": 21,
+            "origin_slot": 0,
+            "target_id": 2,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 34,
+            "origin_id": 2,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "VIDEO"
+          },
+          {
+            "id": 35,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 6,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 36,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 7,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 37,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 18,
+            "target_slot": 0,
+            "type": "COMBO"
+          }
+        ],
+        "extra": {
+          "codex_layout_inserted": true,
+          "codex_layout_role": "prepare",
+          "ds": {
+            "scale": 0.2936170212765957,
+            "offset": [
+              500,
+              25
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "last_node_id": 25,
+  "last_link_id": 37,
+  "state": {
+    "lastNodeId": 25,
+    "lastLinkId": 37,
+    "lastGroupId": 0,
+    "lastRerouteId": 0
+  }
+}

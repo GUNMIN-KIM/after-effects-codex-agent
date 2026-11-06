@@ -1,0 +1,287 @@
+{
+  "id": "dcb650a4-c079-4bc6-91c8-21348ad1122c",
+  "revision": 0,
+  "last_node_id": 6,
+  "last_link_id": 3,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadVideo",
+      "pos": [
+        100.0,
+        130.0
+      ],
+      "size": [
+        282.798828125,
+        82
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideo"
+      },
+      "widgets_values": [
+        "ad_video_demo.mp4",
+        "image"
+      ],
+      "widgets_values_named": {
+        "file": "ad_video_demo.mp4",
+        "upload": "image"
+      }
+    },
+    {
+      "id": 2,
+      "type": "LoadImage",
+      "pos": [
+        100.0,
+        300.0
+      ],
+      "size": [
+        282.798828125,
+        102
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "woman_in_red.png",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "woman_in_red.png",
+        "upload": "image"
+      }
+    },
+    {
+      "id": 3,
+      "type": "MinimaxHailuo03MaxRecastNode",
+      "pos": [
+        520.0,
+        170.0
+      ],
+      "size": [
+        400,
+        272
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model.video",
+          "type": "VIDEO",
+          "link": 1
+        },
+        {
+          "name": "model.reference_images.image_1",
+          "type": "IMAGE",
+          "link": 2
+        },
+        {
+          "name": "model.reference_images.image_2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MinimaxHailuo03MaxRecastNode"
+      },
+      "widgets_values": [
+        "MiniMax H3 Max",
+        "@Image1 is now the woman in the video: keep her speaking to camera, holding the lipstick up the same way, same bright room with white flowers, same framing and timing.",
+        "768P",
+        true,
+        42,
+        "randomize",
+        "randomize"
+      ],
+      "widgets_values_named": {
+        "model": "MiniMax H3 Max",
+        "model.prompt": "@Image1 is now the woman in the video: keep her speaking to camera, holding the lipstick up the same way, same bright room with white flowers, same framing and timing.",
+        "model.resolution": "768P",
+        "model.enhance_realism": true,
+        "model.seed": 42,
+        "control_after_generate#1": "randomize",
+        "control_after_generate": "randomize"
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 4,
+      "type": "SaveVideo",
+      "pos": [
+        1000.0,
+        170.0
+      ],
+      "size": [
+        453.80198751024386,
+        296.70120974169953
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": null
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "api_minimax_h3_max_recast",
+        "auto",
+        "auto",
+        "auto"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "api_minimax_h3_max_recast",
+        "format": "auto",
+        "format.codec": "auto",
+        "codec": "auto"
+      }
+    },
+    {
+      "id": 5,
+      "type": "MarkdownNote",
+      "pos": [
+        -286.0,
+        700.0
+      ],
+      "size": [
+        1100.0,
+        900.0
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "## Cast Swap: MiniMax H3 Max\n\n**Replace the people in a finished shot.** Recast keeps the motion, the framing, the cuts and the original sound, and swaps the people for the ones in your reference photos.\n\n---\n\n### What this graph does\n\n1. **Load Video**: the source clip. It must be 5 to 30 seconds long and no single shot inside it may run longer than 15 seconds.\n2. **Load Image**: the replacement person, at least 256 x 256. Connect up to four photos for up to four people: they become `@Image1` to `@Image4` in socket order.\n3. **MiniMax H3 Max Recast**: rewrites the people in the clip to match the photos.\n4. **Save Video**: writes the MP4.\n\n**Input Assets:** [ad_video_demo.mp4](https://raw.githubusercontent.com/Comfy-Org/workflow_templates/refs/heads/main/input/ad_video_demo.mp4) · [woman_in_red.png](https://raw.githubusercontent.com/Comfy-Org/workflow_templates/refs/heads/main/input/woman_in_red.png)\n\n---\n\n### Writing the prompt\n\nThe prompt says who becomes whom and what has to stay in place. Name the photos by their slot, `@Image1` for the first photo connected to the node, then say what the person is doing and what must not change:\n\n- `@Image1 is now the woman in the video: keep her speaking to camera, holding the lipstick up the same way, same bright room with white flowers, same framing and timing.`\n- Two people: `@Image1 replaces the presenter and @Image2 replaces the guest, keep the handshake and the pan.`\n- Do not describe the look of the new person: costume, hair and accessories follow the reference photo, so a photo of someone in a red suit comes back in a red suit. Spend the prompt on behaviour, blocking and what has to stay.\n\nThe prompt is optional, but the swap is much more predictable when it is there.\n\n---\n\n### Controls\n\n| Control | What it does |\n|---|---|\n| `model` | `MiniMax H3 Max` is the only option on this node |\n| `resolution` | `480P`, `768P` or `1080P`, default `768P` |\n| `enhance_realism` | More natural skin texture and better blending of the new person into the scene. The demo below was rendered with it on |\n| `seed` | Same prompt and seed give similar, not identical, results |\n\n### What the demo run produced\n\n`ad_video_demo.mp4` (1280 x 720, 5.04 seconds) kept its timing and its audio and came back at 1344 x 768 with the presenter replaced by the person in `woman_in_red.png`. The wardrobe followed the reference photo as well, red suit and beret instead of the original green top, and the face stayed stable across all 121 frames with no flicker on the product or the flowers.\n\n### Gotchas\n\n- One photo per person, assigned in socket order. Five photos is over the limit of four.\n- Clips shorter than 5 seconds, or with a shot longer than 15 seconds, are rejected before generation.\n- The source audio is kept, Recast does not regenerate speech.\n"
+      ],
+      "widgets_values_named": {
+        "text": "## Cast Swap: MiniMax H3 Max\n\n**Replace the people in a finished shot.** Recast keeps the motion, the framing, the cuts and the original sound, and swaps the people for the ones in your reference photos.\n\n---\n\n### What this graph does\n\n1. **Load Video**: the source clip. It must be 5 to 30 seconds long and no single shot inside it may run longer than 15 seconds.\n2. **Load Image**: the replacement person, at least 256 x 256. Connect up to four photos for up to four people: they become `@Image1` to `@Image4` in socket order.\n3. **MiniMax H3 Max Recast**: rewrites the people in the clip to match the photos.\n4. **Save Video**: writes the MP4.\n\n**Input Assets:** [ad_video_demo.mp4](https://raw.githubusercontent.com/Comfy-Org/workflow_templates/refs/heads/main/input/ad_video_demo.mp4) · [woman_in_red.png](https://raw.githubusercontent.com/Comfy-Org/workflow_templates/refs/heads/main/input/woman_in_red.png)\n\n---\n\n### Writing the prompt\n\nThe prompt says who becomes whom and what has to stay in place. Name the photos by their slot, `@Image1` for the first photo connected to the node, then say what the person is doing and what must not change:\n\n- `@Image1 is now the woman in the video: keep her speaking to camera, holding the lipstick up the same way, same bright room with white flowers, same framing and timing.`\n- Two people: `@Image1 replaces the presenter and @Image2 replaces the guest, keep the handshake and the pan.`\n- Do not describe the look of the new person: costume, hair and accessories follow the reference photo, so a photo of someone in a red suit comes back in a red suit. Spend the prompt on behaviour, blocking and what has to stay.\n\nThe prompt is optional, but the swap is much more predictable when it is there.\n\n---\n\n### Controls\n\n| Control | What it does |\n|---|---|\n| `model` | `MiniMax H3 Max` is the only option on this node |\n| `resolution` | `480P`, `768P` or `1080P`, default `768P` |\n| `enhance_realism` | More natural skin texture and better blending of the new person into the scene. The demo below was rendered with it on |\n| `seed` | Same prompt and seed give similar, not identical, results |\n\n### What the demo run produced\n\n`ad_video_demo.mp4` (1280 x 720, 5.04 seconds) kept its timing and its audio and came back at 1344 x 768 with the presenter replaced by the person in `woman_in_red.png`. The wardrobe followed the reference photo as well, red suit and beret instead of the original green top, and the face stayed stable across all 121 frames with no flicker on the product or the flowers.\n\n### Gotchas\n\n- One photo per person, assigned in socket order. Five photos is over the limit of four.\n- Clips shorter than 5 seconds, or with a shot longer than 15 seconds, are rejected before generation.\n- The source audio is kept, Recast does not regenerate speech.\n"
+      },
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 6,
+      "type": "MarkdownNote",
+      "pos": [
+        -926.0,
+        130.0
+      ],
+      "size": [
+        600,
+        900
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "H3 Max Recast · 인물 교체 (KR 안내)",
+      "properties": {},
+      "widgets_values": [
+        "## [유료 API] MiniMax H3 Max Recast · 완성 컷의 인물 교체\n\n**용도**: 광고·프리비즈에서 출연자를 다른 사람(레퍼런스 사진)으로 바꾸면서 동작·프레이밍·컷·원본 소리 유지.\n\n**권리 확인 (필수)**: 레퍼런스 사진 속 인물의 **초상 사용 동의**가 있는 경우에만 사용하세요. 실존 인물을 동의 없이 넣거나 오인하게 만드는 용도로 쓰지 않습니다.\n\n**입력**: 영상 5~30초(한 컷 15초 이하) + 사진 1~4장(256px 이상 · 한 사람당 1장 · 연결 순서 = `@Image1`~`@Image4`). **프롬프트**: 누가 누구로 바뀌는지 + 유지할 동작·배치만 (`@Image1 is now the woman in the video: keep her speaking to camera …`). 의상·머리는 사진을 따라가므로 외형 묘사는 쓰지 않습니다.\n\n**설정**: 768P/1080P · enhance_realism(피부 질감·합성 자연스러움) · 원본 오디오는 그대로 유지(음성 재생성 없음).\n\n**요금**: Comfy 계정 크레딧 차감 (노드 오른쪽 위 가격 배지 확인). 실행 전 **짧은 구간·저해상도**로 먼저 확인하세요.\n**데이터**: 영상·이미지가 외부 서비스(MiniMax/fal, Bria)로 업로드됩니다. 공개 전 소스나 계약상 외부 반출이 금지된 소스는 넣지 마세요.\n\n### 모델 (로컬: 아래 파일명 그대로 · Cloud: 문제 패널에 없다고 나오면 '가져오기' 후 이름 확인)\n모델 다운로드 없음 (유료 API · Comfy 계정 크레딧 사용)\n\n### 출처 · 검증\n- 원본: Comfy-Org/workflow_templates `api_minimax_h3_max_recast` (2026-11-03)\n- 상태: GPU 렌더 미검증 (원본 구조·값은 공식 그래프 그대로, 이 환경에서는 노드 존재·연결만 정적 검사)\n- 정리: 2026-11-06 · After Effects Codex Agent 팩 (`comfyui/README.md`)\n"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      0,
+      "VIDEO"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      1,
+      "IMAGE"
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      0,
+      "VIDEO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5,
+      "offset": [
+        120.0,
+        -50.0
+      ]
+    },
+    "frontendVersion": "1.57.6",
+    "ae_pack": {
+      "added": "2026-11-06",
+      "kind": "api",
+      "source": "Comfy-Org/workflow_templates `api_minimax_h3_max_recast` (2026-11-03)",
+      "gpu_render_tested": false
+    }
+  },
+  "version": 0.4
+}

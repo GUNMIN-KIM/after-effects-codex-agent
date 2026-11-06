@@ -27,6 +27,9 @@
 ### 5. EXECUTE
 `ae_catalog`로 현재 사용 가능한 operation을 확인한 뒤 최소 단위로 실행한다. 한 번에 큰 mutation을 몰아넣지 않는다. 각 mutation 뒤에 관련 상태를 다시 읽는다. 레이어 이름이 아닌 stable layer ID를 우선 사용하며, 이름이 겹치면 실행하지 않는다.
 
+### 5-1. 생성형 단계 (ComfyUI)
+물체 제거·교체, 리라이트, 화면 밖 확장, 알파 매트 생성, 업스케일, 프레임 보간, 영상 연장처럼 AE 효과로 만들 수 없는 단계는 `references/comfyui-pipeline.md` 순서로 ComfyUI에 넘깁니다. 처리 구간을 AE 규격 그대로 내보내고, `templates/comfyui-handoff.md`로 brief를 작성합니다. 결과는 새 footage 레이어로 원본 위에 배치합니다. 원본 레이어는 비활성화만 하고 지우지 않습니다. 가져온 직후 W×H·프레임 수·fps를 다시 조회하고 RE-INSPECT로 넘어갑니다.
+
 ### 6. RE-INSPECT
 소스 교체, 매트 연결, effect 추가, keyframe 작성, precompose 이후에는 반드시 해당 레이어와 컴포지션을 다시 조회한다. 결과가 계획과 다르면 다음 작업을 하지 말고 repair plan을 만든다.
 

@@ -10,11 +10,16 @@ After Effects를 실제로 읽고 수정하는 After Effects MCP와 Codex의 판
 | `SKILL.md` | 조사→계획→수정→시각 검수→저장 workflow |
 | `references/` | 합성, 매트, 색상, 애니메이션, 렌더, 문제 해결 기준 |
 | `templates/task-brief.md` | 실제 작업 지시 템플릿 |
+| `templates/comfyui-handoff.md` | AE → ComfyUI 생성 단계 지시 템플릿 |
+| `references/comfyui-pipeline.md` | AE ↔ ComfyUI 내보내기·가져오기·검수 규칙 |
+| `comfyui/` | ComfyUI 워크플로 팩 (H3 · LTX-2.5 · Wan · Qwen · SeedVR2 · RIFE · SAM 3.1 · 유료 API), 프롬프트 가이드, 모델 레지스트리 |
 | `THIRD_PARTY_NOTICES.md` | 외부 프로젝트·상표·문서 고지 |
 
 ## 사용 순서
 
 Codex 프로젝트 지침 위치에 이 폴더를 배치한 뒤 `AGENTS.md`와 `SKILL.md`를 읽는다. 작업마다 `templates/task-brief.md`를 복사해 대상 컴포지션과 변경 범위를 채운다. AE에 연결된 MCP가 제공하는 operation은 `ae_catalog`로 확인하며, 이 저장소는 특정 버전의 operation 목록을 고정하지 않는다.
+
+AE 효과로 만들 수 없는 생성형 단계(제거·인페인팅·리라이트·매트 생성·업스케일·보간·연장)는 `references/comfyui-pipeline.md`를 읽고 `comfyui/workflows/README.md`의 선택표에서 워크플로를 고른 뒤, `templates/comfyui-handoff.md`로 지시를 작성한다.
 
 After Effects MCP 연결, Node.js, AE 버전, 네트워크·스크립트 권한은 실제 설치 환경의 공식 문서를 기준으로 확인한다. 이 저장소의 문서는 실행 서버를 대신하지 않는다.
 

@@ -21,8 +21,11 @@
 | 애니메이션·전환·키프레임 | `references/animation.md` |
 | 프레임 캡처·렌더·시각 검수 | `references/qc-render.md` |
 | 오류·오프라인·타이밍·품질 회귀 | `references/troubleshooting.md` |
+| ComfyUI 생성 단계 왕복 (제거·인페인팅·아웃페인팅·리라이트·매트 생성·업스케일·보간·연장) | `references/comfyui-pipeline.md`, `comfyui/workflows/README.md`, `templates/comfyui-handoff.md` |
 
 실제 MCP operation 이름이나 인자 형식은 문서에 하드코딩하지 않는다. 연결된 MCP가 제공하는 `ae_catalog`를 런타임에 조회하고, 현재 환경에서 확인된 operation만 사용한다.
+
+AE 안에서 만들 수 없는 생성형 단계는 `comfyui/workflows/`의 워크플로로 넘긴다. 내보내기 규격, handoff brief, 가져오기 검수는 `references/comfyui-pipeline.md`를 따른다. 모델 파일명은 `comfyui/MODELS.md`의 로더 값을 그대로 쓰고 추측해서 바꾸지 않는다. 유료 API 워크플로(`comfyui/workflows/유료API/`)는 비용과 외부 업로드 허용을 사용자에게 먼저 확인한다.
 
 ## 보호 규칙
 

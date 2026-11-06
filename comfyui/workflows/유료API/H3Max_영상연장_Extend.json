@@ -1,0 +1,242 @@
+{
+  "id": "03b6c6ca-d28f-46a5-bd3a-7de601f46652",
+  "revision": 0,
+  "last_node_id": 5,
+  "last_link_id": 3,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadVideo",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        360,
+        420
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideo"
+      },
+      "title": "① 이어갈 영상 (1.625~60초 · 50MB 이하)",
+      "widgets_values": [
+        "",
+        "image"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LoadAudio",
+      "pos": [
+        0,
+        480
+      ],
+      "size": [
+        360,
+        160
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadAudio"
+      },
+      "title": "② 음성/소리 레퍼런스 (선택 · @Audio1) · 안 쓰면 Ctrl+B",
+      "widgets_values": [
+        "",
+        null,
+        null
+      ]
+    },
+    {
+      "id": 3,
+      "type": "MinimaxHailuo03MaxExtendVideoNode",
+      "pos": [
+        420,
+        0
+      ],
+      "size": [
+        440,
+        560
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model.video",
+          "type": "VIDEO",
+          "link": 1
+        },
+        {
+          "name": "model.reference_audios.audio_1",
+          "type": "AUDIO",
+          "shape": 7,
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MinimaxHailuo03MaxExtendVideoNode"
+      },
+      "title": "MiniMax H3 Max Extend · 뒤로 이어 생성",
+      "widgets_values": [
+        "MiniMax H3 Max",
+        "The camera keeps tracking her as she reaches the end of the corridor, pushes the heavy door open and steps out into bright daylight.",
+        5,
+        "768P",
+        "auto",
+        "extended",
+        false,
+        42,
+        "fixed",
+        "fixed"
+      ],
+      "widgets_values_named": {
+        "model": "MiniMax H3 Max",
+        "model.prompt": "The camera keeps tracking her as she reaches the end of the corridor, pushes the heavy door open and steps out into bright daylight.",
+        "model.duration": 5,
+        "model.resolution": "768P",
+        "model.aspect_ratio": "auto",
+        "model.output": "extended",
+        "model.prompt_expansion": false,
+        "model.seed": 42,
+        "control_after_generate#1": "fixed",
+        "control_after_generate": "fixed"
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 4,
+      "type": "SaveVideo",
+      "pos": [
+        900,
+        0
+      ],
+      "size": [
+        420,
+        420
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 3
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveVideo"
+      },
+      "title": "결과 영상 · 저장",
+      "widgets_values": [
+        "H3Max/extend",
+        "auto",
+        "auto"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "MarkdownNote",
+      "pos": [
+        -640,
+        0
+      ],
+      "size": [
+        600,
+        900
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "H3 Max Extend · 영상 연장 (KR 안내)",
+      "properties": {},
+      "widgets_values": [
+        "## [유료 API] MiniMax H3 Max Extend · 영상 뒤에 이어 생성\n\n**AE 용도**: 컷 길이가 모자랄 때 끝을 연장. 로컬 대안: `프레임보간/h3/H3_영상연장_원본보존`, `프레임보간/ltx/LTX2.5_영상연장…`(원본 픽셀 보존형).\n\n**핵심 값**: model(H3 Max / H3 Max Turbo) · duration 1~15초 · resolution 480P~2K · aspect_ratio `auto`(원본 비율 · 다른 값은 원본을 잘라냄) · output:\n- `extended` = 원본 전체 + 연장분 (**원본 구간도 선택 해상도로 다시 렌더됨** → 원본 픽셀 보존 아님)\n- `continuation` = 연장분만 (앞에 원본 끝 1.6초 반복 포함) → **AE에서는 이쪽을 받아 원본 뒤에 붙이고 1.6초 겹침을 디졸브/컷으로 정리**하는 것을 권장\n\n**프롬프트**: 원본이 아니라 **다음에 일어날 일**만. 레퍼런스 오디오는 `@Audio1 for the voice`처럼 지칭.\n\n**요금**: Comfy 계정 크레딧 차감 (노드 오른쪽 위 가격 배지 확인). 실행 전 **짧은 구간·저해상도**로 먼저 확인하세요.\n**데이터**: 영상·이미지가 외부 서비스(MiniMax/fal, Bria)로 업로드됩니다. 공개 전 소스나 계약상 외부 반출이 금지된 소스는 넣지 마세요.\n\n### 모델 (로컬: 아래 파일명 그대로 · Cloud: 문제 패널에 없다고 나오면 '가져오기' 후 이름 확인)\n모델 다운로드 없음 (유료 API · Comfy 계정 크레딧 사용)\n\n### 출처 · 검증\n- 원본: ComfyUI `comfy_api_nodes/nodes_minimax.py` MinimaxHailuo03MaxExtendVideoNode (#17424 · 2026-10-31) — 노드 스키마로 구성\n- 상태: GPU/크레딧 실행 미검증 · 노드 스키마(입력·위젯 순서) 대조로 구성\n- 정리: 2026-11-06 · After Effects Codex Agent 팩 (`comfyui/README.md`)\n"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      0,
+      "VIDEO"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      1,
+      "AUDIO"
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      0,
+      "VIDEO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8,
+      "offset": [
+        700,
+        120
+      ]
+    },
+    "ae_pack": {
+      "added": "2026-11-06",
+      "kind": "api",
+      "source": "ComfyUI `comfy_api_nodes/nodes_minimax.py` MinimaxHailuo03MaxExtendVideoNode (#17424 · 2026-10-31) — 노드 스키마로 구성",
+      "gpu_render_tested": false
+    }
+  },
+  "version": 0.4
+}

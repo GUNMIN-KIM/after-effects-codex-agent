@@ -1,0 +1,13 @@
+얼어붙은 호텔 — 일반 Qwen 이미지 편집에 넣는 프롬프트 예시
+
+사용 JSON: Qwen2.1-Turbo_이미지편집_8스텝/Qwen2.1-Turbo_이미지편집_8스텝.json
+02 편집 지시의 프롬프트를 아래 문장으로 바꾸면 같은 호텔 드레싱 용도로 사용할 수 있습니다.
+시드: 42, control_after_generate: fixed
+긴 변: 2048 / 원본 크기 복원: 켬 / CFG: 1 / sampler: euler / Turbo 8스텝
+이 설정은 제거한 프리셋에 저장되어 있던 값입니다. 일반 JSON의 기본값은 변경하지 않았습니다.
+
+[프롬프트]
+Dress the scene in image 1 as a frozen hotel at minus 40 degrees Celsius, as if everything froze solid in an instant. Icicles: dense rows of long, sharp, clear icicles, 20 to 60 centimeters long, hang from every ceiling edge, cornice, molding, beam, pipe, chandelier, lamp, counter edge, railing, sign and overhang. Frost: a thick coat of white hoarfrost and feathery ice crystals covers the walls, columns, furniture, doors and objects, heaviest on top edges and corners, while the original colors and materials stay visible underneath. Snow: a light layer of fresh powder snow, 1 to 2 centimeters deep, lies on the floor, ledges, tabletops and counters, and a few snowflakes drift in the air. Floor: glossy glazed ice with soft reflections under the light snow. Air and light: a faint frozen mist, cool pale cyan ambient light mixed with the existing warm practical lights, which keep their warm glow. People: every person keeps exactly the same face, identity, expression, pose and clothes, with only a light dusting of snow and frost on their hair, shoulders and clothes. Keep exactly the same room, architecture, composition, camera angle, lens, perspective and framing as image 1; every object and person stays in the same position, size and shape. Do not add new objects, people or text. Photorealistic film still, natural ice and snow materials, high detail.
+
+[네거티브 프롬프트]
+blur, low resolution, compression artifacts, malformed hands, duplicate limbs, unintended changes to identity, pose or framing
