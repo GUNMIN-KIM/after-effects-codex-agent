@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+# 클라이언트 레퍼런스·결과물은 저장소에 올리지 않는다
+reference/*
+!reference/README.md
+out/
+*_frozen/
+shots.csv

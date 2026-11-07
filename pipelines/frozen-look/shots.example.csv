@@ -1,0 +1,6 @@
+file,shot,ref,skip,seed,variants,extra
+C001.png,ms,1,1,,,
+C002.png,ws,2,,,,Keep the silver tray level.
+C003.png,walk,3,,777,1,
+C004.png,cu,1,,,3,
+C005.png,ms,none,,,,

@@ -1,0 +1,20 @@
+{
+  "_note": "batch_freeze.py가 읽는 프롬프트 원본. 수정은 여기서만 한다. 'Picture 1' = 원본 프레임, 'Picture 2' = 룩 레퍼런스(ComfyUI TextEncodeQwenImageEditPlus 규칙).",
+
+  "base_with_ref": "Edit Picture 1. Keep Picture 1's exact camera angle, framing, lens, focus, depth of field, room architecture and lighting direction, and keep every person's face, identity, expression, gaze direction, pose, hand position, body shape and clothing design exactly the same. Only add a frozen-indoor-winter effect that matches the look of Picture 2. Use Picture 2 only as a reference for frost texture, icicle style and color grade; do not copy any person, object, furniture or layout from Picture 2.",
+
+  "base_no_ref": "Edit this image. Keep the exact camera angle, framing, lens, focus, depth of field, room architecture and lighting direction, and keep every person's face, identity, expression, gaze direction, pose, hand position, body shape and clothing design exactly the same. Only add a frozen-indoor-winter effect.",
+
+  "frost": "The whole scene looks as if the room flash-froze while everyone carries on calmly. Hair is caked with thick white snow and frost clumps, strands stiff and frozen together, with small clear icicles hanging from hair tips, eyebrows, chin and jawline. Skin is dusted with fine white frost crystals and tiny ice grains across the forehead, cheeks, nose, eyelashes, lips and neck, while the eyes stay clear, wet and alive and the skin keeps a natural, slightly rosy tone. Clothes carry a layer of fresh powdery snow on the shoulders, lapels, collars and folds, sparkling hoarfrost on the fabric, and clear glassy icicles of varied lengths hanging from jacket hems, cuffs, pocket flaps, scarves and sleeves. Hands are frosted white. Props and furniture such as cups, glasses, trays, lamps, tables, chairs and sofas are encased in white frost and soft snow with long icicles dripping from their edges.",
+
+  "look": "Photorealistic high-end live-action cinema commercial still, real practical frost, snow and ice with fine physical detail, not CGI. Soft diffused warm interior light from wall sconces and crystal chandeliers. Warm ivory, cream and beige palette; snow and frost read neutral white, never blue. Muted, desaturated colors, low contrast, lifted milky blacks, gentle atmospheric haze, shallow depth of field with creamy bokeh, subtle fine film grain.",
+
+  "shots": {
+    "cu": "Close-up: concentrate the effect on the face and hair. Dense ice crystals on the skin, frosted eyebrows and eyelashes, hair heavy with snow clumps and a few short icicles from the hair tips and chin. Eyes, gaze and expression unchanged.",
+    "ms": "Medium shot: snow piled on the shoulders and lapels, rows of icicles along the jacket hem, cuffs and pocket flaps, frosted hands, and any table props fully encased in white frost with icicles hanging from the table edge.",
+    "ws": "Wide shot: the entire room is frozen. Frosted walls and moldings, icicles on chandeliers and wall sconces, snow lying on the floor, sofas and furniture under a layer of snow, a soft milky haze in the air. Background people are frosted too but stay soft and out of focus. Christmas trees are snow-covered with warm fairy-light bokeh.",
+    "walk": "Corridor or walking shot: snow-dusted floor, frosted wall panels and doors, a warm glowing chandelier, background figures with frosted hair and coats in soft focus, and the subject's coat heavy with snow and icicles along the hem and chest pocket."
+  },
+
+  "negative": "blue tint, cyan cold color grade, teal and orange grade, oversaturated, high contrast, crushed blacks, CGI, 3d render, cartoon, illustration, painting, plastic skin, waxy face, changed identity, different face, different person, extra people, extra limbs, deformed hands, white eyes, frozen eyeballs, ice over the eyes, melting, dripping water, wet look, falling snowflakes, blizzard, snow in the air, text, watermark, logo, border, blurry, low resolution"
+}

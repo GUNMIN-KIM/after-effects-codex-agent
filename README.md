@@ -10,6 +10,7 @@ After Effects를 실제로 읽고 수정하는 After Effects MCP와 Codex의 판
 | `SKILL.md` | 조사→계획→수정→시각 검수→저장 workflow |
 | `references/` | 합성, 매트, 색상, 애니메이션, 렌더, 문제 해결 기준 |
 | `templates/task-brief.md` | 실제 작업 지시 템플릿 |
+| `pipelines/frozen-look/` | 컷별 프레임 '얼어붙은 실내' 룩 일괄 변환 (ComfyUI 배치·룩 그레이드·H3 프롬프트) |
 | `THIRD_PARTY_NOTICES.md` | 외부 프로젝트·상표·문서 고지 |
 
 ## 사용 순서
