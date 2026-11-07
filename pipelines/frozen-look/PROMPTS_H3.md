@@ -1,8 +1,27 @@
 # H3 (P-H3-Image) 편집 프롬프트
 
-사용자 워크플로 `06_H3_P-H3-Image` 기준 (P-H3-Image int8 · 8 steps · 업샘플러 포함). 노드 동작은 ComfyUI 소스 `comfy_extras/nodes_minimax_h3.py`로 확인했다.
+노드 동작은 ComfyUI 소스 `comfy_extras/nodes_minimax_h3.py`로 확인했다.
 
-## 결과가 정사각 2912×2912 + 다른 사람으로 나오면
+## 권장: 공식 템플릿 `image_p_h3_image_edit` (실사용에서 결과 양호)
+
+`06_H3_P-H3-Image` 커스텀 파일보다 결과가 좋았던 이유는 아래 차이 때문이다. 이 설정은 그대로 유지한다.
+
+| 항목 | 공식 템플릿 (좋음) | 06 커스텀 |
+|---|---|---|
+| 편집 해상도 | `Upsampler vision size`(ImageScaleToTotalPixels) **바이패스** → 원본 그대로 (3840×2160 → 3840×2160) | `edit_mp` 4 → 2720×1536 후 확대 |
+| 편집 입력 | LoadImage가 항상 image_1에 연결됨 | 편집 모드 OFF·① 바이패스면 텍스트→이미지(2912×2912)로 돌아감 |
+| 샘플러 | `er_sde` (확률적, 질감 자연스러움) | `euler` |
+| 모델 | `minimax_h3_fl2va_pruned_int8_convrot` + `p-h3-image_lora_bf16` (strength 1) | `p-h3-image_int8_convrot` 단일 파일 |
+| 업샘플러 | `w4a8`, TextGenerateV2, thinking ON, 1536 | `bf16`, 편집용 커스텀 템플릿, 3072 |
+
+- 시그마(8 steps)와 `ModelSamplingMiniMaxH3` 1.0/1.0은 두 파일이 같다.
+- `Upsampler vision size`를 켜면(0.95MP) 결과도 약 1MP로 작아진다. 4K로 받으려면 바이패스를 유지한다.
+- 후보는 `RandomNoise` 시드만 바꿔서 뽑는다 (공식 파일은 `fixed`).
+- 프롬프트는 `Text (Prompt)` 노드에 넣는다. 아래 상세 프롬프트를 그대로 넣어도 업샘플러가 정리한다. 업샘플 결과는 `Upsampled prompt` 노드에서 확인한다.
+
+## 06 커스텀 파일을 쓸 때
+
+### 결과가 정사각 2912×2912 + 다른 사람으로 나오면
 
 편집이 아니라 **텍스트→이미지**로 돌았다는 뜻이다. 편집 모드가 꺼져 있으면 image_1 자리에 빈 이미지가 들어가고, 비율 표의 1:1 값(2912×2912)으로 새 그림을 만든다.
 
