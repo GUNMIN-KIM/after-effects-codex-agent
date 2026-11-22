@@ -1944,7 +1944,7 @@ function update(rawDt) {
   RU.uShipL.value.copy(shipL.group.position); RU.uShipR.value.copy(shipR.group.position);
   if (!alive) { RU.uShipL.value.y = -50; RU.uShipR.value.y = -50; RU.uShipL.value.x = RU.uShipR.value.x = 999; }
   const g = nextGuide();
-  const showGuide = g && S.mode === 'play' && !S.film;
+  const showGuide = g && S.mode === 'play' && !S.auto;
   RU.uGuideA.value = damp(RU.uGuideA.value, showGuide ? sstep(-130, -60, g.z) : 0, 6, rawDt);
   if (g) { RU.uGuideX.value = damp(RU.uGuideX.value, g.center, 10, rawDt); RU.uGuideZ.value = g.z; }
   pulseT += gdt;
