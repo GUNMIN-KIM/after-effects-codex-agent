@@ -401,6 +401,8 @@ def render(k):
         dn = noise('dfine', 1024, 1024, 5, 51)
         det = cv2.remap(dn, ((GX * 0.9 - k * 1.5) % 1024).astype(np.float32), ((GY * 0.9 + k * 0.8) % 1024).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP)
         vrgb = vol[..., :3] * (1 + 0.16 * (det[..., None] - 0.5)) * lerp(1.0, 0.62, st); va = vol[..., 3:4]
+        warm = smf(92, 116, k)        # inside the wall the sun is blocked: keep the dust brown, not sky-grey
+        vrgb = vrgb * lerp(np.ones(3, np.float32), np.array([1.3, 0.98, 0.66], np.float32), warm)
         bg = vrgb + bg * (1 - va)
         if D_ < Y_PERSON:
             f_ = float(np.clip((Y_PERSON - D_) / 2.2, 0, 1)) * 0.85
@@ -496,6 +498,7 @@ def render(k):
     inside = dust_inside(k)
     if inside > 0.02:
         out = lerp(out, dcol_f * 0.9, np.float32(0.35 * inside))
+        out = out * lerp(np.ones(3, np.float32), np.array([1.12, 0.98, 0.8], np.float32), np.float32(inside * (1 - space_amt(k))))
     if 150 <= k <= 156:
         out = out + np.float32(0.25 * math.exp(-((k - 152) / 1.5) ** 2))   # sonic-boom flash
     return finish(out, k)
