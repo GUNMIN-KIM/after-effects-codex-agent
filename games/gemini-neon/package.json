@@ -1,0 +1,15 @@
+{
+  "name": "gemini-neon",
+  "private": true,
+  "version": "1.0.0",
+  "description": "9:16 WebGL twin-ship runner with a frame-exact 1080x1920 renderer for video work",
+  "type": "module",
+  "scripts": {
+    "build": "node build-standalone.mjs",
+    "render": "node render.mjs",
+    "render:trailer": "node render.mjs --seconds 15 --fps 60 --shots \"low:3,chase:3.5,side:3,top:2.5,front:3\" --out out/gemini-neon-trailer.mp4"
+  },
+  "devDependencies": {
+    "playwright": "1.48.2"
+  }
+}

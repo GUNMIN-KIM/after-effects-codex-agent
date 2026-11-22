@@ -11,6 +11,7 @@ After Effects를 실제로 읽고 수정하는 After Effects MCP와 Codex의 판
 | `references/` | 합성, 매트, 색상, 애니메이션, 렌더, 문제 해결 기준 |
 | `templates/task-brief.md` | 실제 작업 지시 템플릿 |
 | `THIRD_PARTY_NOTICES.md` | 외부 프로젝트·상표·문서 고지 |
+| `games/gemini-neon/` | 영상 소스용 9:16 WebGL 게임과 1080×1920 프레임 렌더러 (자체 `README.md` 참고) |
 
 ## 사용 순서
 
