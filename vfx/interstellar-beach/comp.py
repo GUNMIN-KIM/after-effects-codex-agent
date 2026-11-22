@@ -57,7 +57,7 @@ def storm_D(k):        # dust-wall distance (m); negative = camera inside / behi
     return float(np.interp(k, xs, ys)) if k <= xs[-1] else -6 - (k - 124) * 0.5
 def dust_inside(k): return smf(108, 124, k) * (1 - 0.82 * smf(138, 170, k)) * (1 - 0.6 * smf(200, 260, k))
 def space_amt(k): return smf(122, 150, k)
-def storm_amt(k): return smf(36, 112, k) * (1 - 0.7 * smf(140, 175, k))
+def storm_amt(k): return (0.3 * smf(36, 90, k) + 0.7 * smf(92, 116, k)) * (1 - 0.7 * smf(140, 175, k))
 def front_F(k): return 6.1 if k < 168 else max(0.0, 6.1 * (1 - smf(168, 198, k) ** 0.9))
 def level_h(k): return 0.45 * smf(172, 205, k) + 0.4 * smf(205, 246, k)
 def sink_p(k): return 1.5 * smf(244, 272, k) ** 1.4
@@ -99,6 +99,8 @@ def bh():
     if _bh is None:
         maps = os.path.join(WK, 'bh_maps_1680x3660.npz')
         _bh = BlackHole(maps)
+        for name in ('hit', 'r', 'phi', 'side', 'hit2', 'r2', 'phi2', 'esc', 'cap', 'mapx', 'mapy', 'stars'):
+            setattr(_bh, name, getattr(_bh, name)[:SKY_H].copy())   # only the rows the sky canvas uses
     return _bh
 _noise = {}
 def noise(name, h, w, octv, seed):
@@ -116,8 +118,7 @@ Yg = np.where(LV > VH0 + 0.5, CAM_H * F / np.maximum(LV - VH0, 0.5), 1e6).astype
 
 # ------------------------------------------------------------------ sky (space) canvas, in L coords offset by SKY_X0/Y0
 def space_sky(k):
-    img = bh().render(k / FPS * 1.4, disk_gain=1.0, star_gain=1.5)        # (3660, 1680)
-    img = img[:SKY_H]                                                     # top 2400 rows -> canvas
+    img = bh().render(k / FPS * 1.4, disk_gain=1.0, star_gain=1.5)        # cropped to the 2400 canvas rows
     tw = 1 - 0.25 * math.sin(k * 0.13)
     return (img * np.float32(1.15)).astype(np.float32)
 
@@ -127,8 +128,37 @@ def sky_to_L(sky):
     return cv2.warpAffine(sky, M, (CW, CH), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REPLICATE)
 
 # ------------------------------------------------------------------ dust
-DUST_LIGHT = np.array([0.62, 0.45, 0.30], np.float32)
-DUST_DARK = np.array([0.10, 0.065, 0.04], np.float32)
+DUST_LIGHT = np.array([0.40, 0.29, 0.18], np.float32)
+DUST_DARK = np.array([0.07, 0.05, 0.03], np.float32)
+
+# ---- Cycles volumetric dust wall (rendered every 2nd frame, k 14..118) ----
+@lru_cache(maxsize=4)
+def dust_npy(k):
+    p = os.path.join(WK, 'dust', 'd_%04d.npy' % k)
+    if not os.path.exists(p): return None
+    d = np.load(p).astype(np.float32)
+    d = cv2.resize(d, (W, H), interpolation=cv2.INTER_CUBIC)
+    d[..., 3] = np.clip(d[..., 3], 0, 1); d[..., :3] = np.clip(d[..., :3], 0, None)
+    return d
+def dust_frames():
+    return sorted(int(os.path.basename(p)[2:6]) for p in glob.glob(os.path.join(WK, 'dust', 'd_*.npy')))
+def dust_vol(k):
+    if k < 14 or k > 118: return None
+    fr = dust_frames()
+    if not fr: return None
+    lo = [r for r in fr if r <= k]; hi = [r for r in fr if r >= k]
+    if not lo: return dust_npy(hi[0])
+    if not hi: return dust_npy(lo[-1])
+    a_k, b_k = lo[-1], hi[0]
+    if a_k == b_k: return dust_npy(a_k)
+    f = (k - a_k) / (b_k - a_k)
+    a, b = dust_npy(a_k), dust_npy(b_k)
+    g = lambda d: np.clip((d[..., 3] * 0.6 + d[..., :3].mean(-1)) * 200, 0, 255).astype(np.uint8)
+    ga, gb = cv2.resize(g(a), (W // 2, H // 2)), cv2.resize(g(b), (W // 2, H // 2))
+    fab = cv2.resize(_dis.calc(ga, gb, None), (W, H)) * 2.0; fba = cv2.resize(_dis.calc(gb, ga, None), (W, H)) * 2.0
+    wa = cv2.remap(a, GX - f * fab[..., 0], GY - f * fab[..., 1], cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    wb = cv2.remap(b, GX - (1 - f) * fba[..., 0], GY - (1 - f) * fba[..., 1], cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    return (1 - f) * wa + f * wb
 def dust_layer(k):
     """Returns (rgb, alpha_back, veil) on the L canvas. alpha_back covers what is behind the person."""
     D = storm_D(k)
@@ -153,9 +183,11 @@ def dust_layer(k):
         cov_sky = sm(top * 1.08, top * 0.8, tanE)
         cov_gnd = sm(D * (0.75 + 0.5 * edge_noise) - 1.5, D * (0.75 + 0.5 * edge_noise) + 4.0 + 0.2 * D, Yg)
         skirt = sm(D * 0.12, D * 0.9, Yg) * 0.55 * smf(20, 70, k)          # sand blown ahead of the wall
-        cov = np.where(above, cov_sky, np.maximum(cov_gnd, skirt * (0.6 + 0.6 * edge_noise)))
-        cov *= sm(0.15, 0.45, T1 + 0.25 * sm(0, 1, (top - tanE) / np.maximum(top, 1e-3)))
-        cov = np.clip(cov * 1.6, 0, 1)
+        cov = np.where(above, 0.0, skirt * (0.45 + 0.6 * edge_noise) * sm(0.2, 0.6, T1)).astype(np.float32)
+        # dense dust hugging the ground at the wall's foot: blends the volume's base into the horizon
+        hgt_m = tanE * D
+        foot = np.exp(-hgt_m / (32.0 + 50.0 * edge_noise)) * (0.75 + 0.35 * T1) * float(np.clip(1.45 - D / 12000.0, 0, 1))
+        cov = np.where(above, np.clip(foot, 0, 0.92), cov).astype(np.float32)
     inside = dust_inside(k)
     if inside > 0:
         clear = sm(0.0, 1.0, (k - 130) / 24.0 + tanE * 1.3 - 0.25) if k > 128 else np.zeros_like(tanE)
@@ -170,7 +202,7 @@ def dust_layer(k):
     col = col * (1 - 0.45 * far) + np.array([0.42, 0.40, 0.40], np.float32) * 0.55 * far * light
     col = col * lerp(np.ones(3, np.float32), np.array([1.15, 0.85, 0.6], np.float32), sp)
     veil_amt = 0.0
-    if D < Y_PERSON: veil_amt = min(1.0, (Y_PERSON - max(D, -1e9)) / 3.0) * 0.55 * (1 - 0.8 * smf(138, 175, k))
+    if D < Y_PERSON and k > 118: veil_amt = 0.4 * (1 - 0.85 * smf(130, 165, k))
     veil = np.clip(veil_amt * (0.5 + 0.8 * T1) * (0.6 + 0.6 * (LV > VH0)), 0, 0.85)
     return col.astype(np.float32), cov.astype(np.float32), veil.astype(np.float32)
 
@@ -254,7 +286,7 @@ P0 = np.stack([rng_p.uniform(-14, 14, NP), np.exp(rng_p.uniform(np.log(1.3), np.
 PV = rng_p.uniform(0.6, 1.4, NP); PPH = rng_p.uniform(0, 6.28, NP); PSZ = rng_p.uniform(0.6, 1.8, NP)
 def particles(k, Gk):
     """Wind-blown sand grains as motion-blurred streaks. Returns back/front premultiplied layers (frame space)."""
-    amt = smf(25, 70, k) * (1 - 0.65 * smf(150, 185, k)) * (1 - smf(205, 230, k))
+    amt = smf(25, 70, k) * (1 - 0.85 * smf(122, 150, k)) * (1 - smf(185, 210, k))
     back = np.zeros((H, W), np.uint8); front = np.zeros((H, W), np.uint8)
     if amt <= 0.01: return back, front, amt
     tt = k / FPS; wind = 16.0 * (0.4 + 0.6 * smf(40, 110, k))
@@ -263,7 +295,7 @@ def particles(k, Gk):
     y = P0[:, 1] + 0.3 * np.sin(tt * 1.3 + PPH)
     z = np.clip(P0[:, 2] * np.clip(P0[:, 1] / 6.0, 0.25, 1.0) + 0.25 * np.sin(tt * 3.1 + PPH * 2) + 0.15 * np.sin(tt * 7 + PPH), 0.02, 4)
     dz = 0.12 * np.cos(tt * 3.1 + PPH * 2)
-    dx = -wind * PV / FPS * 0.45
+    dx = -wind * PV / FPS * 0.3
     def proj(X, Y, Z):
         u = CX + F * X / Y; v = VH0 + F * (CAM_H - Z) / Y
         p = Gk @ np.vstack([u + MG, v + MG, np.ones_like(u)]); return p[0], p[1]
@@ -271,7 +303,7 @@ def particles(k, Gk):
     for i in range(n_use):
         if y[i] < 0.5: continue
         thick = max(1, int(PSZ[i] * 2.2 / y[i] + 0.5))
-        val = int(min(200, 150 * PSZ[i] * min(1.0, 2.0 / y[i] + 0.2)))
+        val = int(min(160, 110 * PSZ[i] * min(1.0, 2.0 / y[i] + 0.2)))
         tgt = front if y[i] < Y_PERSON - 0.2 else back
         cv2.line(tgt, (int(u0[i] * 4), int(v0[i] * 4)), (int(u1[i] * 4), int(v1[i] * 4)), val, thick, cv2.LINE_AA, shift=2)
     return back, front, amt
@@ -342,7 +374,7 @@ def render(k):
     warpL = lambda img, bm=cv2.BORDER_REPLICATE: cv2.warpAffine(img, GL[:2], (W, H), flags=cv2.INTER_LINEAR, borderMode=bm)
     # --- background grade
     bg = plate_rgb.copy()
-    storm_look = desat(bg, 0.4) * np.array([1.05, 0.8, 0.58], np.float32) * 0.36
+    storm_look = desat(bg, 0.3) * np.array([1.05, 0.78, 0.55], np.float32) * 0.2 + np.array([0.045, 0.03, 0.018], np.float32)
     bg = lerp(bg, storm_look, st)
     night = desat(plate_rgb, 0.35) * np.array([0.22, 0.26, 0.36], np.float32) * 0.55
     bg = lerp(bg, night, sp)
@@ -354,13 +386,31 @@ def render(k):
         sky_f = warpL(skyL)
         skymask = warpL((LV < VH0 + 1.5).astype(np.float32) * sm(VH0 + 2, VH0 - 2, LV), cv2.BORDER_CONSTANT)
         bg = bg * (1 - skymask[..., None]) + sky_f * skymask[..., None]
-    # --- dust wall / storm (behind subject)
+    # --- dust wall / storm (behind subject): Cycles volume + 2D skirt / inside fog
+    vol = dust_vol(k); vveil = None
+    if vol is not None:
+        D_ = storm_D(k)
+        Gd = G1 @ T(CX, VH0) @ np.diag([1.07, 1.07, 1.0]) @ T(-CX, -960.0)   # horizon row 960 -> plate horizon; 7% overscan for camera drift
+        vol = cv2.warpAffine(vol, Gd[:2], (W, H))
+        if D_ > 2500:                                     # far wall: its base sits beyond the sea horizon (earth curvature)
+            hm = warpL(sm(VH0 + 1.5, VH0 - 1.5, LV).astype(np.float32), cv2.BORDER_CONSTANT)
+            vol = vol * hm[..., None]
+        haze = float(np.clip((D_ - 700) / 6000, 0, 0.5))
+        if haze > 0:
+            vol[..., :3] = vol[..., :3] * (1 - haze) + vol[..., 3:4] * np.array([0.42, 0.44, 0.48], np.float32) * haze
+        dn = noise('dfine', 1024, 1024, 5, 51)
+        det = cv2.remap(dn, ((GX * 0.9 - k * 1.5) % 1024).astype(np.float32), ((GY * 0.9 + k * 0.8) % 1024).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP)
+        vrgb = vol[..., :3] * (1 + 0.16 * (det[..., None] - 0.5)) * lerp(1.0, 0.62, st); va = vol[..., 3:4]
+        bg = vrgb + bg * (1 - va)
+        if D_ < Y_PERSON:
+            f_ = float(np.clip((Y_PERSON - D_) / 2.2, 0, 1)) * 0.85
+            vveil = (vrgb * f_, va * f_)
     dcol, dcov, veilL = dust_layer(k)
     dcol_f, dcov_f, veil_f = warpL(dcol), warpL(dcov), warpL(veilL)
     bg = bg * (1 - dcov_f[..., None]) + dcol_f * dcov_f[..., None]
     # --- water
     if k >= 118 and sky_c is not None:
-        sky_blur = cv2.GaussianBlur(sky_c, (0, 0), 1.2)
+        sky_blur = cv2.GaussianBlur(np.minimum(sky_c, 6.0), (0, 0), 2.6)
         haze = dust_inside(k)
         sky_blur = sky_blur * (1 - 0.7 * haze) + DUST_LIGHT * 0.3 * haze
         wcol, wal = water_layer(k, sky_blur)
@@ -379,16 +429,18 @@ def render(k):
         for name, frames in eng.items():
             for e in range(2):
                 pts = []
-                for j in range(max(0, si - 6), si):
+                for j in range(max(0, si - 3), si):
                     x, y, zc = frames[j][e]
                     if zc <= 0: continue
                     p = G1 @ np.array([x, y, 1.0]); pts.append((p[0], p[1], j))
                 for a_, b_ in zip(pts[:-1], pts[1:]):
-                    if math.hypot(b_[0] - a_[0], b_[1] - a_[1]) > 260: continue
-                    age = (si - 1 - b_[2]) / 6.0; g = 2.2 * (1 - age) ** 1.5
+                    if math.hypot(b_[0] - a_[0], b_[1] - a_[1]) > 120: continue
+                    age = (si - 1 - b_[2]) / 3.0; g = 1.4 * (1 - age) ** 1.5
                     cv2.line(tr, (int(a_[0] * 4), int(a_[1] * 4)), (int(b_[0] * 4), int(b_[1] * 4)), tuple(float(c) for c in ACC[name] * g), 2, cv2.LINE_AA, shift=2)
         tr = cv2.GaussianBlur(tr, (0, 0), 2.5) + cv2.GaussianBlur(tr, (0, 0), 9) * 0.8
         bg += tr
+    sand_col0 = np.array([0.55, 0.42, 0.3], np.float32) * lerp(1.0, 0.45, st) * lerp(1.0, 0.5, sp) + np.array([0.25, 0.12, 0.03], np.float32) * sp
+    bg = ground_streams(bg, k, GL, sand_col0, 'back')
     # --- subject: relight, waterline cut, sink
     h = level_h(k); sink = sink_p(k)
     bhp = GL @ np.array([540 + MG, 430 + MG, 1.0])          # black hole centre on screen (light source)
@@ -420,7 +472,7 @@ def render(k):
             out = out * (1 - a_under[..., None]) + (refr * 0.5 + wcol_under) * a_under[..., None]
             a_vis = a_obj * above_w
             bounce = np.exp(-np.clip(yc - GY, 0, None) / 160.0) * above_w * space_amt(k)
-            s_lit = s_rgb + bounce[..., None] * np.array([0.09, 0.07, 0.05], np.float32)
+            s_lit = s_rgb + bounce[..., None] * np.array([0.04, 0.03, 0.022], np.float32)
             out = out * (1 - a_vis[..., None]) + s_lit * a_vis[..., None]
             # foam collar where the water meets the body
             collar = np.exp(-((GY - yc - wob) / 7.0) ** 2) * cv2.GaussianBlur(a_obj, (0, 0), 10) * 1.4
@@ -437,8 +489,10 @@ def render(k):
         out = out * (1 - pbb[..., None] * 0.6) + sand_col * pbb[..., None] * 0.6
         pfb = cv2.GaussianBlur(pf, (0, 0), 2.2).astype(np.float32) / 255.0
         out = out * (1 - pfb[..., None] * 0.8) + sand_col * 1.1 * pfb[..., None] * 0.8
-        out = ground_streams(out, k, GL, sand_col)
+        out = ground_streams(out, k, GL, sand_col, 'front')
     out = out * (1 - veil_f[..., None]) + dcol_f * veil_f[..., None]
+    if vveil is not None:
+        out = vveil[0] + out * (1 - vveil[1])
     inside = dust_inside(k)
     if inside > 0.02:
         out = lerp(out, dcol_f * 0.9, np.float32(0.35 * inside))
@@ -470,27 +524,32 @@ def relight(rgb, al, k, light_xy, st, sp):
     rim = cv2.GaussianBlur(rim, (0, 0), 1.0) * al
     out = rgb
     if st > 0:   # dust storm: dim, warm, low contrast, soft back-scatter from the bright dust behind
-        storm = flat * np.array([0.95, 0.74, 0.55], np.float32) * 0.5 + 0.035 * np.array([0.6, 0.45, 0.3], np.float32)
+        storm = flat * np.array([0.95, 0.72, 0.52], np.float32) * 0.34 + 0.03 * np.array([0.6, 0.45, 0.3], np.float32)
         storm = storm + rim[..., None] * np.array([0.55, 0.38, 0.22], np.float32) * 0.5
         out = lerp(out, storm, st)
     if sp > 0:   # night under the black hole: cool sky fill + strong golden backlight
         flick = 1 + 0.04 * math.sin(k * 0.37) + 0.025 * math.sin(k * 1.3)
-        night = flat * np.array([0.075, 0.095, 0.14], np.float32) + 0.005
+        night = flat * np.array([0.036, 0.046, 0.072], np.float32) + 0.003
         night = night + rim[..., None] * np.array([1.9, 1.15, 0.52], np.float32) * flick
         night = night + (wide * facing)[..., None] * np.array([0.10, 0.06, 0.03], np.float32) * edge_lum[..., None]
         out = lerp(out, night, sp)
     return out.astype(np.float32)
 
-def ground_streams(out, k, GL, col):
+def ground_streams(out, k, GL, col, which):
+    """Wind-blown sand snaking along the beach. Ground beyond the subject is drawn behind it, nearer ground in front."""
     amt = smf(15, 60, k) * (1 - smf(185, 200, k))
     if amt <= 0: return out
-    n = noise('stream', 512, 2048, 7, 41)
-    u = ((LU * 0.45 + k * 30.0) % 2048).astype(np.float32); v = ((LV * 6.0) % 512).astype(np.float32)
+    n = noise('stream', 512, 2048, 7, 41); wv = noise('d2', 1024, 1024, 7, 22)
+    wob = cv2.remap(wv, ((LU * 0.6 + k * 4) % 1024).astype(np.float32), ((LV * 0.6) % 1024).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP) - 0.5
+    u = ((LU * 0.5 + k * 30.0) % 2048).astype(np.float32); v = ((LV * 3.2 + wob * 90) % 512).astype(np.float32)
     s = cv2.remap(n, u, v, cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP)
-    band = sm(VH0 + 200, VH0 + 520, LV)
-    a = np.clip((s - 0.56) * 4.0, 0, 1) * band * amt * 0.45 * (1 - 0.6 * space_amt(k))
+    band = sm(VH0 + 230, VH0 + 520, LV)
+    depth = sm(Y_PERSON - 0.15, Y_PERSON + 0.15, Yg)
+    side = depth if which == 'back' else 1 - depth
+    a = np.clip((s - 0.5) * 2.6, 0, 1) ** 1.5 * band * side * amt * 0.32 * (1 - 0.6 * space_amt(k))
+    a = cv2.GaussianBlur(a, (0, 0), 1.6)
     a_f = cv2.warpAffine(a, GL[:2], (W, H))
-    return out * (1 - a_f[..., None]) + col * 1.15 * a_f[..., None]
+    return out * (1 - a_f[..., None]) + col * 1.1 * a_f[..., None]
 
 rng_s = np.random.default_rng(17)
 def splashes(out, k, G1, GL):
