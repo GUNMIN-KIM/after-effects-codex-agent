@@ -1761,7 +1761,7 @@ function shotPose(name, t) {
   switch (name) {
     case 'title': _P.set(Math.sin(t * 0.15) * 1.6, 1.15, 6.6); _L.set(0, 1.25, -18); fov = 64; break;
     case 'low': _P.set(Math.sin(t * 0.3) * 0.25, 0.6, 8.4); _L.set(0, 1.5, -20); fov = 62; break;
-    case 'side': _P.set(3.7, 1.1, 2.9 + Math.sin(t * 0.25) * 0.5); _L.set(0.55, 0.45, -1.4); fov = 54; break;
+    case 'side': _P.set(S.spread + 4.0, 1.3, 0.55 + Math.sin(t * 0.25) * 0.3); _L.set(S.spread - 0.6, 0.5, 0.2); fov = 62; break;
     case 'top': _P.set(0, 12.5, 3.2); _L.set(0, 0, -3.6); fov = 58; break;
     case 'front': _P.set(Math.sin(t * 0.4) * 0.6, 1.25, -6.6); _L.set(0, 0.5, 0.4); fov = 56; break;
     case 'orbit': { const a = t * 0.22; _P.set(Math.sin(a) * 6.5, 2.4 + Math.sin(t * 0.3) * 0.6, Math.cos(a) * 6.5); _L.set(0, 0.6, 0); fov = 56; break; }
